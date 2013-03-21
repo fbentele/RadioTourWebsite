@@ -11,5 +11,6 @@
 		<li><a href="<c:url value="/archive" />">Archive</a></li>
 		<li><a href="<c:url value="/stage" />">Etappen</a></li>
 		<li><a href="<c:url value="/about" />">About</a></li>
+		<li><a href="<c:url value="/api" />">API</a></li>
 	</ul>
 </div>

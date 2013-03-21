@@ -6,21 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.hsr.ba.tourlive.dao.PositionDAO;
-import ch.hsr.ba.tourlive.model.Position;
+import ch.hsr.ba.tourlive.dao.PositionDataDAO;
+import ch.hsr.ba.tourlive.model.PositionData;
 
 @Service
-public class PositionServiceImpl implements PositionService {
+public class PositionDataServiceImpl implements PositionDataService {
 	@Autowired
-	private PositionDAO positiondao;
+	private PositionDataDAO positiondao;
 
 	@Transactional
-	public void save(Position position) {
+	public void save(PositionData position) {
 		positiondao.save(position);
 	}
 
 	@Transactional
-	public void update(Position position) {
+	public void update(PositionData position) {
 		positiondao.update(position);
 	}
 
@@ -30,8 +30,7 @@ public class PositionServiceImpl implements PositionService {
 	}
 
 	@Transactional
-	public List<Position> getAllPositions() {
-		return positiondao.getAllPosition();
+	public List<PositionData> getAll() {
+		return positiondao.getAll();
 	}
-
 }

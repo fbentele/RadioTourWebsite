@@ -6,36 +6,32 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ch.hsr.ba.tourlive.model.Position;
+import ch.hsr.ba.tourlive.model.PositionData;
 
 @Repository
-public class PositionDAOImpl implements PositionDAO {
+public class PositionDataDAOImpl implements PositionDataDAO {
 	@Autowired
 	SessionFactory sessionFactory;
 
-	@Override
-	public void save(Position position) {
+	public void save(PositionData position) {
 		sessionFactory.getCurrentSession().save(position);
 	}
 
-	@Override
-	public void update(Position position) {
+	public void update(PositionData position) {
 		sessionFactory.getCurrentSession().update(position);
 
 	}
 
-	@Override
 	public void delete(Long id) {
-		Position pos = (Position) sessionFactory.getCurrentSession().load(
-				Position.class, id);
+		PositionData pos = (PositionData) sessionFactory.getCurrentSession()
+				.load(PositionData.class, id);
 		if (null != pos) {
 			sessionFactory.getCurrentSession().delete(pos);
 		}
 	}
 
-	@Override
-	public List<Position> getAllPosition() {
+	public List<PositionData> getAll() {
 		return sessionFactory.getCurrentSession()
-				.createCriteria(Position.class).list();
+				.createCriteria(PositionData.class).list();
 	}
 }

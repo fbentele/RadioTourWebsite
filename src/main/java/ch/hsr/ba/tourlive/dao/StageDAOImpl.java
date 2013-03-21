@@ -10,7 +10,6 @@ import ch.hsr.ba.tourlive.model.Stage;
 
 @Repository
 public class StageDAOImpl implements StageDAO {
-
 	@Autowired
 	SessionFactory sessionFactory;
 

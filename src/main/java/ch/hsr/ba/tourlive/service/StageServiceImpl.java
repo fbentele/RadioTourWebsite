@@ -11,7 +11,6 @@ import ch.hsr.ba.tourlive.model.Stage;
 
 @Service
 public class StageServiceImpl implements StageService {
-
 	@Autowired
 	private StageDAO stagedao;
 

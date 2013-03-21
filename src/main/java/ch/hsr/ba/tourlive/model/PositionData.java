@@ -13,27 +13,63 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Entity
 @Table(name = "Position")
-public class Position {
+public class PositionData {
 	@Id
-	@Column(name = "POSITION_ID")
+	@Column(name = "POSITIONDATA_ID")
 	@GeneratedValue
-	private Long positionId;
+	private Long positionid;
 
-	@Column(name="LONGITUDE")
+	@Column
+	private int timestamp;
+
+	@Column
 	private float longitude;
-	
-	@Column(name="LATITUDE")
+
+	@Column
 	private float latitude;
-	
-	@Column(name="ALTITUDE")
+
+	@Column
 	private Long altitude;
 
-	public Long getPositionId() {
-		return positionId;
+	@Column
+	private float speed;
+
+	@Column
+	private int direction;
+
+	@Column
+	private int incline;
+
+	public int getTimestamp() {
+		return timestamp;
 	}
 
-	public void setPositionId(Long positionId) {
-		this.positionId = positionId;
+	public void setTimestamp(int timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
+	public int getIncline() {
+		return incline;
+	}
+
+	public void setIncline(int incline) {
+		this.incline = incline;
 	}
 
 	public float getLongitude() {
@@ -59,8 +95,9 @@ public class Position {
 	public void setAltitude(Long altitude) {
 		this.altitude = altitude;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Timestamp: " + timestamp + " and altitude: " + altitude;
+	}
 }

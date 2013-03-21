@@ -2,7 +2,6 @@ package ch.hsr.ba.tourlive.view;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -14,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.service.PositionDataService;
 import ch.hsr.ba.tourlive.service.StageService;
 
 /**
@@ -22,33 +21,30 @@ import ch.hsr.ba.tourlive.service.StageService;
  */
 @Controller
 public class HomeController {
-
 	@Autowired
 	ApplicationContext context;
 
 	@Autowired
 	StageService st;
+	@Autowired
+	PositionDataService positionDataService;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
 	/**
-	 * Simply selects the home view to render by returning its name.
+	 * controller return the welcome page
+	 * 
+	 * @return the start page
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-
+		logger.info("Welcome home! The client locale foking is {}.", locale);
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
 				DateFormat.LONG, locale);
-
 		String formattedDate = dateFormat.format(date);
-
 		model.addAttribute("serverTime", formattedDate);
-
-		//testHibernate();
-
 		return "home";
 	}
 
@@ -58,30 +54,9 @@ public class HomeController {
 		return "about";
 	}
 
-	@RequestMapping(value="/stage", method = RequestMethod.GET)
-	public String stage(Locale locale, Model model){
+	@RequestMapping(value = "/stage", method = RequestMethod.GET)
+	public String stage(Locale locale, Model model) {
 		model.addAttribute("stages", st.getAllStages());
 		return "stage";
-	}
-	
-	
-	private void testHibernate() {
-		System.out.println("#### Start Test");
-
-		Stage stage = context.getBean(Stage.class);
-
-		stage.setStageId(1L);
-		stage.setRaceId(4L);
-		stage.setStageName("Hallo");
-
-		st.save(stage);
-
-		List<Stage> stages = st.getAllStages();
-
-		for (Stage s : stages) {
-			System.out.println("Stage: " + s.getStageName());
-		}
-
-		System.out.println("#### End Test");
 	}
 }
