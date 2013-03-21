@@ -37,5 +37,6 @@ public class ApiController {
 	public String showdata(Locale locale, Model model) {
 		model.addAttribute("positions", positionDataService.getAll());
 		return "api";
+
 	}
 }
