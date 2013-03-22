@@ -48,6 +48,12 @@ public class HomeController {
 		return "home";
 	}
 
+	@RequestMapping(value = "/archive", method = RequestMethod.GET)
+	public String archive(Locale locale, Model model) {
+		logger.info("This is the archive Page");
+		return "archive";
+	}
+
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String about(Locale locale, Model model) {
 		logger.info("This is the about Page");
