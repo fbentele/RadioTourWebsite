@@ -33,9 +33,9 @@ public class ValueContainer {
 	private StageData stageData;
 	// @embedded
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "POSITIONDATA_ID")
-	private PositionData positionData;
+	// @OneToOne(fetch = FetchType.EAGER)
+	// @JoinColumn(name = "POSITIONDATA_ID")
+	// private PositionData positionData;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "NETDATA_ID")

@@ -40,6 +40,14 @@ public class PositionData {
 	@Column
 	private int incline;
 
+	public Long getPositionid() {
+		return positionid;
+	}
+
+	public void setPositionid(Long positionid) {
+		this.positionid = positionid;
+	}
+
 	public int getTimestamp() {
 		return timestamp;
 	}
