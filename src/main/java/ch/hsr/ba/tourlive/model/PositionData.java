@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Table(name = "Position")
 public class PositionData {
 	@Id
-	@Column
+	@Column(name = "POSITION_ID")
 	@GeneratedValue
 	private Long positionid;
 
