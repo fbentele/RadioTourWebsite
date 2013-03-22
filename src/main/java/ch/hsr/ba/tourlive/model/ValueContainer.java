@@ -40,5 +40,4 @@ public class ValueContainer {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "NETDATA_ID")
 	private NetData netData;
-
 }

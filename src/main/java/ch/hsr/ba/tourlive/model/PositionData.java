@@ -20,7 +20,7 @@ public class PositionData {
 	private Long positionid;
 
 	@Column
-	private int timestamp;
+	private Long timestamp;
 
 	@Column
 	private float longitude;
@@ -48,11 +48,11 @@ public class PositionData {
 		this.positionid = positionid;
 	}
 
-	public int getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(int timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 
