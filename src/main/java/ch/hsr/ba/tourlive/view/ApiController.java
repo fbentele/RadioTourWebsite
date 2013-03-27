@@ -35,6 +35,10 @@ public class ApiController {
 	@RequestMapping(value = "/api", method = RequestMethod.GET)
 	public String showdata(Locale locale, Model model) {
 		model.addAttribute("positions", positionDataService.getAll());
+		model.addAttribute(
+				"current",
+				positionDataService.getAll().get(
+						positionDataService.getAll().size() - 1));
 		return "api";
 	}
 }

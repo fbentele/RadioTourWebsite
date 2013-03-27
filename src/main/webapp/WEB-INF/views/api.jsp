@@ -40,9 +40,10 @@
 	</script>
 	<script type="text/javascript">
 		function initialize() {
-			var myLatLng = new google.maps.LatLng(47.025206, 9.030762);
+			
+			var myLatLng = new google.maps.LatLng(${current.latitude}, ${current.longitude});
 			var mapOptions = {
-				zoom : 9,
+				zoom : 14,
 				center : myLatLng,
 				mapTypeId : google.maps.MapTypeId.HYBRID
 			};
@@ -63,17 +64,6 @@
 			});
 
 			flightPath.setMap(map);
-		}
-
-		function initialize2() {
-			var mapOptions = {
-				center : new google.maps.LatLng(-34.397, 150.644),
-				zoom : 8,
-				mapTypeId : google.maps.MapTypeId.ROADMAP
-			};
-			var map = new google.maps.Map(
-					document.getElementById("map-canvas"), mapOptions);
-			center = new google.maps.LatLng(-34.397, 150.644);
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
