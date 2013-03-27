@@ -1,8 +1,6 @@
 package ch.hsr.ba.tourlive.model;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,22 +24,16 @@ public class StageData implements Serializable {
 	private Long stagedataid;
 
 	@Column
-	private Time stagetime;
+	private String stagetime;
 
 	@Column
 	private int stagealtitude;
 
 	@Column
-	private int stagedistance;
+	private int distance;
 
 	@Column
 	private float averagespeed;
-
-	@Column
-	private Time mobiletime;
-
-	@Column
-	private Date mobile;
 
 	public Long getStagedataid() {
 		return stagedataid;
@@ -51,11 +43,11 @@ public class StageData implements Serializable {
 		this.stagedataid = stagedataid;
 	}
 
-	public Time getStagetime() {
+	public String getStagetime() {
 		return stagetime;
 	}
 
-	public void setStagetime(Time stagetime) {
+	public void setStagetime(String stagetime) {
 		this.stagetime = stagetime;
 	}
 
@@ -67,12 +59,12 @@ public class StageData implements Serializable {
 		this.stagealtitude = stagealtitude;
 	}
 
-	public int getStagedistance() {
-		return stagedistance;
+	public int getDistance() {
+		return distance;
 	}
 
-	public void setStagedistance(int stagedistance) {
-		this.stagedistance = stagedistance;
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 
 	public float getAveragespeed() {
@@ -81,21 +73,5 @@ public class StageData implements Serializable {
 
 	public void setAveragespeed(float averagespeed) {
 		this.averagespeed = averagespeed;
-	}
-
-	public Time getMobiletime() {
-		return mobiletime;
-	}
-
-	public void setMobiletime(Time mobiletime) {
-		this.mobiletime = mobiletime;
-	}
-
-	public Date getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(Date mobile) {
-		this.mobile = mobile;
 	}
 }

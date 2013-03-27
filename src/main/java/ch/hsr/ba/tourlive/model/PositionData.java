@@ -38,6 +38,11 @@ public class PositionData {
 	private int incline;
 
 	@Column
+	private String satellites;
+
+	@Column
+	private int gpssendinterval;
+
 	public Long getPositionid() {
 		return positionid;
 	}
@@ -97,5 +102,21 @@ public class PositionData {
 	@Override
 	public String toString() {
 		return "The altitude is: " + altitude;
+	}
+
+	public String getSatellites() {
+		return satellites;
+	}
+
+	public void setSatellites(String satellites) {
+		this.satellites = satellites;
+	}
+
+	public int getGpssendinterval() {
+		return gpssendinterval;
+	}
+
+	public void setGpssendinterval(int gpssendinterval) {
+		this.gpssendinterval = gpssendinterval;
 	}
 }

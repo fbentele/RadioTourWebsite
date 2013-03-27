@@ -25,17 +25,15 @@ public class NetData {
 	@Column
 	private int signalstrength;
 	@Column
-	private String network;
-	@Column
-	private String networkid;
+	private String mncmcc;
 	@Column
 	private int upspeed;
-	@Column
-	private int downspeed;
 	@Column
 	private int rtt;
 	@Column
 	private int packetloss;
+	@Column
+	private String technology;
 
 	public int getNetDataID() {
 		return netDataID;
@@ -69,36 +67,12 @@ public class NetData {
 		this.signalstrength = signalstrength;
 	}
 
-	public String getNetwork() {
-		return network;
-	}
-
-	public void setNetwork(String network) {
-		this.network = network;
-	}
-
-	public String getNetworkid() {
-		return networkid;
-	}
-
-	public void setNetworkid(String networkid) {
-		this.networkid = networkid;
-	}
-
 	public int getUpspeed() {
 		return upspeed;
 	}
 
 	public void setUpspeed(int upspeed) {
 		this.upspeed = upspeed;
-	}
-
-	public int getDownspeed() {
-		return downspeed;
-	}
-
-	public void setDownspeed(int downspeed) {
-		this.downspeed = downspeed;
 	}
 
 	public int getRtt() {
@@ -115,6 +89,22 @@ public class NetData {
 
 	public void setPacketloss(int packetloss) {
 		this.packetloss = packetloss;
+	}
+
+	public String getMncmcc() {
+		return mncmcc;
+	}
+
+	public void setMncmcc(String mncmcc) {
+		this.mncmcc = mncmcc;
+	}
+
+	public String getTechnology() {
+		return technology;
+	}
+
+	public void setTechnology(String technology) {
+		this.technology = technology;
 	}
 
 }
