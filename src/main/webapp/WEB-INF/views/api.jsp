@@ -6,34 +6,11 @@
 <title>All Stages</title>
 </head>
 <body>
-	<h2>Map</h2>
+	<h2>Karte der Positionen</h2>
 
 	<div id="map-canvas"></div>
 
-	<h2>Etappen</h2>
-	<table class="table">
-		<tr>
-			<th>Timestampp</th>
-			<th>Long</th>
-			<th>Lat</th>
-			<th>Alt</th>
-			<th>Speed</th>
-			<th>Direction</th>
-			<th>Incline</th>
-		</tr>
-
-		<c:forEach items="${positions}" var="positionData">
-			<tr>
-				<td>${positionData.timestamp}</td>
-				<td>${positionData.longitude}</td>
-				<td>${positionData.latitude}</td>
-				<td>${positionData.altitude}</td>
-				<td>${positionData.speed}</td>
-				<td>${positionData.direction}</td>
-				<td>${positionData.incline}</td>
-			</tr>
-		</c:forEach>
-	</table>
+	
 	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=false">
 		

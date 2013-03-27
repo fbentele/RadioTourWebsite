@@ -25,16 +25,22 @@ public class ValueContainer {
 	private Long valueContainerId;
 
 	@Column
+	private String deviceId;
+
+	@Column
+	private String username;
+
+	@Column
 	private Date timestamp;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "POSITIONDATA_ID")
+	private PositionData positionData;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "STAGEDATA_ID")
 	private StageData stageData;
 	// @embedded
-
-	// @OneToOne(fetch = FetchType.EAGER)
-	// @JoinColumn(name = "POSITIONDATA_ID")
-	// private PositionData positionData;
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "NETDATA_ID")

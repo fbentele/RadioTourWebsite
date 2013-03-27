@@ -20,19 +20,16 @@ public class PositionData {
 	private Long positionid;
 
 	@Column
-	private Long timestamp;
-
-	@Column
 	private float longitude;
 
 	@Column
 	private float latitude;
 
 	@Column
-	private Long altitude;
+	private float speed;
 
 	@Column
-	private float speed;
+	private int altitude;
 
 	@Column
 	private int direction;
@@ -40,20 +37,13 @@ public class PositionData {
 	@Column
 	private int incline;
 
+	@Column
 	public Long getPositionid() {
 		return positionid;
 	}
 
 	public void setPositionid(Long positionid) {
 		this.positionid = positionid;
-	}
-
-	public Long getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
 	}
 
 	public float getSpeed() {
@@ -96,16 +86,16 @@ public class PositionData {
 		this.latitude = latitude;
 	}
 
-	public Long getAltitude() {
+	public int getAltitude() {
 		return altitude;
 	}
 
-	public void setAltitude(Long altitude) {
+	public void setAltitude(int altitude) {
 		this.altitude = altitude;
 	}
 
 	@Override
 	public String toString() {
-		return "Timestamp: " + timestamp + " and altitude: " + altitude;
+		return "The altitude is: " + altitude;
 	}
 }
