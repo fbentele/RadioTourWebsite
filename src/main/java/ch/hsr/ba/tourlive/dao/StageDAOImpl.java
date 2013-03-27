@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 
 @Repository
@@ -33,5 +34,24 @@ public class StageDAOImpl implements StageDAO {
 	public List<Stage> getAllStages() {
 		return sessionFactory.getCurrentSession().createCriteria(Stage.class)
 				.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Stage> getAllByRace(Race race) {
+		if (race != null) {
+			return sessionFactory
+					.getCurrentSession()
+					.createQuery(
+							"select stage from Race as race where race.raceId=?")
+					.setLong(0, race.getRaceId()).list();
+		} else {
+			return null;
+		}
+	}
+
+	public List<Stage> doit(Race race) {
+
+		return null;
 	}
 }

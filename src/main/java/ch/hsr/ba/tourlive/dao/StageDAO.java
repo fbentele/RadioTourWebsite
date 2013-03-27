@@ -2,6 +2,7 @@ package ch.hsr.ba.tourlive.dao;
 
 import java.util.List;
 
+import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 
 public interface StageDAO {
@@ -12,4 +13,6 @@ public interface StageDAO {
 	public void delete(Long id);
 
 	public List<Stage> getAllStages();
+
+	public List<Stage> getAllByRace(Race race);
 }

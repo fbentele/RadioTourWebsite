@@ -60,9 +60,9 @@ public class HomeController {
 		return "about";
 	}
 
-	@RequestMapping(value = "/stage", method = RequestMethod.GET)
+	@RequestMapping(value = "/tds/stage", method = RequestMethod.GET)
 	public String stage(Locale locale, Model model) {
-		model.addAttribute("stages", st.getAllStages());
+		model.addAttribute("stages", st.getAll());
 		return "stage";
 	}
 }

@@ -2,6 +2,7 @@ package ch.hsr.ba.tourlive.service;
 
 import java.util.List;
 
+import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 
 public interface StageService {
@@ -11,5 +12,7 @@ public interface StageService {
 
 	public void delete(Long id);
 
-	public List<Stage> getAllStages();
+	public List<Stage> getAll();
+
+	public List<Stage> getAllByRace(Race race);
 }

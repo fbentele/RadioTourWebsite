@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.hsr.ba.tourlive.dao.StageDAO;
+import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 
 @Service
@@ -30,7 +31,12 @@ public class StageServiceImpl implements StageService {
 	}
 
 	@Transactional
-	public List<Stage> getAllStages() {
+	public List<Stage> getAll() {
 		return stagedao.getAllStages();
+	}
+
+	@Transactional
+	public List<Stage> getAllByRace(Race race) {
+		return stagedao.getAllByRace(race);
 	}
 }

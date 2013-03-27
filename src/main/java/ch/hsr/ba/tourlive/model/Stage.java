@@ -12,18 +12,29 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Entity
-@Table(name="Stage")
+@Table(name = "Stage")
 public class Stage {
 	@Id
-	@Column(name="STAGE_ID")
+	@Column(name = "STAGE_ID")
 	@GeneratedValue
 	private Long stageId;
-	
-	@Column(name="RACE_ID")
-	private Long raceId;
 
-	@Column(name="STAGE_NAME")
+	@Column(name = "STAGE_NAME")
 	private String stageName;
+
+	@Column
+	private String stageDescription;
+
+	@Column
+	private float distance;
+
+	public float getDistance() {
+		return distance;
+	}
+
+	public void setDistance(float distance) {
+		this.distance = distance;
+	}
 
 	public Long getStageId() {
 		return stageId;
@@ -33,14 +44,6 @@ public class Stage {
 		this.stageId = stageId;
 	}
 
-	public Long getRaceId() {
-		return raceId;
-	}
-
-	public void setRaceId(Long raceId) {
-		this.raceId = raceId;
-	}
-
 	public String getStageName() {
 		return stageName;
 	}
@@ -48,5 +51,14 @@ public class Stage {
 	public void setStageName(String stageName) {
 		this.stageName = stageName;
 	}
+
+	public String getStageDescription() {
+		return stageDescription;
+	}
+
+	public void setStageDescription(String stageDescription) {
+		this.stageDescription = stageDescription;
+	}
+	
 
 }

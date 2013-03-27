@@ -4,6 +4,11 @@
 <html lang="en">
 
 <body>
+	<div class="hero-unit">
+		<h2>TourLive</h2>
+		<p>Made by Students</p>
+	</div>
+
 	<div class="row-fluid">
 		<div class="span12">
 			<hr class="soften">

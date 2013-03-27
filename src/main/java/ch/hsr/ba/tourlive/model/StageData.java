@@ -98,5 +98,4 @@ public class StageData implements Serializable {
 	public void setMobile(Date mobile) {
 		this.mobile = mobile;
 	}
-
 }

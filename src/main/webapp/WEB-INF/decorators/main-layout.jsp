@@ -15,6 +15,8 @@
 <link
 	href="<c:url value="/resources/css/bootstrap-responsive.min.css" />"
 	rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/tourlive.css" />"
+	rel="stylesheet" type="text/css" />
 
 <style type="text/css">
 body {
@@ -46,20 +48,11 @@ body {
 
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span2">
-				<div class="well sidebar-nav">
-					<c:import url="/WEB-INF/views/tags/menu.jsp" />
-				</div>
-				<!--/.well -->
-			</div>
-			<!--/span-->
+
+			<c:import url="/WEB-INF/views/tags/menu.jsp" />
+
 			<div class="span10">
-				<div class="hero-unit">
-					<c:import url="/WEB-INF/views/tags/banner.jsp" />
-				</div>
-
 				<decorator:body />
-
 				<!--/span-->
 			</div>
 			<!--/row-->
@@ -67,14 +60,12 @@ body {
 		<!--/span-->
 	</div>
 	<!--/row-->
-
 	<hr>
 
 	<footer>
 		<c:import url="/WEB-INF/views/tags/footer.jsp" />
 	</footer>
 	</div>
-
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/jquery-1.8.0-min.js" />"></script>

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table(name = "ValueContainer")
 public class ValueContainer {
-
 	@Id
 	@GeneratedValue
 	@Column(name = "VALUECONTAINER_ID")
