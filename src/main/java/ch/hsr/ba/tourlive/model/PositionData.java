@@ -41,7 +41,7 @@ public class PositionData {
 	private String satellites;
 
 	@Column
-	private int gpssendinterval;
+	private Integer gpssendinterval;
 
 	public Long getPositionid() {
 		return positionid;
