@@ -1,7 +1,17 @@
 package ch.hsr.ba.tourlive.view;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -9,7 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ch.hsr.ba.tourlive.model.PositionData;
 import ch.hsr.ba.tourlive.model.ValueContainer;
@@ -24,6 +36,9 @@ public class ApiController {
 	PositionDataService positionDataService;
 	@Autowired
 	ValueContainerService valueContainerService;
+
+	private static final Logger log = LoggerFactory
+			.getLogger(ApiController.class);
 
 	// test json
 	// {"altitude":0.0,"timestamp":1363958381172,"latitude":47.2234989,"longitude":8.817247,"speed":0.0,"direction":0.0}
@@ -50,6 +65,24 @@ public class ApiController {
 				positionDataService.getAll().get(
 						positionDataService.getAll().size() - 1));
 		return "api";
+	}
+
+	@RequestMapping(value = "/api/image", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
+	public void uploadImage(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("image") CommonsMultipartFile image,
+			@RequestParam("stamp") String filename) {
+		InputStream is = null;
+		try {
+			is = image.getInputStream();
+			BufferedImage sourceImage = ImageIO.read(is);
+			ImageIO.write(sourceImage, "png", new File("/tmp/images/"
+					+ filename + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
 	}
 }
 
