@@ -2,6 +2,7 @@ package ch.hsr.ba.tourlive.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,16 +34,16 @@ public class ValueContainer {
 	@Column
 	private Date timestamp;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "POSITIONDATA_ID")
 	private PositionData positionData;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "STAGEDATA_ID")
 	private StageData stageData;
 	// @embedded
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "NETDATA_ID")
 	private NetData netData;
 
@@ -101,5 +102,4 @@ public class ValueContainer {
 	public void setNetData(NetData netData) {
 		this.netData = netData;
 	}
-
 }

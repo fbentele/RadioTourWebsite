@@ -2,56 +2,36 @@ package ch.hsr.ba.tourlive.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import ch.hsr.ba.tourlive.dao.DeviceDataDAO;
 import ch.hsr.ba.tourlive.model.DeviceData;
 
 @Service
 public class DeviceDataServiceImpl implements DeviceDataService {
+	@Autowired
+	DeviceDataDAO deviceDataDao;
 
-	@Override
+	@Transactional
 	public void save(DeviceData devicedata) {
-		// TODO Auto-generated method stub
-
+		deviceDataDao.save(devicedata);
 	}
 
-	@Override
+	@Transactional
 	public void update(DeviceData devicedata) {
-		// TODO Auto-generated method stub
-
+		deviceDataDao.update(devicedata);
 	}
 
-	@Override
+	@Transactional
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-
+		deviceDataDao.delete(id);
 	}
 
-	@Override
+	@Transactional
 	public List<DeviceData> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return deviceDataDao.getAll();
 	}
-	// @Autowired
-	// private DeviceDataDAO devicedata;
-	//
-	// @Transactional
-	// public void save(DeviceData devdat) {
-	// devicedata.save(devdat);
-	// }
-	//
-	// @Transactional
-	// public void update(DeviceData devdat) {
-	// devicedata.update(devdat);
-	// }
-	//
-	// @Transactional
-	// public void delete(Long id) {
-	// devicedata.delete(id);
-	// }
-	//
-	// @Transactional
-	// public List<DeviceData> getAll() {
-	// return devicedata.getAll();
-	// }
+
 }

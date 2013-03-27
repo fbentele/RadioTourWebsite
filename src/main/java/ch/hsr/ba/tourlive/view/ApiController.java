@@ -53,4 +53,34 @@ public class ApiController {
 	}
 }
 
-// {"deviceid":"asdf1234","username":"hellouser","timestamp":112223334,"positionData":{"longitude":31.111,"latitude":43.9999,"speed":12.5,"altitude":50,"direction":5,"incline":9,"satellites":"2/11","gpssendinterval":5},"stageData":{"stagetime":"00:00:00","stagealtitude":10,"distance":12.5,"averagespeed":24.6},"netData":{"cellnumber":65432,"locationarea":909,"signalstrength":96,"mncmcc":"asdf","upspeed":10,"rtt":55,"packetloss":10,"technology":"umts"}}
+// {
+// "deviceId": "asdf1235",
+// "username": "hellouser",
+// "timestamp": 112223334,
+// "positionData": {
+// "longitude": 8.8571,
+// "latitude": 47.2489,
+// "speed": 12.5,
+// "altitude": 50,
+// "direction": 5,
+// "incline": 9,
+// "satellites": "2/11",
+// "gpssendinterval": 5
+// },
+// "stageData": {
+// "stagetime": "00:00:00",
+// "stagealtitude": 10,
+// "distance": 12.5,
+// "averagespeed": 24.6
+// },
+// "netData": {
+// "cellnumber": 65432,
+// "locationarea": 909,
+// "signalstrength": 96,
+// "mncmcc": "asdf",
+// "upspeed": 10,
+// "rtt": 55,
+// "packetloss": 10,
+// "technology": "umts"
+// }
+// }

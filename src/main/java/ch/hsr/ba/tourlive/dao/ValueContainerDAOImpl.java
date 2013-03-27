@@ -11,30 +11,30 @@ import ch.hsr.ba.tourlive.model.ValueContainer;
 @Repository
 public class ValueContainerDAOImpl implements ValueContainerDAO {
 	@Autowired
-	SessionFactory sessioFactory;
+	SessionFactory sessionFactory;
 
 	@Override
 	public void save(ValueContainer valuecontainer) {
-		sessioFactory.getCurrentSession().save(valuecontainer);
+		sessionFactory.getCurrentSession().save(valuecontainer);
 	}
 
 	@Override
 	public void update(ValueContainer valuecontainer) {
-		sessioFactory.getCurrentSession().update(valuecontainer);
+		sessionFactory.getCurrentSession().update(valuecontainer);
 	}
 
 	@Override
 	public void delete(Long id) {
-		ValueContainer valuecontainer = (ValueContainer) sessioFactory
+		ValueContainer valuecontainer = (ValueContainer) sessionFactory
 				.getCurrentSession().load(ValueContainer.class, id);
 		if (null != valuecontainer) {
-			sessioFactory.getCurrentSession().delete(valuecontainer);
+			sessionFactory.getCurrentSession().delete(valuecontainer);
 		}
 	}
 
 	@Override
 	public List<ValueContainer> getAll() {
-		return sessioFactory.getCurrentSession()
+		return sessionFactory.getCurrentSession()
 				.createCriteria(ValueContainer.class).list();
 	}
 
