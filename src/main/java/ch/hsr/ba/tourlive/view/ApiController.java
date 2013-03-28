@@ -77,7 +77,7 @@ public class ApiController {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
 			ImageIO.write(sourceImage, "png", new File("/tmp/images/"
-					+ filename + ".png"));
+					+ filename));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
