@@ -29,10 +29,10 @@ public class PositionData {
 	private float speed;
 
 	@Column
-	private int altitude;
+	private double altitude;
 
 	@Column
-	private int direction;
+	private float direction;
 
 	@Column
 	private int incline;
@@ -59,7 +59,7 @@ public class PositionData {
 		this.speed = speed;
 	}
 
-	public int getDirection() {
+	public float getDirection() {
 		return direction;
 	}
 
@@ -91,7 +91,7 @@ public class PositionData {
 		this.latitude = latitude;
 	}
 
-	public int getAltitude() {
+	public double getAltitude() {
 		return altitude;
 	}
 
