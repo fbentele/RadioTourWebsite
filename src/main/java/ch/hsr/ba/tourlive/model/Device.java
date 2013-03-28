@@ -18,21 +18,21 @@ public class Device {
 	private String deviceId;
 
 	@Column
-	private String deviceDescription;
+	private String username;
 
 	public String getDeviceId() {
 		return deviceId;
 	}
 
-	public void setDeviceId(String deviceid) {
-		this.deviceId = deviceid;
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 
-	public String getDeviceDescription() {
-		return deviceDescription;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setDeviceDescription(String devicedescription) {
-		this.deviceDescription = devicedescription;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

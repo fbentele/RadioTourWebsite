@@ -19,19 +19,19 @@ public class NetData {
 	@Column(name = "NETDATA_ID")
 	private int netDataID;
 	@Column
-	private int cellnumber;
+	private int cellNumber;
 	@Column
-	private int locationarea;
+	private int locationArea;
 	@Column
-	private int signalstrength;
+	private int signalStrength;
 	@Column
 	private String mncmcc;
 	@Column
-	private int upspeed;
+	private int upstream;
 	@Column
 	private int rtt;
 	@Column
-	private int packetloss;
+	private int packetLoss;
 	@Column
 	private String technology;
 
@@ -43,36 +43,36 @@ public class NetData {
 		this.netDataID = netDataID;
 	}
 
-	public int getCellnumber() {
-		return cellnumber;
+	public int getCellNumber() {
+		return cellNumber;
 	}
 
-	public void setCellnumber(int cellnumber) {
-		this.cellnumber = cellnumber;
+	public void setCellNumber(int cellNumber) {
+		this.cellNumber = cellNumber;
 	}
 
-	public int getLocationarea() {
-		return locationarea;
+	public int getLocationArea() {
+		return locationArea;
 	}
 
-	public void setLocationarea(int locationarea) {
-		this.locationarea = locationarea;
+	public void setLocationArea(int locationArea) {
+		this.locationArea = locationArea;
 	}
 
-	public int getSignalstrength() {
-		return signalstrength;
+	public int getSignalStrength() {
+		return signalStrength;
 	}
 
-	public void setSignalstrength(int signalstrength) {
-		this.signalstrength = signalstrength;
+	public void setSignalStrength(int signalStrength) {
+		this.signalStrength = signalStrength;
 	}
 
-	public int getUpspeed() {
-		return upspeed;
+	public int getUpstream() {
+		return upstream;
 	}
 
-	public void setUpspeed(int upspeed) {
-		this.upspeed = upspeed;
+	public void setUpstream(int upsteam) {
+		this.upstream = upstream;
 	}
 
 	public int getRtt() {
@@ -83,12 +83,12 @@ public class NetData {
 		this.rtt = rtt;
 	}
 
-	public int getPacketloss() {
-		return packetloss;
+	public int getPacketLoss() {
+		return packetLoss;
 	}
 
-	public void setPacketloss(int packetloss) {
-		this.packetloss = packetloss;
+	public void setPacketLoss(int packetLoss) {
+		this.packetLoss = packetLoss;
 	}
 
 	public String getMncmcc() {

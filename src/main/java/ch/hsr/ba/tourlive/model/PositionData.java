@@ -41,7 +41,7 @@ public class PositionData {
 	private String satellites;
 
 	@Column
-	private Integer gpssendinterval;
+	private Integer gpsSendInterval;
 
 	public Long getPositionid() {
 		return positionid;
@@ -49,30 +49,6 @@ public class PositionData {
 
 	public void setPositionid(Long positionid) {
 		this.positionid = positionid;
-	}
-
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
-	public float getDirection() {
-		return direction;
-	}
-
-	public void setDirection(int direction) {
-		this.direction = direction;
-	}
-
-	public int getIncline() {
-		return incline;
-	}
-
-	public void setIncline(int incline) {
-		this.incline = incline;
 	}
 
 	public float getLongitude() {
@@ -91,17 +67,36 @@ public class PositionData {
 		this.latitude = latitude;
 	}
 
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
 	public double getAltitude() {
 		return altitude;
 	}
 
-	public void setAltitude(int altitude) {
+	public void setAltitude(double altitude) {
 		this.altitude = altitude;
 	}
 
-	@Override
-	public String toString() {
-		return "The altitude is: " + altitude;
+	public float getDirection() {
+		return direction;
+	}
+
+	public void setDirection(float direction) {
+		this.direction = direction;
+	}
+
+	public int getIncline() {
+		return incline;
+	}
+
+	public void setIncline(int incline) {
+		this.incline = incline;
 	}
 
 	public String getSatellites() {
@@ -112,11 +107,12 @@ public class PositionData {
 		this.satellites = satellites;
 	}
 
-	public int getGpssendinterval() {
-		return gpssendinterval;
+	public Integer getGpsSendInterval() {
+		return gpsSendInterval;
 	}
 
-	public void setGpssendinterval(int gpssendinterval) {
-		this.gpssendinterval = gpssendinterval;
+	public void setGpsSendInterval(Integer gpsSendInterval) {
+		this.gpsSendInterval = gpsSendInterval;
 	}
+
 }

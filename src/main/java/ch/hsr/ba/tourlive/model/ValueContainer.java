@@ -1,7 +1,5 @@
 package ch.hsr.ba.tourlive.model;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,13 +25,11 @@ public class ValueContainer {
 	private Long valueContainerId;
 
 	@Column
-	private String deviceId;
+	private Long timestamp;
 
-	@Column
-	private String username;
-
-	@Column
-	private Date timestamp;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "DEVICE_ID")
+	private Device device;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "POSITIONDATA_ID")
@@ -41,7 +38,6 @@ public class ValueContainer {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "STAGEDATA_ID")
 	private StageData stageData;
-	// @embedded
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "NETDATA_ID")
@@ -55,27 +51,11 @@ public class ValueContainer {
 		this.valueContainerId = valueContainerId;
 	}
 
-	public String getDeviceId() {
-		return deviceId;
-	}
-
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public Date getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -102,4 +82,13 @@ public class ValueContainer {
 	public void setNetData(NetData netData) {
 		this.netData = netData;
 	}
+
+	public Device getDevice() {
+		return device;
+	}
+
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
 }

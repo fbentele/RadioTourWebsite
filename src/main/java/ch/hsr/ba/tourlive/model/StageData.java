@@ -24,16 +24,16 @@ public class StageData implements Serializable {
 	private Long stagedataid;
 
 	@Column
-	private String stagetime;
+	private String stageTime;
 
 	@Column
-	private double stagealtitude;
+	private double stageAltitude;
 
 	@Column
 	private float distance;
 
 	@Column
-	private float averagespeed;
+	private float averageSpeed;
 
 	public Long getStagedataid() {
 		return stagedataid;
@@ -43,35 +43,40 @@ public class StageData implements Serializable {
 		this.stagedataid = stagedataid;
 	}
 
-	public String getStagetime() {
-		return stagetime;
+	public String getStageTime() {
+		return stageTime;
 	}
 
-	public void setStagetime(String stagetime) {
-		this.stagetime = stagetime;
+	public void setStageTime(String stageTime) {
+		this.stageTime = stageTime;
 	}
 
-	public double getStagealtitude() {
-		return stagealtitude;
+	public double getStageAltitude() {
+		return stageAltitude;
 	}
 
-	public void setStagealtitude(int stagealtitude) {
-		this.stagealtitude = stagealtitude;
+	public void setStageAltitude(double stageAltitude) {
+		this.stageAltitude = stageAltitude;
 	}
 
 	public float getDistance() {
 		return distance;
 	}
 
-	public void setDistance(int distance) {
+	public void setDistance(float distance) {
 		this.distance = distance;
 	}
 
-	public float getAveragespeed() {
-		return averagespeed;
+	public float getAverageSpeed() {
+		return averageSpeed;
 	}
 
-	public void setAveragespeed(float averagespeed) {
-		this.averagespeed = averagespeed;
+	public void setAverageSpeed(float averageSpeed) {
+		this.averageSpeed = averageSpeed;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }
