@@ -9,8 +9,27 @@
 	<h2>Karte der Positionen</h2>
 
 	<div id="map-canvas"></div>
+	<c:if test="${not empty positions}">
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>latitude</th>
+				<th>longitude</th>
+			</tr>
+			<c:forEach items="${positions}" var="item">
+				<tr>
+					<td>${item.positionid}</td>
+					<td>${item.latitude}</td>
+					<td>${item.longitude}</td>
+				</tr>
+			</c:forEach>
 
-	
+		</table>
+
+	</c:if>
+
+
+
 	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=false">
 		

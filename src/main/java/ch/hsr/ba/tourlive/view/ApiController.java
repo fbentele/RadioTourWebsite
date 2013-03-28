@@ -60,10 +60,7 @@ public class ApiController {
 	@RequestMapping(value = "/api", method = RequestMethod.GET)
 	public String showdata(Locale locale, Model model) {
 		model.addAttribute("positions", positionDataService.getAll());
-		model.addAttribute(
-				"current",
-				positionDataService.getAll().get(
-						positionDataService.getAll().size() - 1));
+		model.addAttribute("current", positionDataService.getAll().get(0));
 		return "api";
 	}
 
@@ -73,6 +70,9 @@ public class ApiController {
 			@RequestParam("image") CommonsMultipartFile image,
 			@RequestParam("stamp") String filename) {
 		InputStream is = null;
+		if (filename.isEmpty() || filename == null) {
+			filename = "tempimage";
+		}
 		try {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
@@ -81,7 +81,7 @@ public class ApiController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-
+			// implement handler here
 		}
 	}
 }
