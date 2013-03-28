@@ -16,7 +16,7 @@
 			<div class="row-fluid">
 				<div class="span6">
 					<h3>
-						Dingdong Simon and the crew</br>
+						Dingdong Simon and the crew and the rest.</br>
 					</h3>
 					<ul>
 						<li>Some fancy charts here...</li>
