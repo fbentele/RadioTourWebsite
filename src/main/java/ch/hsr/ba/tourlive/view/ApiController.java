@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.PositionData;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.PositionDataService;
@@ -58,21 +57,22 @@ public class ApiController {
 		valueContainerService.save(request);
 	}
 
-	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.GET)
-	@ResponseBody
-	public ValueContainer value() {
-		ValueContainer v = new ValueContainer();
-		Device d = new Device();
-		d.setUsername("devdesc");
-		d.setDeviceId("devid");
-		PositionData pos = new PositionData();
-		pos.setAltitude(10);
-		pos.setLatitude(40);
-		pos.setAltitude(8);
-		v.setDevice(d);
-		v.setPositionData(pos);
-		return v;
-	}
+	// @RequestMapping(value = "/api/valuecontainer", method =
+	// RequestMethod.GET)
+	// @ResponseBody
+	// public ValueContainer value() {
+	// ValueContainer v = new ValueContainer();
+	// Device d = new Device();
+	// d.setUsername("devdesc");
+	// d.setDeviceId("devid");
+	// PositionData pos = new PositionData();
+	// pos.setAltitude(10);
+	// pos.setLatitude(40);
+	// pos.setAltitude(8);
+	// v.setDevice(d);
+	// v.setPositionData(pos);
+	// return v;
+	// }
 
 	@RequestMapping(value = "/api", method = RequestMethod.GET)
 	public String showdata(Locale locale, Model model) {

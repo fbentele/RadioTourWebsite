@@ -24,7 +24,7 @@ public class ValueContainer {
 	@Column(name = "VALUECONTAINER_ID")
 	private Long valueContainerId;
 
-	@Column
+	@Column(columnDefinition = "bigint(20)")
 	private Long timestamp;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
