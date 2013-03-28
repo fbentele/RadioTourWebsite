@@ -71,7 +71,7 @@ public class NetData {
 		return upstream;
 	}
 
-	public void setUpstream(int upsteam) {
+	public void setUpstream(int upstream) {
 		this.upstream = upstream;
 	}
 
