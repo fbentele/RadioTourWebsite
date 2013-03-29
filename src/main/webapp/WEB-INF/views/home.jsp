@@ -1,22 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <body>
-	<div class="hero-unit">
-		<h2>TourLive</h2>
-		<p>Made by Students</p>
-	</div>
-
 	<div class="row-fluid">
 		<div class="span12">
 			<hr class="soften">
-
 			<div class="row-fluid">
 				<div class="span6">
 					<h3>
-						Dingdong Simon and the crew and the rest.</br>
+						Dingdong Simon and the crew and the rest
 					</h3>
 					<ul>
 						<li>Some fancy charts here...</li>
@@ -29,7 +21,7 @@
 				</div>
 				<div class="span6">
 					<h3>
-						What else?</br>
+						What else?
 					</h3>
 					<p>somethins here Lorem ipsum dolor sit amet, consectetur
 						adipiscing elit. Sed gravida mollis placerat. Sed congue iaculis
@@ -43,20 +35,15 @@
 						ante, ac consequat est lacus eget enim. Proin lacinia justo et est
 						vehicula adipiscing rhoncus lacus mollis.</p>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span12">
 			<hr class="soften">
-
 			<div class="row-fluid">
 				<div class="span6">
-					<h3>
-						Blubb</br>
-					</h3>
+					<h3>Blubb</h3>
 					<ul>
 						<li>Some fancy charts here...</li>
 						<li>Lorem ipsum dolor sit amet</li>
@@ -64,13 +51,11 @@
 						<li>Sed congue iaculis</li>
 						<li>Pellentesque habitant morbi tristique senectus</li>
 						<li>Vestibulum ante ipsum primis</li>
-
-
-						<ul>
+					</ul>
 				</div>
 				<div class="span6">
 					<h3>
-						This as well</br>
+						This as well
 					</h3>
 					<p>somethins here Lorem ipsum dolor sit amet, consectetur
 						adipiscing elit. Sed gravida mollis placerat. Sed congue iaculis
@@ -84,9 +69,7 @@
 						ante, ac consequat est lacus eget enim. Proin lacinia justo et est
 						vehicula adipiscing rhoncus lacus mollis.</p>
 				</div>
-
 			</div>
-
 		</div>
 	</div>
 </body>

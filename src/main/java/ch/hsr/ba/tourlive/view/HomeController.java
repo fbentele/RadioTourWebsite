@@ -45,24 +45,21 @@ public class HomeController {
 				DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
+		model.addAttribute("navbarhome", "active");
 		return "home";
 	}
 
 	@RequestMapping(value = "/archive", method = RequestMethod.GET)
 	public String archive(Locale locale, Model model) {
 		logger.info("This is the archive Page");
+		model.addAttribute("navbararchive", "active");
 		return "archive";
 	}
 
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String about(Locale locale, Model model) {
 		logger.info("This is the about Page");
+		model.addAttribute("navbarabout", "active");
 		return "about";
-	}
-
-	@RequestMapping(value = "/tds/stage", method = RequestMethod.GET)
-	public String stage(Locale locale, Model model) {
-		model.addAttribute("stages", st.getAll());
-		return "stage";
 	}
 }

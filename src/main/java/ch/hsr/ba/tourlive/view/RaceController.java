@@ -38,6 +38,7 @@ public class RaceController {
 	@RequestMapping(value = "/race", method = RequestMethod.GET)
 	public String race(Locale locale, Model model) {
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("navbarrace", "active");
 		return "race";
 	}
 
@@ -45,6 +46,7 @@ public class RaceController {
 	public String stage(Locale locale, Model model) {
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("stages", stageService.getAll());
+		model.addAttribute("navbarrace", "active");
 		return "race";
 	}
 

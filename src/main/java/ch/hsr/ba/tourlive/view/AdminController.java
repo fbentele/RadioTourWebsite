@@ -34,6 +34,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("navbaradmin", "active");
 		return "admin";
 	}
 
@@ -42,19 +43,22 @@ public class AdminController {
 			SessionStatus status) {
 		raceService.save(race);
 		status.setComplete();
-		log.info("!!!!!!!" + race.getDescription());
 		return "addRace";
 	}
 
 	@RequestMapping(value = "admin/race", method = RequestMethod.GET)
 	public String addRace(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("navbaradmin", "active");
+
 		return "addRace";
 	}
 
 	@RequestMapping(value = "/admin/stage", method = RequestMethod.GET)
 	public String addStage(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("navbaradmin", "active");
+
 		return "addStage";
 	}
 
@@ -69,6 +73,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/rider", method = RequestMethod.GET)
 	public String addRider(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("navbaradmin", "active");
 		return "addRider";
 	}
 

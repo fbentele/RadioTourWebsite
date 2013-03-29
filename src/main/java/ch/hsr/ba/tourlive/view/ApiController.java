@@ -56,6 +56,7 @@ public class ApiController {
 	public String showdata(Locale locale, Model model) {
 		model.addAttribute("positions", positionDataService.getAll());
 		model.addAttribute("current", positionDataService.getAll().get(0));
+		model.addAttribute("navbarapi", "active");
 		return "api";
 	}
 
