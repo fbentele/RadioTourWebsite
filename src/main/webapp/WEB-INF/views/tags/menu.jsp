@@ -4,9 +4,9 @@
 	<div class="span2">
 		<div class="well sidebar-nav">
 			<ul class="nav nav-list">
-				<li class="nav-header">Add new</li>
+				<li class="nav-header">${menutitle}</li>
 				<c:forEach items="${menuitems}" var="item">
-					<li><a href="${item}" target="_self">${item}</a></li>
+					<li class=""><a href="${item.value}" target="_self">${item.key}</a></li>
 				</c:forEach>
 			</ul>
 		</div>

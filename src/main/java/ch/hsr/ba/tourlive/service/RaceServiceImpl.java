@@ -35,6 +35,11 @@ public class RaceServiceImpl implements RaceService {
 	}
 
 	@Transactional
+	public Race getRaceById(Long id) {
+		return racedao.getRaceById(id);
+	}
+
+	@Transactional
 	public Race getActualTds() {
 		return racedao.getActualTds();
 	}

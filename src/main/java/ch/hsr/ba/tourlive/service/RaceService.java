@@ -13,5 +13,7 @@ public interface RaceService {
 
 	public List<Race> getAll();
 
+	public Race getRaceById(Long id);
+
 	public Race getActualTds();
 }

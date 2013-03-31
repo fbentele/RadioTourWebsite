@@ -29,15 +29,20 @@ public class RaceDAOImpl implements RaceDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Race> getAll() {
 		return sessionFactory.getCurrentSession().createCriteria(Race.class)
 				.list();
 	}
 
 	public Race getActualTds() {
-		// TODO: return latest Tour de Suiss Race Object or null of none
+		// TODO: return latest Tour de Suiss Race Object or null if none
 		// available
 		return null;
+	}
+
+	public Race getRaceById(Long id) {
+		return (Race) sessionFactory.getCurrentSession().get(Race.class, id);
 	}
 
 }
