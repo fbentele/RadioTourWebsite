@@ -2,3 +2,7 @@
 	height: 600px;
 	width: 600px;
 }
+
+.newItem{
+	display:none;
+}

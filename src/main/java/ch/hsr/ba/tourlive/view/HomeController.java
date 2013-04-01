@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.hsr.ba.tourlive.service.PositionDataService;
+import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 
 /**
@@ -28,15 +29,16 @@ public class HomeController {
 	StageService st;
 	@Autowired
 	PositionDataService positionDataService;
+	@Autowired
+	RaceService raceService;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
-	/**
-	 * controller return the welcome page
-	 * 
-	 * @return the start page
+	/*
+	 * Default Controller for all Pages
 	 */
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale foking is {}.", locale);
@@ -46,6 +48,8 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("navbarhome", "active");
+		model.addAttribute("races", raceService.getAll());
+
 		return "home";
 	}
 
@@ -53,6 +57,8 @@ public class HomeController {
 	public String archive(Locale locale, Model model) {
 		logger.info("This is the archive Page");
 		model.addAttribute("navbararchive", "active");
+		model.addAttribute("races", raceService.getAll());
+
 		return "archive";
 	}
 
@@ -60,6 +66,8 @@ public class HomeController {
 	public String about(Locale locale, Model model) {
 		logger.info("This is the about Page");
 		model.addAttribute("navbarabout", "active");
+		model.addAttribute("races", raceService.getAll());
+
 		return "about";
 	}
 }

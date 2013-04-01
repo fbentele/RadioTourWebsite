@@ -24,11 +24,14 @@ public class TdsController {
 		model.addAttribute("menuitems",
 				stageService.getAllByRace(raceService.getActualTds()));
 		model.addAttribute("navbartds", "active");
+		model.addAttribute("races", raceService.getAll());
+
 		return "tds";
 	}
 
 	@RequestMapping(value = "/tds/stage", method = RequestMethod.GET)
 	public String stage(Locale locale, Model model) {
+		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("stages", stageService.getAll());
 		return "stage";
 	}

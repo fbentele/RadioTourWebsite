@@ -21,23 +21,27 @@
 					<td>${race.raceId}</td>
 					<td>${race.raceName}</td>
 					<td>${race.year}</td>
-					<td>${race.description}</td>
+					<td>${race.raceDescription}</td>
 					<td><a href="/admin/race/edit/${race.raceId}" target="_self">Bearbeiten</a></td>
 					<td><a href="/admin/race/delete/${race.raceId}" target="_self">Löschen</a></td>
 				</tr>
 			</c:forEach>
 		</table>
-		<h2>Neues Rennen hinzufügen</h2>
-		<form:form method="post" name="race" action="/admin/race/add">
-			<label for="raceName">Rennname</label>
-			<input type="text" name="raceName" />
-			<label for="description">Beschreibung</label>
-			<textarea name="description"></textarea>
-			<label for="year">Jahr</label>
-			<input type="number" name="year" />
-			<br>
-			<input type="submit" value="Hinzufügen" />
-		</form:form>
+		<button id="adder" type="submit" class="btn btn-primary">Neues Rennen</button>
+		<div class="newItem">
+			<p>
+				<form:form method="post" name="race" action="/admin/race/add">
+					<label for="raceName">Rennname</label>
+					<input type="text" name="raceName" />
+					<label for="raceDescription">Beschreibung</label>
+					<textarea name="raceDescription"></textarea>
+					<label for="year">Jahr</label>
+					<input type="number" name="year" />
+					<br>
+					<input type="submit" value="Hinzufügen" />
+				</form:form>
+			</p>
+		</div>
 	</div>
 </body>
 </html>

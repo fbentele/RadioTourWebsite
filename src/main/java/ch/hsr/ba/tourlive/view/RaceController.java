@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,15 @@ public class RaceController {
 		return "race";
 	}
 
+	@RequestMapping(value = "/race/{raceId}", method = RequestMethod.GET)
+	public String customRace(@PathVariable("raceId") Long raceId,
+			Locale locale, Model model) {
+		model.addAttribute("race", raceService.getRaceById(raceId));
+		model.addAttribute("navbarrace", "active");
+		model.addAttribute("races", raceService.getAll());
+		return "customrace";
+	}
+
 	@RequestMapping(value = "/race/stage/{int}", method = RequestMethod.GET)
 	public String stage(Locale locale, Model model) {
 		model.addAttribute("races", raceService.getAll());
@@ -44,5 +54,4 @@ public class RaceController {
 		model.addAttribute("navbarrace", "active");
 		return "race";
 	}
-
 }

@@ -14,5 +14,7 @@ public interface StageService {
 
 	public List<Stage> getAll();
 
+	public Stage getStageById(Long id);
+
 	public List<Stage> getAllByRace(Race race);
 }

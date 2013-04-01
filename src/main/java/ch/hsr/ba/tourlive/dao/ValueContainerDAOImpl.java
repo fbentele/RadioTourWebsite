@@ -39,5 +39,4 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				.createCriteria(ValueContainer.class, "ValueContainer")
 				.addOrder(Order.desc("ValueContainer.valueContainerId")).list();
 	}
-
 }

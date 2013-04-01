@@ -2,7 +2,9 @@ package ch.hsr.ba.tourlive.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,18 +38,25 @@ public class StageDAOImpl implements StageDAO {
 				.list();
 	}
 
+	public Stage getStageById(Long id) {
+		return (Stage) sessionFactory.getCurrentSession().get(Stage.class, id);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Stage> getAllByRace(Race race) {
-		if (race != null) {
-			return sessionFactory
-					.getCurrentSession()
-					.createQuery(
-							"select stage from Race as race where race.raceId=?")
-					.setLong(0, race.getRaceId()).list();
-		} else {
-			return null;
-		}
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+				Stage.class);
+		crit.add(Restrictions.eq("race", race));
+		return crit.list();
+
+		// if (race != null) {
+		// return sessionFactory.getCurrentSession()
+		// .createQuery("from Stage as stage where stage.raceId=?")
+		// .setLong(0, race.getRaceId()).list();
+		// } else {
+		// return null;
+		// }
 	}
 
 	public List<Stage> doit(Race race) {

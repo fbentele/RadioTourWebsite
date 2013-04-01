@@ -26,6 +26,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import ch.hsr.ba.tourlive.model.PositionData;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.PositionDataService;
+import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
 
 @Controller
@@ -36,6 +37,8 @@ public class ApiController {
 	PositionDataService positionDataService;
 	@Autowired
 	ValueContainerService valueContainerService;
+	@Autowired
+	RaceService raceService;
 
 	private static final Logger log = LoggerFactory
 			.getLogger(ApiController.class);
@@ -58,6 +61,8 @@ public class ApiController {
 		model.addAttribute("positions", positionDataService.getAll());
 		model.addAttribute("current", positionDataService.getAll().get(0));
 		model.addAttribute("navbarapi", "active");
+		model.addAttribute("races", raceService.getAll());
+
 		return "api";
 	}
 

@@ -2,11 +2,8 @@ package ch.hsr.ba.tourlive.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Scope;
@@ -26,14 +23,13 @@ public class Race {
 	private String raceName;
 
 	@Column
-	private String description;
+	private String shortname;
+
+	@Column
+	private String raceDescription;
 
 	@Column
 	private int year;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "STAGE_ID")
-	private Stage stage;
 
 	public Long getRaceId() {
 		return raceId;
@@ -51,12 +47,20 @@ public class Race {
 		this.raceName = raceName;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getShortname() {
+		return shortname;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setShortname(String shortname) {
+		this.shortname = shortname;
+	}
+
+	public String getRaceDescription() {
+		return raceDescription;
+	}
+
+	public void setRaceDescription(String raceDescription) {
+		this.raceDescription = raceDescription;
 	}
 
 	public int getYear() {
@@ -66,13 +70,4 @@ public class Race {
 	public void setYear(int year) {
 		this.year = year;
 	}
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
 }

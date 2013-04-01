@@ -3,6 +3,8 @@ package ch.hsr.ba.tourlive.view;
 import java.util.HashMap;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -27,20 +29,26 @@ public class AdminController {
 	@Autowired
 	RaceService raceService;
 
+	Logger log = LoggerFactory.getLogger(AdminController.class);
+
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAll());
+
 		return "admin/admin";
 	}
 
-	@RequestMapping(value = "admin/race", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/race", method = RequestMethod.GET)
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAll());
+
 		return "admin/manageRace";
 	}
 
-	@RequestMapping(value = "admin/race/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/race/add", method = RequestMethod.POST)
 	public String newRace(@ModelAttribute("race") Race race,
 			SessionStatus status, Model model) {
 		raceService.save(race);
@@ -48,14 +56,18 @@ public class AdminController {
 		return "redirect:/admin/race";
 	}
 
-	@RequestMapping(value = "admin/race/edit/{raceId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
 	public String editRace(@PathVariable("raceId") Long raceId, Model model) {
 		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("race", raceService.getRaceById(raceId));
+		Race race = raceService.getRaceById(raceId);
+		model.addAttribute("race", race);
+		model.addAttribute("stages", stageService.getAllByRace(race));
+		model.addAttribute("races", raceService.getAll());
+
 		return "admin/editRace";
 	}
 
-	@RequestMapping(value = "admin/race/edit/{raceId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.POST)
 	public String editedRace(@PathVariable("raceId") Long raceId,
 			@ModelAttribute("race") Race race, Model model) {
 		model.addAttribute("menuitems", makeMenu());
@@ -64,38 +76,62 @@ public class AdminController {
 		return "redirect:/admin/race";
 	}
 
-	@RequestMapping(value = "admin/race/delete/{raceId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/race/delete/{raceId}", method = RequestMethod.GET)
 	public String removeRace(@PathVariable("raceId") Long raceId, Model model) {
 		raceService.delete(raceId);
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAll());
+
 		return "forward:/admin/race";
 	}
 
 	@RequestMapping(value = "/admin/stage", method = RequestMethod.GET)
 	public String manageStage(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAll());
+
 		return "forward:/admin/stage";
 	}
 
-	@RequestMapping(value = "admin/race/{raceId}/stage/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
 	public String newStage(@ModelAttribute("stage") Stage stage,
-			SessionStatus status) {
+			@PathVariable("raceId") Long raceId, SessionStatus status) {
+		stage.setRace(raceService.getRaceById(raceId));
 		stageService.save(stage);
 		status.setComplete();
-		return "forward:/admin/race";
+		return "redirect:/admin/race/edit/" + raceId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.GET)
+	public String editStage(@PathVariable("stageId") Long stageId, Model model) {
+		model.addAttribute("stage", stageService.getStageById(stageId));
+		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAll());
+
+		return "admin/editStage";
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/delete/{stageId}", method = RequestMethod.GET)
+	public String deleteStage(@PathVariable("stageId") Long stageId,
+			@PathVariable("raceId") Long raceId) {
+		stageService.delete(stageId);
+
+		return "redirect:/admin/race/edit/" + raceId;
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/rider", method = RequestMethod.GET)
-	public String addRider(Locale locale, Model model) {
+	public String addRider(@PathVariable("raceId") Long raceId, Locale locale,
+			Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAll());
+
 		return "admin/manageRider";
 	}
 
 	private HashMap<String, String> makeMenu() {
 		HashMap<String, String> dings = new HashMap<String, String>();
 		dings.put("Rennen", "/admin/race");
-		dings.put("Etappen", "/admin/stage");
-		dings.put("Fahrer", "/admin/rider");
+		dings.put("Geräte", "/admin/device");
 		return dings;
 	}
 }
