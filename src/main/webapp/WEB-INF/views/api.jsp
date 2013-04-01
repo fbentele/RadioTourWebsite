@@ -15,7 +15,7 @@
 	<c:if test="${not empty valueContainer}">
 		<table class="table">
 			<tr>
-				<th>ID</th>
+				<th>vcID / pID</th>
 				<th>Zeit</th>
 				<th>latitude</th>
 				<th>longitude</th>
@@ -25,7 +25,7 @@
 				<jsp:setProperty name="dateValue" property="time"
 					value="${item.timestamp}" />
 				<tr>
-					<td>${item.positionData.positionid}</td>
+					<td>${item.valueContainerId} / ${item.positionData.positionid}</td>
 					<td>${item.timestamp} / <fmt:formatDate
 							pattern="dd.MM.yyy - HH:mm:ss" value="${dateValue}" />
 					</td>

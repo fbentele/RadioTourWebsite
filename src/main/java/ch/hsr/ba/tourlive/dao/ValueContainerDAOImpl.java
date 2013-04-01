@@ -3,6 +3,7 @@ package ch.hsr.ba.tourlive.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +36,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	@Override
 	public List<ValueContainer> getAll() {
 		return sessionFactory.getCurrentSession()
-				.createCriteria(ValueContainer.class).list();
+				.createCriteria(ValueContainer.class, "ValueContainer")
+				.addOrder(Order.desc("ValueContainer.valueContainerId")).list();
 	}
 
 }
