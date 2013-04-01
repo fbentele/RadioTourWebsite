@@ -27,7 +27,6 @@
 				</tr>
 			</c:forEach>
 		</table>
-
 		<h2>Neues Rennen hinzufügen</h2>
 		<form:form method="post" name="race" action="/admin/race/add">
 			<label for="raceName">Rennname</label>

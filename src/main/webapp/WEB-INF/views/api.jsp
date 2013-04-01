@@ -1,6 +1,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <html>
 <head>
 <title>All Stages</title>
@@ -9,26 +11,30 @@
 	<h2>Karte der Positionen</h2>
 
 	<div id="map-canvas"></div>
-	<c:if test="${not empty positions}">
+
+	<c:if test="${not empty valueContainer}">
 		<table class="table">
 			<tr>
 				<th>ID</th>
+				<th>Zeit</th>
 				<th>latitude</th>
 				<th>longitude</th>
 			</tr>
-			<c:forEach items="${positions}" var="item">
+			<c:forEach items="${valueContainer}" var="item">
+				<jsp:useBean id="dateValue" class="java.util.Date" />
+				<jsp:setProperty name="dateValue" property="time"
+					value="${item.timestamp}" />
 				<tr>
-					<td>${item.positionid}</td>
-					<td>${item.latitude}</td>
-					<td>${item.longitude}</td>
+					<td>${item.positionData.positionid}</td>
+					<td>${item.timestamp} / <fmt:formatDate
+							pattern="dd.MM.yyy - HH:mm:ss" value="${dateValue}" />
+					</td>
+					<td>${item.positionData.latitude}</td>
+					<td>${item.positionData.longitude}</td>
 				</tr>
 			</c:forEach>
-
 		</table>
-
 	</c:if>
-
-
 
 	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=false">
