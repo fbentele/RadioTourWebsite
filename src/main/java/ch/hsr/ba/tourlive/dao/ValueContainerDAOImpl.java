@@ -59,6 +59,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				stage.getStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
 		log.error("______________________" + crit.list().size());
 
-		return (List<ValueContainer>) crit.list();
+		return (List<ValueContainer>) crit.addOrder(
+				Order.desc("ValueContainer.timestamp")).list();
 	}
 }
