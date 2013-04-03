@@ -30,6 +30,12 @@ public class DeviceDAOImpl implements DeviceDAO {
 		}
 	}
 
+	public Device getDeviceById(String deviceId) {
+		return (Device) sessionFactory.getCurrentSession().get(Device.class,
+				deviceId);
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<Device> getAll() {
 		return sessionFactory.getCurrentSession().createCriteria(Device.class)
 				.list();

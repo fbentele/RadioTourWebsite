@@ -7,33 +7,75 @@
 <body>
 	<div class="span10">
 		<h2>Etappe bearbeiten:</h2>
-		<form:form method="post" name="stage"
-			action="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">
-			<input type="hidden" name="stageId" value="${stage.stageId}" />
+		<div class="row-fluid">
+			<form:form method="post" name="stage"
+				action="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">
+				<div class="span4">
+					<input type="hidden" name="stageId" value="${stage.stageId}" /> <label for="stageName">Etappenname</label>
+					<input type="text" name="stageName" value="${stage.stageName}" />
+					
+					<div class="input-append">
+						<label for="starttime">Startzeit</label> <input type="datetime" name="starttime"
+							value="${stage.starttime}"><span class="add-on">z.B. 09:45</span>
+					</div>
+					
+					<div class="input-append">
+						<label for="endtime">Rennende</label> <input type="datetime" name="endtime"
+							value="${stage.endtime}"><span class="add-on">z.B. 17:15</span>
+					</div>
+					<div class="input-append">
+						<label for="distance">Distanz</label> <input type="number" name="distance"
+							value="${stage.distance}"><span class="add-on">km</span>
+					</div>
+					<br>
+					<button type="submit" class="btn btn-primary">Speichern</button>
+				</div>
+				<div class="span4">
+					<label for="stageDescription">Beschreibung</label>
+					<textarea name="stageDescription" rows="6" class="span12">${stage.stageDescription}</textarea>
+				</div>
+			</form:form>
+		</div>
 
-			<label for="stageName">Etappenname</label>
-			<input type="text" name="stageName" value="${stage.stageName}" />
-
-			<label for="stageDescription">Beschreibung</label>
-			<textarea name="stageDescription">${stage.stageDescription}</textarea>
-
-			<label for="starttime">Startzeit</label>
-			<input type="datetime" name="starttime" value="${stage.starttime}">
-			<label for="endtime">Rennende</label>
-			<input type="datetime" name="Endtime" value="${stage.endtime}">
-
-			<label for="distance">Distanz</label>
-			<div class="input-append">
-				<input type="number" name="distance" value="${stage.distance}"><span
-					class="add-on">km</span>
+		<div class="row-fluid">
+			<c:choose>
+				<c:when test="${not empty stage.devices}">
+					<h3>Zugeordnete Geräte</h3>
+					<ul>
+						<c:forEach items="${stage.devices}" var="device">
+							<li>${device.username} (Geräte ID: ${device.deviceId})</li>
+						</c:forEach>
+					</ul>
+				</c:when>
+				<c:otherwise>
+					<h4>Dieser Etappe sind keine Geräte zugeordnet, bitte neue Geräte zuordnen.</h4>
+				</c:otherwise>
+			</c:choose>
+			<button id="adder" type="submit" class="btn btn-primary">Neues Gerät zuordnen</button>
+			<div class="newItem row-fluid">
+				<c:choose>
+					<c:when test="${not empty devices}">
+						<form:form method="post" name="device"
+							action="/admin/race/${race.raceId}/stage/${stage.stageId}/device/add">
+							<div class="control-group">
+								<div class="controls">
+									<c:forEach items="${devices}" var="device">
+										<label class="checkbox"> <input type="checkbox" name="device"
+											value="${device.deviceId}"> ${device.username} (Geräte ID:
+											${device.deviceId })
+										</label>
+									</c:forEach>
+									<button type="submit" class="btn">Speicher</button>
+								</div>
+							</div>
+						</form:form>
+					</c:when>
+					<c:otherwise>
+						<h4>Es sind keine Geräte bekannt</h4>
+					</c:otherwise>
+				</c:choose>
 			</div>
-			<br>
-			<button type="submit" class="btn btn-primary">Speichern</button>
-		</form:form>
-		<h3>Zugeordnete Geräte</h3>
-		<c:forEach items="${stage.devices}" var="device">
-			${device.username} <br/>
-		</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

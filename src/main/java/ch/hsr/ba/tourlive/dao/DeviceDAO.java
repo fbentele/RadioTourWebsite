@@ -12,4 +12,6 @@ public interface DeviceDAO {
 	public void delete(Long id);
 
 	public List<Device> getAll();
+
+	public Device getDeviceById(String deviceId);
 }

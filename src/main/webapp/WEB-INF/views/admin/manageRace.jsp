@@ -27,20 +27,23 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<button id="adder" type="submit" class="btn btn-primary">Neues Rennen</button>
+		<p><button id="adder" type="submit" class="btn btn-primary">Neues Rennen</button></p>
 		<div class="newItem">
-			<p>
-				<form:form method="post" name="race" action="/admin/race/add">
-					<label for="raceName">Rennname</label>
-					<input type="text" name="raceName" />
+
+			<form:form method="post" name="race" action="/admin/race/add">
+				<div class="span3">
+					<label for="raceName">Rennname</label> <input type="text" name="raceName" tabindex="1"/> <label
+						for="year">Jahr</label> <input type="number" name="year" tabindex="2"/> <input type="submit"
+						value="Hinzufügen" tabindex="4" />
+
+				</div>
+				<div class="span4">
 					<label for="raceDescription">Beschreibung</label>
-					<textarea name="raceDescription"></textarea>
-					<label for="year">Jahr</label>
-					<input type="number" name="year" />
-					<br>
-					<input type="submit" value="Hinzufügen" />
-				</form:form>
-			</p>
+					<textarea name="raceDescription" cols="50" rows="5" tabindex="3"></textarea>
+				</div>
+				<br>
+			</form:form>
+
 		</div>
 	</div>
 </body>

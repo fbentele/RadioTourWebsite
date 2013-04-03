@@ -2,5 +2,5 @@
 <jsp:useBean id="random" class="ch.hsr.ba.tourlive.utils.Randomizer" scope="application" />
 
 	<div class="hero-unit" style="background-image:url(/resources/img/banner${random.nextNumber % 3}.png)">
-		<h2>  .</h2>
+		<h2> <span style="opacity:0.1">Tourlive</span></h2>
 	</div>

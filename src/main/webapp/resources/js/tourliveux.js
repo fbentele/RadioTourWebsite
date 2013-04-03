@@ -4,6 +4,6 @@ $(document).ready(function() {
 	});
 	
 	$("#adder").click(function(){
-		$(".newItem").toggle('slow');
+		$(".newItem").slideToggle('fast');
 	});
 });

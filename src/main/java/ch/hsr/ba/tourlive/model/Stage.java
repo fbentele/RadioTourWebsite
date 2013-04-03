@@ -1,5 +1,8 @@
 package ch.hsr.ba.tourlive.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -72,20 +75,50 @@ public class Stage {
 		this.stageName = stageName;
 	}
 
-	public Long getStarttime() {
-		return starttime;
+	public String getStarttime() {
+		SimpleDateFormat date = new SimpleDateFormat("HH:mm");
+		try {
+			Date d = new Date(this.starttime);
+			return date.format(d);
+		} catch (NullPointerException e) {
+			return "00:00";
+		}
 	}
 
 	public void setStarttime(Long starttime) {
 		this.starttime = starttime;
 	}
 
-	public Long getEndtime() {
-		return endtime;
+	public void setStarttime(String unformatted) {
+		try {
+			Date date = new SimpleDateFormat("HH:mm").parse(unformatted);
+			this.starttime = date.getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getEndtime() {
+		SimpleDateFormat date = new SimpleDateFormat("HH:mm");
+		try {
+			Date d = new Date(this.endtime);
+			return date.format(d).toString();
+		} catch (NullPointerException e) {
+			return "00:00";
+		}
 	}
 
 	public void setEndtime(Long endtime) {
 		this.endtime = endtime;
+	}
+
+	public void setEndtime(String unformatted) {
+		try {
+			Date date = new SimpleDateFormat("HH:mm").parse(unformatted);
+			this.endtime = date.getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<Device> getDevices() {
@@ -110,6 +143,10 @@ public class Stage {
 
 	public void setRace(Race race) {
 		this.race = race;
+	}
+
+	public void addDevice(Device device) {
+		this.devices.add(device);
 	}
 
 }

@@ -1,6 +1,6 @@
 package ch.hsr.ba.tourlive.view;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
+import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
 public class AdminController {
@@ -28,6 +31,8 @@ public class AdminController {
 	StageService stageService;
 	@Autowired
 	RaceService raceService;
+	@Autowired
+	DeviceService deviceService;
 
 	Logger log = LoggerFactory.getLogger(AdminController.class);
 
@@ -94,29 +99,57 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
-	public String newStage(@ModelAttribute("stage") Stage stage,
+	public String addStage(@ModelAttribute("stage") Stage stage,
+			@RequestParam("starttime") String starttime,
+			@RequestParam("endtime") String endtime,
 			@PathVariable("raceId") Long raceId, SessionStatus status) {
 		stage.setRace(raceService.getRaceById(raceId));
+		stage.setStarttime(starttime);
+		stage.setEndtime(endtime);
 		stageService.save(stage);
 		status.setComplete();
 		return "redirect:/admin/race/edit/" + raceId;
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.GET)
-	public String editStage(@PathVariable("stageId") Long stageId, Model model) {
+	public String editStage(@PathVariable("stageId") Long stageId,
+			@PathVariable("raceId") Long raceId, Model model) {
 		model.addAttribute("stage", stageService.getStageById(stageId));
+		model.addAttribute("race", raceService.getRaceById(raceId));
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
-
+		model.addAttribute("devices", deviceService.getAll());
 		return "admin/editStage";
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.POST)
+	public String updateStage(@ModelAttribute("stage") Stage stage,
+			@RequestParam("starttime") String starttime,
+			@RequestParam("endtime") String endtime,
+			@PathVariable("raceId") Long raceId, Model model) {
+
+		stage.setRace(raceService.getRaceById(raceId));
+		stage.setEndtime(endtime);
+		stage.setStarttime(starttime);
+		stageService.update(stage);
+		return "redirect:/admin/race/edit/" + raceId;
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/delete/{stageId}", method = RequestMethod.GET)
 	public String deleteStage(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId) {
 		stageService.delete(stageId);
-
 		return "redirect:/admin/race/edit/" + raceId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/add", method = RequestMethod.POST)
+	public String editDevice(@PathVariable("stageId") Long stageId,
+			@PathVariable("raceId") Long raceId,
+			@ModelAttribute("device") String deviceId) {
+		Stage stage = stageService.getStageById(stageId);
+		stage.addDevice(deviceService.getDeviceById(deviceId));
+		stageService.update(stage);
+		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/rider", method = RequestMethod.GET)
@@ -124,14 +157,13 @@ public class AdminController {
 			Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
-
 		return "admin/manageRider";
 	}
 
-	private HashMap<String, String> makeMenu() {
-		HashMap<String, String> dings = new HashMap<String, String>();
-		dings.put("Rennen", "/admin/race");
-		dings.put("Geräte", "/admin/device");
-		return dings;
+	private ArrayList<MenuItem> makeMenu() {
+		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
+		menu.add(new MenuItem("Rennen", "/admin/race"));
+		menu.add(new MenuItem("Geräte", "/admin/device"));
+		return menu;
 	}
 }

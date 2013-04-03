@@ -6,7 +6,7 @@
 			<ul class="nav nav-list">
 				<li class="nav-header">${menutitle}</li>
 				<c:forEach items="${menuitems}" var="item">
-					<li class=""><a href="${item.value}" target="_self">${item.key}</a></li>
+					<li class=""><a href="${item.urlpath}" target="_self">${item.menutitle}</a></li>
 				</c:forEach>
 			</ul>
 		</div>

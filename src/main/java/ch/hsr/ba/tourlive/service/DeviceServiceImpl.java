@@ -30,6 +30,11 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Transactional
+	public Device getDeviceById(String deviceId) {
+		return device.getDeviceById(deviceId);
+	}
+
+	@Transactional
 	public List<Device> getAll() {
 		return device.getAll();
 	}
