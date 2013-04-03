@@ -54,12 +54,9 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		for (Device device : stage.getDevices()) {
 			crit.add(Restrictions.eq("device", device));
 		}
-		log.error("______________________" + crit.list().size());
 		crit.add(Restrictions.between("timestamp",
 				stage.getStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
-		log.error("______________________" + crit.list().size());
-
-		return (List<ValueContainer>) crit.addOrder(
-				Order.desc("ValueContainer.timestamp")).list();
+		crit.addOrder(Order.desc("timestamp"));
+		return crit.list();
 	}
 }
