@@ -27,7 +27,7 @@
 								data-toggle="dropdown">Rennen <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<c:forEach items="${races}" var="race">
-										<li><a href="/race/${race.raceId}">${race.raceName}</a></li>
+										<li><a href="/race/${race.raceSlug}">${race.raceName}</a></li>
 									</c:forEach>
 								</ul></li>
 						</c:if>

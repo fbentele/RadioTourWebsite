@@ -43,24 +43,17 @@ public class StageDAOImpl implements StageDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Stage> getAllByRace(Race race) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 				Stage.class);
 		crit.add(Restrictions.eq("race", race));
 		return crit.list();
-
-		// if (race != null) {
-		// return sessionFactory.getCurrentSession()
-		// .createQuery("from Stage as stage where stage.raceId=?")
-		// .setLong(0, race.getRaceId()).list();
-		// } else {
-		// return null;
-		// }
 	}
 
-	public List<Stage> doit(Race race) {
-
-		return null;
+	public Stage getStageBySlug(String slug) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+				Stage.class);
+		return (Stage) crit.add(Restrictions.eq("stageSlug", slug)).list()
+				.get(0);
 	}
 }

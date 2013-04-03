@@ -44,4 +44,9 @@ public class StageServiceImpl implements StageService {
 	public List<Stage> getAllByRace(Race race) {
 		return stagedao.getAllByRace(race);
 	}
+
+	@Transactional
+	public Stage getStageBySlug(String slug) {
+		return stagedao.getStageBySlug(slug);
+	}
 }

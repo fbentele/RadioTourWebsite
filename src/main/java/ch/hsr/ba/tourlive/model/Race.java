@@ -22,8 +22,11 @@ public class Race {
 	@Column
 	private String raceName;
 
-	@Column
-	private String shortname;
+	/*
+	 * A slug is a pathpart in an url
+	 */
+	@Column(unique = true)
+	private String raceSlug;
 
 	@Column
 	private String raceDescription;
@@ -47,12 +50,12 @@ public class Race {
 		this.raceName = raceName;
 	}
 
-	public String getShortname() {
-		return shortname;
+	public String getRaceSlug() {
+		return raceSlug;
 	}
 
-	public void setShortname(String shortname) {
-		this.shortname = shortname;
+	public void setRaceSlug(String raceSlug) {
+		this.raceSlug = raceSlug;
 	}
 
 	public String getRaceDescription() {

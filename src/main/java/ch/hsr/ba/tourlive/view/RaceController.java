@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
+import ch.hsr.ba.tourlive.service.ValueContainerService;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
@@ -26,6 +28,8 @@ public class RaceController {
 	StageService stageService;
 	@Autowired
 	RaceService raceService;
+	@Autowired
+	ValueContainerService valueContainerService;
 
 	@RequestMapping(value = "/race", method = RequestMethod.GET)
 	public String race(Locale locale, Model model) {
@@ -34,29 +38,41 @@ public class RaceController {
 		return "race";
 	}
 
-	@RequestMapping(value = "/race/{raceId}", method = RequestMethod.GET)
-	public String customRace(@PathVariable("raceId") Long raceId,
+	@RequestMapping(value = "/race/{raceSlug}", method = RequestMethod.GET)
+	public String customRace(@PathVariable("raceSlug") String raceSlug,
 			Locale locale, Model model) {
-		Race actualRace = raceService.getRaceById(raceId);
+		Race actualRace = raceService.getRaceBySlug(raceSlug);
 		model.addAttribute("race", actualRace);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("menuitems", makeMenu(actualRace));
+		model.addAttribute("menuitems",
+				makeMenu(stageService.getAllByRace(actualRace)));
 		return "actualrace";
 	}
 
-	@RequestMapping(value = "/race/stage/{int}", method = RequestMethod.GET)
-	public String stage(Locale locale, Model model) {
+	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}", method = RequestMethod.GET)
+	public String stage(@PathVariable("stageSlug") String stageSlug,
+			@PathVariable("raceSlug") String raceSlug, Model model) {
+		Stage stage = stageService.getStageBySlug(stageSlug);
+		List<ValueContainer> valueContainers = valueContainerService
+				.getAllValueContainerForStage(stage);
+
 		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("stages", stageService.getAll());
+		model.addAttribute("menuitems", makeMenu(stageService
+				.getAllByRace(raceService.getRaceBySlug(raceSlug))));
+		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
-		return "race";
+		model.addAttribute("valuecontainers", valueContainers);
+		model.addAttribute("current", valueContainers.get(0));
+		return "actualstage";
 	}
 
-	private List<MenuItem> makeMenu(Race race) {
+	private List<MenuItem> makeMenu(List<Stage> stages) {
 		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
-		for (Stage stage : stageService.getAllByRace(race)) {
-			menu.add(new MenuItem(stage.getStageName(), "#"));
+		for (Stage stage : stages) {
+			menu.add(new MenuItem(stage.getStageName(), "/race/"
+					+ stage.getRace().getRaceSlug() + "/stage/"
+					+ stage.getStageSlug()));
 		}
 		return menu;
 	}

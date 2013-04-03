@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.hsr.ba.tourlive.dao.ValueContainerDAO;
+import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 
 @Service
@@ -34,4 +35,8 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 		return valueDao.getAll();
 	}
 
+	@Transactional
+	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
+		return valueDao.getAllValueContainerForStage(stage);
+	}
 }

@@ -1,6 +1,6 @@
 package ch.hsr.ba.tourlive.view;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.hsr.ba.tourlive.service.DeviceService;
+import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
 public class AdminDeviceController {
@@ -23,10 +24,10 @@ public class AdminDeviceController {
 		return "admin/manageDevice";
 	}
 
-	private HashMap<String, String> makeMenu() {
-		HashMap<String, String> dings = new HashMap<String, String>();
-		dings.put("Rennen", "/admin/race");
-		dings.put("Geräte", "/admin/device");
-		return dings;
+	private ArrayList<MenuItem> makeMenu() {
+		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
+		menu.add(new MenuItem("Rennen", "/admin/race"));
+		menu.add(new MenuItem("Geräte", "/admin/device"));
+		return menu;
 	}
 }

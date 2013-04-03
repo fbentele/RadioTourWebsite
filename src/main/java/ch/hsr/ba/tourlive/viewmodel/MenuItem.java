@@ -24,5 +24,4 @@ public class MenuItem {
 	public void setUrlpath(String urlpath) {
 		this.urlpath = urlpath;
 	}
-
 }

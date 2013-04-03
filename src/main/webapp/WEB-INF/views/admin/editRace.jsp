@@ -12,7 +12,8 @@
 				<form:form method="post" name="race" action="/admin/race/edit/${race.raceId}">
 					<div class="span3">
 						<input type="hidden" name="raceId" value="${race.raceId}" /> <label for="raceName">Rennname</label>
-						<input type="text" name="raceName" value="${race.raceName}" tabindex="1" /> <label
+						<input type="text" name="raceName" class="toRaceSlug" value="${race.raceName}" tabindex="1" /><label for="raceSlug">Kurzname</label>
+						<input type="text" name="raceSlug" class="theRaceSlug" value="${race.raceSlug}" tabindex="1" />  <label
 							for="year">Jahr</label> <input type="number" name="year" value="${race.year}"
 							tabindex="2" /> <br>
 						<button type="submit" class="btn btn-primary">Speichern</button>
@@ -61,12 +62,13 @@
 		<div class="newItem row-fluid">
 			<form:form method="post" name="stage" action="/admin/race/${race.raceId}/stage/add">
 				<div class="span3">
-					<label for="stageName">Etappenname</label> <input type="text" name="stageName"
-						tabindex="4"> <label for="starttime">Startzeit</label> <input type="datetime"
-						name="starttime" tabindex="5" /> <label for="endtime">Startzeit</label> <input
-						type="datetime" name="endtime" tabindex="6" /> <label for="distance">Distanz</label>
+					<label for="stageName">Etappenname</label> <input type="text" name="stageName" class="toSlug"
+						tabindex="4"> <label for="stageSlug">Etappenkurzname</label> <input type="text" name="stageSlug" class="theSlug"
+						tabindex="5"><label for="starttime">Startzeit</label> <input type="datetime"
+						name="starttime" tabindex="6" /> <label for="endtime">Startzeit</label> <input
+						type="datetime" name="endtime" tabindex="7" /> <label for="distance">Distanz</label>
 					<div class="input-append">
-						<input type="number" name="distance" tabindex="7"> <span class="add-on">km</span>
+						<input type="number" name="distance" tabindex="8"> <span class="add-on">km</span>
 					</div>
 					<br />
 					<button type="submit" class="btn btn-primary" tabindex="10">Speichern</button>

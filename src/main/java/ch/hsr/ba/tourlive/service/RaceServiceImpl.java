@@ -43,4 +43,9 @@ public class RaceServiceImpl implements RaceService {
 	public Race getActualTds() {
 		return racedao.getActualTds();
 	}
+
+	@Transactional
+	public Race getRaceBySlug(String slug) {
+		return racedao.getRaceBySlug(slug);
+	}
 }

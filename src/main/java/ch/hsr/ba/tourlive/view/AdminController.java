@@ -40,7 +40,6 @@ public class AdminController {
 	public String admin(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
-
 		return "admin/admin";
 	}
 

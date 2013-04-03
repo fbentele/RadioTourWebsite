@@ -32,7 +32,8 @@
 
 			<form:form method="post" name="race" action="/admin/race/add">
 				<div class="span3">
-					<label for="raceName">Rennname</label> <input type="text" name="raceName" tabindex="1"/> <label
+					<label for="raceName">Rennname</label> <input class="toRaceSlug" type="text" name="raceName" tabindex="1"/><label for="raceSlug">Kurzname für URL (Slug)</label>
+						<input type="text" name="raceSlug" class="theRaceSlug" tabindex="1" />  <label
 						for="year">Jahr</label> <input type="number" name="year" tabindex="2"/> <input type="submit"
 						value="Hinzufügen" tabindex="4" />
 

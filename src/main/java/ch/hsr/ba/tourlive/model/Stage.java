@@ -31,6 +31,12 @@ public class Stage {
 	@Column(name = "STAGE_NAME")
 	private String stageName;
 
+	/*
+	 * A slug is a pathpart in an url
+	 */
+	@Column(unique = true)
+	private String stageSlug;
+
 	@Column
 	private String stageDescription;
 
@@ -75,14 +81,30 @@ public class Stage {
 		this.stageName = stageName;
 	}
 
+	public String getStageSlug() {
+		return stageSlug;
+	}
+
+	public void setStageSlug(String stageSlug) {
+		this.stageSlug = stageSlug;
+	}
+
 	public String getStarttime() {
-		SimpleDateFormat date = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
 		try {
 			Date d = new Date(this.starttime);
 			return date.format(d);
 		} catch (NullPointerException e) {
-			return "00:00";
+			return "01.01.1970 - 00:00";
 		}
+	}
+
+	public Long getStarttimeAsTimestamp() {
+		return this.starttime;
+	}
+
+	public Long getEndtimeAsTimestamp() {
+		return this.endtime;
 	}
 
 	public void setStarttime(Long starttime) {
@@ -91,7 +113,8 @@ public class Stage {
 
 	public void setStarttime(String unformatted) {
 		try {
-			Date date = new SimpleDateFormat("HH:mm").parse(unformatted);
+			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm")
+					.parse(unformatted);
 			this.starttime = date.getTime();
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -99,12 +122,12 @@ public class Stage {
 	}
 
 	public String getEndtime() {
-		SimpleDateFormat date = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
 		try {
 			Date d = new Date(this.endtime);
-			return date.format(d).toString();
+			return date.format(d);
 		} catch (NullPointerException e) {
-			return "00:00";
+			return "01.01.1970 - 00:00";
 		}
 	}
 
@@ -114,7 +137,8 @@ public class Stage {
 
 	public void setEndtime(String unformatted) {
 		try {
-			Date date = new SimpleDateFormat("HH:mm").parse(unformatted);
+			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm")
+					.parse(unformatted);
 			this.endtime = date.getTime();
 		} catch (ParseException e) {
 			e.printStackTrace();

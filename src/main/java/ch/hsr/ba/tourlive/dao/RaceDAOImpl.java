@@ -2,7 +2,9 @@ package ch.hsr.ba.tourlive.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -45,4 +47,9 @@ public class RaceDAOImpl implements RaceDAO {
 		return (Race) sessionFactory.getCurrentSession().get(Race.class, id);
 	}
 
+	public Race getRaceBySlug(String slug) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+				Race.class);
+		return (Race) crit.add(Restrictions.eq("raceSlug", slug)).list().get(0);
+	}
 }
