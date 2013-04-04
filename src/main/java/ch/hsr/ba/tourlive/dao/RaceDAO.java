@@ -18,5 +18,4 @@ public interface RaceDAO {
 	public Race getActualTds();
 
 	public Race getRaceBySlug(String slug);
-
 }

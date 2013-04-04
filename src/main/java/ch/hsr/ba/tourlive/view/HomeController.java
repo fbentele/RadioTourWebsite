@@ -48,7 +48,6 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("navbarhome", "active");
 		model.addAttribute("races", raceService.getAll());
-
 		return "home";
 	}
 

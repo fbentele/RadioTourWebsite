@@ -4,7 +4,6 @@
 <html lang="en">
 
 <body>
-
 	<div class="span10">Lorem ipsum dolor sit amet, consectetur
 		adipiscing elit. Sed gravida mollis placerat. Sed congue iaculis massa
 		vitae dapibus. Fusce sed felis lorem. Suspendisse purus diam,

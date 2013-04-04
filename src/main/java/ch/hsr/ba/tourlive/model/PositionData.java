@@ -41,7 +41,7 @@ public class PositionData {
 	private String satellites;
 
 	@Column
-	private Integer gpsSendInterval;
+	private Integer transferInterval;
 
 	public Long getPositionid() {
 		return positionid;
@@ -107,12 +107,12 @@ public class PositionData {
 		this.satellites = satellites;
 	}
 
-	public Integer getGpsSendInterval() {
-		return gpsSendInterval;
+	public Integer getTransferInterval() {
+		return transferInterval;
 	}
 
-	public void setGpsSendInterval(Integer gpsSendInterval) {
-		this.gpsSendInterval = gpsSendInterval;
+	public void setTransferInterval(Integer transferInterval) {
+		this.transferInterval = transferInterval;
 	}
 
 }

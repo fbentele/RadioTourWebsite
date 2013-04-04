@@ -12,14 +12,14 @@
 				action="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">
 				<div class="span4">
 					<input type="hidden" name="stageId" value="${stage.stageId}" /> <label for="stageName">Etappenname</label>
-					<input type="text" name="stageName" class="toSlug" value="${stage.stageName}" />
-					<label for="stageSlug">Etappen Kurzname (slug)</label>
-					<input type="text" name="stageSlug" class="theSlug" value="${stage.stageSlug}" />
+					<input type="text" name="stageName" class="toSlug" value="${stage.stageName}" /> <label
+						for="stageSlug">Etappen Kurzname (slug)</label> <input type="text" name="stageSlug"
+						class="theSlug" value="${stage.stageSlug}" />
 					<div class="input-append">
 						<label for="starttime">Startzeit</label> <input type="datetime" name="starttime"
 							value="${stage.starttime}"><span class="add-on">z.B.01.01.2013 - 09:45</span>
 					</div>
-					
+
 					<div class="input-append">
 						<label for="endtime">Rennende</label> <input type="datetime" name="endtime"
 							value="${stage.endtime}"><span class="add-on">z.B. 01.01.2013 - 17:15</span>
@@ -52,6 +52,8 @@
 					<h4>Dieser Etappe sind keine Geräte zugeordnet, bitte neue Geräte zuordnen.</h4>
 				</c:otherwise>
 			</c:choose>
+		</div>
+		<div class="row-fluid">
 			<button id="adder" type="submit" class="btn btn-primary">Neues Gerät zuordnen</button>
 			<div class="newItem row-fluid">
 				<c:choose>

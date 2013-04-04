@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ch.hsr.ba.tourlive.model.PositionData;
+import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.PositionDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
@@ -51,7 +52,7 @@ public class ApiController {
 
 	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.POST)
 	@ResponseBody
-	public void values(@RequestBody final ValueContainer request) {
+	public void valueContainer(@RequestBody final ValueContainer request) {
 		valueContainerService.save(request);
 	}
 
@@ -84,6 +85,12 @@ public class ApiController {
 		} finally {
 			// implement handler here
 		}
+	}
+
+	@RequestMapping(value = "/api/racesituation", method = RequestMethod.POST)
+	public void raceSituation(@RequestBody final RaceSituation raceSituation) {
+		log.info("RaceSituation received");
+
 	}
 }
 

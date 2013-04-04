@@ -47,8 +47,6 @@ public class AdminController {
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("races", raceService.getAll());
-
 		return "admin/manageRace";
 	}
 

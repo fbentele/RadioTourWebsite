@@ -7,9 +7,8 @@
 			<hr class="soften">
 			<div class="row-fluid">
 				<div class="span6">
-					<h3>
-						Dingdong Simon and the crew and the rest
-					</h3>
+					<h3>Dingdong Simon and the crew and the rest</h3>
+					
 					<ul>
 						<li>Some fancy charts here...</li>
 						<li>Lorem ipsum dolor sit amet</li>
