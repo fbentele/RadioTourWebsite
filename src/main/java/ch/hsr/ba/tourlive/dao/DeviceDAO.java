@@ -9,7 +9,7 @@ public interface DeviceDAO {
 
 	public void update(Device device);
 
-	public void delete(Long id);
+	public void delete(String id);
 
 	public List<Device> getAll();
 

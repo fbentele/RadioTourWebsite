@@ -22,7 +22,7 @@ public class DeviceDAOImpl implements DeviceDAO {
 
 	}
 
-	public void delete(Long id) {
+	public void delete(String id) {
 		Device device = (Device) sessionFactory.getCurrentSession().load(
 				Device.class, id);
 		if (null != device) {

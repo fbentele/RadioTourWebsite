@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ public class RaceController {
 	RaceService raceService;
 	@Autowired
 	ValueContainerService valueContainerService;
+	Logger log = LoggerFactory.getLogger(RaceController.class);
 
 	@RequestMapping(value = "/race", method = RequestMethod.GET)
 	public String race(Locale locale, Model model) {
@@ -56,14 +59,17 @@ public class RaceController {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
-
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("menuitems", makeMenu(stageService
 				.getAllByRace(raceService.getRaceBySlug(raceSlug))));
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
-		model.addAttribute("current", valueContainers.get(0));
+		try {
+			model.addAttribute("current", valueContainers.get(0));
+		} catch (IndexOutOfBoundsException e) {
+			log.info("No ValueContainer for this Stage, so no Map available");
+		}
 		return "actualstage";
 	}
 

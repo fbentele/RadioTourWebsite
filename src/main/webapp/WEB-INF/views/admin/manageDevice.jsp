@@ -13,7 +13,6 @@
 				<th>Username</th>
 				<th>Anz. Rennen</th>
 				<th>Anz Pos</th>
-				<th>Bearbeiten</th>
 				<th>Löschen</th>
 			</tr>
 			<c:forEach items="${devices}" var="device">
@@ -22,7 +21,6 @@
 					<td>${device.username}</td>
 					<td>a</td>
 					<td>d</td>
-					<td><a href="/admin/device/edit/${device.deviceId}" target="_self">Bearbeiten</a></td>
 					<td><a href="/admin/device/delete/${device.deviceId}" target="_self">Löschen</a></td>
 				</tr>
 			</c:forEach>

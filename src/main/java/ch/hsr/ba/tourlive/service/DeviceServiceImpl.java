@@ -25,7 +25,7 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Transactional
-	public void delete(Long id) {
+	public void delete(String id) {
 		device.delete(id);
 	}
 

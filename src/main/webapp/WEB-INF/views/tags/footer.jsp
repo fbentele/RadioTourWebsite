@@ -1,6 +1,4 @@
-
-<hr>
-<footer class="footer">
+<div class="footer black-footer">
 	<div class="container">
 		<p class="pull-left">(c) 2013, TourLive by cnlab AG and Students</p>
 		<p class="pull-right">
@@ -8,7 +6,7 @@
 		</p>
 	</div>
 	<div class="container">
-		<div class="row">
+		<div class="row-fluid muted credit">
 			<div class="span4">about this awesome project</div>
 			<div class="span4">
 				<ul>
@@ -27,4 +25,4 @@
 			</div>
 		</div>
 	</div>
-</footer>
+</div>
