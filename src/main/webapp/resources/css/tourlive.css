@@ -6,6 +6,10 @@ html, body {
 	height: 300px;
 }
 
+#map-canvas img{
+	max-width: none;
+}
+
 .newItem {
 	display: none;
 }
