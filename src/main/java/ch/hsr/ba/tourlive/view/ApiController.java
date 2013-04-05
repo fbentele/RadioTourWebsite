@@ -77,6 +77,7 @@ public class ApiController {
 		if (deviceId.isEmpty() || deviceId == null) {
 			deviceId = "tempimage";
 		}
+
 		try {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
@@ -94,7 +95,8 @@ public class ApiController {
 			}
 
 			ImageIO.write(sourceImage, "png", new File(theImage, deviceId
-					+ ".png"));
+					+ timestamp + ".png"));
+
 		} catch (IOException e) {
 		} finally {
 			// implement handler here
@@ -141,3 +143,6 @@ public class ApiController {
 // "averageSpeed": 0
 // }
 // }
+
+// curl -F "deviceId=anothernewpic" -F "image=@CydiaIcon.png" -F
+// "timestamp=1111" http://localhost:8080/api/image

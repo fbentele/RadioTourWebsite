@@ -59,6 +59,7 @@ public class RaceController {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
+
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("menuitems", makeMenu(stageService
 				.getAllByRace(raceService.getRaceBySlug(raceSlug))));

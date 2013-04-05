@@ -8,16 +8,16 @@
 <body>
 	<div class="span10">
 		<div class="row-fluid">
-				<ul class="nav nav-pills">
-					<li><a href="#">Top</a></li>
-					<li><a href="#streckenprofil">Streckenprofil</a></li>
-					<li><a href="#abstand">Abstandsentwicklung</a></li>
-					<li><a href="#livebilder">Livebilder</a></li>
-					<li><a href="#liveticker">Liveticker</a></li>
-					<li><a href="#map-canvas">Karte</a></li>
-					<li><a href="#rennsituation">Rennsituation</a></li>
-					<li><a href="#rangliste">Rangliste</a></li>
-				</ul>
+			<ul class="nav nav-pills">
+				<li><a href="#">Top</a></li>
+				<li><a href="#streckenprofil">Streckenprofil</a></li>
+				<li><a href="#abstand">Abstandsentwicklung</a></li>
+				<li><a href="#livebilder">Livebilder</a></li>
+				<li><a href="#liveticker">Liveticker</a></li>
+				<li><a href="#map-canvas">Karte</a></li>
+				<li><a href="#rennsituation">Rennsituation</a></li>
+				<li><a href="#rangliste">Rangliste</a></li>
+			</ul>
 		</div>
 		<div class="row-fluid">
 			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
@@ -199,7 +199,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
 	</script>
@@ -215,14 +214,14 @@
 
 			var map = new google.maps.Map(
 					document.getElementById("map-canvas"), mapOptions);
-			var flightPlanCoordinates = [
+			var androide1 = [
 				<c:forEach items="${valuecontainers}" var="valuecontainer">
 					new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}),
 			    </c:forEach>
 			];
 
 			var flightPath = new google.maps.Polyline({
-				path : flightPlanCoordinates,
+				path : androide1,
 				strokeColor : "#FF0000",
 				strokeOpacity : 1.0,
 				strokeWeight : 2
@@ -231,8 +230,6 @@
 			flightPath.setMap(map);
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
-		
-		
 </script>
 </body>
 </html>
