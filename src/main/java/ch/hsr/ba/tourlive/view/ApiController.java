@@ -71,19 +71,21 @@ public class ApiController {
 	public void uploadImage(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("image") CommonsMultipartFile image,
-			@RequestParam("stamp") String filename) {
+			@RequestParam("timestamp") Long timestamp,
+			@RequestParam("deviceId") String deviceId) {
 		InputStream is = null;
-		if (filename.isEmpty() || filename == null) {
-			filename = "tempimage";
+		if (deviceId.isEmpty() || deviceId == null) {
+			deviceId = "tempimage";
 		}
 		try {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
 			HttpSession session = request.getSession();
 
-			File theImage = new File(session.getServletContext().getRealPath(
-					"/")
-					+ "/images/");
+			String path = session.getServletContext().getRealPath("/");
+			File theImagePath = new File(path);
+			File theImage = new File(theImagePath.getParent() + "/images/");
+
 			if (!theImage.exists()) {
 				boolean result = theImage.mkdir();
 				if (result) {
@@ -94,7 +96,7 @@ public class ApiController {
 			ImageIO.write(sourceImage, "png", new File(session
 					.getServletContext().getRealPath("/")
 					+ "/images/"
-					+ filename + ".png"));
+					+ deviceId + ".png"));
 		} catch (IOException e) {
 		} finally {
 			// implement handler here
