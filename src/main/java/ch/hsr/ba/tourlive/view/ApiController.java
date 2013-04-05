@@ -93,10 +93,8 @@ public class ApiController {
 				}
 			}
 
-			ImageIO.write(sourceImage, "png", new File(session
-					.getServletContext().getRealPath("/")
-					+ "/images/"
-					+ deviceId + ".png"));
+			ImageIO.write(sourceImage, "png", new File(theImage, deviceId
+					+ ".png"));
 		} catch (IOException e) {
 		} finally {
 			// implement handler here
