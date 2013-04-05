@@ -81,13 +81,21 @@ public class ApiController {
 			BufferedImage sourceImage = ImageIO.read(is);
 			HttpSession session = request.getSession();
 
-			;
+			File theImage = new File(session.getServletContext().getRealPath(
+					"/")
+					+ "/images/");
+			if (!theImage.exists()) {
+				boolean result = theImage.mkdir();
+				if (result) {
+					log.info("images folder created");
+				}
+			}
+
 			ImageIO.write(sourceImage, "png", new File(session
 					.getServletContext().getRealPath("/")
 					+ "/images/"
 					+ filename + ".png"));
 		} catch (IOException e) {
-			e.printStackTrace();
 		} finally {
 			// implement handler here
 		}
