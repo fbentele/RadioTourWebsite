@@ -1,13 +1,15 @@
 <div class="footer black-footer">
 	<div class="container">
-		<p class="pull-left">(c) 2013, TourLive by cnlab AG and Students</p>
-		<p class="pull-right">
-			<a href="#">Back to top</a>
-		</p>
-	</div>
-	<div class="container">
 		<div class="row-fluid muted credit">
-			<div class="span4">about this awesome project</div>
+			<div class="span4">
+				<p>(c) 2013, TourLive</p>
+				<p>
+					Das TourLive System sowie die dazugehörigen Android Aufnahmesysteme wurden im Rahmen
+					einer Bachelorarbeit an der Hochschule für Technik in Rapperswil (<a
+						href="http://www.hsr.ch">hsr.ch</a>) erstellt und durch die cnlab AG (<a
+						href="http://www.cnlab.ch">cnlab.ch</a>) betreut und weiter entwickelt.
+				</p>
+			</div>
 			<div class="span4">
 				<ul>
 					<li><a href="/agb" target="_self">AGB</a></li>

@@ -115,4 +115,13 @@ public class PositionData {
 		this.transferInterval = transferInterval;
 	}
 
+	@Override
+	public String toString() {
+		return "PositionData [positionid=" + positionid + ", longitude="
+				+ longitude + ", latitude=" + latitude + ", speed=" + speed
+				+ ", altitude=" + altitude + ", direction=" + direction
+				+ ", incline=" + incline + ", satellites=" + satellites
+				+ ", transferInterval=" + transferInterval + "]";
+	}
+
 }

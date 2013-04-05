@@ -91,4 +91,12 @@ public class ValueContainer {
 		this.device = device;
 	}
 
+	@Override
+	public String toString() {
+		return "ValueContainer [valueContainerId=" + valueContainerId
+				+ ", timestamp=" + timestamp + ", device=" + device
+				+ ", positionData=" + positionData + ", stageData=" + stageData
+				+ ", netData=" + netData + "]";
+	}
+
 }

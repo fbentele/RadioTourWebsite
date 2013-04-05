@@ -173,4 +173,13 @@ public class Stage {
 		this.devices.add(device);
 	}
 
+	@Override
+	public String toString() {
+		return "Stage [stageId=" + stageId + ", stageName=" + stageName
+				+ ", stageSlug=" + stageSlug + ", stageDescription="
+				+ stageDescription + ", starttime=" + starttime + ", endtime="
+				+ endtime + ", distance=" + distance + ", race=" + race
+				+ ", devices=" + devices + "]";
+	}
+
 }

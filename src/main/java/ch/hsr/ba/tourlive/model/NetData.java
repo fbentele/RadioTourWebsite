@@ -107,4 +107,13 @@ public class NetData {
 		this.technology = technology;
 	}
 
+	@Override
+	public String toString() {
+		return "NetData [netDataID=" + netDataID + ", cellNumber=" + cellNumber
+				+ ", locationArea=" + locationArea + ", signalStrength="
+				+ signalStrength + ", mncmcc=" + mncmcc + ", upstream="
+				+ upstream + ", rtt=" + rtt + ", packetLoss=" + packetLoss
+				+ ", technology=" + technology + "]";
+	}
+
 }

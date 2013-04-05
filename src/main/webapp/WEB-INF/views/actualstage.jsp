@@ -60,7 +60,7 @@
 
 		<div class="row-fluid">
 			<div class="span6">
-				<h4>Karte</h4>
+				<h4 id="karte">Karte</h4>
 				<div id="map-canvas"></div>
 			</div>
 			<div class="span6">
@@ -201,7 +201,7 @@
 	</div>
 
 	<script type="text/javascript"
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=false">
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
 	</script>
 	<script type="text/javascript">
 		function initialize() {
@@ -210,7 +210,7 @@
 			var mapOptions = {
 				zoom : 14,
 				center : myLatLng,
-				mapTypeId : google.maps.MapTypeId.HYBRID
+				mapTypeId : google.maps.MapTypeId['ROADMAP'],
 			};
 
 			var map = new google.maps.Map(
@@ -231,7 +231,8 @@
 			flightPath.setMap(map);
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
-	
+		
+		
 </script>
 </body>
 </html>

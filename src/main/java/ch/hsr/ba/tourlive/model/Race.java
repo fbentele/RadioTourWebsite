@@ -73,4 +73,12 @@ public class Race {
 	public void setYear(int year) {
 		this.year = year;
 	}
+
+	@Override
+	public String toString() {
+		return "Race [raceId=" + raceId + ", raceName=" + raceName
+				+ ", raceSlug=" + raceSlug + ", raceDescription="
+				+ raceDescription + ", year=" + year + "]";
+	}
+
 }

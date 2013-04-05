@@ -30,4 +30,10 @@ public class DeviceData {
 	@OneToOne
 	@JoinColumn(name = "DEVICE_ID")
 	private Device device;
+
+	@Override
+	public String toString() {
+		return "DeviceData [devicedataid=" + devicedataid + ", valueContainer="
+				+ valueContainer + ", device=" + device + "]";
+	}
 }

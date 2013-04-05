@@ -79,4 +79,12 @@ public class StageData implements Serializable {
 		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "StageData [stagedataid=" + stagedataid + ", stageTime="
+				+ stageTime + ", stageAltitude=" + stageAltitude
+				+ ", distance=" + distance + ", averageSpeed=" + averageSpeed
+				+ "]";
+	}
+
 }

@@ -2,46 +2,44 @@ package ch.hsr.ba.tourlive.service;
 
 import java.util.List;
 
-import ch.hsr.ba.tourlive.model.Race;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ch.hsr.ba.tourlive.dao.RaceSituationDAO;
 import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.Stage;
 
 public class RaceSituationServiceImpl implements RaceSituationService {
+	@Autowired
+	RaceSituationDAO raceSituationDao;
 
 	@Override
 	public void save(RaceSituation raceSituation) {
-		// TODO Auto-generated method stub
-
+		raceSituationDao.save(raceSituation);
 	}
 
 	@Override
 	public void update(RaceSituation raceSituation) {
-		// TODO Auto-generated method stub
-
+		raceSituationDao.update(raceSituation);
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-
+		raceSituationDao.delete(id);
 	}
 
 	@Override
 	public List<RaceSituation> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return raceSituationDao.getAll();
 	}
 
 	@Override
-	public Race getRaceSituationById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public RaceSituation getRaceSituationById(Long id) {
+		return raceSituationDao.getRaceSituationById(id);
 	}
 
 	@Override
 	public List<RaceSituation> getRaceSituationByStage(Stage stage) {
-		// TODO Auto-generated method stub
-		return null;
+		return raceSituationDao.getAllByStage(stage);
 	}
 
 }

@@ -11,11 +11,11 @@ html, body {
 }
 
 .black-footer a {
-	color: #acacac;
+	color:#cfcfcf;
 }
 
 .black-footer {
-	padding-top: 80px;
+	padding: 70px 0 20px;
 	color: #acacac;
 	background-image: linear-gradient(bottom, rgb(71, 71, 71) 66%, rgb(102, 102, 102) 100%);
 	background-image: -o-linear-gradient(bottom, rgb(71, 71, 71) 66%, rgb(102, 102, 102) 100%);

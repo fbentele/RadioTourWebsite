@@ -40,4 +40,11 @@ public class PageModel {
 		this.navbar = navbar;
 	}
 
+	@Override
+	public String toString() {
+		return "PageModel [browsertitle=" + browsertitle + ", pagetitle="
+				+ pagetitle + ", menuitems=" + menuitems + ", navbar=" + navbar
+				+ "]";
+	}
+
 }

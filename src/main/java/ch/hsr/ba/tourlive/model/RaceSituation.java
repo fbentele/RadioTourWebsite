@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Scope;
@@ -16,79 +18,21 @@ import org.springframework.stereotype.Component;
 public class RaceSituation {
 	@Id
 	@GeneratedValue
-	private Long RaceSituationId;
+	private Long raceSituationId;
 	@Column
 	private Long timestamp;
 
-	// @Column
-	// private List<String> situation;
-	// @ManyToOne
-	// @JoinColumn(name = "stageId")
-	// private Stage stage;
-
-	public class Situation {
-		private int[] drivernumber;
-		private boolean isLeader;
-		private int groupnr;
-		private Long handicaptime;
-		private boolean isField;
-
-		public int[] getDrivernumber() {
-			return drivernumber;
-		}
-
-		public void setDrivernumber(int[] drivernumber) {
-			this.drivernumber = drivernumber;
-		}
-
-		public boolean isLeader() {
-			return isLeader;
-		}
-
-		public void setLeader(boolean isLeader) {
-			this.isLeader = isLeader;
-		}
-
-		public int getGroupnr() {
-			return groupnr;
-		}
-
-		public void setGroupnr(int groupnr) {
-			this.groupnr = groupnr;
-		}
-
-		public Long getHandicaptime() {
-			return handicaptime;
-		}
-
-		public void setHandicaptime(Long handicaptime) {
-			this.handicaptime = handicaptime;
-		}
-
-		public boolean isField() {
-			return isField;
-		}
-
-		public void setField(boolean isField) {
-			this.isField = isField;
-		}
-	}
+	@ManyToOne
+	@JoinColumn(name = "stageId")
+	private Stage stage;
 
 	public Long getRaceSituationId() {
-		return RaceSituationId;
+		return raceSituationId;
 	}
 
 	public void setRaceSituationId(Long raceSituationId) {
-		RaceSituationId = raceSituationId;
+		this.raceSituationId = raceSituationId;
 	}
-
-	// public Stage getStage() {
-	// return stage;
-	// }
-	//
-	// public void setStage(Stage stage) {
-	// this.stage = stage;
-	// }
 
 	public Long getTimestamp() {
 		return timestamp;
@@ -98,15 +42,10 @@ public class RaceSituation {
 		this.timestamp = timestamp;
 	}
 
-	// public List<String> getSituation() {
-	// return situation;
-	// }
-	//
-	// public void setSituation(List<String> situation) {
-	// this.situation = situation;
-	// }
-	//
-	// public void addSituation(Situation situation) {
-	// this.situation.add(situation);
-	// }
+	@Override
+	public String toString() {
+		return "RaceSituation [RaceSituationId=" + raceSituationId
+				+ ", timestamp=" + timestamp + "]";
+	}
+
 }
