@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,8 +79,13 @@ public class ApiController {
 		try {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
-			ImageIO.write(sourceImage, "png", new File("/tmp/images/"
-					+ filename));
+			HttpSession session = request.getSession();
+
+			;
+			ImageIO.write(sourceImage, "png", new File(session
+					.getServletContext().getRealPath("/")
+					+ "/images/"
+					+ filename + ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

@@ -27,7 +27,7 @@ public class StageData implements Serializable {
 	private String stageTime;
 
 	@Column
-	private double stageAltitude;
+	private double stageUpAltitude;
 
 	@Column
 	private float distance;
@@ -51,12 +51,12 @@ public class StageData implements Serializable {
 		this.stageTime = stageTime;
 	}
 
-	public double getStageAltitude() {
-		return stageAltitude;
+	public double getStageUpAltitude() {
+		return stageUpAltitude;
 	}
 
-	public void setStageAltitude(double stageAltitude) {
-		this.stageAltitude = stageAltitude;
+	public void setStageUpAltitude(double stageUpAltitude) {
+		this.stageUpAltitude = stageUpAltitude;
 	}
 
 	public float getDistance() {
@@ -82,7 +82,7 @@ public class StageData implements Serializable {
 	@Override
 	public String toString() {
 		return "StageData [stagedataid=" + stagedataid + ", stageTime="
-				+ stageTime + ", stageAltitude=" + stageAltitude
+				+ stageTime + ", stageAltitude=" + stageUpAltitude
 				+ ", distance=" + distance + ", averageSpeed=" + averageSpeed
 				+ "]";
 	}

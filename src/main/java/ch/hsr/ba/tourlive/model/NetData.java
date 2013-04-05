@@ -29,10 +29,6 @@ public class NetData {
 	@Column
 	private int upstream;
 	@Column
-	private int rtt;
-	@Column
-	private int packetLoss;
-	@Column
 	private String technology;
 
 	public int getNetDataID() {
@@ -75,22 +71,6 @@ public class NetData {
 		this.upstream = upstream;
 	}
 
-	public int getRtt() {
-		return rtt;
-	}
-
-	public void setRtt(int rtt) {
-		this.rtt = rtt;
-	}
-
-	public int getPacketLoss() {
-		return packetLoss;
-	}
-
-	public void setPacketLoss(int packetLoss) {
-		this.packetLoss = packetLoss;
-	}
-
 	public String getMncmcc() {
 		return mncmcc;
 	}
@@ -112,8 +92,6 @@ public class NetData {
 		return "NetData [netDataID=" + netDataID + ", cellNumber=" + cellNumber
 				+ ", locationArea=" + locationArea + ", signalStrength="
 				+ signalStrength + ", mncmcc=" + mncmcc + ", upstream="
-				+ upstream + ", rtt=" + rtt + ", packetLoss=" + packetLoss
-				+ ", technology=" + technology + "]";
+				+ upstream + ", technology=" + technology + "]";
 	}
-
 }

@@ -123,5 +123,4 @@ public class PositionData {
 				+ ", incline=" + incline + ", satellites=" + satellites
 				+ ", transferInterval=" + transferInterval + "]";
 	}
-
 }
