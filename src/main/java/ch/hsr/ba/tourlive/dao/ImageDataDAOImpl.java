@@ -1,5 +1,6 @@
 package ch.hsr.ba.tourlive.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.ImageData;
+import ch.hsr.ba.tourlive.model.Stage;
 
 @Repository
 public class ImageDataDAOImpl implements ImageDataDAO {
@@ -50,6 +52,18 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 					.addOrder(Order.desc("timestamp")).list().get(0);
 		} catch (NullPointerException e) {
 			return null;
+		} catch (IndexOutOfBoundsException e) {
+			return null;
 		}
+	}
+
+	@Override
+	public List<ImageData> getMostRecentByStage(Stage stage) {
+		List<ImageData> imageData = new ArrayList<ImageData>();
+		for (Device dev : stage.getDevices()) {
+			if (this.getMostRecentByDevice(dev) != null)
+				imageData.add(this.getMostRecentByDevice(dev));
+		}
+		return imageData;
 	}
 }

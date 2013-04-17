@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.hsr.ba.tourlive.dao.ImageDataDAO;
 import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.ImageData;
+import ch.hsr.ba.tourlive.model.Stage;
 
 @Service
 public class ImageDataServiceImpl implements ImageDataService {
@@ -43,6 +44,11 @@ public class ImageDataServiceImpl implements ImageDataService {
 	@Transactional
 	public ImageData getById(Long id) {
 		return imageDataDao.getById(id);
+	}
+
+	@Transactional
+	public List<ImageData> getMostRecentByStage(Stage stage) {
+		return imageDataDao.getMostRecentByStage(stage);
 	}
 
 }

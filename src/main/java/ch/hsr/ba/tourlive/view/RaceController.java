@@ -7,6 +7,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
+import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
@@ -25,13 +27,18 @@ import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 @Controller
 public class RaceController {
 	@Autowired
-	ApplicationContext context;
+	private ApplicationContext context;
 	@Autowired
-	StageService stageService;
+	private StageService stageService;
 	@Autowired
-	RaceService raceService;
+	private RaceService raceService;
 	@Autowired
-	ValueContainerService valueContainerService;
+	private ValueContainerService valueContainerService;
+	@Autowired
+	private ImageDataService imageDataService;
+	@Value("${config.dev.hostname}")
+	private String hostname;
+
 	Logger log = LoggerFactory.getLogger(RaceController.class);
 
 	@RequestMapping(value = "/race", method = RequestMethod.GET)
@@ -66,6 +73,10 @@ public class RaceController {
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
+		model.addAttribute("images",
+				imageDataService.getMostRecentByStage(stage));
+		model.addAttribute("devices", stage.getDevices());
+		model.addAttribute("hostname", hostname);
 		try {
 			model.addAttribute("current", valueContainers.get(0));
 		} catch (IndexOutOfBoundsException e) {

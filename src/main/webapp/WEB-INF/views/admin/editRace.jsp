@@ -60,12 +60,27 @@
 		</div>
 		<button id="adder" type="submit" class="btn btn-primary">Neue Etappe</button>
 		<div class="newItem row-fluid">
-			<form:form method="post" name="stage" action="/admin/race/${race.raceId}/stage/add">
-				<div class="span3">
+			<form method="post" name="stage" action="/admin/race/${race.raceId}/stage/add"
+				enctype="multipart/form-data">
+				<div class="span4">
 					<label for="stageName">Etappenname</label> <input type="text" name="stageName"
 						class="toSlug" tabindex="4"> <label for="stageSlug">Etappenkurzname</label> <input
-						type="text" name="stageSlug" class="theSlug" tabindex="5"><label
-						for="starttime">Startzeit</label>
+						type="text" name="stageSlug" class="theSlug" tabindex="5"> <label
+						for="distance">Distanz</label>
+					<div class="input-append">
+						<input type="number" name="distance" tabindex="8"> <span class="add-on">km</span>
+					</div>
+					<div>
+						<label for="bannerImageFile">Etappen Banner Bild hochladen:</label> <img
+							src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
+						<div id="fileuploadbutton" class="btn">Bild auswählen</div>
+						<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" />
+					</div>
+					<br />
+					<button type="submit" class="btn btn-primary" tabindex="10">Speichern</button>
+				</div>
+				<div class="span4">
+					<label for="starttime">Startzeit</label>
 					<div class="input-append">
 						<input type="datetime" name="starttime" tabindex="6" /> <span class="add-on">14.03.2013
 							- 12:00</span>
@@ -75,18 +90,11 @@
 						<input type="datetime" name="endtime" tabindex="7" /><span class="add-on">14.03.2013
 							- 12:00</span>
 					</div>
-					<label for="distance">Distanz</label>
-					<div class="input-append">
-						<input type="number" name="distance" tabindex="8"> <span class="add-on">km</span>
-					</div>
-					<br />
-					<button type="submit" class="btn btn-primary" tabindex="10">Speichern</button>
-				</div>
-				<div class="span4">
+
 					<label for="stageDescription">Beschreibung</label>
 					<textarea name="stageDescription" rows="6" class="span12" tabindex="8"></textarea>
 				</div>
-			</form:form>
+			</form>
 		</div>
 	</div>
 </body>

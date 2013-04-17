@@ -40,4 +40,5 @@ public class DeviceDAOImpl implements DeviceDAO {
 		return sessionFactory.getCurrentSession().createCriteria(Device.class)
 				.list();
 	}
+
 }

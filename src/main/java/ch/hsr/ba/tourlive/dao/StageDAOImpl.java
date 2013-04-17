@@ -47,7 +47,8 @@ public class StageDAOImpl implements StageDAO {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 				Stage.class);
 		crit.add(Restrictions.eq("race", race));
-		return crit.list();
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return (List<Stage>) crit.list();
 	}
 
 	public Stage getStageBySlug(String slug) {

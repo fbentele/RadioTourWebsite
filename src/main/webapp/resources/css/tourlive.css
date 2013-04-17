@@ -1,4 +1,4 @@
-html, body {
+html,body {
 	height: 100%;
 }
 
@@ -6,7 +6,7 @@ html, body {
 	height: 300px;
 }
 
-#map-canvas img{
+#map-canvas img {
 	max-width: none;
 }
 
@@ -15,7 +15,7 @@ html, body {
 }
 
 .black-footer a {
-	color:#cfcfcf;
+	color: #cfcfcf;
 }
 
 .black-footer {
@@ -37,6 +37,11 @@ html, body {
 	height: 100%;
 	margin: 0 auto -180px;
 }
-#push{
-	height:200px;
+
+#push {
+	height: 200px;
+}
+
+.fileupload{
+	display:none;
 }

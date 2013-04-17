@@ -1,5 +1,8 @@
 package ch.hsr.ba.tourlive.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +31,16 @@ public class ImageData {
 	@Column
 	private String imageLocation;
 
+	public ImageData(Long timestamp, Device device, String imageLocation) {
+		this.timestamp = timestamp;
+		this.device = device;
+		this.imageLocation = imageLocation;
+	}
+
+	public ImageData() {
+
+	}
+
 	public Long getImageDataId() {
 		return imageDataId;
 	}
@@ -36,8 +49,14 @@ public class ImageData {
 		this.imageDataId = imageDataId;
 	}
 
-	public Long getTimestamp() {
-		return timestamp;
+	public String getTimestamp() {
+		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Date d = new Date(this.timestamp);
+			return date.format(d);
+		} catch (NullPointerException e) {
+			return "Zeitpunkt unbekannt";
+		}
 	}
 
 	public void setTimestamp(Long timestamp) {

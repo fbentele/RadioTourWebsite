@@ -9,11 +9,11 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import ch.hsr.ba.tourlive.model.ImageData;
 import ch.hsr.ba.tourlive.model.PositionData;
 import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.ValueContainer;
+import ch.hsr.ba.tourlive.service.DeviceService;
+import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.PositionDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
@@ -41,6 +44,13 @@ public class ApiController {
 	ValueContainerService valueContainerService;
 	@Autowired
 	RaceService raceService;
+	@Autowired
+	ImageDataService imageDataService;
+	@Autowired
+	DeviceService deviceService;
+
+	@Value("${config.api.imagePath}")
+	private String imagePath;
 
 	private static final Logger log = LoggerFactory
 			.getLogger(ApiController.class);
@@ -73,19 +83,16 @@ public class ApiController {
 			@RequestParam("image") CommonsMultipartFile image,
 			@RequestParam("timestamp") Long timestamp,
 			@RequestParam("deviceId") String deviceId) {
+
 		InputStream is = null;
-		if (deviceId.isEmpty() || deviceId == null) {
+		if (deviceId.isEmpty() || deviceId == null)
 			deviceId = "tempimage";
-		}
 
 		try {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
-			HttpSession session = request.getSession();
 
-			String path = session.getServletContext().getRealPath("/");
-			File theImagePath = new File(path);
-			File theImage = new File(theImagePath.getParent() + "/images/");
+			File theImage = new File(imagePath + deviceId);
 
 			if (!theImage.exists()) {
 				boolean result = theImage.mkdir();
@@ -93,11 +100,12 @@ public class ApiController {
 					log.info("images folder created");
 				}
 			}
-
-			ImageIO.write(sourceImage, "png", new File(theImage, deviceId
-					+ timestamp + ".png"));
-
+			String imagefilename = deviceId + timestamp + ".png";
+			ImageIO.write(sourceImage, "png", new File(theImage, imagefilename));
+			imageDataService.save(new ImageData(timestamp, deviceService
+					.getDeviceById(deviceId), deviceId + "/" + imagefilename));
 		} catch (IOException e) {
+			// catch exception
 		} finally {
 			// implement handler here
 		}
@@ -114,15 +122,13 @@ public class ApiController {
 // {
 // "timestamp": 13646926,
 // "device": {
-// "deviceId": "devideid unique",
-// "username": ""
+// "deviceId": "iJlekqJleNapiWnxqPejslq",
+// "username": "Spitze"
 // },
 // "netData": {
 // "technology": "3",
 // "mncmcc": "22801",
 // "locationArea": 909,
-// "packetLoss": 0,
-// "rtt": 0,
 // "signalStrength": 0,
 // "cellNumber": 689828,
 // "upstream": 0
@@ -134,15 +140,15 @@ public class ApiController {
 // "latitude": 47.3235338,
 // "longitude": 8.817226,
 // "incline": 9,
-// "gpsSendInterval": 0
+// "transferInterval": 0
 // },
 // "stageData": {
 // "stageTime": "01:00:00",
 // "distance": 0,
-// "stageAltitude": 0,
+// "stageUpAltitude": 0,
 // "averageSpeed": 0
 // }
 // }
 
-// curl -F "deviceId=anothernewpic" -F "image=@CydiaIcon.png" -F
+// curl -F "deviceId=testdevice" -F "image=@CydiaIcon.png" -F
 // "timestamp=1111" http://localhost:8080/api/image

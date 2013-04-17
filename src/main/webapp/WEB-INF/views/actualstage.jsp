@@ -37,27 +37,15 @@
 			</div>
 		</div>
 
-		<div class="row-fluid">
-			<div class="span4">
-				<h4 id="livebilder">Feld</h4>
-				<p>
-					<img width="250" src="<c:url value="/resources/img/feld.png"/>" />
-				</p>
-			</div>
-			<div class="span4">
-				<h4>Verfolger</h4>
-				<p>
-					<img width="250" src="<c:url value="/resources/img/verfolger.png"/>" />
-				</p>
-			</div>
-			<div class="span4">
-				<h4>Spitze</h4>
-				<p>
-					<img width="250" src="<c:url value="/resources/img/spitze.png"/>" />
-				</p>
-			</div>
+		<div class="row-fluid" id="livebilder">
+			<c:forEach items="${images}" var="image">
+				<div class="span4">
+					<h4>${image.device.username}</h4>
+						<img width="250" src="<c:url value="${hostname}${image.imageLocation}"/>" />
+						<div id="caption">Letzte aktualisierung: ${image.timestamp}</div>
+				</div>
+			</c:forEach>
 		</div>
-
 		<div class="row-fluid">
 			<div class="span6">
 				<h4 id="karte">Karte</h4>

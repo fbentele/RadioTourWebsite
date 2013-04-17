@@ -31,4 +31,8 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$('#fileuploadbutton').bind("click" , function () {
+        $('.fileupload').click();
+    });
 });
