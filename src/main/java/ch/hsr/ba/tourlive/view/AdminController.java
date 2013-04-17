@@ -157,7 +157,6 @@ public class AdminController {
 		String imagelocation = hostname + "stage" + stageId
 				+ "/bannerImage.png";
 		File f = new File(imagelocation);
-		log.error(imagelocation + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		String s = f.exists() ? imagelocation
 				: "http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild";
 		model.addAttribute("bannerImage", s);
@@ -171,16 +170,19 @@ public class AdminController {
 			@RequestParam("stageDescription") String stageDescription,
 			@RequestParam("stageSlug") String stageSlug,
 			@RequestParam("starttime") String starttime,
+			@RequestParam("distance") float stageDistance,
 			@RequestParam("endtime") String endtime,
 			@PathVariable("raceId") Long raceId,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile image) {
 		Stage stage = stageService.getStageById(stageId);
+		log.error("aaaaaaaaaand the id is " + stage.getStageId());
 		stage.setStageName(stageName);
 		stage.setStageDescription(stageDescription);
 		stage.setStageSlug(stageSlug);
 		stage.setStarttime(starttime);
+		stage.setDistance(stageDistance);
 		stage.setEndtime(endtime);
-		stageService.save(stage);
+		stageService.update(stage);
 		InputStream is = null;
 		try {
 			is = image.getInputStream();
@@ -192,8 +194,8 @@ public class AdminController {
 					log.info("images folder created");
 				}
 			}
-			String imagefilename = "bannerImage.png";
-			ImageIO.write(sourceImage, "png", new File(theImage, imagefilename));
+			ImageIO.write(sourceImage, "png", new File(theImage,
+					"bannerImage.png"));
 		} catch (IOException e) {
 			// catch exception
 		} catch (IllegalArgumentException e) {

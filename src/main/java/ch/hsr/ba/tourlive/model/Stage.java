@@ -49,6 +49,9 @@ public class Stage {
 	@Column
 	private float distance;
 
+	@Column
+	private String bannerImage;
+
 	@ManyToOne
 	@JoinColumn(name = "raceId")
 	private Race race;
@@ -171,6 +174,14 @@ public class Stage {
 
 	public void addDevice(Device device) {
 		this.devices.add(device);
+	}
+
+	public String getBannerImage() {
+		return bannerImage;
+	}
+
+	public void setBannerImage(String bannerImage) {
+		this.bannerImage = bannerImage;
 	}
 
 	@Override
