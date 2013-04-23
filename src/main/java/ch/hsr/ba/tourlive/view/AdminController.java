@@ -35,19 +35,18 @@ import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 @Controller
 public class AdminController {
 	@Autowired
-	ApplicationContext context;
+	private ApplicationContext context;
 	@Autowired
-	StageService stageService;
+	private StageService stageService;
 	@Autowired
-	RaceService raceService;
+	private RaceService raceService;
 	@Autowired
-	DeviceService deviceService;
+	private DeviceService deviceService;
 	@Value("${config.api.imagePath}")
 	private String imagePath;
 	@Value("${config.dev.hostname}")
 	private String hostname;
-
-	Logger log = LoggerFactory.getLogger(AdminController.class);
+	private Logger log = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Locale locale, Model model) {
@@ -154,12 +153,6 @@ public class AdminController {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("devices", deviceService.getAll());
-		String imagelocation = hostname + "stage" + stageId
-				+ "/bannerImage.png";
-		File f = new File(imagelocation);
-		String s = f.exists() ? imagelocation
-				: "http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild";
-		model.addAttribute("bannerImage", s);
 		return "admin/editStage";
 	}
 
@@ -175,14 +168,12 @@ public class AdminController {
 			@PathVariable("raceId") Long raceId,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile image) {
 		Stage stage = stageService.getStageById(stageId);
-		log.error("aaaaaaaaaand the id is " + stage.getStageId());
 		stage.setStageName(stageName);
 		stage.setStageDescription(stageDescription);
 		stage.setStageSlug(stageSlug);
 		stage.setStarttime(starttime);
 		stage.setDistance(stageDistance);
 		stage.setEndtime(endtime);
-		stageService.update(stage);
 		InputStream is = null;
 		try {
 			is = image.getInputStream();
@@ -196,12 +187,14 @@ public class AdminController {
 			}
 			ImageIO.write(sourceImage, "png", new File(theImage,
 					"bannerImage.png"));
+			stage.setBannerImage("stage" + stage.getStageId()
+					+ "/bannerImage.png");
 		} catch (IOException e) {
 			// catch exception
 		} catch (IllegalArgumentException e) {
 			// no image specified
 		} finally {
-			// implement handler here
+			stageService.update(stage);
 		}
 
 		return "redirect:/admin/race/edit/" + raceId;
