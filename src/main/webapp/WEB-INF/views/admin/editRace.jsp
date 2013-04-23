@@ -76,6 +76,12 @@
 						<div id="fileuploadbutton" class="btn">Bild auswählen</div>
 						<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" />
 					</div>
+					<div>
+						<label for="stageProfileFile">Etappen (höhen) Profilbild hochladen:</label> <img
+							src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
+						<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
+						<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" />
+					</div>
 					<br />
 					<button type="submit" class="btn btn-primary" tabindex="10">Speichern</button>
 				</div>

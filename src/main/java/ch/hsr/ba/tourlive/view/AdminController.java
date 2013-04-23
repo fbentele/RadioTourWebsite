@@ -1,13 +1,8 @@
 package ch.hsr.ba.tourlive.view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -30,6 +25,7 @@ import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
+import ch.hsr.ba.tourlive.utils.SafeImageUtil;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
@@ -107,13 +103,15 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
-	public String addStage(@RequestParam("stageName") String stageName,
+	public String addStage(
+			@PathVariable("raceId") Long raceId,
+			@RequestParam("stageName") String stageName,
 			@RequestParam("stageDescription") String stageDescription,
 			@RequestParam("stageSlug") String stageSlug,
 			@RequestParam("starttime") String starttime,
 			@RequestParam("endtime") String endtime,
-			@PathVariable("raceId") Long raceId,
-			@RequestParam("bannerImageFile") CommonsMultipartFile image) {
+			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
+			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
 		Stage stage = new Stage();
 		stage.setStageName(stageName);
 		stage.setStageDescription(stageDescription);
@@ -124,24 +122,14 @@ public class AdminController {
 		stageService.save(stage);
 		// creates id, needed to save image properly
 		stage = stageService.getStageBySlug(stageSlug);
-		InputStream is = null;
-		try {
-			is = image.getInputStream();
-			BufferedImage sourceImage = ImageIO.read(is);
-			File theImage = new File(imagePath + "stage" + stage.getStageId());
-			if (!theImage.exists()) {
-				boolean result = theImage.mkdir();
-				if (result) {
-					log.info("images folder created");
-				}
-			}
-			String imagefilename = "bannerImage.png";
-			ImageIO.write(sourceImage, "png", new File(theImage, imagefilename));
-		} catch (IOException e) {
-			// catch exception
-		} finally {
-			// implement handler here
-		}
+
+		String rel = "stage" + stage.getStageId();
+
+		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel,
+				"banner.png"));
+		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage,
+				imagePath, rel, "banner.png"));
+		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
 	}
 
@@ -156,8 +144,14 @@ public class AdminController {
 		return "admin/editStage";
 	}
 
+	/*
+	 * This method handles each request parameter separately because of the
+	 * specially handled time formates and muliple images not saved in the stage
+	 * model but to disk and a only as path string to the model
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.POST)
 	public String updateStage(
+			@PathVariable("raceId") Long raceId,
 			@RequestParam("stageId") Long stageId,
 			@RequestParam("stageName") String stageName,
 			@RequestParam("stageDescription") String stageDescription,
@@ -165,8 +159,8 @@ public class AdminController {
 			@RequestParam("starttime") String starttime,
 			@RequestParam("distance") float stageDistance,
 			@RequestParam("endtime") String endtime,
-			@PathVariable("raceId") Long raceId,
-			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile image) {
+			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
+			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
 		Stage stage = stageService.getStageById(stageId);
 		stage.setStageName(stageName);
 		stage.setStageDescription(stageDescription);
@@ -174,28 +168,14 @@ public class AdminController {
 		stage.setStarttime(starttime);
 		stage.setDistance(stageDistance);
 		stage.setEndtime(endtime);
-		InputStream is = null;
-		try {
-			is = image.getInputStream();
-			BufferedImage sourceImage = ImageIO.read(is);
-			File theImage = new File(imagePath + "stage" + stage.getStageId());
-			if (!theImage.exists()) {
-				boolean result = theImage.mkdir();
-				if (result) {
-					log.info("images folder created");
-				}
-			}
-			ImageIO.write(sourceImage, "png", new File(theImage,
-					"bannerImage.png"));
-			stage.setBannerImage("stage" + stage.getStageId()
-					+ "/bannerImage.png");
-		} catch (IOException e) {
-			// catch exception
-		} catch (IllegalArgumentException e) {
-			// no image specified
-		} finally {
-			stageService.update(stage);
-		}
+
+		String rel = "stage" + stage.getStageId();
+
+		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel,
+				"banner.png"));
+		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage,
+				imagePath, rel, "stageProfile.png"));
+		stageService.update(stage);
 
 		return "redirect:/admin/race/edit/" + raceId;
 	}

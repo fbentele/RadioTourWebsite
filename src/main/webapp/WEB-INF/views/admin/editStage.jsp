@@ -37,14 +37,16 @@
 					</div>
 
 					<div>
-						<label for="bannerImageFile">Etappen Banner Bild hochladen:</label>
-						
-						
-							<img src="${bannerImage}"
-								class="img-rounded">
-						
+						<label for="bannerImageFile">Etappen Banner Bild hochladen: (940x210px)</label> <img
+							src="${bannerImage}" class="img-rounded">
 						<div id="fileuploadbutton" class="btn">Bild auswählen</div>
 						<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" />
+					</div>
+					<div>
+						<label for="stageProfileFile">Strecken Profil Bild hochladen: (940x210px)</label> <img
+							src="${stageProfileImage}" class="img-rounded">
+						<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
+						<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" />
 					</div>
 				</div>
 			</form:form>
@@ -80,7 +82,7 @@
 											${device.deviceId })
 										</label>
 									</c:forEach>
-									<button type="submit" class="btn">Speicher</button>
+									<button type="submit" class="btn">Speichern</button>
 								</div>
 							</div>
 						</form:form>

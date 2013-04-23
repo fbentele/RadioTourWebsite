@@ -52,6 +52,9 @@ public class Stage {
 	@Column
 	private String bannerImage;
 
+	@Column
+	private String stageProfileImage;
+
 	@ManyToOne
 	@JoinColumn(name = "raceId")
 	private Race race;
@@ -182,6 +185,14 @@ public class Stage {
 
 	public void setBannerImage(String bannerImage) {
 		this.bannerImage = bannerImage;
+	}
+
+	public String getStageProfileImage() {
+		return stageProfileImage;
+	}
+
+	public void setStageProfileImage(String stageProfileImage) {
+		this.stageProfileImage = stageProfileImage;
 	}
 
 	@Override

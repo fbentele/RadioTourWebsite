@@ -42,6 +42,6 @@ html,body {
 	height: 200px;
 }
 
-.fileupload{
+.fileupload,.fileupload2{
 	display:none;
 }

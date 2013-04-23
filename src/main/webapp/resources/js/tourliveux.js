@@ -35,4 +35,7 @@ $(document).ready(function() {
 	$('#fileuploadbutton').bind("click" , function () {
         $('.fileupload').click();
     });
+	$('#fileuploadbutton2').bind("click" , function () {
+        $('.fileupload2').click();
+    });
 });
