@@ -201,24 +201,29 @@
 				center : myLatLng,
 				mapTypeId : google.maps.MapTypeId['ROADMAP'],
 			};
-
+			
 			var map = new google.maps.Map(
 					document.getElementById("map-canvas"), mapOptions);
-			var androide1 = [
-				<c:forEach items="${valuecontainers}" var="valuecontainer">
-					new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}),
-			    </c:forEach>
-			];
+			
+			<c:forEach items="${devices}" var="device">
+				var ${device.username} = []
+			</c:forEach>
 
-			var flightPath = new google.maps.Polyline({
-				path : androide1,
-				strokeColor : "#FF0000",
-				strokeOpacity : 1.0,
-				strokeWeight : 2
-			});
+			<c:forEach items="${valuecontainers}" var="valuecontainer">
+				${valuecontainer.device.username}.push(new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}))
+			 </c:forEach>
+		
+			<c:forEach items="${devices}" var="device">
+				var flightPath_${device.username} = new google.maps.Polyline({
+					path : ${device.username},
+					strokeColor : "${device.color}",
+					strokeOpacity : 1.0,
+					strokeWeight : 2
+				});
+				flightPath_${device.username}.setMap(map);
 
-			flightPath.setMap(map);
-		}
+			</c:forEach>
+			}
 		google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </body>

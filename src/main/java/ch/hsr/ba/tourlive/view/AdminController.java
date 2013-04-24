@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.service.DeviceService;
@@ -219,6 +220,20 @@ public class AdminController {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAllVisible());
 		return "admin/manageRider";
+	}
+
+	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.GET)
+	public String editDevice(@PathVariable("deviceId") String deviceId, Model model) {
+		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("device", deviceService.getDeviceById(deviceId));
+		return "admin/editDevice";
+	}
+
+	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.POST)
+	public String saveDevice(@PathVariable("deviceId") String deviceId,
+			@ModelAttribute("deice") Device device, Model model) {
+		deviceService.update(device);
+		return "redirect:/admin/device";
 	}
 
 	private ArrayList<MenuItem> makeMenu() {

@@ -2,5 +2,9 @@
 
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.8.0-min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/tourliveux.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/bootstrap-colorpicker.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/tourliveux.js" />"></script>
+	

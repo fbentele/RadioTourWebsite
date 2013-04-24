@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -33,8 +34,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 
 	@Override
 	public void delete(Long id) {
-		ValueContainer valuecontainer = (ValueContainer) sessionFactory
-				.getCurrentSession().load(ValueContainer.class, id);
+		ValueContainer valuecontainer = (ValueContainer) sessionFactory.getCurrentSession().load(
+				ValueContainer.class, id);
 		if (null != valuecontainer) {
 			sessionFactory.getCurrentSession().delete(valuecontainer);
 		}
@@ -49,13 +50,23 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-				ValueContainer.class);
-		for (Device device : stage.getDevices()) {
-			crit.add(Restrictions.eq("device", device));
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		log.info("______________ pre " + crit.list().size());
+
+		if (!stage.getDevices().isEmpty()) {
+			Disjunction d = Restrictions.or();
+			for (Device device : stage.getDevices()) {
+				d.add(Restrictions.eq("device", device));
+			}
+			crit.add(d);
 		}
-		crit.add(Restrictions.between("timestamp",
-				stage.getStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
+
+		log.info("______________ pre " + crit.list().size());
+
+		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+				stage.getEndtimeAsTimestamp()));
+		log.info("______________ pre " + crit.list().size());
+
 		crit.addOrder(Order.desc("timestamp"));
 		return crit.list();
 	}

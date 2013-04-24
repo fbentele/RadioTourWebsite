@@ -20,6 +20,12 @@ public class Device {
 	@Column
 	private String username;
 
+	@Column
+	private String color;
+
+	@Column
+	private String labelName;
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -34,6 +40,22 @@ public class Device {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
 	}
 
 	@Override

@@ -58,4 +58,7 @@ $(document).ready(function() {
 			language : 'de-CH'
 		});
 	});
+	
+	//color picker
+	$('.colorpicker').colorpicker();
 });
