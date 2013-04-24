@@ -38,4 +38,24 @@ $(document).ready(function() {
 	$('#fileuploadbutton2').bind("click" , function () {
         $('.fileupload2').click();
     });
+	
+	// datetimepicker
+	// http://tarruda.github.io/bootstrap-datetimepicker/
+	$.fn.datetimepicker.defaults = {
+			  maskInput: true,           // disables the text input mask
+			  pickDate: true,            // disables the date picker
+			  pickTime: true,            // disables de time picker
+			  pick12HourFormat: false,   // enables the 12-hour format time picker
+			  pickSeconds: false,         // disables seconds in the time picker
+			  startDate: -Infinity,      // set a minimum date
+			  endDate: Infinity          // set a maximum date
+			};
+	$(function() {
+		$('#datetimepicker1').datetimepicker({
+			language : 'de-CH'
+		});
+		$('#datetimepicker2').datetimepicker({
+			language : 'de-CH'
+		});
+	});
 });

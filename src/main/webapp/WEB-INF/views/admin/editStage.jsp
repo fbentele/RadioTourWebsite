@@ -27,17 +27,22 @@
 					<button type="submit" class="btn btn-primary">Speichern</button>
 				</div>
 				<div class="span4">
-					<div class="input-append">
-						<label for="starttime">Startzeit</label> <input type="datetime" name="starttime"
-							value="${stage.starttime}"><span class="add-on">z.B.01.01.2013 - 09:45</span>
+					<label for="starttime">Startzeit</label>
+					<div id="datetimepicker1" class="input-append date">
+						<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" tabindex="6"
+							value="${stage.starttime}" /> <span class="add-on"> <i
+							data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 					</div>
-					<div class="input-append">
-						<label for="endtime">Rennende</label> <input type="datetime" name="endtime"
-							value="${stage.endtime}"><span class="add-on">z.B. 01.01.2013 - 17:15</span>
+					<label for="endtime">Endzeit</label>
+					<div id="datetimepicker2" class="input-append">
+						<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" tabindex="7"
+							value="${stage.endtime}" /> <span class="add-on"> <i
+							data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 					</div>
-					
+
 					<label for="visible"> <input type="checkbox" name="visible"
-						value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if>> Sichtbar
+						value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if>>
+						Sichtbar
 					</label>
 					<div>
 						<label for="bannerImageFile">Etappen Banner Bild hochladen: (940x210px)</label> <img

@@ -16,9 +16,8 @@
 							tabindex="1" /><label for="raceSlug">Kurzname</label> <input type="text"
 							name="raceSlug" class="theRaceSlug" value="${race.raceSlug}" tabindex="1" /> <label
 							for="year">Jahr</label> <input type="number" name="year" value="${race.year}"
-							tabindex="2" />
-							<label for="visible"><input type="checkbox" name="visible" value="true" <c:if test="${race.visible == true}">checked</c:if>> Sichtbar</label>
-							<br>
+							tabindex="2" /> <label for="visible"><input type="checkbox" name="visible"
+							value="true" <c:if test="${race.visible == true}">checked</c:if>> Sichtbar</label> <br>
 						<button type="submit" class="btn btn-primary">Speichern</button>
 					</div>
 					<div class="span4">
@@ -74,8 +73,8 @@
 					<div class="input-append">
 						<input type="number" name="distance" tabindex="8"> <span class="add-on">km</span>
 					</div>
-					<label for="visible"> <input type="checkbox" name="visible"
-						value="true"> Sichtbar
+					<label for="visible"> <input type="checkbox" name="visible" value="true">
+						Sichtbar
 					</label>
 					<div>
 						<label for="bannerImageFile">Etappen Banner Bild hochladen:</label> <img
@@ -95,14 +94,16 @@
 				</div>
 				<div class="span4">
 					<label for="starttime">Startzeit</label>
-					<div class="input-append">
-						<input type="datetime" name="starttime" tabindex="6" /> <span class="add-on">14.03.2013
-							- 12:00</span>
+					<div id="datetimepicker1" class="input-append date">
+						<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" tabindex="6" />
+						<span class="add-on"> <i data-time-icon="icon-time"
+							data-date-icon="icon-calendar"></i></span>
 					</div>
 					<label for="endtime">Endzeit</label>
-					<div class="input-append">
-						<input type="datetime" name="endtime" tabindex="7" /><span class="add-on">14.03.2013
-							- 12:00</span>
+					<div id="datetimepicker2" class="input-append">
+						<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" tabindex="7" />
+						<span class="add-on"> <i data-time-icon="icon-time"
+							data-date-icon="icon-calendar"></i></span>
 					</div>
 
 					<label for="stageDescription">Beschreibung</label>
