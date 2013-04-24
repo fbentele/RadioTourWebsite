@@ -25,8 +25,7 @@ public class StageDAOImpl implements StageDAO {
 	}
 
 	public void delete(Long id) {
-		Stage st = (Stage) sessionFactory.getCurrentSession().load(Stage.class,
-				id);
+		Stage st = (Stage) sessionFactory.getCurrentSession().load(Stage.class, id);
 		if (null != st) {
 			sessionFactory.getCurrentSession().delete(st);
 		}
@@ -34,8 +33,23 @@ public class StageDAOImpl implements StageDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllStages() {
-		return sessionFactory.getCurrentSession().createCriteria(Stage.class)
-				.list();
+		return sessionFactory.getCurrentSession().createCriteria(Stage.class).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Stage> getAllVisibleStages() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		crit.add(Restrictions.eq("visible", true));
+		return (List<Stage>) crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Stage> getAllVisibleByRace(Race race) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		crit.add(Restrictions.eq("race", race));
+		crit.add(Restrictions.eq("visible", true));
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return (List<Stage>) crit.list();
 	}
 
 	public Stage getStageById(Long id) {
@@ -44,17 +58,14 @@ public class StageDAOImpl implements StageDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllByRace(Race race) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-				Stage.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
 		crit.add(Restrictions.eq("race", race));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return (List<Stage>) crit.list();
 	}
 
 	public Stage getStageBySlug(String slug) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-				Stage.class);
-		return (Stage) crit.add(Restrictions.eq("stageSlug", slug)).list()
-				.get(0);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		return (Stage) crit.add(Restrictions.eq("stageSlug", slug)).list().get(0);
 	}
 }

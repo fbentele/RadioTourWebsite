@@ -13,6 +13,8 @@ public interface RaceDAO {
 
 	public List<Race> getAll();
 
+	public List<Race> getAllVisible();
+
 	public Race getRaceById(Long id);
 
 	public Race getActualTds();

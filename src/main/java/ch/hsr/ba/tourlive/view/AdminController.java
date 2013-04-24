@@ -60,27 +60,35 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/race/add", method = RequestMethod.POST)
 	public String newRace(@ModelAttribute("race") Race race,
+			@RequestParam(value = "visible", defaultValue = "") String visible,
 			SessionStatus status, Model model) {
+		if (visible.contains("true"))
+			race.setVisible(true);
 		raceService.save(race);
 		status.setComplete();
 		return "redirect:/admin/race";
 	}
 
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
-	public String editRace(@PathVariable("raceId") Long raceId, Model model) {
+	public String editRace(@PathVariable("raceId") Long raceId,
+			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		Race race = raceService.getRaceById(raceId);
 		model.addAttribute("race", race);
 		model.addAttribute("stages", stageService.getAllByRace(race));
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 		return "admin/editRace";
 	}
 
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.POST)
 	public String editedRace(@PathVariable("raceId") Long raceId,
-			@ModelAttribute("race") Race race, Model model) {
-		model.addAttribute("menuitems", makeMenu());
+			@ModelAttribute("race") Race race,
+			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
+		if (visible.contains("true"))
+			race.setVisible(true);
 		raceService.update(race);
+
+		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("race", raceService.getRaceById(raceId));
 		return "redirect:/admin/race";
 	}
@@ -89,7 +97,7 @@ public class AdminController {
 	public String removeRace(@PathVariable("raceId") Long raceId, Model model) {
 		raceService.delete(raceId);
 		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 
 		return "forward:/admin/race";
 	}
@@ -97,7 +105,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/stage", method = RequestMethod.GET)
 	public String manageStage(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 
 		return "forward:/admin/stage";
 	}
@@ -110,6 +118,7 @@ public class AdminController {
 			@RequestParam("stageSlug") String stageSlug,
 			@RequestParam("starttime") String starttime,
 			@RequestParam("endtime") String endtime,
+			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
 		Stage stage = new Stage();
@@ -119,16 +128,18 @@ public class AdminController {
 		stage.setRace(raceService.getRaceById(raceId));
 		stage.setStarttime(starttime);
 		stage.setEndtime(endtime);
+		if (visible.contains("true"))
+			stage.setVisible(true);
+
 		stageService.save(stage);
 		// creates id, needed to save image properly
 		stage = stageService.getStageBySlug(stageSlug);
 
 		String rel = "stage" + stage.getStageId();
 
-		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel,
-				"banner.png"));
-		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage,
-				imagePath, rel, "banner.png"));
+		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel, "banner.png"));
+		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage, imagePath, rel,
+				"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
 	}
@@ -139,7 +150,7 @@ public class AdminController {
 		model.addAttribute("stage", stageService.getStageById(stageId));
 		model.addAttribute("race", raceService.getRaceById(raceId));
 		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("devices", deviceService.getAll());
 		return "admin/editStage";
 	}
@@ -159,6 +170,7 @@ public class AdminController {
 			@RequestParam("starttime") String starttime,
 			@RequestParam("distance") float stageDistance,
 			@RequestParam("endtime") String endtime,
+			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
 		Stage stage = stageService.getStageById(stageId);
@@ -169,12 +181,15 @@ public class AdminController {
 		stage.setDistance(stageDistance);
 		stage.setEndtime(endtime);
 
+		stage.setVisible(false);
+		if (visible.contains("true"))
+			stage.setVisible(true);
+
 		String rel = "stage" + stage.getStageId();
 
-		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel,
-				"banner.png"));
-		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage,
-				imagePath, rel, "stageProfile.png"));
+		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel, "banner.png"));
+		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage, imagePath, rel,
+				"stageProfile.png"));
 		stageService.update(stage);
 
 		return "redirect:/admin/race/edit/" + raceId;
@@ -191,8 +206,8 @@ public class AdminController {
 	public String editDevice(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId, HttpServletRequest request) {
 		Stage stage = stageService.getStageById(stageId);
-		String[] a = request.getParameterValues("device");
-		for (String deviceId : a) {
+		String[] deviceIds = request.getParameterValues("device");
+		for (String deviceId : deviceIds) {
 			stage.addDevice(deviceService.getDeviceById(deviceId));
 		}
 		stageService.update(stage);
@@ -200,10 +215,9 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/rider", method = RequestMethod.GET)
-	public String addRider(@PathVariable("raceId") Long raceId, Locale locale,
-			Model model) {
+	public String addRider(@PathVariable("raceId") Long raceId, Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 		return "admin/manageRider";
 	}
 

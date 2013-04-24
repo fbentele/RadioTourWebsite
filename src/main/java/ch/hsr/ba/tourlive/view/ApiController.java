@@ -53,8 +53,7 @@ public class ApiController {
 	@Value("${config.api.imagePath}")
 	private String imagePath;
 
-	private static final Logger log = LoggerFactory
-			.getLogger(ApiController.class);
+	private static final Logger log = LoggerFactory.getLogger(ApiController.class);
 
 	@RequestMapping(value = "/api/positiondata", method = RequestMethod.POST)
 	@ResponseBody
@@ -74,16 +73,14 @@ public class ApiController {
 		model.addAttribute("positions", positionDataService.getAll());
 		model.addAttribute("current", positionDataService.getAll().get(0));
 		model.addAttribute("navbarapi", "active");
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 		return "api";
 	}
 
 	@RequestMapping(value = "/api/image", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
-	public void uploadImage(HttpServletRequest request,
-			HttpServletResponse response,
+	public void uploadImage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("image") CommonsMultipartFile image,
-			@RequestParam("timestamp") Long timestamp,
-			@RequestParam("deviceId") String deviceId) {
+			@RequestParam("timestamp") Long timestamp, @RequestParam("deviceId") String deviceId) {
 
 		InputStream is = null;
 		if (deviceId.isEmpty() || deviceId == null)
@@ -103,8 +100,8 @@ public class ApiController {
 			}
 			String imagefilename = deviceId + timestamp + ".png";
 			ImageIO.write(sourceImage, "png", new File(theImage, imagefilename));
-			imageDataService.save(new ImageData(timestamp, deviceService
-					.getDeviceById(deviceId), deviceId + "/" + imagefilename));
+			imageDataService.save(new ImageData(timestamp, deviceService.getDeviceById(deviceId),
+					deviceId + "/" + imagefilename));
 		} catch (IOException e) {
 			// catch exception
 		} finally {

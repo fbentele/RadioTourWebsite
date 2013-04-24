@@ -43,20 +43,18 @@ public class RaceController {
 
 	@RequestMapping(value = "/race", method = RequestMethod.GET)
 	public String race(Locale locale, Model model) {
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("navbarrace", "active");
 		return "race";
 	}
 
 	@RequestMapping(value = "/race/{raceSlug}", method = RequestMethod.GET)
-	public String customRace(@PathVariable("raceSlug") String raceSlug,
-			Locale locale, Model model) {
+	public String customRace(@PathVariable("raceSlug") String raceSlug, Locale locale, Model model) {
 		Race actualRace = raceService.getRaceBySlug(raceSlug);
 		model.addAttribute("race", actualRace);
 		model.addAttribute("navbarrace", "active");
-		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("menuitems",
-				makeMenu(stageService.getAllByRace(actualRace)));
+		model.addAttribute("races", raceService.getAllVisible());
+		model.addAttribute("menuitems", makeMenu(stageService.getAllVisibleByRace(actualRace)));
 		return "actualrace";
 	}
 
@@ -66,14 +64,13 @@ public class RaceController {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
-		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("menuitems", makeMenu(stageService
-				.getAllByRace(raceService.getRaceBySlug(raceSlug))));
+		model.addAttribute("races", raceService.getAllVisible());
+		model.addAttribute("menuitems",
+				makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
-		model.addAttribute("images",
-				imageDataService.getMostRecentByStage(stage));
+		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
 		model.addAttribute("devices", stage.getDevices());
 		model.addAttribute("hostname", hostname);
 		try {
@@ -87,9 +84,8 @@ public class RaceController {
 	private List<MenuItem> makeMenu(List<Stage> stages) {
 		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
 		for (Stage stage : stages) {
-			menu.add(new MenuItem(stage.getStageName(), "/race/"
-					+ stage.getRace().getRaceSlug() + "/stage/"
-					+ stage.getStageSlug()));
+			menu.add(new MenuItem(stage.getStageName(), "/race/" + stage.getRace().getRaceSlug()
+					+ "/stage/" + stage.getStageSlug()));
 		}
 		return menu;
 	}

@@ -55,6 +55,9 @@ public class Stage {
 	@Column
 	private String stageProfileImage;
 
+	@Column
+	private Boolean visible;
+
 	@ManyToOne
 	@JoinColumn(name = "raceId")
 	private Race race;
@@ -119,8 +122,7 @@ public class Stage {
 
 	public void setStarttime(String unformatted) {
 		try {
-			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm")
-					.parse(unformatted);
+			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm").parse(unformatted);
 			this.starttime = date.getTime();
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -143,8 +145,7 @@ public class Stage {
 
 	public void setEndtime(String unformatted) {
 		try {
-			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm")
-					.parse(unformatted);
+			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm").parse(unformatted);
 			this.endtime = date.getTime();
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -195,12 +196,19 @@ public class Stage {
 		this.stageProfileImage = stageProfileImage;
 	}
 
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
 	@Override
 	public String toString() {
-		return "Stage [stageId=" + stageId + ", stageName=" + stageName
-				+ ", stageSlug=" + stageSlug + ", stageDescription="
-				+ stageDescription + ", starttime=" + starttime + ", endtime="
-				+ endtime + ", distance=" + distance + ", race=" + race
+		return "Stage [stageId=" + stageId + ", stageName=" + stageName + ", stageSlug="
+				+ stageSlug + ", stageDescription=" + stageDescription + ", starttime=" + starttime
+				+ ", endtime=" + endtime + ", distance=" + distance + ", race=" + race
 				+ ", devices=" + devices + "]";
 	}
 

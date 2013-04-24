@@ -35,7 +35,10 @@
 						<label for="endtime">Rennende</label> <input type="datetime" name="endtime"
 							value="${stage.endtime}"><span class="add-on">z.B. 01.01.2013 - 17:15</span>
 					</div>
-
+					
+					<label for="visible"> <input type="checkbox" name="visible"
+						value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if>> Sichtbar
+					</label>
 					<div>
 						<label for="bannerImageFile">Etappen Banner Bild hochladen: (940x210px)</label> <img
 							src="${bannerImage}" class="img-rounded">
@@ -46,7 +49,8 @@
 						<label for="stageProfileFile">Strecken Profil Bild hochladen: (940x210px)</label> <img
 							src="${stageProfileImage}" class="img-rounded">
 						<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
-						<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" />
+						<br /> <input type="file" accept="image/*" name="stageProfileFile"
+							class="fileupload2" />
 					</div>
 				</div>
 			</form:form>

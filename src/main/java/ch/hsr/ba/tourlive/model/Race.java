@@ -34,6 +34,9 @@ public class Race {
 	@Column
 	private int year;
 
+	@Column
+	private Boolean visible;
+
 	public Long getRaceId() {
 		return raceId;
 	}
@@ -74,11 +77,18 @@ public class Race {
 		this.year = year;
 	}
 
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
 	@Override
 	public String toString() {
-		return "Race [raceId=" + raceId + ", raceName=" + raceName
-				+ ", raceSlug=" + raceSlug + ", raceDescription="
-				+ raceDescription + ", year=" + year + "]";
+		return "Race [raceId=" + raceId + ", raceName=" + raceName + ", raceSlug=" + raceSlug
+				+ ", raceDescription=" + raceDescription + ", year=" + year + "]";
 	}
 
 }

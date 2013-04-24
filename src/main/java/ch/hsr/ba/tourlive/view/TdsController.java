@@ -21,18 +21,16 @@ public class TdsController {
 	@RequestMapping("/tds")
 	public String tds(Model model) {
 		model.addAttribute("tds", raceService.getActualTds());
-		model.addAttribute("menuitems",
-				stageService.getAllByRace(raceService.getActualTds()));
+		model.addAttribute("menuitems", stageService.getAllByRace(raceService.getActualTds()));
 		model.addAttribute("navbartds", "active");
-		model.addAttribute("races", raceService.getAll());
-
+		model.addAttribute("races", raceService.getAllVisible());
 		return "tds";
 	}
 
 	@RequestMapping(value = "/tds/stage", method = RequestMethod.GET)
 	public String stage(Locale locale, Model model) {
-		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("stages", stageService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
+		model.addAttribute("stages", stageService.getAllVisibleStages());
 		return "stage";
 	}
 }

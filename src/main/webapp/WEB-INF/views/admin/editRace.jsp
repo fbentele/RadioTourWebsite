@@ -16,7 +16,9 @@
 							tabindex="1" /><label for="raceSlug">Kurzname</label> <input type="text"
 							name="raceSlug" class="theRaceSlug" value="${race.raceSlug}" tabindex="1" /> <label
 							for="year">Jahr</label> <input type="number" name="year" value="${race.year}"
-							tabindex="2" /> <br>
+							tabindex="2" />
+							<label for="visible"><input type="checkbox" name="visible" value="true" <c:if test="${race.visible == true}">checked</c:if>> Sichtbar</label>
+							<br>
 						<button type="submit" class="btn btn-primary">Speichern</button>
 					</div>
 					<div class="span4">
@@ -37,6 +39,7 @@
 							<th>Von</th>
 							<th>Bis</th>
 							<th>Distanz</th>
+							<th>Sichtbar</th>
 							<th>Bearbeiten</th>
 							<th>Löschen</th>
 						</tr>
@@ -47,6 +50,7 @@
 								<td>${stage.starttime}</td>
 								<td>${stage.endtime}</td>
 								<td>${stage.distance}</td>
+								<td>${stage.visible}</td>
 								<td><a href="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">Bearbeiten</a></td>
 								<td><a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}">Löschen</a></td>
 							</tr>
@@ -70,6 +74,9 @@
 					<div class="input-append">
 						<input type="number" name="distance" tabindex="8"> <span class="add-on">km</span>
 					</div>
+					<label for="visible"> <input type="checkbox" name="visible"
+						value="true"> Sichtbar
+					</label>
 					<div>
 						<label for="bannerImageFile">Etappen Banner Bild hochladen:</label> <img
 							src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
@@ -80,7 +87,8 @@
 						<label for="stageProfileFile">Etappen (höhen) Profilbild hochladen:</label> <img
 							src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
 						<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
-						<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" />
+						<br /> <input type="file" accept="image/*" name="stageProfileFile"
+							class="fileupload2" />
 					</div>
 					<br />
 					<button type="submit" class="btn btn-primary" tabindex="10">Speichern</button>

@@ -25,18 +25,12 @@
 				gefahren.</p>
 		</div>
 		<div class="row-fluid">
-			<div class="span12">
-				<h4 id="streckenprofil">Streckenprofil</h4>
-				<c:choose>
-					<c:when test="${not empty stage.stageProfileImage}">
-						<img width="940" src="${hostname}${stage.stageProfileImage}" />
-					</c:when>
-					<c:otherwise>
-						<img width="940" src="<c:url value="/resources/img/streckenprofil.png" />" />
-					</c:otherwise>
-				</c:choose>
-
-			</div>
+			<c:if test="${not empty stage.stageProfileImage}">
+				<div class="span12">
+					<h4 id="streckenprofil">Streckenprofil</h4>
+					<img width="940" src="${hostname}${stage.stageProfileImage}" />
+				</div>
+			</c:if>
 		</div>
 		<div class="row-fluid">
 			<div class="span12">

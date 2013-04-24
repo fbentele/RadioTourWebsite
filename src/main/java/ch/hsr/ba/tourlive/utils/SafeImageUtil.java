@@ -10,24 +10,19 @@ import javax.imageio.ImageIO;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class SafeImageUtil {
-	public static String safe(CommonsMultipartFile bannerimage,
-			String absolutePath, String relativePath, String filename) {
+	public static String safe(CommonsMultipartFile multipartImage, String absolutePath,
+			String relativePath, String filename) {
 
-		if (bannerimage.toString() != "") {
-
-			InputStream bannerInStream = null;
-
+		if (!multipartImage.isEmpty()) {
+			InputStream iStream = null;
 			try {
-				bannerInStream = bannerimage.getInputStream();
-
-				BufferedImage sourceImage = ImageIO.read(bannerInStream);
-
+				iStream = multipartImage.getInputStream();
+				BufferedImage sourceImage = ImageIO.read(iStream);
 				File serverPath = new File(absolutePath + relativePath);
 				if (!serverPath.exists()) {
 					serverPath.mkdir();
 				}
-				ImageIO.write(sourceImage, "png",
-						new File(serverPath, filename));
+				ImageIO.write(sourceImage, "png", new File(serverPath, filename));
 			} catch (IOException e) {
 				// catch exception
 			} catch (IllegalArgumentException e) {

@@ -18,5 +18,9 @@ public interface StageService {
 
 	public List<Stage> getAllByRace(Race race);
 
+	public List<Stage> getAllVisibleStages();
+
+	public List<Stage> getAllVisibleByRace(Race race);
+
 	public Stage getStageBySlug(String slug);
 }

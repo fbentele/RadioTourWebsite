@@ -24,8 +24,7 @@ public class RaceDAOImpl implements RaceDAO {
 	}
 
 	public void delete(Long id) {
-		Race race = (Race) sessionFactory.getCurrentSession().load(Race.class,
-				id);
+		Race race = (Race) sessionFactory.getCurrentSession().load(Race.class, id);
 		if (race != null) {
 			sessionFactory.getCurrentSession().delete(race);
 		}
@@ -33,13 +32,21 @@ public class RaceDAOImpl implements RaceDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Race> getAll() {
-		return sessionFactory.getCurrentSession().createCriteria(Race.class)
-				.list();
+		return sessionFactory.getCurrentSession().createCriteria(Race.class).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Race> getAllVisible() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Race.class);
+		crit.add(Restrictions.eq("visible", true));
+		return (List<Race>) crit.list();
 	}
 
 	public Race getActualTds() {
-		// TODO: return latest Tour de Suiss Race Object or null if none
-		// available
+		/*
+		 * TODO: return latest Tour de Suiss Race Object or null if none
+		 * available
+		 */
 		return null;
 	}
 
@@ -48,8 +55,7 @@ public class RaceDAOImpl implements RaceDAO {
 	}
 
 	public Race getRaceBySlug(String slug) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-				Race.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Race.class);
 		return (Race) crit.add(Restrictions.eq("raceSlug", slug)).list().get(0);
 	}
 }

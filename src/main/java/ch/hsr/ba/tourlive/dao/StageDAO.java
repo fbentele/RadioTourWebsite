@@ -14,9 +14,13 @@ public interface StageDAO {
 
 	public List<Stage> getAllStages();
 
+	public List<Stage> getAllVisibleStages();
+
 	public Stage getStageById(Long id);
 
 	public List<Stage> getAllByRace(Race race);
+
+	public List<Stage> getAllVisibleByRace(Race race);
 
 	public Stage getStageBySlug(String slug);
 }

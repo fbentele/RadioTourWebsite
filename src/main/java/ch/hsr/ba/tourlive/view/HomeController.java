@@ -32,8 +32,7 @@ public class HomeController {
 	@Autowired
 	RaceService raceService;
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	/*
 	 * Default Controller for all Pages
@@ -42,12 +41,12 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
-				DateFormat.LONG, locale);
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG,
+				locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("navbarhome", "active");
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 		return "home";
 	}
 
@@ -55,7 +54,7 @@ public class HomeController {
 	public String archive(Locale locale, Model model) {
 		logger.info("This is the archive Page");
 		model.addAttribute("navbararchive", "active");
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 
 		return "archive";
 	}
@@ -64,7 +63,7 @@ public class HomeController {
 	public String about(Locale locale, Model model) {
 		logger.info("This is the about Page");
 		model.addAttribute("navbarabout", "active");
-		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("races", raceService.getAllVisible());
 
 		return "about";
 	}

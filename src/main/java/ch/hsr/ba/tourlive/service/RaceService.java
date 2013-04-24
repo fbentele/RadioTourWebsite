@@ -13,6 +13,8 @@ public interface RaceService {
 
 	public List<Race> getAll();
 
+	public List<Race> getAllVisible();
+
 	public Race getRaceById(Long id);
 
 	public Race getActualTds();

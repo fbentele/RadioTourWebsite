@@ -36,6 +36,16 @@ public class StageServiceImpl implements StageService {
 	}
 
 	@Transactional
+	public List<Stage> getAllVisibleStages() {
+		return stagedao.getAllVisibleStages();
+	}
+
+	@Transactional
+	public List<Stage> getAllVisibleByRace(Race race) {
+		return stagedao.getAllVisibleByRace(race);
+	}
+
+	@Transactional
 	public Stage getStageById(Long id) {
 		return stagedao.getStageById(id);
 	}
