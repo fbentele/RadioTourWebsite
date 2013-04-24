@@ -51,8 +51,6 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		log.info("______________ pre " + crit.list().size());
-
 		if (!stage.getDevices().isEmpty()) {
 			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
@@ -60,14 +58,46 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			}
 			crit.add(d);
 		}
-
-		log.info("______________ pre " + crit.list().size());
-
 		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
 				stage.getEndtimeAsTimestamp()));
-		log.info("______________ pre " + crit.list().size());
-
 		crit.addOrder(Order.desc("timestamp"));
 		return crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ValueContainer> getAllForStageByDistance(Stage stage) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		if (!stage.getDevices().isEmpty()) {
+			Disjunction d = Restrictions.or();
+			for (Device device : stage.getDevices()) {
+				d.add(Restrictions.eq("device", device));
+			}
+			crit.add(d);
+		}
+		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+				stage.getEndtimeAsTimestamp()));
+		Criteria stageCriteria = crit.createCriteria("stageData");
+		stageCriteria.addOrder(Order.asc("distance"));
+		return (List<ValueContainer>) stageCriteria.list();
+	}
+
+	public ValueContainer getFirstByStage(Stage stage) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		if (!stage.getDevices().isEmpty()) {
+			Disjunction d = Restrictions.or();
+			for (Device device : stage.getDevices()) {
+				d.add(Restrictions.eq("device", device));
+			}
+			crit.add(d);
+		}
+		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+				stage.getEndtimeAsTimestamp()));
+		try {
+			return (ValueContainer) crit.addOrder(Order.desc("Stagedata.distance")).list().get(0);
+		} catch (Exception e) {
+			// TODO: do stuff here, if list is empty, cannot acces element 0
+			return null;
+		}
+
 	}
 }

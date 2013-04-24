@@ -225,6 +225,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.GET)
 	public String editDevice(@PathVariable("deviceId") String deviceId, Model model) {
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("device", deviceService.getDeviceById(deviceId));
 		return "admin/editDevice";
 	}

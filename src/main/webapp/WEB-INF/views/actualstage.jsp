@@ -21,7 +21,7 @@
 		</div>
 		<div class="row-fluid">
 			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
-			<p class="lead">Es sind ${current.stageData.distance} km von ${stage.distance} km
+			<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
 				gefahren.</p>
 		</div>
 		<div class="row-fluid">
@@ -35,7 +35,21 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="abstand">Abstandsentwicklung</h4>
-				<img width="940" src="<c:url value="/resources/img/abstandsentwicklung.png" />" />
+				<div id="abstand-canvas"></div>
+
+				<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
+
+				<script type="text/javascript">
+					var canvas = Raphael("abstand-canvas", 940, 220);
+					var lineY = canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+					var lineX = canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+					
+					<c:forEach items="${distances}" var="distance">
+						var circle = canvas.circle(${distance.stageData.distance}*920/${stage.distance}, 80, 5).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
+					</c:forEach>
+
+				</script>
+				<!-- <img width="940" src="<c:url value="/resources/img/abstandsentwicklung.png" />" /> -->
 			</div>
 		</div>
 

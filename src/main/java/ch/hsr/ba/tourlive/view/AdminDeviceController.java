@@ -13,24 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.hsr.ba.tourlive.service.DeviceService;
+import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
 public class AdminDeviceController {
 	@Autowired
 	DeviceService deviceService;
+	@Autowired
+	RaceService raceService;
 	Logger log = LoggerFactory.getLogger(AdminDeviceController.class);
 
 	@RequestMapping(value = "/admin/device", method = RequestMethod.GET)
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("devices", deviceService.getAll());
 		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("races", raceService.getAllVisible());
 		return "admin/manageDevice";
 	}
 
 	@RequestMapping(value = "/admin/device/delete/{deviceId}")
-	public String deleteRace(@PathVariable("deviceId") String deviceId,
-			Model model) throws Exception {
+	public String deleteRace(@PathVariable("deviceId") String deviceId, Model model)
+			throws Exception {
 		// deviceService.delete(deviceId);
 		log.error("If device is being deleted what happens to valuecontainer?");
 

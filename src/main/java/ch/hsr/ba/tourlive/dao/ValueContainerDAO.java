@@ -16,4 +16,8 @@ public interface ValueContainerDAO {
 
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage);
 
+	public List<ValueContainer> getAllForStageByDistance(Stage stage);
+
+	public ValueContainer getFirstByStage(Stage stage);
+
 }

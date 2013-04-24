@@ -6,5 +6,4 @@
 	src="<c:url value="/resources/js/bootstrap-datetimepicker.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/bootstrap-colorpicker.js" />"></script>
-	<script type="text/javascript" src="<c:url value="/resources/js/tourliveux.js" />"></script>
-	
+<script type="text/javascript" src="<c:url value="/resources/js/tourliveux.js" />"></script>

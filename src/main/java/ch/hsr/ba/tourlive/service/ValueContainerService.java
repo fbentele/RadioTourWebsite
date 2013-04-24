@@ -16,4 +16,8 @@ public interface ValueContainerService {
 	public List<ValueContainer> getAll();
 
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage);
+
+	public List<ValueContainer> getAllForStageByDistance(Stage stage);
+
+	public ValueContainer getFirstByStage(Stage stage);
 }
