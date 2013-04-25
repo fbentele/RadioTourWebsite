@@ -2,15 +2,15 @@
 
 <c:if test="${not empty menuitems}">
 	<div class="span2">
-		<div class="well sidebar-nav">
-			<ul class="nav">
-				<li class="nav-header">${menutitle}</li>
+		<div class="">
+			<ul class="nav nav-list affix">
+				<c:if test="${not empty menutitle}">
+					<li class="nav-header">${menutitle}</li>
+				</c:if>
 				<c:forEach items="${menuitems}" var="item">
 					<li class=""><a href="${item.urlpath}" target="_self">${item.menutitle}</a></li>
 				</c:forEach>
 			</ul>
 		</div>
-		<!--/.well -->
 	</div>
-	<!--/span-->
 </c:if>

@@ -1,5 +1,6 @@
 package ch.hsr.ba.tourlive.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -102,4 +103,26 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		}
 
 	}
+
+	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
+		List<ValueContainer> list = new ArrayList<ValueContainer>();
+		if (!stage.getDevices().isEmpty()) {
+			for (Device device : stage.getDevices()) {
+				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+						ValueContainer.class);
+				crit.add(Restrictions.eq("device", device));
+				crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+						stage.getEndtimeAsTimestamp()));
+				Criteria stageCriteria = crit.createCriteria("stageData");
+				try {
+					list.add((ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list()
+							.get(0));
+				} catch (Exception e) {
+				}
+			}
+		}
+		return list;
+
+	}
+
 }

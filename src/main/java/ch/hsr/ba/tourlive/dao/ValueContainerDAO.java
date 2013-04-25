@@ -20,4 +20,6 @@ public interface ValueContainerDAO {
 
 	public ValueContainer getFirstByStage(Stage stage);
 
+	public List<ValueContainer> getLatestForDeviceByStage(Stage stage);
+
 }

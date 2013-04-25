@@ -20,4 +20,7 @@ public interface ValueContainerService {
 	public List<ValueContainer> getAllForStageByDistance(Stage stage);
 
 	public ValueContainer getFirstByStage(Stage stage);
+
+	public List<ValueContainer> getLatestForDeviceByStage(Stage stage);
+
 }

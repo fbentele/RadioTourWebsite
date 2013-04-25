@@ -73,10 +73,9 @@ public class RaceController {
 		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
 		model.addAttribute("devices", stage.getDevices());
 		model.addAttribute("hostname", hostname);
+		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
 		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
 		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
-		log.info("________________________ firsts dist: "
-				+ valueContainerService.getFirstByStage(stage));
 		try {
 			model.addAttribute("current", valueContainers.get(0));
 		} catch (IndexOutOfBoundsException e) {

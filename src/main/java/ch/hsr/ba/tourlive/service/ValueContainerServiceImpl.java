@@ -49,4 +49,9 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	public ValueContainer getFirstByStage(Stage stage) {
 		return valueDao.getFirstByStage(stage);
 	}
+
+	@Transactional
+	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
+		return valueDao.getLatestForDeviceByStage(stage);
+	}
 }

@@ -209,16 +209,35 @@
 	<!-- Strecken / Hoehenprofil -->
 	<script type="text/javascript">
 		var streckencanvas = Raphael("strecken-canvas", 940, 350);
-		<c:forEach items="${devices}" var="device">
-		var lineZ = streckencanvas.path("M50,330L50,135").attr({"stroke": "${device.color}", "stroke-width":"2"});
-		</c:forEach>
+		<c:choose>
+			<c:when test="${not empty latest}">
+				<c:forEach items="${latest}" var="latest">
+					var m = ${latest.stageData.distance}*870/${latest.stageData.distance}+50;
+					var drawstring = "M" + m + ",330L"+m+",135";
+					var line_${latest.device.deviceId} = streckencanvas.path(drawstring).attr({"stroke": "${latest.device.color}", "stroke-width":"2"});
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				var line_default = streckencanvas.path("M50,330L50,135").attr({"stroke": "#ff0", "stroke-width":"2"});
+			</c:otherwise>
+		</c:choose>
 	</script>
 
 	<!-- Abstandsentwicklung -->
 	<script type="text/javascript">
+					var stageDistance = ${stage.distance};
 					var canvas = Raphael("abstand-canvas", 940, 220);
 					var lineY = canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 					var lineX = canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+					
+					var markerLineX50 = canvas.path("M450,190L450,210");
+					var markerLineX100 = canvas.path("M900,190L900,210");
+					var textMarkerLineX50 = canvas.text(450,215, stageDistance/2);
+					var textMarkerLineX100 = canvas.text(900,215, stageDistance);
+					
+					canvas.text(50, 10, "Rückstand in m");
+					canvas.text(900, 180, "Rennkilometer");
+					
 					<c:forEach items="${distances}" var="distance">
 						var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 80, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
 					</c:forEach>
