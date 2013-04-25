@@ -5,7 +5,6 @@
 <html lang="en">
 
 <body>
-	<div class="span10">
 		<div class="row-fluid">
 			<h2>Rennen bearbeiten:</h2>
 			<p>
@@ -111,6 +110,5 @@
 				</div>
 			</form>
 		</div>
-	</div>
 </body>
 </html>

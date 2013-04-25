@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.utils.SafeImageUtil;
+import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
@@ -49,6 +49,7 @@ public class AdminController {
 	public String admin(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin"));
 		return "admin/admin";
 	}
 
@@ -56,6 +57,8 @@ public class AdminController {
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
+
 		return "admin/manageRace";
 	}
 
@@ -78,6 +81,7 @@ public class AdminController {
 		model.addAttribute("race", race);
 		model.addAttribute("stages", stageService.getAllByRace(race));
 		model.addAttribute("races", raceService.getAllVisible());
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId));
 		return "admin/editRace";
 	}
 
@@ -99,16 +103,8 @@ public class AdminController {
 		raceService.delete(raceId);
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAllVisible());
-
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
 		return "forward:/admin/race";
-	}
-
-	@RequestMapping(value = "/admin/stage", method = RequestMethod.GET)
-	public String manageStage(Locale locale, Model model) {
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAllVisible());
-
-		return "forward:/admin/stage";
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
@@ -155,6 +151,8 @@ public class AdminController {
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("devices", deviceService.getAll());
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
+				+ stageId));
 		return "admin/editStage";
 	}
 
@@ -224,6 +222,7 @@ public class AdminController {
 		Stage stage = stageService.getStageById(stageId);
 		stage.removeDevice(deviceService.getDeviceById(deviceId));
 		stageService.update(stage);
+
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
@@ -234,25 +233,11 @@ public class AdminController {
 		return "admin/manageRider";
 	}
 
-	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.GET)
-	public String editDevice(@PathVariable("deviceId") String deviceId, Model model) {
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("device", deviceService.getDeviceById(deviceId));
-		return "admin/editDevice";
-	}
-
-	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.POST)
-	public String saveDevice(@PathVariable("deviceId") String deviceId,
-			@ModelAttribute("deice") Device device, Model model) {
-		deviceService.update(device);
-		return "redirect:/admin/device";
-	}
-
 	private ArrayList<MenuItem> makeMenu() {
 		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
 		menu.add(new MenuItem("Rennen", "/admin/race"));
 		menu.add(new MenuItem("Geräte", "/admin/device"));
 		return menu;
 	}
+
 }

@@ -43,6 +43,9 @@ public class PositionData {
 	@Column
 	private Integer transferInterval;
 
+	@Column
+	private float accuracy;
+
 	public Long getPositionid() {
 		return positionid;
 	}
@@ -115,12 +118,19 @@ public class PositionData {
 		this.transferInterval = transferInterval;
 	}
 
+	public float getAccuracy() {
+		return accuracy;
+	}
+
+	public void setAccuracy(float accuracy) {
+		this.accuracy = accuracy;
+	}
+
 	@Override
 	public String toString() {
-		return "PositionData [positionid=" + positionid + ", longitude="
-				+ longitude + ", latitude=" + latitude + ", speed=" + speed
-				+ ", altitude=" + altitude + ", direction=" + direction
-				+ ", incline=" + incline + ", satellites=" + satellites
-				+ ", transferInterval=" + transferInterval + "]";
+		return "PositionData [positionid=" + positionid + ", longitude=" + longitude
+				+ ", latitude=" + latitude + ", speed=" + speed + ", altitude=" + altitude
+				+ ", direction=" + direction + ", incline=" + incline + ", satellites="
+				+ satellites + ", transferInterval=" + transferInterval + "]";
 	}
 }

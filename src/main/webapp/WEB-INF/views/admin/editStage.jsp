@@ -5,7 +5,6 @@
 <html lang="en">
 
 <body>
-	<div class="span10">
 		<h2>Etappe bearbeiten:</h2>
 		<div class="row-fluid">
 			<form:form method="post" name="stage"
@@ -102,6 +101,5 @@
 				</c:choose>
 			</div>
 		</div>
-	</div>
 </body>
 </html>

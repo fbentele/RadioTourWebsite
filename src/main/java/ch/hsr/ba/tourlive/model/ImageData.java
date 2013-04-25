@@ -49,6 +49,10 @@ public class ImageData {
 		this.imageDataId = imageDataId;
 	}
 
+	public Long getRealTimestamp() {
+		return timestamp;
+	}
+
 	public String getTimestamp() {
 		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
 		try {

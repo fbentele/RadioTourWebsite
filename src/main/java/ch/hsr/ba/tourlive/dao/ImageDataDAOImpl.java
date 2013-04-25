@@ -29,24 +29,20 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 
 	public void delete(Long imageDataId) {
 		sessionFactory.getCurrentSession().delete(
-				sessionFactory.getCurrentSession().get(ImageData.class,
-						imageDataId));
+				sessionFactory.getCurrentSession().get(ImageData.class, imageDataId));
 	}
 
 	public ImageData getById(Long imageDataId) {
-		return (ImageData) sessionFactory.getCurrentSession().get(
-				ImageData.class, imageDataId);
+		return (ImageData) sessionFactory.getCurrentSession().get(ImageData.class, imageDataId);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllImageDataByDevice(Device device) {
-		return sessionFactory.getCurrentSession()
-				.createCriteria(ImageData.class).list();
+		return sessionFactory.getCurrentSession().createCriteria(ImageData.class).list();
 	}
 
 	public ImageData getMostRecentByDevice(Device device) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-				ImageData.class);
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
 		try {
 			return (ImageData) crit.add(Restrictions.eq("device", device))
 					.addOrder(Order.desc("timestamp")).list().get(0);
@@ -61,8 +57,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	public List<ImageData> getMostRecentByStage(Stage stage) {
 		List<ImageData> imageData = new ArrayList<ImageData>();
 		for (Device dev : stage.getDevices()) {
-			if (this.getMostRecentByDevice(dev) != null)
-				imageData.add(this.getMostRecentByDevice(dev));
+			ImageData img = this.getMostRecentByDevice(dev);
+
+			if (img != null) {
+				if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
+						&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+					imageData.add(this.getMostRecentByDevice(dev));
+			}
 		}
 		return imageData;
 	}

@@ -6,7 +6,6 @@
 <title>Tourlive - ${stage.stageName}</title>
 </head>
 <body>
-	<div class="span10">
 		<div class="row-fluid">
 			<ul class="nav nav-pills">
 				<li><a href="#">Top</a></li>
@@ -88,9 +87,9 @@
 				</div>
 			</div>
 		</c:if>
-	
-	
-<!-- 		<div class="row-fluid">
+
+
+		<!-- 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rennsituation">Rennsituation</h4>
 				<table class="table table-hover">
@@ -204,15 +203,15 @@
 	</div>
 	
 	 -->
-	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
+		<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
-	<!-- Strecken / Hoehenprofil -->
-	<script type="text/javascript">
+		<!-- Strecken / Hoehenprofil -->
+		<script type="text/javascript">
 		var streckencanvas = Raphael("strecken-canvas", 940, 350);
 		<c:choose>
 			<c:when test="${not empty latest}">
 				<c:forEach items="${latest}" var="latest">
-					var m = ${latest.stageData.distance}*870/${latest.stageData.distance}+50;
+					var m = ${latest.stageData.distance}*870/${stage.distance}+50;
 					var drawstring = "M" + m + ",330L"+m+",135";
 					var line_${latest.device.deviceId} = streckencanvas.path(drawstring).attr({"stroke": "${latest.device.color}", "stroke-width":"2"});
 				</c:forEach>
@@ -223,32 +222,37 @@
 		</c:choose>
 	</script>
 
-	<!-- Abstandsentwicklung -->
-	<script type="text/javascript">
-					var stageDistance = ${stage.distance};
-					var canvas = Raphael("abstand-canvas", 940, 220);
-					var lineY = canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-					var lineX = canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+		<!-- Abstandsentwicklung -->
+		<script type="text/javascript">
+		var stageDistance = ${stage.distance};
+		var canvas = Raphael("abstand-canvas", 940, 220);
+		canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+		canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+			
+		canvas.path("M230,190L230,210");
+		canvas.path("M450,190L450,210");
+		canvas.path("M670,190L670,210");
+		canvas.path("M890,190L890,210");
+		canvas.text(10,215, "0 " );
+		canvas.text(230,215, stageDistance/4);
+		canvas.text(450,215, stageDistance/2);
+		canvas.text(670,215, stageDistance/4 *3);
+		canvas.text(890,215, stageDistance);
 					
-					var markerLineX50 = canvas.path("M450,190L450,210");
-					var markerLineX100 = canvas.path("M900,190L900,210");
-					var textMarkerLineX50 = canvas.text(450,215, stageDistance/2);
-					var textMarkerLineX100 = canvas.text(900,215, stageDistance);
-					
-					canvas.text(50, 10, "Rückstand in m");
-					canvas.text(900, 180, "Rennkilometer");
-					
-					<c:forEach items="${distances}" var="distance">
-						var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 80, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
-					</c:forEach>
+		canvas.text(50, 10, "Rückstand in m");
+		canvas.text(900, 180, "Rennkilometer");
+	
+		<c:forEach items="${distances}" var="distance">
+			var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 1000/${distance.valueContainerId}, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
+		</c:forEach>
 	</script>
 
-	<!-- Karte -->
-	<c:if test="${not empty valuecontainers}">
-		<script type="text/javascript"
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
+		<!-- Karte -->
+		<c:if test="${not empty valuecontainers}">
+			<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
 	</script>
-		<script type="text/javascript">
+			<script type="text/javascript">
 		function initialize() {
 			
 			var myLatLng = new google.maps.LatLng(${current.positionData.latitude}, ${current.positionData.longitude});
@@ -282,6 +286,6 @@
 			}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
-	</c:if>
+		</c:if>
 </body>
 </html>

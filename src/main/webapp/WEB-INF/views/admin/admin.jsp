@@ -4,7 +4,7 @@
 <html lang="en">
 
 <body>
-	<div class="span10">Lorem ipsum dolor sit amet, consectetur
+	Lorem ipsum dolor sit amet, consectetur
 		adipiscing elit. Sed gravida mollis placerat. Sed congue iaculis massa
 		vitae dapibus. Fusce sed felis lorem. Suspendisse purus diam,
 		sollicitudin vitae imperdiet ac, placerat eu metus. In luctus, metus
@@ -25,6 +25,6 @@
 		adipiscing sapien et porta. Sed quis diam ut sem tincidunt consectetur
 		varius non dolor. Fusce fermentum, quam vitae suscipit euismod, leo
 		erat malesuada ante, ac consequat est lacus eget enim. Proin lacinia
-		justo et est vehicula adipiscing rhoncus lacus mollis.</div>
+		justo et est vehicula adipiscing rhoncus lacus mollis.
 </body>
 </html>

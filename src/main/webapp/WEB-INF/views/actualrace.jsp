@@ -6,9 +6,7 @@
 <title>Tourlive - ${race.raceName}</title>
 </head>
 <body>
-	<div class="span10">
 		<h2>${race.raceName}</h2>
 		<p>${race.raceDescription}</p>
-	</div>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <html lang="en">
 
 <body>
-	<div class="span10">
 		<h2>Aufnahmegeräte:</h2>
 		<table class="table table-hover">
 			<tr>
@@ -27,6 +26,5 @@
 				</tr>
 			</c:forEach>
 		</table>
-	</div>
 </body>
 </html>

@@ -28,7 +28,11 @@
 			<c:import url="/WEB-INF/views/tags/banner.jsp" />
 			<div class="row-fluid">
 				<c:import url="/WEB-INF/views/tags/menu.jsp" />
-				<decorator:body />
+				<div class="span10">
+					<c:import url="/WEB-INF/views/tags/breadcrumb.jsp" />
+					<decorator:body />
+				</div>
+
 				<!--/span-->
 				<!--/row-->
 			</div>

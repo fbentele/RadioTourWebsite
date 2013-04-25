@@ -5,7 +5,6 @@
 <html lang="en">
 
 <body>
-	<div class="span10">
 		<h2>Alle Rennen:</h2>
 		<table class="table table-hover">
 			<tr>
@@ -46,6 +45,5 @@
 			</form:form>
 
 		</div>
-	</div>
 </body>
 </html>
