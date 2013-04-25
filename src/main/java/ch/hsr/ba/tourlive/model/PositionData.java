@@ -44,7 +44,7 @@ public class PositionData {
 	private Integer transferInterval;
 
 	@Column
-	private float accuracy;
+	private Float accuracy;
 
 	public Long getPositionid() {
 		return positionid;
@@ -118,11 +118,11 @@ public class PositionData {
 		this.transferInterval = transferInterval;
 	}
 
-	public float getAccuracy() {
+	public Float getAccuracy() {
 		return accuracy;
 	}
 
-	public void setAccuracy(float accuracy) {
+	public void setAccuracy(Float accuracy) {
 		this.accuracy = accuracy;
 	}
 
