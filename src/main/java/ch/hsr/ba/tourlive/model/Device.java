@@ -47,7 +47,9 @@ public class Device {
 	}
 
 	public void setColor(String color) {
-		this.color = color;
+		if (color.length() > 0) {
+			this.color = color;
+		}
 	}
 
 	public String getLabelName() {

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.ImageData;
 import ch.hsr.ba.tourlive.model.PositionData;
 import ch.hsr.ba.tourlive.model.RaceSituation;
@@ -64,6 +65,12 @@ public class ApiController {
 	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.POST)
 	@ResponseBody
 	public void valueContainer(@RequestBody final ValueContainer request) {
+		Device rec = request.getDevice();
+		Device d = deviceService.getDeviceById(rec.getDeviceId());
+		if (d != null) {
+			d.setUsername(rec.getUsername());
+			request.setDevice(d);
+		}
 		valueContainerService.save(request);
 	}
 
