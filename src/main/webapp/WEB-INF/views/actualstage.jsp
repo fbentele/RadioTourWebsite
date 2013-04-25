@@ -88,7 +88,9 @@
 				</div>
 			</div>
 		</c:if>
-		<div class="row-fluid">
+	
+	
+<!-- 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rennsituation">Rennsituation</h4>
 				<table class="table table-hover">
@@ -200,6 +202,8 @@
 			</div>
 		</div>
 	</div>
+	
+	 -->
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
 	<!-- Strecken / Hoehenprofil -->
