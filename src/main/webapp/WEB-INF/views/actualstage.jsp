@@ -21,36 +21,31 @@
 		</div>
 		<div class="row-fluid">
 			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
-			<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
-				gefahren.</p>
-		</div>
-		<div class="row-fluid">
-			<c:if test="${not empty stage.stageProfileImage}">
-				<div class="span12">
-					<h4 id="streckenprofil">Streckenprofil</h4>
-					<img width="940" src="${hostname}${stage.stageProfileImage}" />
-				</div>
+			<c:if test="${not empty first.stageData.distance}">
+				<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
+					gefahren.</p>
 			</c:if>
 		</div>
-		<div class="row-fluid">
-			<div class="span12">
-				<h4 id="abstand">Abstandsentwicklung</h4>
-				<div id="abstand-canvas"></div>
-
-				<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
-
-				<script type="text/javascript">
-					var canvas = Raphael("abstand-canvas", 940, 220);
-					var lineY = canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-					var lineX = canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-					
-					<c:forEach items="${distances}" var="distance">
-						var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 80, 5).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
-					</c:forEach>
-
-				</script>
+		<c:if test="${not empty stage.stageProfileImage}">
+			<div class="row-fluid">
+				<div class="span12">
+					<h4 id="streckenprofil">Streckenprofil</h4>
+					<div id="image-drawing-wrapper">
+						<img width="940" src="${hostname}${stage.stageProfileImage}" />
+						<div id="strecken-canvas"></div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</c:if>
+		<c:if test="${not empty distances}">
+			<div class="row-fluid">
+				<div class="span12">
+					<h4 id="abstand">Abstandsentwicklung</h4>
+					<div id="abstand-canvas"></div>
+
+				</div>
+			</div>
+		</c:if>
 
 		<div class="row-fluid" id="livebilder">
 			<c:forEach items="${images}" var="image">
@@ -61,35 +56,38 @@
 				</div>
 			</c:forEach>
 		</div>
-		<div class="row-fluid">
-			<div class="span6">
-				<h4 id="karte">Karte</h4>
-				<div id="map-canvas"></div>
+
+		<c:if test="${not empty valuecontainers}">
+			<div class="row-fluid">
+				<div class="span6">
+					<h4 id="karte">Karte</h4>
+					<div id="map-canvas"></div>
+				</div>
+				<div class="span6">
+					<h4 id="liveticker">Liveticker</h4>
+					<p>Hier stehen jeweils die aktuellsten News zum Rennen</p>
+					<dl class="dl-horizontal">
+						<dt>09:35:12</dt>
+						<dd>Fahrer fährt vor</dd>
+						<dt>09:35:47</dt>
+						<dd>Grosser Sturz im Feld</dd>
+						<dt>09:35:59</dt>
+						<dd>Nr. 9 wird überholt</dd>
+						<dt>09:36:15</dt>
+						<dd>Alle fahren schnell</dd>
+						<dt>09:36:43</dt>
+						<dd>Nr. 12 trink Wasser</dd>
+						<dt>09:36:54</dt>
+						<dd>Team BMC macht richtig Dampf</dd>
+						<dt>09:37:09</dt>
+						<dd>Alle anderen auch</dd>
+						<dt>
+							<img src="<c:url value="/resources/img/loading.gif"/>" />
+						</dt>
+					</dl>
+				</div>
 			</div>
-			<div class="span6">
-				<h4 id="liveticker">Liveticker</h4>
-				<p>Hier stehen jeweils die aktuellsten News zum Rennen</p>
-				<dl class="dl-horizontal">
-					<dt>09:35:12</dt>
-					<dd>Fahrer fährt vor</dd>
-					<dt>09:35:47</dt>
-					<dd>Grosser Sturz im Feld</dd>
-					<dt>09:35:59</dt>
-					<dd>Nr. 9 wird überholt</dd>
-					<dt>09:36:15</dt>
-					<dd>Alle fahren schnell</dd>
-					<dt>09:36:43</dt>
-					<dd>Nr. 12 trink Wasser</dd>
-					<dt>09:36:54</dt>
-					<dd>Team BMC macht richtig Dampf</dd>
-					<dt>09:37:09</dt>
-					<dd>Alle anderen auch</dd>
-					<dt>
-						<img src="<c:url value="/resources/img/loading.gif"/>" />
-					</dt>
-				</dl>
-			</div>
-		</div>
+		</c:if>
 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rennsituation">Rennsituation</h4>
@@ -202,10 +200,32 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
-	</script>
+	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
+
+	<!-- Strecken / Hoehenprofil -->
 	<script type="text/javascript">
+		var streckencanvas = Raphael("strecken-canvas", 940, 350);
+		<c:forEach items="${devices}" var="device">
+		var lineZ = streckencanvas.path("M50,330L50,135").attr({"stroke": "${device.color}", "stroke-width":"2"});
+		</c:forEach>
+	</script>
+
+	<!-- Abstandsentwicklung -->
+	<script type="text/javascript">
+					var canvas = Raphael("abstand-canvas", 940, 220);
+					var lineY = canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+					var lineX = canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+					<c:forEach items="${distances}" var="distance">
+						var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 80, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
+					</c:forEach>
+	</script>
+
+	<!-- Karte -->
+	<c:if test="${not empty valuecontainers}">
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
+	</script>
+		<script type="text/javascript">
 		function initialize() {
 			
 			var myLatLng = new google.maps.LatLng(${current.positionData.latitude}, ${current.positionData.longitude});
@@ -238,6 +258,7 @@
 			</c:forEach>
 			}
 		google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+	</script>
+	</c:if>
 </body>
 </html>

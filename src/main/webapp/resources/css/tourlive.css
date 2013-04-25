@@ -172,4 +172,20 @@ html,body {
 	cursor: pointer;
 	width: 16px;
 	height: 16px;
-} 
+}
+
+#image-drawing-wrapper {
+    position: relative;
+    padding: 0;
+    min-height: 350px;
+}
+#image-drawing-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#strecken-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

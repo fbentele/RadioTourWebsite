@@ -119,6 +119,7 @@ public class AdminController {
 			@RequestParam("stageSlug") String stageSlug,
 			@RequestParam("starttime") String starttime,
 			@RequestParam("endtime") String endtime,
+			@RequestParam("distance") Float distance,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
@@ -129,6 +130,7 @@ public class AdminController {
 		stage.setRace(raceService.getRaceById(raceId));
 		stage.setStarttime(starttime);
 		stage.setEndtime(endtime);
+		stage.setDistance(distance);
 		if (visible.contains("true"))
 			stage.setVisible(true);
 
