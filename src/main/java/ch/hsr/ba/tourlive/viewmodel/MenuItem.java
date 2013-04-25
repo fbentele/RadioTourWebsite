@@ -35,8 +35,8 @@ public class MenuItem {
 		navi.add(new MenuItem("Abstand", "#abstand"));
 		navi.add(new MenuItem("Livebilder", "#livebilder"));
 		navi.add(new MenuItem("Karte", "#map-canvas"));
-		// navi.add(new MenuItem("Rennsituation", "#rennsituation"));
-		// navi.add(new MenuItem("Rangliste", "#rangliste"));
+		navi.add(new MenuItem("Rennsituation", "#rennsituation"));
+		navi.add(new MenuItem("Rangliste", "#rangliste"));
 		return navi;
 	}
 }
