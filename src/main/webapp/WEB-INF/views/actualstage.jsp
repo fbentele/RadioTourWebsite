@@ -30,7 +30,6 @@
 				<div class="span12">
 					<h4 id="abstand">Abstandsentwicklung</h4>
 					<div id="abstand-canvas"></div>
-
 				</div>
 			</div>
 		</c:if>
@@ -39,8 +38,20 @@
 			<c:forEach items="${images}" var="image">
 				<div class="span4">
 					<h4>${image.device.username}</h4>
-					<img width="250" src="<c:url value="${hostname}${image.imageLocation}"/>" />
-					<div id="caption">Letzte aktualisierung: ${image.timestamp}</div>
+					<img width="350" src="<c:url value="${hostname}${image.imageLocation}"/>" />
+					<div id="">
+					<c:forEach items="${latest}" var="latest" >
+						<c:if test="${latest.device.deviceId == image.device.deviceId}">
+						Überwundene Höhenmeter: <span class="pull-right">${latest.stageData.stageUpAltitude}</span></br>
+						Aktuelle Zeit: <span class="pull-right">${latest.stageData.stageTime}</span></br>
+						Rennkilometer: <span class="pull-right">${latest.stageData.distance}</span></br>
+						Durchschnittliche Geschwindigkeit: <span class="pull-right">${latest.stageData.averageSpeed}</br>
+						
+						
+						</c:if>
+					</c:forEach>
+					</div>
+					<div id="caption">Letzte aktualisierung: <span class="pull-right">${image.timestamp}</span></div>
 				</div>
 			</c:forEach>
 		</div>
@@ -78,9 +89,10 @@
 		</c:if>
 
 
-		<!-- 		<div class="row-fluid">
+		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rennsituation">Rennsituation</h4>
+				<p>Zum Zeitpunkt: 14:25:15 und Rennkilometer: 35.5 km<p>
 				<table class="table table-hover">
 					<tr>
 						<th>Feld</th>
@@ -88,9 +100,9 @@
 						<th>Spitze</th>
 					</tr>
 					<tr>
-						<td><img src="<c:url value="/resources/img/f5.png"/>" /></td>
-						<td><img src="<c:url value="/resources/img/f2.png"/>" /></td>
-						<td><img src="<c:url value="/resources/img/f3.png"/>" /></td>
+						<td><img src="<c:url value="/resources/img/f5.png"/>" /></br>Fahrer Nr: 1, 2, 3, 4</td>
+						<td><img src="<c:url value="/resources/img/f2.png"/>" /></br>Fahrer Nr: 13, 12, 41, 19</td>
+						<td><img src="<c:url value="/resources/img/f3.png"/>" /></br>Fahrer Nr: 32, 7, 11, 27</td>
 					</tr>
 				</table>
 			</div>
@@ -98,47 +110,61 @@
 		
 		<div class="row-fluid">
 			<div class="span12">
-				<h4 id="rangliste">Rangliste</h4>
+				<h4 id="rangliste">Live - Rangliste</h4>
 				<table class="table table-hover">
 					<tr>
-						<th>Startnummer</th>
-						<th>Rang</th>
-						<th>Name</th>
-						<th>Team</th>
-						<th>Land</th>
-						<th>Zeit</th>
+						<th style="width:10%">Start #</th>
+						<th style="width:10%">Rang</th>
+						<th style="width:40%">Name</th>
+						<th style="width:10%">Team</th>
+						<th style="width:10%">Land</th>
+						<th style="width:10%">Zeit</th>
+						<th style="width:10%">Rückstand:</th>
 					</tr>
 					<tr>
 						<td>1</td>
-						<td>3</td>
+						<td>1</td>
 						<td>Fabian Cancellara</td>
 						<td>BMC</td>
 						<td>Sui</td>
 						<td>4:23:1</td>
+						<td>00:00</td>
 					</tr>
 					<tr>
-						<td>1</td>
+						<td>2</td>
 						<td>3</td>
-						<td>Fabian Cancellara</td>
+						<td>Elmiger Martin</td>
 						<td>BMC</td>
 						<td>Sui</td>
 						<td>4:23:1</td>
+						<td>00:15</td>
 					</tr>
 					<tr>
-						<td>1</td>
 						<td>3</td>
-						<td>Fabian Cancellara</td>
+						<td>2</td>
+						<td>Champion Dimitri</td>
 						<td>BMC</td>
 						<td>Sui</td>
 						<td>4:23:1</td>
+						<td>00:21</td>
 					</tr>
 					<tr>
-						<td>1</td>
-						<td>3</td>
-						<td>Fabian Cancellara</td>
+						<td>4</td>
+						<td>5</td>
+						<td>Goddaert Kristof</td>
 						<td>BMC</td>
 						<td>Sui</td>
 						<td>4:23:1</td>
+						<td>00:35</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>4</td>
+						<td>Houanard Steve</td>
+						<td>BMC</td>
+						<td>Sui</td>
+						<td>4:23:1</td>
+						<td>00:45</td>
 					</tr>
 				</table>
 			</div>
@@ -157,7 +183,7 @@
 						<tr>
 							<td>1</td>
 							<td>3</td>
-							<td>Genf</td>
+							<td>Chur</td>
 							<td>13:12</td>
 							<td>13:15</td>
 							<td>4:23:1</td>
@@ -165,7 +191,7 @@
 						<tr class="success">
 							<td>1</td>
 							<td>3</td>
-							<td>Bern</td>
+							<td>Bonaduz</td>
 							<td>14:12</td>
 							<td>14:15</td>
 							<td>4:23:1</td>
@@ -173,7 +199,7 @@
 						<tr>
 							<td>1</td>
 							<td>3</td>
-							<td>Zürich</td>
+							<td>Thusis</td>
 							<td>15:12</td>
 							<td>15:15</td>
 							<td>4:23:1</td>
@@ -181,7 +207,7 @@
 						<tr>
 							<td>1</td>
 							<td>3</td>
-							<td>St. Gallen</td>
+							<td>Tiefencastel</td>
 							<td>16:12</td>
 							<td>16:15</td>
 							<td>4:23:1</td>
@@ -191,7 +217,6 @@
 			</div>
 		</div>
 	
-	 -->
 	</div>
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
