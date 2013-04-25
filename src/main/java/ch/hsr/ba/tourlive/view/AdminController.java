@@ -215,6 +215,16 @@ public class AdminController {
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/{deviceId}/remove", method = RequestMethod.GET)
+	public String removeDevice(@PathVariable("stageId") Long stageId,
+			@PathVariable("raceId") Long raceId, @PathVariable("deviceId") String deviceId,
+			HttpServletRequest request) {
+		Stage stage = stageService.getStageById(stageId);
+		stage.removeDevice(deviceService.getDeviceById(deviceId));
+		stageService.update(stage);
+		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
+	}
+
 	@RequestMapping(value = "/admin/race/{raceId}/rider", method = RequestMethod.GET)
 	public String addRider(@PathVariable("raceId") Long raceId, Locale locale, Model model) {
 		model.addAttribute("menuitems", makeMenu());

@@ -62,4 +62,14 @@ public class Device {
 	public String toString() {
 		return "Device [deviceId=" + deviceId + ", username=" + username + "]";
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return this.deviceId.equals(((Device) o).deviceId);
+	}
+
+	@Override
+	public int hashCode() {
+		return this.hashCode();
+	}
 }

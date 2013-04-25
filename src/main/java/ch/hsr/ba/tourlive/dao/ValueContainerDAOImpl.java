@@ -93,7 +93,9 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
 				stage.getEndtimeAsTimestamp()));
 		try {
-			return (ValueContainer) crit.addOrder(Order.desc("Stagedata.distance")).list().get(0);
+			Criteria stageCriteria = crit.createCriteria("stageData");
+			return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list().get(0);
+
 		} catch (Exception e) {
 			// TODO: do stuff here, if list is empty, cannot acces element 0
 			return null;

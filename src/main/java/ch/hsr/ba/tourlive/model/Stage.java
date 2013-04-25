@@ -177,7 +177,11 @@ public class Stage {
 	}
 
 	public void addDevice(Device device) {
-		this.devices.add(device);
+		devices.add(device);
+	}
+
+	public void removeDevice(Device device) {
+		devices.remove(device);
 	}
 
 	public String getBannerImage() {

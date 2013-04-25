@@ -25,7 +25,7 @@ public class AdminDeviceController {
 	Logger log = LoggerFactory.getLogger(AdminDeviceController.class);
 
 	@RequestMapping(value = "/admin/device", method = RequestMethod.GET)
-	public String manageRace(Locale locale, Model model) {
+	public String manageDevice(Locale locale, Model model) {
 		model.addAttribute("devices", deviceService.getAll());
 		model.addAttribute("menuitems", makeMenu());
 		model.addAttribute("races", raceService.getAllVisible());
@@ -33,7 +33,7 @@ public class AdminDeviceController {
 	}
 
 	@RequestMapping(value = "/admin/device/delete/{deviceId}")
-	public String deleteRace(@PathVariable("deviceId") String deviceId, Model model)
+	public String deleteDevice(@PathVariable("deviceId") String deviceId, Model model)
 			throws Exception {
 		// deviceService.delete(deviceId);
 		log.error("If device is being deleted what happens to valuecontainer?");

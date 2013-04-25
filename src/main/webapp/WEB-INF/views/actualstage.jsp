@@ -45,11 +45,10 @@
 					var lineX = canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 					
 					<c:forEach items="${distances}" var="distance">
-						var circle = canvas.circle(${distance.stageData.distance}*920/${stage.distance}, 80, 5).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
+						var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 80, 5).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
 					</c:forEach>
 
 				</script>
-				<!-- <img width="940" src="<c:url value="/resources/img/abstandsentwicklung.png" />" /> -->
 			</div>
 		</div>
 

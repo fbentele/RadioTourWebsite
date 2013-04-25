@@ -67,7 +67,7 @@
 					<h3>Zugeordnete Geräte</h3>
 					<ul>
 						<c:forEach items="${stage.devices}" var="device">
-							<li>${device.username} (Geräte ID: ${device.deviceId})</li>
+							<li>${device.username} (Geräte ID: ${device.deviceId}) <a href="/admin/race/${race.raceId}/stage/${stage.stageId}/device/${device.deviceId}/remove" targe="_self">Entfernen</a></li>
 						</c:forEach>
 					</ul>
 				</c:when>
