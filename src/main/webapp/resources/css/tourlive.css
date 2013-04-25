@@ -2,6 +2,10 @@ html,body {
 	height: 100%;
 }
 
+.well {
+	min-width: 140px;
+}
+
 #map-canvas {
 	height: 300px;
 }
@@ -19,7 +23,7 @@ html,body {
 }
 
 .black-footer {
-	padding: 70px 0 20px;
+	padding: 35px 0 10px;
 	color: #acacac;
 	background-image: linear-gradient(bottom, rgb(71, 71, 71) 66%, rgb(102, 102, 102) 100%);
 	background-image: -o-linear-gradient(bottom, rgb(71, 71, 71) 66%, rgb(102, 102, 102) 100%);
@@ -39,7 +43,7 @@ html,body {
 }
 
 #push {
-	height: 200px;
+	height: 220px;
 }
 
 .fileupload,.fileupload2{

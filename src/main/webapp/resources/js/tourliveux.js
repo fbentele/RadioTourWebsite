@@ -61,4 +61,7 @@ $(document).ready(function() {
 	
 	//color picker
 	$('.colorpicker').colorpicker();
+	
+	//scroll spy
+	$('#tourlive-site').scrollspy();
 });

@@ -22,6 +22,7 @@ import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
+import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
@@ -45,6 +46,7 @@ public class RaceController {
 	public String race(Locale locale, Model model) {
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("navbarrace", "active");
+		model.addAttribute("breadcrumb", new Breadcrumb("/race"));
 		return "race";
 	}
 
@@ -55,7 +57,13 @@ public class RaceController {
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("menuitems", makeMenu(stageService.getAllVisibleByRace(actualRace)));
+		model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug));
 		return "actualrace";
+	}
+
+	@RequestMapping(value = "/race/{raceSlug}/stage", method = RequestMethod.GET)
+	public String sRace(@PathVariable("raceSlug") String raceSlug) {
+		return "redirect:/race/" + raceSlug;
 	}
 
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}", method = RequestMethod.GET)
@@ -65,8 +73,8 @@ public class RaceController {
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("menuitems",
-				makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
+		// model.addAttribute("menuitems",makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
+		model.addAttribute("menuitems", MenuItem.makeStageNavi());
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
@@ -76,6 +84,8 @@ public class RaceController {
 		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
 		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
 		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
+		model.addAttribute("breadcrumb",
+				new Breadcrumb("/race/" + raceSlug + "/stage/" + stageSlug));
 		try {
 			model.addAttribute("current", valueContainers.get(0));
 		} catch (IndexOutOfBoundsException e) {
@@ -92,4 +102,5 @@ public class RaceController {
 		}
 		return menu;
 	}
+
 }

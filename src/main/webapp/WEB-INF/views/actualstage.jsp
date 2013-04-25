@@ -6,19 +6,8 @@
 <title>Tourlive - ${stage.stageName}</title>
 </head>
 <body>
-		<div class="row-fluid">
-			<ul class="nav nav-pills">
-				<li><a href="#">Top</a></li>
-				<li><a href="#streckenprofil">Streckenprofil</a></li>
-				<li><a href="#abstand">Abstandsentwicklung</a></li>
-				<li><a href="#livebilder">Livebilder</a></li>
-				<li><a href="#liveticker">Liveticker</a></li>
-				<li><a href="#map-canvas">Karte</a></li>
-				<li><a href="#rennsituation">Rennsituation</a></li>
-				<li><a href="#rangliste">Rangliste</a></li>
-			</ul>
-		</div>
-		<div class="row-fluid">
+	<div>
+		<div id="top" class="row-fluid">
 			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
 			<c:if test="${not empty first.stageData.distance}">
 				<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
@@ -46,7 +35,7 @@
 			</div>
 		</c:if>
 
-		<div class="row-fluid" id="livebilder">
+		<div id="livebilder" class="row-fluid">
 			<c:forEach items="${images}" var="image">
 				<div class="span4">
 					<h4>${image.device.username}</h4>
@@ -106,6 +95,7 @@
 				</table>
 			</div>
 		</div>
+		
 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rangliste">Rangliste</h4>
@@ -200,13 +190,13 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	
 	 -->
-		<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
+	</div>
+	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
-		<!-- Strecken / Hoehenprofil -->
-		<script type="text/javascript">
+	<!-- Strecken / Hoehenprofil -->
+	<script type="text/javascript">
 		var streckencanvas = Raphael("strecken-canvas", 940, 350);
 		<c:choose>
 			<c:when test="${not empty latest}">
@@ -222,8 +212,8 @@
 		</c:choose>
 	</script>
 
-		<!-- Abstandsentwicklung -->
-		<script type="text/javascript">
+	<!-- Abstandsentwicklung -->
+	<script type="text/javascript">
 		var stageDistance = ${stage.distance};
 		var canvas = Raphael("abstand-canvas", 940, 220);
 		canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
@@ -247,12 +237,12 @@
 		</c:forEach>
 	</script>
 
-		<!-- Karte -->
-		<c:if test="${not empty valuecontainers}">
-			<script type="text/javascript"
-				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
+	<!-- Karte -->
+	<c:if test="${not empty valuecontainers}">
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=true">
 	</script>
-			<script type="text/javascript">
+		<script type="text/javascript">
 		function initialize() {
 			
 			var myLatLng = new google.maps.LatLng(${current.positionData.latitude}, ${current.positionData.longitude});
@@ -286,6 +276,6 @@
 			}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
-		</c:if>
+	</c:if>
 </body>
 </html>

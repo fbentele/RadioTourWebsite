@@ -10,11 +10,13 @@ public class Breadcrumb {
 	public Breadcrumb(String path) {
 		List<Page> parent = new ArrayList<Page>();
 		String[] items = path.split("/");
+		String linkstring = "";
 		for (String string : items) {
 			if (string.length() > 0) {
+				linkstring += string + "/";
 				char[] stringArray = string.toCharArray();
 				stringArray[0] = Character.toUpperCase(stringArray[0]);
-				parent.add(new Page(new String(stringArray), "/" + string));
+				parent.add(new Page(new String(stringArray), "/" + linkstring));
 			}
 		}
 		if (parent.size() > 1) {

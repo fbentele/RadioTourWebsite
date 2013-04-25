@@ -1,5 +1,8 @@
 package ch.hsr.ba.tourlive.viewmodel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuItem {
 	private String menutitle;
 	private String urlpath;
@@ -23,5 +26,17 @@ public class MenuItem {
 
 	public void setUrlpath(String urlpath) {
 		this.urlpath = urlpath;
+	}
+
+	public static List<MenuItem> makeStageNavi() {
+		List<MenuItem> navi = new ArrayList<MenuItem>();
+		navi.add(new MenuItem("Top", "#top"));
+		navi.add(new MenuItem("Streckenprofil", "#streckenprofil"));
+		navi.add(new MenuItem("Abstand", "#abstand"));
+		navi.add(new MenuItem("Livebilder", "#livebilder"));
+		navi.add(new MenuItem("Karte", "#map-canvas"));
+		navi.add(new MenuItem("Rennsituation", "#rennsituation"));
+		navi.add(new MenuItem("Rangliste", "#rangliste"));
+		return navi;
 	}
 }
