@@ -2,8 +2,35 @@ html,body {
 	height: 100%;
 }
 
-.well {
-	min-width: 140px;
+@media ( min-width : 1200px) {
+	.well {
+		min-width: 150px;
+	}
+}
+
+@media ( min-width : 768px) {
+	.affix{
+		posistion:fixed;
+	}
+}
+
+@media ( min-width : 768px) and (max-width : 979px) {
+	.well {
+		display: block;
+		float: none;
+		width: auto;
+		margin-left: 0;
+		padding: 5px;
+	}
+	.nav-tabs>li>a,.nav-pills>li>a {
+		padding: 5px;
+	}
+}
+
+@media (max-width : 768px){
+	.affix{
+		position: relative;
+	}
 }
 
 #map-canvas {
@@ -46,8 +73,8 @@ html,body {
 	height: 220px;
 }
 
-.fileupload,.fileupload2{
-	display:none;
+.fileupload,.fileupload2 {
+	display: none;
 }
 
 /*
@@ -65,6 +92,7 @@ html,body {
 	cursor: crosshair;
 	float: left;
 }
+
 .colorpicker-saturation i {
 	display: block;
 	height: 5px;
@@ -78,6 +106,7 @@ html,body {
 	left: 0;
 	margin: -4px 0 0 -4px;
 }
+
 .colorpicker-saturation i b {
 	display: block;
 	height: 5px;
@@ -87,7 +116,8 @@ html,body {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-.colorpicker-hue, .colorpicker-alpha {
+
+.colorpicker-hue,.colorpicker-alpha {
 	width: 15px;
 	height: 100px;
 	float: left;
@@ -95,7 +125,8 @@ html,body {
 	margin-left: 4px;
 	margin-bottom: 4px;
 }
-.colorpicker-hue i, .colorpicker-alpha i {
+
+.colorpicker-hue i,.colorpicker-alpha i {
 	display: block;
 	height: 1px;
 	background: #000;
@@ -106,13 +137,16 @@ html,body {
 	width: 100%;
 	margin-top: -1px;
 }
+
 .colorpicker-hue {
 	background-image: url(/img/hue.png);
 }
+
 .colorpicker-alpha {
 	background-image: url(/img/alpha.png);
 	display: none;
 }
+
 .colorpicker {
 	*zoom: 1;
 	top: 0;
@@ -124,13 +158,16 @@ html,body {
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
-.colorpicker:before, .colorpicker:after {
+
+.colorpicker:before,.colorpicker:after {
 	display: table;
 	content: "";
 }
+
 .colorpicker:after {
 	clear: both;
 }
+
 .colorpicker:before {
 	content: '';
 	display: inline-block;
@@ -142,6 +179,7 @@ html,body {
 	top: -7px;
 	left: 6px;
 }
+
 .colorpicker:after {
 	content: '';
 	display: inline-block;
@@ -152,15 +190,19 @@ html,body {
 	top: -6px;
 	left: 7px;
 }
+
 .colorpicker div {
 	position: relative;
 }
+
 .colorpicker.alpha {
 	min-width: 140px;
 }
+
 .colorpicker.alpha .colorpicker-alpha {
 	display: block;
 }
+
 .colorpicker-color {
 	height: 10px;
 	margin-top: 5px;
@@ -168,10 +210,12 @@ html,body {
 	background-image: url(/img/alpha.png);
 	background-position: 0 100%;
 }
+
 .colorpicker-color div {
 	height: 10px;
 }
-.input-append.color .add-on i, .input-prepend.color .add-on i {
+
+.input-append.color .add-on i,.input-prepend.color .add-on i {
 	display: block;
 	cursor: pointer;
 	width: 16px;
@@ -179,17 +223,19 @@ html,body {
 }
 
 #image-drawing-wrapper {
-    position: relative;
-    padding: 0;
-    min-height: 350px;
+	position: relative;
+	padding: 0;
+	min-height: 350px;
 }
+
 #image-drawing-wrapper img {
-    position: absolute;
-    top: 0;
-    left: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
+
 #strecken-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
