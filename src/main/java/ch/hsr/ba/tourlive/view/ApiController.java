@@ -30,11 +30,13 @@ import ch.hsr.ba.tourlive.model.ImageData;
 import ch.hsr.ba.tourlive.model.PositionData;
 import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.ValueContainer;
+import ch.hsr.ba.tourlive.model.VideoData;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.PositionDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
+import ch.hsr.ba.tourlive.service.VideoDataService;
 
 @Controller
 public class ApiController {
@@ -50,6 +52,8 @@ public class ApiController {
 	ImageDataService imageDataService;
 	@Autowired
 	DeviceService deviceService;
+	@Autowired
+	VideoDataService videoDataService;
 
 	@Value("${config.api.imagePath}")
 	private String imagePath;
@@ -114,6 +118,30 @@ public class ApiController {
 		} finally {
 			// implement handler here
 		}
+	}
+
+	@RequestMapping(value = "/api/video", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
+	public void uploadVideoSequence(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("video") CommonsMultipartFile video,
+			@RequestParam("timestamp") Long timestamp, @RequestParam("deviceId") String deviceId) {
+
+		String videoFilename = timestamp + "_" + video.getOriginalFilename();
+		File filePath = new File(imagePath + deviceId);
+		if (!filePath.exists()) {
+			filePath.mkdir();
+		}
+		File dest = new File(filePath, videoFilename);
+		try {
+			video.transferTo(dest);
+			videoDataService.save(new VideoData(timestamp, deviceService.getDeviceById(deviceId),
+					deviceId + "/" + videoFilename));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+		}
+
 	}
 
 	@RequestMapping(value = "/api/racesituation", method = RequestMethod.POST)

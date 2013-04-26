@@ -124,4 +124,19 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		if (!stage.getDevices().isEmpty()) {
+			Disjunction d = Restrictions.or();
+			for (Device device : stage.getDevices()) {
+				d.add(Restrictions.eq("device", device));
+			}
+			crit.add(d);
+		}
+		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
+		Criteria stageCriteria = crit.createCriteria("stageData");
+		stageCriteria.addOrder(Order.asc("distance"));
+		return (List<ValueContainer>) stageCriteria.list();
+	}
 }

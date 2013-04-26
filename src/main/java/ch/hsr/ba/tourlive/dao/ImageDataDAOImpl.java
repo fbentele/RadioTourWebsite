@@ -38,7 +38,9 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllImageDataByDevice(Device device) {
-		return sessionFactory.getCurrentSession().createCriteria(ImageData.class).list();
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
+		crit.add(Restrictions.eq("device", device));
+		return crit.list();
 	}
 
 	public ImageData getMostRecentByDevice(Device device) {

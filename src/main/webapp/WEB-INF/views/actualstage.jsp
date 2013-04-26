@@ -40,18 +40,34 @@
 					<h4>${image.device.username}</h4>
 					<img width="350" src="<c:url value="${hostname}${image.imageLocation}"/>" />
 					<div id="">
-					<c:forEach items="${latest}" var="latest" >
-						<c:if test="${latest.device.deviceId == image.device.deviceId}">
-						Überwundene Höhenmeter: <span class="pull-right">${latest.stageData.stageUpAltitude}</span></br>
-						Aktuelle Zeit: <span class="pull-right">${latest.stageData.stageTime}</span></br>
-						Rennkilometer: <span class="pull-right">${latest.stageData.distance}</span></br>
-						Durchschnittliche Geschwindigkeit: <span class="pull-right">${latest.stageData.averageSpeed}</br>
-						
-						
-						</c:if>
-					</c:forEach>
+						<c:forEach items="${latest}" var="latest">
+							<c:if test="${latest.device.deviceId == image.device.deviceId}">
+						Überwundene Höhenmeter: <span class="pull-right">${latest.stageData.stageUpAltitude}</span>
+								<br />
+						Aktuelle Zeit: <span class="pull-right">${latest.stageData.stageTime}</span>
+								<br />
+						Rennkilometer: <span class="pull-right">${latest.stageData.distance}</span>
+								<br />
+						Durchschnittliche Geschwindigkeit: <span class="pull-right">${latest.stageData.averageSpeed}</span>
+								<br />
+							</c:if>
+						</c:forEach>
 					</div>
-					<div id="caption">Letzte aktualisierung: <span class="pull-right">${image.timestamp}</span></div>
+					<div id="caption">
+						Letzte aktualisierung: <span class="pull-right">${image.timestamp}</span>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+
+		<div id="livevideo" class="row-fluid">
+			<c:forEach items="${videos}" var="video">
+				<div class="span4">
+					<h4>${video.device.username}</h4>
+					<video width="320" height="240" controls>
+						<source src="${hostname}${video.videoLocation}"
+							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+					</video>
 				</div>
 			</c:forEach>
 		</div>
@@ -92,7 +108,8 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rennsituation">Rennsituation</h4>
-				<p>Zum Zeitpunkt: 14:25:15 und Rennkilometer: 35.5 km<p>
+				<p>Zum Zeitpunkt: 14:25:15 und Rennkilometer: 35.5 km
+				<p>
 				<table class="table table-hover">
 					<tr>
 						<th>Feld</th>
@@ -101,25 +118,26 @@
 					</tr>
 					<tr>
 						<td><img src="<c:url value="/resources/img/f5.png"/>" /></br>Fahrer Nr: 1, 2, 3, 4</td>
-						<td><img src="<c:url value="/resources/img/f2.png"/>" /></br>Fahrer Nr: 13, 12, 41, 19</td>
+						<td><img src="<c:url value="/resources/img/f2.png"/>" /></br>Fahrer Nr: 13, 12, 41,
+							19</td>
 						<td><img src="<c:url value="/resources/img/f3.png"/>" /></br>Fahrer Nr: 32, 7, 11, 27</td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		
+
 		<div class="row-fluid">
 			<div class="span12">
 				<h4 id="rangliste">Live - Rangliste</h4>
 				<table class="table table-hover">
 					<tr>
-						<th style="width:10%">Start #</th>
-						<th style="width:10%">Rang</th>
-						<th style="width:40%">Name</th>
-						<th style="width:10%">Team</th>
-						<th style="width:10%">Land</th>
-						<th style="width:10%">Zeit</th>
-						<th style="width:10%">Rückstand:</th>
+						<th style="width: 10%">Start #</th>
+						<th style="width: 10%">Rang</th>
+						<th style="width: 40%">Name</th>
+						<th style="width: 10%">Team</th>
+						<th style="width: 10%">Land</th>
+						<th style="width: 10%">Zeit</th>
+						<th style="width: 10%">Rückstand:</th>
 					</tr>
 					<tr>
 						<td>1</td>
@@ -216,7 +234,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 

@@ -54,4 +54,9 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
 		return valueDao.getLatestForDeviceByStage(stage);
 	}
+
+	@Transactional
+	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit) {
+		return valueDao.getForStageByDistanceLimitedTo(stage, limit);
+	}
 }

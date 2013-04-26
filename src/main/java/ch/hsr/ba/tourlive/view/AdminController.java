@@ -43,6 +43,7 @@ public class AdminController {
 	private String imagePath;
 	@Value("${config.dev.hostname}")
 	private String hostname;
+	@SuppressWarnings("unused")
 	private Logger log = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)

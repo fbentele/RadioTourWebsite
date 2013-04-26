@@ -22,4 +22,6 @@ public interface ValueContainerDAO {
 
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage);
 
+	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit);
+
 }

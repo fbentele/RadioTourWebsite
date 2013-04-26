@@ -24,15 +24,16 @@ public class PositionDataDAOImpl implements PositionDataDAO {
 	}
 
 	public void delete(Long id) {
-		PositionData pos = (PositionData) sessionFactory.getCurrentSession()
-				.load(PositionData.class, id);
+		PositionData pos = (PositionData) sessionFactory.getCurrentSession().load(
+				PositionData.class, id);
 		if (null != pos) {
 			sessionFactory.getCurrentSession().delete(pos);
 		}
 	}
 
+	@SuppressWarnings(value = "unchecked")
 	public List<PositionData> getAll() {
-		return sessionFactory.getCurrentSession()
+		return (List<PositionData>) sessionFactory.getCurrentSession()
 				.createCriteria(PositionData.class, "Position")
 				.addOrder(Order.desc("Position.positionid")).list();
 	}

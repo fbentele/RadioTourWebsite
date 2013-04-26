@@ -22,6 +22,7 @@ import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
+import ch.hsr.ba.tourlive.service.VideoDataService;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
@@ -37,6 +38,8 @@ public class RaceController {
 	private ValueContainerService valueContainerService;
 	@Autowired
 	private ImageDataService imageDataService;
+	@Autowired
+	private VideoDataService videoDataService;
 	@Value("${config.dev.hostname}")
 	private String hostname;
 
@@ -72,6 +75,38 @@ public class RaceController {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
+		model.addAttribute("races", raceService.getAllVisible());
+		// model.addAttribute("menuitems",makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
+		model.addAttribute("menuitems", MenuItem.makeStageNavi());
+		model.addAttribute("stage", stage);
+		model.addAttribute("navbarrace", "active");
+		model.addAttribute("valuecontainers", valueContainers);
+		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
+		model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
+		log.info("_____________________" + videoDataService.getMostRecentByStage(stage).size());
+		model.addAttribute("devices", stage.getDevices());
+		model.addAttribute("hostname", hostname);
+		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
+		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
+		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
+		model.addAttribute("breadcrumb",
+				new Breadcrumb("/race/" + raceSlug + "/stage/" + stageSlug));
+		try {
+			model.addAttribute("current", valueContainers.get(0));
+		} catch (IndexOutOfBoundsException e) {
+			log.info("No ValueContainer for this Stage, so no Map available");
+		}
+		return "actualstage";
+	}
+
+	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/{untilTime}", method = RequestMethod.GET)
+	public String stageForTime(@PathVariable("stageSlug") String stageSlug,
+			@PathVariable("raceSlug") String raceSlug, @PathVariable("untilTime") Long untilTime,
+			Model model) {
+		Stage stage = stageService.getStageBySlug(stageSlug);
+		List<ValueContainer> valueContainers = valueContainerService
+				.getForStageByDistanceLimitedTo(stage, untilTime);
+		log.info("___________________number: " + valueContainers.size());
 		model.addAttribute("races", raceService.getAllVisible());
 		// model.addAttribute("menuitems",makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
 		model.addAttribute("menuitems", MenuItem.makeStageNavi());

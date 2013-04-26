@@ -23,4 +23,6 @@ public interface ValueContainerService {
 
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage);
 
+	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit);
+
 }

@@ -25,17 +25,17 @@ public class StageDataDAOImpl implements StageDataDAO {
 
 	@Override
 	public void delete(Long id) {
-		StageData stagedata = (StageData) sessionFactory.getCurrentSession()
-				.load(StageData.class, id);
+		StageData stagedata = (StageData) sessionFactory.getCurrentSession().load(StageData.class,
+				id);
 		if (null != stagedata) {
 			sessionFactory.getCurrentSession().delete(stagedata);
 		}
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
 	public List<StageData> getAll() {
-		return sessionFactory.getCurrentSession()
-				.createCriteria(StageData.class).list();
+		return (List<StageData>) sessionFactory.getCurrentSession().createCriteria(StageData.class)
+				.list();
 	}
 
 }

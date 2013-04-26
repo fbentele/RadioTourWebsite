@@ -26,16 +26,15 @@ public class NetDataDAOImpl implements NetDataDAO {
 
 	@Override
 	public void delete(Long id) {
-		NetData netdata = (NetData) sessionFactory.getCurrentSession().load(
-				NetData.class, id);
+		NetData netdata = (NetData) sessionFactory.getCurrentSession().load(NetData.class, id);
 		if (null != netdata) {
 			sessionFactory.getCurrentSession().delete(netdata);
 		}
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
 	public List<NetData> getAll() {
-		return sessionFactory.getCurrentSession().createCriteria(NetData.class)
+		return (List<NetData>) sessionFactory.getCurrentSession().createCriteria(NetData.class)
 				.list();
 	}
 }
