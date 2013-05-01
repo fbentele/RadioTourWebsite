@@ -2,49 +2,24 @@ package ch.hsr.ba.tourlive.model.rider;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-@Component
-@Scope("prototype")
-@Entity
-@Table(name = "Situation")
 public class Situation implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5090788260118136922L;
-
-	@Id
-	@Column
-	@GeneratedValue
-	private Long situationId;
-
-	@Column
 	private int[] drivernumber;
-	@Column
 	private boolean isLeader;
-	@Column
 	private int groupnr;
-	@Column
 	private Long handicaptime;
-	@Column
 	private boolean isField;
 
 	public Situation() {
 
 	}
 
-	public Situation(Long situationId, int[] drivernumber, boolean isLeader, int groupnr,
-			Long handicaptime, boolean isField) {
+	public Situation(int[] drivernumber, boolean isLeader, int groupnr, Long handicaptime,
+			boolean isField) {
 		super();
-		this.situationId = situationId;
 		this.drivernumber = drivernumber;
 		this.isLeader = isLeader;
 		this.groupnr = groupnr;
@@ -121,32 +96,5 @@ public class Situation implements Serializable {
 	public void setIsField(boolean isField) {
 		this.isField = isField;
 	}
-
-	public Long getSituationId() {
-		return situationId;
-	}
-
-	public void setSituationId(Long situationId) {
-		this.situationId = situationId;
-	}
-
-	// public RaceSituation getRaceSituation() {
-	// return raceSituation;
-	// }
-	//
-	// public void setRaceSituation(RaceSituation raceSituation) {
-	// this.raceSituation = raceSituation;
-	// }
-	//
-	// @Override
-	// public String toString() {
-	// return "Situation [situationId=" + situationId + ", raceSituation=" +
-	// raceSituation
-	// + ", drivernumber=" + Arrays.toString(drivernumber) + ", isLeader=" +
-	// isLeader
-	// + ", groupnr=" + groupnr + ", handicaptime=" + handicaptime +
-	// ", isField="
-	// + isField + "]";
-	// }
 
 }
