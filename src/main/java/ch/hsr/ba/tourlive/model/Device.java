@@ -69,9 +69,4 @@ public class Device {
 	public boolean equals(Object o) {
 		return this.deviceId.equals(((Device) o).deviceId);
 	}
-
-	@Override
-	public int hashCode() {
-		return this.hashCode();
-	}
 }

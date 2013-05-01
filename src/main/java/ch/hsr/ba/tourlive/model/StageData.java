@@ -52,7 +52,7 @@ public class StageData implements Serializable {
 	}
 
 	public Double getStageUpAltitude() {
-		return stageUpAltitude;
+		return (double) (Math.round(stageUpAltitude * 100) / 100.0);
 	}
 
 	public void setStageUpAltitude(Double stageUpAltitude) {
@@ -60,7 +60,7 @@ public class StageData implements Serializable {
 	}
 
 	public Float getDistance() {
-		return distance;
+		return (float) (Math.round(distance * 100) / 100.0);
 	}
 
 	public void setDistance(Float distance) {
@@ -68,10 +68,10 @@ public class StageData implements Serializable {
 	}
 
 	public Float getAverageSpeed() {
-		return averageSpeed;
+		return (float) (Math.round(averageSpeed * 100) / 100.0);
 	}
 
-	public void setAverageSpeed(float averageSpeed) {
+	public void setAverageSpeed(Float averageSpeed) {
 		this.averageSpeed = averageSpeed;
 	}
 
@@ -81,10 +81,9 @@ public class StageData implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StageData [stagedataid=" + stagedataid + ", stageTime="
-				+ stageTime + ", stageAltitude=" + stageUpAltitude
-				+ ", distance=" + distance + ", averageSpeed=" + averageSpeed
-				+ "]";
+		return "StageData [stagedataid=" + stagedataid + ", stageTime=" + stageTime
+				+ ", stageAltitude=" + stageUpAltitude + ", distance=" + distance
+				+ ", averageSpeed=" + averageSpeed + "]";
 	}
 
 }

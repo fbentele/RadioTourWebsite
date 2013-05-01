@@ -70,6 +70,10 @@
 					</video>
 				</div>
 			</c:forEach>
+			<c:if test="${not empty stage.adCode}">
+				<div class="span4">${stage.adCode}</div>
+			</c:if>
+
 		</div>
 
 		<c:if test="${not empty valuecontainers}">
@@ -97,34 +101,34 @@
 						<dt>09:37:09</dt>
 						<dd>Alle anderen auch</dd>
 						<dt>
-							<img src="<c:url value="/resources/img/loading.gif"/>" />
+							^ <img src="<c:url value="/resources/img/loading.gif"/>" />
 						</dt>
 					</dl>
 				</div>
 			</div>
 		</c:if>
 
-
-		<div class="row-fluid">
-			<div class="span12">
-				<h4 id="rennsituation">Rennsituation</h4>
-				<p>Zum Zeitpunkt: 14:25:15 und Rennkilometer: 35.5 km
-				<p>
-				<table class="table table-hover">
-					<tr>
-						<th>Feld</th>
-						<th>Gruppe</th>
-						<th>Spitze</th>
-					</tr>
-					<tr>
-						<td><img src="<c:url value="/resources/img/f5.png"/>" /></br>Fahrer Nr: 1, 2, 3, 4</td>
-						<td><img src="<c:url value="/resources/img/f2.png"/>" /></br>Fahrer Nr: 13, 12, 41,
-							19</td>
-						<td><img src="<c:url value="/resources/img/f3.png"/>" /></br>Fahrer Nr: 32, 7, 11, 27</td>
-					</tr>
-				</table>
+		<c:if test="${not empty situation}">
+			<div class="row-fluid">
+				<div class="span12">
+					<h4 id="rennsituation">Rennsituation</h4>
+					<p>Zum Zeitpunkt: ${situation.timestamp} und Rennkilometer:
+						${first.stageData.distance} km</p>
+					<c:forEach items="${situation.situation}" var="sit">
+						<div class="span2">
+							<h4>${sit.groupName}</h4>
+							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
+							Fahrer:
+							<ul>
+								<c:forEach items="${sit.drivernumber}" var="rider">
+									<li>${rider}</li>
+								</c:forEach>
+							</ul>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
-		</div>
+		</c:if>
 
 		<div class="row-fluid">
 			<div class="span12">
@@ -238,8 +242,10 @@
 	</div>
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
-	<!-- Strecken / Hoehenprofil -->
-	<script type="text/javascript">
+	<!-- Strecken / Hoehenprofil  -->
+	<c:if test="${not empty stage.stageProfileImage}">
+
+		<script type="text/javascript">
 		var streckencanvas = Raphael("strecken-canvas", 940, 350);
 		<c:choose>
 			<c:when test="${not empty latest}">
@@ -254,14 +260,15 @@
 			</c:otherwise>
 		</c:choose>
 	</script>
+	</c:if>
 
-	<!-- Abstandsentwicklung -->
+	<!-- Abstandsentwicklung  -->
 	<script type="text/javascript">
 		var stageDistance = ${stage.distance};
 		var canvas = Raphael("abstand-canvas", 940, 220);
 		canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 		canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-			
+
 		canvas.path("M230,190L230,210");
 		canvas.path("M450,190L450,210");
 		canvas.path("M670,190L670,210");
@@ -288,7 +295,7 @@
 		<script type="text/javascript">
 		function initialize() {
 			
-			var myLatLng = new google.maps.LatLng(${current.positionData.latitude}, ${current.positionData.longitude});
+			var myLatLng = new google.maps.LatLng(${first.positionData.latitude}, ${first.positionData.longitude});
 			var mapOptions = {
 				zoom : 14,
 				center : myLatLng,
@@ -303,8 +310,10 @@
 			</c:forEach>
 
 			<c:forEach items="${valuecontainers}" var="valuecontainer">
-				${valuecontainer.device.username}.push(new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}))
-			 </c:forEach>
+				<c:if test="${not empty valuecontainer.positionData.latitude}">
+					${valuecontainer.device.username}.push(new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}))
+			 	</c:if>
+			</c:forEach>
 		
 			<c:forEach items="${devices}" var="device">
 				var flightPath_${device.username} = new google.maps.Polyline({
@@ -320,5 +329,6 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</c:if>
+
 </body>
 </html>

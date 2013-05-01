@@ -14,6 +14,13 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+/**
+ * The ValueContainer combines information about the current position of a
+ * device
+ * 
+ * @author fbentele
+ * 
+ */
 @Component
 @Scope("prototype")
 @Entity
@@ -93,10 +100,9 @@ public class ValueContainer {
 
 	@Override
 	public String toString() {
-		return "ValueContainer [valueContainerId=" + valueContainerId
-				+ ", timestamp=" + timestamp + ", device=" + device
-				+ ", positionData=" + positionData + ", stageData=" + stageData
-				+ ", netData=" + netData + "]";
+		return "ValueContainer [valueContainerId=" + valueContainerId + ", timestamp=" + timestamp
+				+ ", device=" + device + ", positionData=" + positionData + ", stageData="
+				+ stageData + ", netData=" + netData + "]";
 	}
 
 }

@@ -2,12 +2,17 @@ package ch.hsr.ba.tourlive.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.model.rider.RaceSituation;
 
+@Repository
 public class RaceSituationDAOImpl implements RaceSituationDAO {
 	@Autowired
 	SessionFactory sessionFactory;
@@ -21,27 +26,36 @@ public class RaceSituationDAOImpl implements RaceSituationDAO {
 	}
 
 	public void delete(Long id) {
-		sessionFactory.getCurrentSession()
-				.delete(sessionFactory.getCurrentSession().get(
-						RaceSituation.class, id));
+		sessionFactory.getCurrentSession().delete(
+				sessionFactory.getCurrentSession().get(RaceSituation.class, id));
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<RaceSituation> getAll() {
-		return sessionFactory.getCurrentSession()
-				.createCriteria(RaceSituation.class).list();
+		return sessionFactory.getCurrentSession().createCriteria(RaceSituation.class).list();
 	}
 
 	@Override
 	public RaceSituation getRaceSituationById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (RaceSituation) sessionFactory.getCurrentSession().get(RaceSituation.class, id);
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
 	public List<RaceSituation> getAllByStage(Stage stage) {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RaceSituation.class);
+		crit.add(Restrictions.eq("stage", stage));
+		return (List<RaceSituation>) crit.list();
 	}
 
+	public RaceSituation getLatestByStage(Stage stage) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RaceSituation.class);
+		crit.add(Restrictions.eq("stage", stage));
+		crit.addOrder(Order.desc("timestamp"));
+		try {
+			return (RaceSituation) crit.list().get(0);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("_____________ list is empty");
+		}
+		return null;
+	}
 }

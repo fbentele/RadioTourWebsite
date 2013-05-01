@@ -31,8 +31,8 @@ public class Stage {
 	@Column(name = "STAGE_NAME")
 	private String stageName;
 
-	/*
-	 * A slug is a pathpart in an url
+	/**
+	 * A slug is a pathpart in an url.
 	 */
 	@Column(unique = true)
 	private String stageSlug;
@@ -47,13 +47,16 @@ public class Stage {
 	private Long endtime;
 
 	@Column
-	private float distance;
+	private Float distance;
 
 	@Column
 	private String bannerImage;
 
 	@Column
 	private String stageProfileImage;
+
+	@Column
+	private String adCode;
 
 	@Column
 	private Boolean visible;
@@ -206,6 +209,14 @@ public class Stage {
 
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
+	}
+
+	public String getAdCode() {
+		return adCode;
+	}
+
+	public void setAdCode(String adCode) {
+		this.adCode = adCode;
 	}
 
 	@Override

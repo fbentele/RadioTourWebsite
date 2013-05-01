@@ -5,6 +5,7 @@
 		<dir name="/Users/flo/Documents/workspace_spring/tourlive/target/classes">
 		</dir>
 	</classpath>
+
 	<web>
 		<link target="/">
 			<dir name="/Users/flo/Documents/workspace_spring/tourlive/target/m2e-wtp/web-resources">
@@ -16,4 +17,5 @@
 			</dir>
 		</link>
 	</web>
+
 </application>

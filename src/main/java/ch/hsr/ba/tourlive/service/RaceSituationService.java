@@ -2,8 +2,8 @@ package ch.hsr.ba.tourlive.service;
 
 import java.util.List;
 
-import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.model.rider.RaceSituation;
 
 public interface RaceSituationService {
 	public void save(RaceSituation raceSituation);
@@ -17,5 +17,7 @@ public interface RaceSituationService {
 	public RaceSituation getRaceSituationById(Long id);
 
 	public List<RaceSituation> getRaceSituationByStage(Stage stage);
+
+	public RaceSituation getLatestByStage(Stage stage);
 
 }

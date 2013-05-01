@@ -21,6 +21,7 @@ html,body {
 		width: auto;
 		margin-left: 0;
 		padding: 5px;
+		min-width: 100px;
 	}
 	.nav-tabs>li>a,.nav-pills>li>a {
 		padding: 5px;
@@ -43,6 +44,7 @@ html,body {
 
 .newItem {
 	display: none;
+	margin-top: 10px;
 }
 
 .black-footer a {

@@ -27,14 +27,16 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.ImageData;
-import ch.hsr.ba.tourlive.model.PositionData;
-import ch.hsr.ba.tourlive.model.RaceSituation;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.model.VideoData;
+import ch.hsr.ba.tourlive.model.rider.RaceSituation;
+import ch.hsr.ba.tourlive.model.rider.Rider;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.PositionDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
+import ch.hsr.ba.tourlive.service.RaceSituationService;
+import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
 import ch.hsr.ba.tourlive.service.VideoDataService;
 
@@ -49,31 +51,37 @@ public class ApiController {
 	@Autowired
 	RaceService raceService;
 	@Autowired
+	StageService stageService;
+	@Autowired
 	ImageDataService imageDataService;
 	@Autowired
 	DeviceService deviceService;
 	@Autowired
 	VideoDataService videoDataService;
+	@Autowired
+	RaceSituationService raceSituationService;
 
 	@Value("${config.api.imagePath}")
 	private String imagePath;
 
 	private static final Logger log = LoggerFactory.getLogger(ApiController.class);
 
-	@RequestMapping(value = "/api/positiondata", method = RequestMethod.POST)
-	@ResponseBody
-	public void api(@RequestBody final PositionData request) {
-		positionDataService.save(request);
-	}
+	// @RequestMapping(value = "/api/positiondata", method = RequestMethod.POST)
+	// @ResponseBody
+	// public void api(@RequestBody final PositionData request) {
+	// positionDataService.save(request);
+	// }
 
 	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.POST)
 	@ResponseBody
 	public void valueContainer(@RequestBody final ValueContainer request) {
-		Device rec = request.getDevice();
-		Device d = deviceService.getDeviceById(rec.getDeviceId());
-		if (d != null) {
+		try {
+			Device rec = request.getDevice();
+			Device d = deviceService.getDeviceById(rec.getDeviceId());
 			d.setUsername(rec.getUsername());
 			request.setDevice(d);
+		} catch (NullPointerException e) {
+
 		}
 		valueContainerService.save(request);
 	}
@@ -141,18 +149,25 @@ public class ApiController {
 			e.printStackTrace();
 		} finally {
 		}
-
 	}
 
-	@RequestMapping(value = "/api/racesituation", method = RequestMethod.POST)
-	public void raceSituation(@RequestBody final RaceSituation raceSituation) {
-		log.info("RaceSituation received");
+	@RequestMapping(value = "/api/racesituation/stage/{stageId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public void raceSituation(@PathVariable("stageId") Long stageId,
+			@RequestBody RaceSituation rawSituation) {
+		rawSituation.setStage(stageService.getStageById(stageId));
+		raceSituationService.save(rawSituation);
 	}
 
 	@RequestMapping(value = "/api/getstageinfo/{deviceId}", method = RequestMethod.GET)
-	public void getStageInfo(@PathVariable String deviceId) {
+	public void getStageInfo(@PathVariable("deviceId") String deviceId) {
 		// stageName
 		// raceName
+	}
+
+	@RequestMapping(value = "/api/stage/{stageId}/rider/add", method = RequestMethod.POST)
+	public void addRider(@PathVariable("stageId") Long stageId, @RequestBody final Rider rider) {
+		// Stage stage = stageService.getStageById(stageId);
 	}
 }
 

@@ -117,6 +117,7 @@ public class AdminController {
 			@RequestParam("starttime") String starttime,
 			@RequestParam("endtime") String endtime,
 			@RequestParam("distance") Float distance,
+			@RequestParam("adCode") String adCode,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
@@ -128,9 +129,9 @@ public class AdminController {
 		stage.setStarttime(starttime);
 		stage.setEndtime(endtime);
 		stage.setDistance(distance);
+		stage.setAdCode(adCode);
 		if (visible.contains("true"))
 			stage.setVisible(true);
-
 		stageService.save(stage);
 		// creates id, needed to save image properly
 		stage = stageService.getStageBySlug(stageSlug);
@@ -172,6 +173,7 @@ public class AdminController {
 			@RequestParam("starttime") String starttime,
 			@RequestParam("distance") float stageDistance,
 			@RequestParam("endtime") String endtime,
+			@RequestParam("adCode") String adCode,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
@@ -182,6 +184,7 @@ public class AdminController {
 		stage.setStarttime(starttime);
 		stage.setDistance(stageDistance);
 		stage.setEndtime(endtime);
+		stage.setAdCode(adCode);
 
 		stage.setVisible(false);
 		if (visible.contains("true"))

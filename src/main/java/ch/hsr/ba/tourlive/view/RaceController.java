@@ -20,6 +20,7 @@ import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.RaceService;
+import ch.hsr.ba.tourlive.service.RaceSituationService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
 import ch.hsr.ba.tourlive.service.VideoDataService;
@@ -40,6 +41,8 @@ public class RaceController {
 	private ImageDataService imageDataService;
 	@Autowired
 	private VideoDataService videoDataService;
+	@Autowired
+	private RaceSituationService raceSituationService;
 	@Value("${config.dev.hostname}")
 	private String hostname;
 
@@ -76,14 +79,12 @@ public class RaceController {
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
 		model.addAttribute("races", raceService.getAllVisible());
-		// model.addAttribute("menuitems",makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
 		model.addAttribute("menuitems", MenuItem.makeStageNavi());
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
 		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
 		model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
-		log.info("_____________________" + videoDataService.getMostRecentByStage(stage).size());
 		model.addAttribute("devices", stage.getDevices());
 		model.addAttribute("hostname", hostname);
 		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
@@ -91,11 +92,7 @@ public class RaceController {
 		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
 		model.addAttribute("breadcrumb",
 				new Breadcrumb("/race/" + raceSlug + "/stage/" + stageSlug));
-		try {
-			model.addAttribute("current", valueContainers.get(0));
-		} catch (IndexOutOfBoundsException e) {
-			log.info("No ValueContainer for this Stage, so no Map available");
-		}
+		model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
 		return "actualstage";
 	}
 
