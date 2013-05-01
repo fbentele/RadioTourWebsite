@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import ch.hsr.ba.tourlive.model.Situation;
 import ch.hsr.ba.tourlive.model.Stage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
