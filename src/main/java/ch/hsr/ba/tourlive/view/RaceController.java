@@ -19,8 +19,10 @@ import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.ImageDataService;
+import ch.hsr.ba.tourlive.service.LiveTickerItemService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.RaceSituationService;
+import ch.hsr.ba.tourlive.service.RiderService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
 import ch.hsr.ba.tourlive.service.VideoDataService;
@@ -43,6 +45,10 @@ public class RaceController {
 	private VideoDataService videoDataService;
 	@Autowired
 	private RaceSituationService raceSituationService;
+	@Autowired
+	private RiderService riderService;
+	@Autowired
+	private LiveTickerItemService liveTickerItemService;
 	@Value("${config.dev.hostname}")
 	private String hostname;
 
@@ -83,8 +89,11 @@ public class RaceController {
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
+		model.addAttribute("topRiders", riderService.getTopTenByStage(stage));
 		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
 		model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
+		model.addAttribute("liveTickerItems",
+				liveTickerItemService.getAllByStageLimitedTo(stage, 10));
 		model.addAttribute("devices", stage.getDevices());
 		model.addAttribute("hostname", hostname);
 		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));

@@ -1,4 +1,4 @@
-package ch.hsr.ba.tourlive.view;
+package ch.hsr.ba.tourlive.view.admin;
 
 import java.util.ArrayList;
 import java.util.Locale;

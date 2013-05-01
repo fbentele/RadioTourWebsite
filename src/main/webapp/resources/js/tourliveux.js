@@ -38,7 +38,9 @@ $(document).ready(function() {
 	$('#fileuploadbutton2').bind("click" , function () {
         $('.fileupload2').click();
     });
-	
+	$('#fileuploadbutton3').bind("click" , function () {
+        $('.fileupload3').click();
+    });
 	// datetimepicker
 	// http://tarruda.github.io/bootstrap-datetimepicker/
 	$.fn.datetimepicker.defaults = {

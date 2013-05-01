@@ -35,7 +35,7 @@ public class RaceSituation {
 	@JoinColumn(name = "stageId")
 	private Stage stage;
 
-	@Column
+	@Column(columnDefinition = "longblob")
 	private Situation[] situation;
 
 	public RaceSituation() {

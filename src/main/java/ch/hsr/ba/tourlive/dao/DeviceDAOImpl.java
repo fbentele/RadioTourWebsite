@@ -11,7 +11,7 @@ import ch.hsr.ba.tourlive.model.Device;
 @Repository
 public class DeviceDAOImpl implements DeviceDAO {
 	@Autowired
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	public void save(Device device) {
 		sessionFactory.getCurrentSession().save(device);
@@ -19,26 +19,22 @@ public class DeviceDAOImpl implements DeviceDAO {
 
 	public void update(Device device) {
 		sessionFactory.getCurrentSession().update(device);
-
 	}
 
 	public void delete(String id) {
-		Device device = (Device) sessionFactory.getCurrentSession().load(
-				Device.class, id);
+		Device device = (Device) sessionFactory.getCurrentSession().load(Device.class, id);
 		if (null != device) {
 			sessionFactory.getCurrentSession().delete(device);
 		}
 	}
 
 	public Device getDeviceById(String deviceId) {
-		return (Device) sessionFactory.getCurrentSession().get(Device.class,
-				deviceId);
+		return (Device) sessionFactory.getCurrentSession().get(Device.class, deviceId);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Device> getAll() {
-		return sessionFactory.getCurrentSession().createCriteria(Device.class)
-				.list();
+		return sessionFactory.getCurrentSession().createCriteria(Device.class).list();
 	}
 
 }

@@ -1,7 +1,8 @@
-package ch.hsr.ba.tourlive.view;
+package ch.hsr.ba.tourlive.view.admin;
 
-import java.util.ArrayList;
-import java.util.Locale;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,25 +13,29 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import ch.hsr.ba.tourlive.model.Race;
+import ch.hsr.ba.tourlive.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.model.rider.Rider;
 import ch.hsr.ba.tourlive.service.DeviceService;
+import ch.hsr.ba.tourlive.service.LiveTickerItemService;
 import ch.hsr.ba.tourlive.service.RaceService;
+import ch.hsr.ba.tourlive.service.RiderService;
 import ch.hsr.ba.tourlive.service.StageService;
-import ch.hsr.ba.tourlive.utils.SafeImageUtil;
+import ch.hsr.ba.tourlive.utils.DateUtil;
+import ch.hsr.ba.tourlive.utils.FileUploadUtil;
+import ch.hsr.ba.tourlive.utils.importer.CSVReader;
+import ch.hsr.ba.tourlive.utils.importer.RiderImporter;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
-public class AdminController {
+public class AdminStageController {
 	@Autowired
 	private ApplicationContext context;
 	@Autowired
@@ -39,74 +44,16 @@ public class AdminController {
 	private RaceService raceService;
 	@Autowired
 	private DeviceService deviceService;
+	@Autowired
+	private LiveTickerItemService ltiService;
+	@Autowired
+	private RiderService riderService;
 	@Value("${config.api.imagePath}")
-	private String imagePath;
+	private String filePath;
 	@Value("${config.dev.hostname}")
 	private String hostname;
 	@SuppressWarnings("unused")
-	private Logger log = LoggerFactory.getLogger(AdminController.class);
-
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin(Locale locale, Model model) {
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin"));
-		return "admin/admin";
-	}
-
-	@RequestMapping(value = "/admin/race", method = RequestMethod.GET)
-	public String manageRace(Locale locale, Model model) {
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
-
-		return "admin/manageRace";
-	}
-
-	@RequestMapping(value = "/admin/race/add", method = RequestMethod.POST)
-	public String newRace(@ModelAttribute("race") Race race,
-			@RequestParam(value = "visible", defaultValue = "") String visible,
-			SessionStatus status, Model model) {
-		if (visible.contains("true"))
-			race.setVisible(true);
-		raceService.save(race);
-		status.setComplete();
-		return "redirect:/admin/race";
-	}
-
-	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
-	public String editRace(@PathVariable("raceId") Long raceId,
-			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
-		model.addAttribute("menuitems", makeMenu());
-		Race race = raceService.getRaceById(raceId);
-		model.addAttribute("race", race);
-		model.addAttribute("stages", stageService.getAllByRace(race));
-		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId));
-		return "admin/editRace";
-	}
-
-	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.POST)
-	public String editedRace(@PathVariable("raceId") Long raceId,
-			@ModelAttribute("race") Race race,
-			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
-		if (visible.contains("true"))
-			race.setVisible(true);
-		raceService.update(race);
-
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("race", raceService.getRaceById(raceId));
-		return "redirect:/admin/race";
-	}
-
-	@RequestMapping(value = "/admin/race/delete/{raceId}", method = RequestMethod.GET)
-	public String removeRace(@PathVariable("raceId") Long raceId, Model model) {
-		raceService.delete(raceId);
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
-		return "forward:/admin/race";
-	}
+	private Logger log = LoggerFactory.getLogger(AdminStageController.class);
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
 	public String addStage(
@@ -138,8 +85,8 @@ public class AdminController {
 
 		String rel = "stage" + stage.getStageId();
 
-		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel, "banner.png"));
-		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage, imagePath, rel,
+		stage.setBannerImage(FileUploadUtil.safe(bannerimage, filePath, rel, "banner.png"));
+		stage.setStageProfileImage(FileUploadUtil.safe(stageProfileImage, filePath, rel,
 				"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
@@ -148,11 +95,13 @@ public class AdminController {
 	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.GET)
 	public String editStage(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId, Model model) {
-		model.addAttribute("stage", stageService.getStageById(stageId));
+		Stage stage = stageService.getStageById(stageId);
+		model.addAttribute("stage", stage);
 		model.addAttribute("race", raceService.getRaceById(raceId));
-		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("devices", deviceService.getAll());
+		model.addAttribute("riders", riderService.getAllbyStage(stage));
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
 				+ stageId));
 		return "admin/editStage";
@@ -185,18 +134,14 @@ public class AdminController {
 		stage.setDistance(stageDistance);
 		stage.setEndtime(endtime);
 		stage.setAdCode(adCode);
-
 		stage.setVisible(false);
 		if (visible.contains("true"))
 			stage.setVisible(true);
-
 		String rel = "stage" + stage.getStageId();
-
-		stage.setBannerImage(SafeImageUtil.safe(bannerimage, imagePath, rel, "banner.png"));
-		stage.setStageProfileImage(SafeImageUtil.safe(stageProfileImage, imagePath, rel,
+		stage.setBannerImage(FileUploadUtil.safe(bannerimage, filePath, rel, "banner.png"));
+		stage.setStageProfileImage(FileUploadUtil.safe(stageProfileImage, filePath, rel,
 				"stageProfile.png"));
 		stageService.update(stage);
-
 		return "redirect:/admin/race/edit/" + raceId;
 	}
 
@@ -230,18 +175,60 @@ public class AdminController {
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
-	@RequestMapping(value = "/admin/race/{raceId}/rider", method = RequestMethod.GET)
-	public String addRider(@PathVariable("raceId") Long raceId, Locale locale, Model model) {
-		model.addAttribute("menuitems", makeMenu());
-		model.addAttribute("races", raceService.getAllVisible());
-		return "admin/manageRider";
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker", method = RequestMethod.GET)
+	public String showLiveTicker(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId, Model model) {
+		Stage stage = stageService.getStageById(stageId);
+		model.addAttribute("race", raceService.getRaceById(raceId));
+		model.addAttribute("stage", stage);
+		model.addAttribute("liveTickerItems", ltiService.getAllByStage(stage));
+		model.addAttribute("now", DateUtil.timeNow());
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
+				+ stageId));
+		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("races", raceService.getAll());
+		return "admin/liveticker";
 	}
 
-	private ArrayList<MenuItem> makeMenu() {
-		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
-		menu.add(new MenuItem("Rennen", "/admin/race"));
-		menu.add(new MenuItem("Geräte", "/admin/device"));
-		return menu;
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/add", method = RequestMethod.POST)
+	public String addLiveTickerItem(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId, @RequestParam("timestamp") String timestamp,
+			@RequestParam("news") String news) {
+		LiveTickerItem lti = new LiveTickerItem();
+		lti.setTimestamp(timestamp);
+		lti.setNews(news);
+		lti.setStage(stageService.getStageById(stageId));
+		ltiService.save(lti);
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId + "/liveticker";
 	}
 
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/delete/{ltiId}", method = RequestMethod.GET)
+	public String removeLTI(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId, @PathVariable("ltiId") Long ltiId) {
+		ltiService.delete(ltiId);
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId + "/liveticker";
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/rider/import", method = RequestMethod.POST)
+	public String importRider(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId,
+			@RequestParam(value = "riderCsv", defaultValue = "") CommonsMultipartFile riderCsv) {
+		File csvFile = FileUploadUtil.safeCsv(riderCsv, filePath, "stage" + stageId);
+		Stage stage = stageService.getStageById(stageId);
+		CSVReader reader;
+		RiderImporter importer = new RiderImporter();
+
+		try {
+			reader = new CSVReader(new FileInputStream(csvFile));
+			for (String[] riderAsString : reader.readFile()) {
+				Rider r = importer.convertTo(riderAsString);
+				r.setStage(stage);
+				riderService.save(r);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return "admin/editStage";
+	}
 }

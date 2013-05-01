@@ -1,6 +1,8 @@
 package ch.hsr.ba.tourlive.model.rider;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Situation implements Serializable {
 	/**
@@ -81,8 +83,18 @@ public class Situation implements Serializable {
 		return "none";
 	}
 
-	public Long getHandicaptime() {
+	public Long getHandicaptimeAsTimestamp() {
 		return handicaptime;
+	}
+
+	public String getHandicaptime() {
+		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
+		try {
+			Date d = new Date(this.handicaptime);
+			return date.format(d);
+		} catch (NullPointerException e) {
+			return "00:00";
+		}
 	}
 
 	public void setHandicaptime(Long handicaptime) {

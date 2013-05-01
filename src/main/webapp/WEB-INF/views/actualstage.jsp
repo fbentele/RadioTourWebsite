@@ -76,37 +76,31 @@
 
 		</div>
 
-		<c:if test="${not empty valuecontainers}">
-			<div class="row-fluid">
+
+		<div class="row-fluid">
+			<c:if test="${not empty valuecontainers}">
 				<div class="span6">
 					<h4 id="karte">Karte</h4>
 					<div id="map-canvas"></div>
 				</div>
+			</c:if>
+			<c:if test="${not empty liveTickerItems}">
 				<div class="span6">
 					<h4 id="liveticker">Liveticker</h4>
 					<p>Hier stehen jeweils die aktuellsten News zum Rennen</p>
 					<dl class="dl-horizontal">
-						<dt>09:35:12</dt>
-						<dd>Fahrer fährt vor</dd>
-						<dt>09:35:47</dt>
-						<dd>Grosser Sturz im Feld</dd>
-						<dt>09:35:59</dt>
-						<dd>Nr. 9 wird überholt</dd>
-						<dt>09:36:15</dt>
-						<dd>Alle fahren schnell</dd>
-						<dt>09:36:43</dt>
-						<dd>Nr. 12 trink Wasser</dd>
-						<dt>09:36:54</dt>
-						<dd>Team BMC macht richtig Dampf</dd>
-						<dt>09:37:09</dt>
-						<dd>Alle anderen auch</dd>
+						<c:forEach items="${liveTickerItems}" var="lti">
+							<dt>${lti.timestamp}</dt>
+							<dd>${lti.news}</dd>
+						</c:forEach>
 						<dt>
-							^ <img src="<c:url value="/resources/img/loading.gif"/>" />
+							<img src="<c:url value="/resources/img/loading.gif"/>" />
 						</dt>
 					</dl>
 				</div>
-			</div>
-		</c:if>
+			</c:if>
+		</div>
+
 
 		<c:if test="${not empty situation}">
 			<div class="row-fluid">
@@ -118,7 +112,7 @@
 						<div class="span2">
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
-							Fahrer:
+							Fahrer: <br /> ${sit.handicaptime}
 							<ul>
 								<c:forEach items="${sit.drivernumber}" var="rider">
 									<li>${rider}</li>
@@ -130,116 +124,85 @@
 			</div>
 		</c:if>
 
-		<div class="row-fluid">
-			<div class="span12">
-				<h4 id="rangliste">Live - Rangliste</h4>
-				<table class="table table-hover">
-					<tr>
-						<th style="width: 10%">Start #</th>
-						<th style="width: 10%">Rang</th>
-						<th style="width: 40%">Name</th>
-						<th style="width: 10%">Team</th>
-						<th style="width: 10%">Land</th>
-						<th style="width: 10%">Zeit</th>
-						<th style="width: 10%">Rückstand:</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>1</td>
-						<td>Fabian Cancellara</td>
-						<td>BMC</td>
-						<td>Sui</td>
-						<td>4:23:1</td>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>3</td>
-						<td>Elmiger Martin</td>
-						<td>BMC</td>
-						<td>Sui</td>
-						<td>4:23:1</td>
-						<td>00:15</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>2</td>
-						<td>Champion Dimitri</td>
-						<td>BMC</td>
-						<td>Sui</td>
-						<td>4:23:1</td>
-						<td>00:21</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>5</td>
-						<td>Goddaert Kristof</td>
-						<td>BMC</td>
-						<td>Sui</td>
-						<td>4:23:1</td>
-						<td>00:35</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>4</td>
-						<td>Houanard Steve</td>
-						<td>BMC</td>
-						<td>Sui</td>
-						<td>4:23:1</td>
-						<td>00:45</td>
-					</tr>
-				</table>
-			</div>
+		<c:if test="${not empty topRiders}">
 			<div class="row-fluid">
 				<div class="span12">
-					<h4 id="marschtabelle">Marschtabelle</h4>
+					<h4 id="rangliste">Live - Rangliste</h4>
 					<table class="table table-hover">
 						<tr>
-							<th>Höhe</th>
-							<th>km</th>
-							<th>Ortschaft</th>
-							<th>Werbekolonne</th>
-							<th>Zeit schnell</th>
-							<th>Zeit langsam</th>
+							<th style="width: 10%">Start #</th>
+							<th style="width: 10%">Rang</th>
+							<th style="width: 40%">Name</th>
+							<th style="width: 10%">Team</th>
+							<th style="width: 10%">Land</th>
+							<th style="width: 10%">Zeit</th>
+							<th style="width: 10%">Rückstand:</th>
 						</tr>
-						<tr>
-							<td>1</td>
-							<td>3</td>
-							<td>Chur</td>
-							<td>13:12</td>
-							<td>13:15</td>
-							<td>4:23:1</td>
-						</tr>
-						<tr class="success">
-							<td>1</td>
-							<td>3</td>
-							<td>Bonaduz</td>
-							<td>14:12</td>
-							<td>14:15</td>
-							<td>4:23:1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>3</td>
-							<td>Thusis</td>
-							<td>15:12</td>
-							<td>15:15</td>
-							<td>4:23:1</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>3</td>
-							<td>Tiefencastel</td>
-							<td>16:12</td>
-							<td>16:15</td>
-							<td>4:23:1</td>
-						</tr>
+						<c:forEach items="${topRiders}" var="rider">
+							<tr>
+								<td>${rider.startNr}</td>
+								<td>${rider.startNr}</td>
+								<td>${rider.name}</td>
+								<td>${rider.teamShort}</td>
+								<td>${rider.country}</td>
+								<td>${rider.timeVirt}</td>
+								<td>${rider.timeRueck}</td>
+							</tr>
+						</c:forEach>
 					</table>
 				</div>
 			</div>
-		</div>
+		</c:if>
 
+		<div class="row-fluid">
+			<div class="span12">
+				<h4 id="marschtabelle">Marschtabelle</h4>
+				<table class="table table-hover">
+					<tr>
+						<th>Höhe</th>
+						<th>km</th>
+						<th>Ortschaft</th>
+						<th>Werbekolonne</th>
+						<th>Zeit schnell</th>
+						<th>Zeit langsam</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>3</td>
+						<td>Chur</td>
+						<td>13:12</td>
+						<td>13:15</td>
+						<td>4:23:1</td>
+					</tr>
+					<tr class="success">
+						<td>1</td>
+						<td>3</td>
+						<td>Bonaduz</td>
+						<td>14:12</td>
+						<td>14:15</td>
+						<td>4:23:1</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>3</td>
+						<td>Thusis</td>
+						<td>15:12</td>
+						<td>15:15</td>
+						<td>4:23:1</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>3</td>
+						<td>Tiefencastel</td>
+						<td>16:12</td>
+						<td>16:15</td>
+						<td>4:23:1</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
+
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
 	<!-- Strecken / Hoehenprofil  -->

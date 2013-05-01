@@ -13,12 +13,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ch.hsr.ba.tourlive.model.Stage;
+import ch.hsr.ba.tourlive.utils.DateUtil;
 
 @Component
 @Scope("prototype")
 @Entity
 public class Rider {
 	@Id
+	@Column
 	@GeneratedValue
 	private Long riderId;
 	@Column
@@ -28,6 +30,8 @@ public class Rider {
 	@Column
 	private String team;
 	@Column
+	private String teamShort;
+	@Column
 	private String country;
 	@Column
 	private Date birthday;
@@ -35,6 +39,12 @@ public class Rider {
 	private String note;
 	@Column
 	private Boolean neo;
+	@Column
+	private Long timeOff;
+	@Column
+	private Long timeRueck;
+	@Column
+	private Long timeVirt;
 	@ManyToOne
 	@JoinColumn(name = "stageId")
 	private Stage stage;
@@ -69,6 +79,14 @@ public class Rider {
 
 	public void setTeam(String team) {
 		this.team = team;
+	}
+
+	public String getTeamShort() {
+		return teamShort;
+	}
+
+	public void setTeamShort(String teamShort) {
+		this.teamShort = teamShort;
 	}
 
 	public String getCountry() {
@@ -109,6 +127,30 @@ public class Rider {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+	}
+
+	public Long getTimeOff() {
+		return timeOff;
+	}
+
+	public void setTimeOff(String timeOff) {
+		this.timeOff = DateUtil.toTimestamp(timeOff);
+	}
+
+	public Long getTimeRueck() {
+		return timeRueck;
+	}
+
+	public void setTimeRueck(String timeRueck) {
+		this.timeRueck = DateUtil.toTimestamp(timeRueck);
+	}
+
+	public Long getTimeVirt() {
+		return timeVirt;
+	}
+
+	public void setTimeVirt(String timeVirt) {
+		this.timeVirt = DateUtil.toTimestamp(timeVirt);
 	}
 
 }

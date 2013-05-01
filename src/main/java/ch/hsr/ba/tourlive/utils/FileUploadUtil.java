@@ -9,10 +9,9 @@ import javax.imageio.ImageIO;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class SafeImageUtil {
+public class FileUploadUtil {
 	public static String safe(CommonsMultipartFile multipartImage, String absolutePath,
 			String relativePath, String filename) {
-
 		if (!multipartImage.isEmpty()) {
 			InputStream iStream = null;
 			try {
@@ -30,6 +29,25 @@ public class SafeImageUtil {
 			} finally {
 			}
 			return relativePath + "/" + filename;
+		}
+		return null;
+	}
+
+	public static File safeCsv(CommonsMultipartFile file, String absolutePath, String relativePath) {
+		file.getOriginalFilename();
+		File filePath = new File(absolutePath + relativePath);
+		if (!filePath.exists()) {
+			filePath.mkdir();
+		}
+		File dest = new File(filePath, file.getOriginalFilename());
+		try {
+			file.transferTo(dest);
+			return dest;
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
 		}
 		return null;
 	}
