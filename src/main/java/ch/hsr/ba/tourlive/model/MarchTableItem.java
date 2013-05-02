@@ -29,9 +29,9 @@ public class MarchTableItem {
 	@Column
 	private Integer altitude;
 	@Column
-	private Double distance;
+	private Float distance;
 	@Column
-	private Double distanceToGo;
+	private Float distanceToGo;
 	@Column
 	private String ortschaft;
 	@Column
@@ -71,19 +71,19 @@ public class MarchTableItem {
 		this.altitude = altitude;
 	}
 
-	public Double getDistance() {
+	public Float getDistance() {
 		return distance;
 	}
 
-	public void setDistance(Double distance) {
+	public void setDistance(Float distance) {
 		this.distance = distance;
 	}
 
-	public Double getDistanceToGo() {
+	public Float getDistanceToGo() {
 		return distanceToGo;
 	}
 
-	public void setDistanceToGo(Double distanceToGo) {
+	public void setDistanceToGo(Float distanceToGo) {
 		this.distanceToGo = distanceToGo;
 	}
 
@@ -95,32 +95,32 @@ public class MarchTableItem {
 		this.ortschaft = ortschaft;
 	}
 
-	public Long getWerbekolonne() {
-		return werbekolonne;
+	public String getWerbekolonne() {
+		return DateUtil.toTimeFormat(werbekolonne);
 	}
 
 	public void setWerbekolonne(String werbekolonne) {
 		this.werbekolonne = DateUtil.timeToTimestamp(werbekolonne);
 	}
 
-	public Long getRaceSlow() {
-		return raceSlow;
+	public String getRaceSlow() {
+		return DateUtil.toTimeFormat(raceSlow);
 	}
 
 	public void setRaceSlow(String raceSlow) {
 		this.raceSlow = DateUtil.timeToTimestamp(raceSlow);
 	}
 
-	public Long getRaceMedium() {
-		return raceMedium;
+	public String getRaceMedium() {
+		return DateUtil.toTimeFormat(raceMedium);
 	}
 
 	public void setRaceMedium(String raceMedium) {
 		this.raceMedium = DateUtil.timeToTimestamp(raceMedium);
 	}
 
-	public Long getRaceFast() {
-		return raceFast;
+	public String getRaceFast() {
+		return DateUtil.toTimeFormat(raceFast);
 	}
 
 	public void setRaceFast(String raceFast) {

@@ -13,12 +13,17 @@ public class MarchTableImporter {
 	private final int raceMedium = 7;
 	private final int raceFast = 8;
 
+	// private enum Icon {
+	// achtung, kreisel, bahn, tunnel, verpflegung, rechts, links, bodenwelle,
+	// info
+	// }
+
 	public MarchTableItem convertTo(String[] strings) {
 		final MarchTableItem mti = new MarchTableItem();
 		mti.setIcon(strings[icon]);
 		mti.setAltitude(Integer.valueOf(strings[altitude]));
-		mti.setDistance(Double.valueOf(strings[distance]));
-		mti.setDistanceToGo(Double.valueOf(strings[distanceToGo]));
+		mti.setDistance(Float.valueOf(strings[distance]));
+		mti.setDistanceToGo(Float.valueOf(strings[distanceToGo]));
 		mti.setOrtschaft(strings[ortschaft]);
 		mti.setWerbekolonne(strings[werbekolonne]);
 		mti.setRaceSlow(strings[raceSlow]);

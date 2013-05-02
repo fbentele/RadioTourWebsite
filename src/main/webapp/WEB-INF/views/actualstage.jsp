@@ -161,9 +161,9 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th> </th>
+								<th></th>
 								<th>Höhe</th>
-								<th>Dist.</th>
+								<th colspan="2">Distanz (km)</th>
 								<th>Ortschaft</th>
 								<th>Werbekolonne</th>
 								<th>Zeit schnell</th>
@@ -173,10 +173,14 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${marchtable}" var="mti">
-								<tr>
-									<td><c:if test="${not empty mti.icon}"><img src="/resources/img/${mti.icon}" /></c:if></td>
+								<tr  <c:if test="${first.stageData.distance > mti.distance}">class="success"</c:if>>
+								
+									<td><c:if test="${not empty mti.icon}">
+											<img width="20px" src="/resources/img/${mti.icon}.png" />
+										</c:if></td>
 									<td>${mti.altitude}</td>
-									<td>${mti.distance} / ${mti.distanceToGo}</td>
+									<td>${mti.distance}</td>
+									<td>${mti.distanceToGo}</td>
 									<td>${mti.ortschaft}</td>
 									<td>${mti.werbekolonne}</td>
 									<td>${mti.raceFast}</td>

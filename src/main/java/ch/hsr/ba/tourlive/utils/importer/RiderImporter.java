@@ -33,9 +33,9 @@ public class RiderImporter {
 		return rider;
 	}
 
-	private String getCountry(String string) {
-		return string.substring(0, 3);
-	}
+	// private String getCountry(String string) {
+	// return string.substring(0, 3);
+	// }
 
 	private Date getBirthday(String string) {
 		SimpleDateFormat formater = new SimpleDateFormat("yyyyMMdd");
