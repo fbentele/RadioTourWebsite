@@ -6,7 +6,7 @@
 
 <body>
 		<h2>Alle Rennen:</h2>
-		<table class="table table-hover">
+		<table class="table table-hover" data-provides="rowlink">
 			<tr>
 				<th>ID</th>
 				<th>Name</th>
@@ -17,7 +17,7 @@
 			</tr>
 			<c:forEach items="${races}" var="race">
 				<tr>
-					<td>${race.raceId}</td>
+					<td><a href="/admin/race/edit/${race.raceId}">${race.raceId}</a></td>
 					<td>${race.raceName}</td>
 					<td>${race.year}</td>
 					<td>${race.raceDescription}</td>

@@ -7,6 +7,7 @@ $(document).ready(function() {
 		$(".newItem").slideToggle('fast');
 	});
 
+	// Slug generator
 	$('.toSlug').keyup(function() {
 		$.ajax({
 			type : "POST",
@@ -31,27 +32,31 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
-	$('#fileuploadbutton').bind("click" , function () {
-        $('.fileupload').click();
-    });
-	$('#fileuploadbutton2').bind("click" , function () {
-        $('.fileupload2').click();
-    });
-	$('#fileuploadbutton3').bind("click" , function () {
-        $('.fileupload3').click();
-    });
+
+	$('#fileuploadbutton').bind("click", function() {
+		$('.fileupload').click();
+	});
+	$('#fileuploadbutton2').bind("click", function() {
+		$('.fileupload2').click();
+	});
+	$('#fileuploadbutton3').bind("click", function() {
+		$('.fileupload3').click();
+	});
+	$('#fileuploadbutton4').bind("click", function() {
+		$('.fileupload4').click();
+	});
 	// datetimepicker
 	// http://tarruda.github.io/bootstrap-datetimepicker/
 	$.fn.datetimepicker.defaults = {
-			  maskInput: true,           // disables the text input mask
-			  pickDate: true,            // disables the date picker
-			  pickTime: true,            // disables de time picker
-			  pick12HourFormat: false,   // enables the 12-hour format time picker
-			  pickSeconds: false,         // disables seconds in the time picker
-			  startDate: -Infinity,      // set a minimum date
-			  endDate: Infinity          // set a maximum date
-			};
+		maskInput : true, // disables the text input mask
+		pickDate : true, // disables the date picker
+		pickTime : true, // disables de time picker
+		pick12HourFormat : false, // enables the 12-hour format time picker
+		pickSeconds : false, // disables seconds in the time picker
+		startDate : -Infinity, // set a minimum date
+		endDate : Infinity
+	// set a maximum date
+	};
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
 			language : 'de-CH'
@@ -60,10 +65,47 @@ $(document).ready(function() {
 			language : 'de-CH'
 		});
 	});
-	
-	//color picker
+
+	// color picker
 	$('.colorpicker').colorpicker();
-	
-	//scroll spy
+
+	// scroll spy
 	$('#tourlive-site').scrollspy();
+
+	// table rowlink
+	$('tbody.rowlink').rowlink();
+
+	// table-data
+	$('#ridertable').dataTable({
+		"sDom" : "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+	});
+	$.extend($.fn.dataTableExt.oStdClasses, {
+		"sWrapper" : "dataTables_wrapper form-inline"
+	});
+
+	// load riders on the fly
+	function rider(stage, startNr) {
+		var theurl = "/utils/stage/" + stage + "/rider";
+		$.ajax({
+			type : "POST",
+			url : theurl,
+			data : {
+				startNr : startNr
+			},
+			success : function(data) {
+				$("#rider" + startNr).attr('title', data);
+			}
+		});
+	};
+
+	$("#testa").mouseover(function() {
+		var riderNr = $(this).children("a").text();
+		if ($("#rider"+riderNr).is('[title]').length > 0){
+		} else {
+			console.log("title not found, calling ajax");
+			rider(3, riderNr);
+		}
+	});
+
+	$('.riders').tooltip();
 });

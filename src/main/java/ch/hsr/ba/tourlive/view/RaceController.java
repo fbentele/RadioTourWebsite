@@ -20,6 +20,7 @@ import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.LiveTickerItemService;
+import ch.hsr.ba.tourlive.service.MarchTableService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.RaceSituationService;
 import ch.hsr.ba.tourlive.service.RiderService;
@@ -47,6 +48,8 @@ public class RaceController {
 	private RaceSituationService raceSituationService;
 	@Autowired
 	private RiderService riderService;
+	@Autowired
+	private MarchTableService marchTableService;
 	@Autowired
 	private LiveTickerItemService liveTickerItemService;
 	@Value("${config.dev.hostname}")
@@ -81,6 +84,7 @@ public class RaceController {
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}", method = RequestMethod.GET)
 	public String stage(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, Model model) {
+
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
@@ -89,7 +93,7 @@ public class RaceController {
 		model.addAttribute("stage", stage);
 		model.addAttribute("navbarrace", "active");
 		model.addAttribute("valuecontainers", valueContainers);
-		model.addAttribute("topRiders", riderService.getTopTenByStage(stage));
+		model.addAttribute("riders", riderService.getAllByStage(stage));
 		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
 		model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
 		model.addAttribute("liveTickerItems",
@@ -98,6 +102,7 @@ public class RaceController {
 		model.addAttribute("hostname", hostname);
 		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
 		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
+		model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
 		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
 		model.addAttribute("breadcrumb",
 				new Breadcrumb("/race/" + raceSlug + "/stage/" + stageSlug));

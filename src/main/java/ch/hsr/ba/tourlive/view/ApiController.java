@@ -4,7 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.ImageData;
+import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.model.VideoData;
 import ch.hsr.ba.tourlive.model.rider.RaceSituation;
@@ -104,13 +107,10 @@ public class ApiController {
 		InputStream is = null;
 		if (deviceId.isEmpty() || deviceId == null)
 			deviceId = "tempimage";
-
 		try {
 			is = image.getInputStream();
 			BufferedImage sourceImage = ImageIO.read(is);
-
 			File theImage = new File(imagePath + deviceId);
-
 			if (!theImage.exists()) {
 				boolean result = theImage.mkdir();
 				if (result) {
@@ -159,10 +159,29 @@ public class ApiController {
 		raceSituationService.save(rawSituation);
 	}
 
-	@RequestMapping(value = "/api/getstageinfo/{deviceId}", method = RequestMethod.GET)
-	public void getStageInfo(@PathVariable("deviceId") String deviceId) {
+	@ResponseBody
+	@RequestMapping(value = "/api/getstageinfo/{deviceId}", method = RequestMethod.GET, produces = "application/json")
+	public Map<String, Object> getStageInfo(@PathVariable("deviceId") String deviceId) {
+		Device device = deviceService.getDeviceById(deviceId);
+		if (device != null) {
+			Stage stage = stageService.getMostRecentStageForDevice(device);
+			Map<String, Object> val = new HashMap<String, Object>();
+			val.put("stageName", stage.getStageName());
+			val.put("raceName", stage.getRace().getRaceName());
+			val.put("currentRaceTotalDistance",
+					stageService.getTotalRaceDistance(stage.getRace(), false));
+			val.put("currentStageTotalDistance", stage.getDistance());
+			val.put("completedStagesDistance",
+					stageService.getTotalRaceDistance(stage.getRace(), true));
+			return val;
+		}
+
+		return null;
 		// stageName
 		// raceName
+		// currentRaceTotalDistance //sum of all stages.distance together
+		// currentStageTotalDistance
+		// completedStagesDistance // all passed stages.distance together
 	}
 
 	@RequestMapping(value = "/api/stage/{stageId}/rider/add", method = RequestMethod.POST)

@@ -24,7 +24,7 @@ public class Rider {
 	@GeneratedValue
 	private Long riderId;
 	@Column
-	private int startNr;
+	private Integer startNr;
 	@Column
 	private String name;
 	@Column
@@ -129,28 +129,29 @@ public class Rider {
 		this.stage = stage;
 	}
 
-	public Long getTimeOff() {
-		return timeOff;
+	public String getTimeOff() {
+		return DateUtil.toTimeFormat(timeOff);
 	}
 
 	public void setTimeOff(String timeOff) {
-		this.timeOff = DateUtil.toTimestamp(timeOff);
+		this.timeOff = DateUtil.timeToTimestamp(timeOff);
 	}
 
-	public Long getTimeRueck() {
-		return timeRueck;
+	public String getTimeRueck() {
+		return DateUtil.toTimeFormat(timeRueck);
+
 	}
 
 	public void setTimeRueck(String timeRueck) {
-		this.timeRueck = DateUtil.toTimestamp(timeRueck);
+		this.timeRueck = DateUtil.timeToTimestamp(timeRueck);
 	}
 
-	public Long getTimeVirt() {
-		return timeVirt;
+	public String getTimeVirt() {
+		return DateUtil.toTimeFormat(timeVirt);
 	}
 
 	public void setTimeVirt(String timeVirt) {
-		this.timeVirt = DateUtil.toTimestamp(timeVirt);
+		this.timeVirt = DateUtil.timeToTimestamp(timeVirt);
 	}
 
 }

@@ -111,6 +111,38 @@
 				</c:choose>
 			</div>
 		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<h3>Marschtabelle</h3>
+			<p>CSV mit den Spalten:</p>
+			<pre>icon , altitude, distance, distanceToGo, ortschaft, werbekolonne, raceSlow, raceMedium, raceFast</pre>
+			<form:form method="post" name="marchtableimport"
+				action="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/import"
+				enctype="multipart/form-data">
+				<div>
+					<label for="marchTableCsv">Marschtabelle hochladen:</label>
+					<div id="fileuploadbutton4" class="btn">CSV Datei auswählen</div>
+					<br /> <input type="file" accept=".csv" name="marchTableCsv" class="fileupload4" />
+				</div>
+				<button type="submit" class="btn btn-primary">Importieren</button>
+			</form:form>
+			<c:if test="${not empty marchTable}">
+				<table class="table hover-table">
+					<c:forEach items="${marchTable}" var="mti">
+						<tr>
+							<td>${mti.ortschaft}</td>
+							<td>${mti.distance}</td>
+							<td><a
+								href="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/delete/${mti.marchTableItemId}"><i
+									class="icon-trash pull-right"></i></a></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		</div>
+	</div>
+	<div class="row-fluid">
 		<div class="span6">
 			<h3>Fahrer importieren</h3>
 			<p>CSV Datei mit den Spalten:</p>
@@ -128,7 +160,16 @@
 			</form:form>
 			<c:if test="${not empty riders}">
 				<table class="table hover-table">
-					<c:forEach items="${riders}" var="rider"><tr><td>${rider.startNr}</td><td>${rider.name}</td><td>Bearbeiten</td><td>Löschen</td></tr></c:forEach>
+					<c:forEach items="${riders}" var="rider">
+						<tr>
+							<td>${rider.startNr}</td>
+							<td>${rider.name}</td>
+							<td>${rider.teamShort}</td>
+							<td><a
+								href="/admin/race/${race.raceId}/stage/${stage.stageId}/rider/delete/${rider.riderId}"><i
+									class="icon-trash pull-right"></i></a></td>
+						</tr>
+					</c:forEach>
 
 				</table>
 

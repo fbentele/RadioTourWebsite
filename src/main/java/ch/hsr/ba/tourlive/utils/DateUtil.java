@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class DateUtil {
 	private static final String TIME_FORMAT_PATTERN = "HH:mm:ss";
+	private static final String DATE_TIME_FORMAT_PATTERN = "dd.mm.yyyy - HH:mm:ss";
+	private static final String DATE_FORMAT_PATTERN = "dd.mm.yyyy";
 
 	/**
 	 * 
@@ -27,7 +29,7 @@ public class DateUtil {
 		return null;
 	}
 
-	public static Long toTimestamp(String time) {
+	public static Long timeToTimestamp(String time) {
 		try {
 			Date date = new SimpleDateFormat(TIME_FORMAT_PATTERN).parse(time);
 			return date.getTime();
@@ -35,6 +37,17 @@ public class DateUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * 
+	 * @param timestamp_as_Long
+	 * @return returns a String of the timestamp in the format HH:mm:ss
+	 */
+	public static String toTimeFormat(Long timestamp) {
+		Date date = new Date(timestamp);
+		SimpleDateFormat s = new SimpleDateFormat(TIME_FORMAT_PATTERN);
+		return s.format(date);
 	}
 
 }

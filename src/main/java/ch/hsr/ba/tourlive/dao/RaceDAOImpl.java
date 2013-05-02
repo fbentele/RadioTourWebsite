@@ -58,4 +58,5 @@ public class RaceDAOImpl implements RaceDAO {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Race.class);
 		return (Race) crit.add(Restrictions.eq("raceSlug", slug)).list().get(0);
 	}
+
 }

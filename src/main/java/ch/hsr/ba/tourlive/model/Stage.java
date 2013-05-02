@@ -61,6 +61,9 @@ public class Stage {
 	@Column
 	private Boolean visible;
 
+	@Column
+	private Boolean completed;
+
 	@ManyToOne
 	@JoinColumn(name = "raceId")
 	private Race race;
@@ -69,11 +72,11 @@ public class Stage {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Device> devices;
 
-	public float getDistance() {
+	public Float getDistance() {
 		return distance;
 	}
 
-	public void setDistance(float distance) {
+	public void setDistance(Float distance) {
 		this.distance = distance;
 	}
 

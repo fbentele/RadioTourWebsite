@@ -20,16 +20,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ch.hsr.ba.tourlive.model.LiveTickerItem;
+import ch.hsr.ba.tourlive.model.MarchTableItem;
 import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.rider.Rider;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.LiveTickerItemService;
+import ch.hsr.ba.tourlive.service.MarchTableService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.RiderService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.utils.DateUtil;
 import ch.hsr.ba.tourlive.utils.FileUploadUtil;
 import ch.hsr.ba.tourlive.utils.importer.CSVReader;
+import ch.hsr.ba.tourlive.utils.importer.MarchTableImporter;
 import ch.hsr.ba.tourlive.utils.importer.RiderImporter;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 import ch.hsr.ba.tourlive.viewmodel.MenuItem;
@@ -48,6 +51,8 @@ public class AdminStageController {
 	private LiveTickerItemService ltiService;
 	@Autowired
 	private RiderService riderService;
+	@Autowired
+	private MarchTableService mtiService;
 	@Value("${config.api.imagePath}")
 	private String filePath;
 	@Value("${config.dev.hostname}")
@@ -101,13 +106,20 @@ public class AdminStageController {
 		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("devices", deviceService.getAll());
-		model.addAttribute("riders", riderService.getAllbyStage(stage));
+		model.addAttribute("riders", riderService.getAllByStage(stage));
+		model.addAttribute("marchTable", mtiService.getAllByStage(stage));
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
 				+ stageId));
 		return "admin/editStage";
 	}
 
-	/*
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}", method = RequestMethod.GET)
+	public String showStage(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId) {
+		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
+	}
+
+	/**
 	 * This method handles each request parameter separately because of the
 	 * specially handled time formates and muliple images not saved in the stage
 	 * model but to disk and a only as path string to the model
@@ -228,7 +240,43 @@ public class AdminStageController {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
-		return "admin/editStage";
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/rider/delete/{riderId}", method = RequestMethod.GET)
+	public String deleteRider(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId, @PathVariable("riderId") Long riderId) {
+		riderService.delete(riderId);
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/marchtable/import", method = RequestMethod.POST)
+	public String importMarchTable(
+			@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId,
+			@RequestParam(value = "marchTableCsv", defaultValue = "") CommonsMultipartFile marchTableCsv) {
+		File csvFile = FileUploadUtil.safeCsv(marchTableCsv, filePath, "stage" + stageId);
+		Stage stage = stageService.getStageById(stageId);
+		CSVReader reader;
+		MarchTableImporter importer = new MarchTableImporter();
+		try {
+			reader = new CSVReader(new FileInputStream(csvFile));
+			for (String[] mtiAsString : reader.readFile()) {
+				MarchTableItem mti = importer.convertTo(mtiAsString);
+				mti.setStage(stage);
+				mtiService.save(mti);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/marchtable/delete/{mtiId}", method = RequestMethod.GET)
+	public String deleteMarchTableItem(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId, @PathVariable("mtiId") Long mtiId) {
+		mtiService.delete(mtiId);
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
+	}
+
 }

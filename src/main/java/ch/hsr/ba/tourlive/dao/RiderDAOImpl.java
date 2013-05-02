@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,8 @@ import ch.hsr.ba.tourlive.model.rider.Rider;
 public class RiderDAOImpl implements RiderDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+
+	private static final Logger LOG = LoggerFactory.getLogger(RiderDAOImpl.class);
 
 	public void save(Rider rider) {
 		sessionFactory.getCurrentSession().save(rider);
@@ -42,11 +46,11 @@ public class RiderDAOImpl implements RiderDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Rider> getAllbyStage(Stage stage) {
+	public List<Rider> getAllByStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Rider.class);
 		crit.add(Restrictions.eq("stage", stage));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-
+		System.out.println("__________ number of riders:" + crit.list().size());
 		return (List<Rider>) crit.list();
 	}
 
@@ -61,4 +65,18 @@ public class RiderDAOImpl implements RiderDAO {
 		return (List<Rider>) crit.list();
 	}
 
+	public Rider getRiderByStartNrForStage(Stage stage, Integer startNr) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Rider.class);
+		LOG.info("_________________stageid " + stage.getStageId());
+		crit.add(Restrictions.eq("stage", stage));
+		LOG.info("_________________startnr " + startNr);
+
+		crit.add(Restrictions.eq("startNr", startNr));
+		try {
+			return (Rider) crit.list().get(0);
+		} catch (IndexOutOfBoundsException e) {
+
+		}
+		return null;
+	}
 }

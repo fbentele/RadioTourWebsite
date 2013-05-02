@@ -73,10 +73,7 @@
 			<c:if test="${not empty stage.adCode}">
 				<div class="span4">${stage.adCode}</div>
 			</c:if>
-
 		</div>
-
-
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
 				<div class="span6">
@@ -101,7 +98,6 @@
 			</c:if>
 		</div>
 
-
 		<c:if test="${not empty situation}">
 			<div class="row-fluid">
 				<div class="span12">
@@ -114,8 +110,9 @@
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
 							Fahrer: <br /> ${sit.handicaptime}
 							<ul>
-								<c:forEach items="${sit.drivernumber}" var="rider">
-									<li>${rider}</li>
+								<c:forEach items="${sit.drivernumber}" var="startNr">
+									<li id="testa"><a id="rider${startNr}" class="riders" href="#"
+										data-toggle="tooltip">${startNr}</a></li>
 								</c:forEach>
 							</ul>
 						</div>
@@ -124,83 +121,74 @@
 			</div>
 		</c:if>
 
-		<c:if test="${not empty topRiders}">
+		<c:if test="${not empty riders}">
 			<div class="row-fluid">
 				<div class="span12">
 					<h4 id="rangliste">Live - Rangliste</h4>
-					<table class="table table-hover">
-						<tr>
-							<th style="width: 10%">Start #</th>
-							<th style="width: 10%">Rang</th>
-							<th style="width: 40%">Name</th>
-							<th style="width: 10%">Team</th>
-							<th style="width: 10%">Land</th>
-							<th style="width: 10%">Zeit</th>
-							<th style="width: 10%">Rückstand:</th>
-						</tr>
-						<c:forEach items="${topRiders}" var="rider">
+					<table id="ridertable" class="table table-hover">
+						<thead>
 							<tr>
-								<td>${rider.startNr}</td>
-								<td>${rider.startNr}</td>
-								<td>${rider.name}</td>
-								<td>${rider.teamShort}</td>
-								<td>${rider.country}</td>
-								<td>${rider.timeVirt}</td>
-								<td>${rider.timeRueck}</td>
+								<th style="width: 10%">Start #</th>
+								<th style="width: 10%">Rang</th>
+								<th style="width: 40%">Name</th>
+								<th style="width: 10%">Team</th>
+								<th style="width: 10%">Land</th>
+								<th style="width: 10%">Zeit</th>
+								<th style="width: 10%">Rückstand:</th>
 							</tr>
-						</c:forEach>
+						</thead>
+						<tbody>
+							<c:forEach items="${riders}" var="rider">
+								<tr>
+									<td>${rider.startNr}</td>
+									<td>${rider.startNr}</td>
+									<td>${rider.name}</td>
+									<td>${rider.teamShort}</td>
+									<td>${rider.country}</td>
+									<td>${rider.timeVirt}</td>
+									<td>${rider.timeRueck}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
 				</div>
 			</div>
 		</c:if>
-
-		<div class="row-fluid">
-			<div class="span12">
-				<h4 id="marschtabelle">Marschtabelle</h4>
-				<table class="table table-hover">
-					<tr>
-						<th>Höhe</th>
-						<th>km</th>
-						<th>Ortschaft</th>
-						<th>Werbekolonne</th>
-						<th>Zeit schnell</th>
-						<th>Zeit langsam</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>3</td>
-						<td>Chur</td>
-						<td>13:12</td>
-						<td>13:15</td>
-						<td>4:23:1</td>
-					</tr>
-					<tr class="success">
-						<td>1</td>
-						<td>3</td>
-						<td>Bonaduz</td>
-						<td>14:12</td>
-						<td>14:15</td>
-						<td>4:23:1</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>3</td>
-						<td>Thusis</td>
-						<td>15:12</td>
-						<td>15:15</td>
-						<td>4:23:1</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>3</td>
-						<td>Tiefencastel</td>
-						<td>16:12</td>
-						<td>16:15</td>
-						<td>4:23:1</td>
-					</tr>
-				</table>
+		<c:if test="${not empty marchtable}">
+			<div class="row-fluid">
+				<div class="span12">
+					<h4 id="marschtabelle">Marschtabelle</h4>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th> </th>
+								<th>Höhe</th>
+								<th>Dist.</th>
+								<th>Ortschaft</th>
+								<th>Werbekolonne</th>
+								<th>Zeit schnell</th>
+								<th>Zeit mittel</th>
+								<th>Zeit langsam</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${marchtable}" var="mti">
+								<tr>
+									<td><c:if test="${not empty mti.icon}"><img src="/resources/img/${mti.icon}" /></c:if></td>
+									<td>${mti.altitude}</td>
+									<td>${mti.distance} / ${mti.distanceToGo}</td>
+									<td>${mti.ortschaft}</td>
+									<td>${mti.werbekolonne}</td>
+									<td>${mti.raceFast}</td>
+									<td>${mti.raceMedium}</td>
+									<td>${mti.raceSlow }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
+		</c:if>
 	</div>
 
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
@@ -292,6 +280,5 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</c:if>
-
 </body>
 </html>

@@ -17,7 +17,10 @@ public interface RiderService {
 
 	public Rider getRiderById(Long id);
 
-	public List<Rider> getAllbyStage(Stage stage);
+	public List<Rider> getAllByStage(Stage stage);
 
 	public List<Rider> getTopTenByStage(Stage stage);
+
+	public Rider getRiderByStartNrForStage(Stage stage, Integer startNr);
+
 }

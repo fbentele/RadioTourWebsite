@@ -15,6 +15,11 @@
 <link href="<c:url value="/resources/css/tourlive.css" />" rel="stylesheet" type="text/css" />
 <link href="<c:url value="/resources/css/bootstrap-datetimepicker.min.css" />"
 	rel="stylesheet" type="text/css" />
+<link href="<c:url value="/resources/css/bootstrap-rowlink.min.css" />" rel="stylesheet"
+	type="text/css" />
+<link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet"
+	type="text/css" />
+	
 
 <!-- for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

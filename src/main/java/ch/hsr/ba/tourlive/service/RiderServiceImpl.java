@@ -42,8 +42,8 @@ public class RiderServiceImpl implements RiderService {
 	}
 
 	@Transactional
-	public List<Rider> getAllbyStage(Stage stage) {
-		return riderDao.getAllbyStage(stage);
+	public List<Rider> getAllByStage(Stage stage) {
+		return riderDao.getAllByStage(stage);
 	}
 
 	@Transactional
@@ -51,4 +51,8 @@ public class RiderServiceImpl implements RiderService {
 		return riderDao.getTopTenByStage(stage);
 	}
 
+	@Transactional
+	public Rider getRiderByStartNrForStage(Stage stage, Integer startNr) {
+		return riderDao.getRiderByStartNrForStage(stage, startNr);
+	}
 }

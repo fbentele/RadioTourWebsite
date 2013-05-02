@@ -30,7 +30,7 @@
 		<c:choose>
 			<c:when test="${not empty stages}">
 				<h3>Etappen für dieses Rennen</h3>
-				<table class="table table-hover">
+				<table class="table table-hover" data-provides="rowlink">
 					<tr>
 						<th>Etappe</th>
 						<th>Beschreibung</th>
@@ -38,18 +38,16 @@
 						<th>Bis</th>
 						<th>Distanz</th>
 						<th>Sichtbar</th>
-						<th>Bearbeiten</th>
 						<th>Löschen</th>
 					</tr>
 					<c:forEach items="${stages}" var="stage">
 						<tr>
-							<td>${stage.stageName}</td>
+							<td><a href="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">${stage.stageName}</a></td>
 							<td>${stage.stageDescription}</td>
 							<td>${stage.starttime}</td>
 							<td>${stage.endtime}</td>
 							<td>${stage.distance}</td>
 							<td>${stage.visible}</td>
-							<td><a href="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">Bearbeiten</a></td>
 							<td><a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}">Löschen</a></td>
 						</tr>
 					</c:forEach>
@@ -99,16 +97,16 @@
 					<label for="bannerImageFile">Etappen Banner Bild hochladen:</label> <img
 						src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
 					<div id="fileuploadbutton" class="btn">Bild auswählen</div>
-					<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" /><br/>
+					<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" /><br />
 				</div>
 				<div>
 					<label for="stageProfileFile">Etappen (höhen) Profilbild hochladen:</label> <img
 						src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
 					<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
-					<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" /><br/>
+					<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" /><br />
 				</div>
 				<label for="adCode">HTML Code für Werbeelement</label>
-					<textarea name="adCode" rows="6" tabindex="8"></textarea>
+				<textarea name="adCode" rows="6" tabindex="8"></textarea>
 			</div>
 		</form>
 	</div>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.hsr.ba.tourlive.dao.StageDAO;
+import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 
@@ -58,5 +59,15 @@ public class StageServiceImpl implements StageService {
 	@Transactional
 	public Stage getStageBySlug(String slug) {
 		return stagedao.getStageBySlug(slug);
+	}
+
+	@Transactional
+	public Stage getMostRecentStageForDevice(Device device) {
+		return stagedao.getMostRecentStageForDevice(device);
+	}
+
+	@Transactional
+	public Float getTotalRaceDistance(Race race, Boolean completed) {
+		return stagedao.getTotalRaceDistance(race, completed);
 	}
 }
