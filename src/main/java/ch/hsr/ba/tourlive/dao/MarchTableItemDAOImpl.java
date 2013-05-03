@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +35,7 @@ public class MarchTableItemDAOImpl implements MarchTableItemDAO {
 	@SuppressWarnings("unchecked")
 	public List<MarchTableItem> getAllByStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(MarchTableItem.class);
+		crit.add(Restrictions.eq("stage", stage));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return (List<MarchTableItem>) crit.list();
 	}
