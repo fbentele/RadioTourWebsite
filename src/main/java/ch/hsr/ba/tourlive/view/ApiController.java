@@ -165,15 +165,17 @@ public class ApiController {
 		Device device = deviceService.getDeviceById(deviceId);
 		if (device != null) {
 			Stage stage = stageService.getMostRecentStageForDevice(device);
-			Map<String, Object> val = new HashMap<String, Object>();
-			val.put("stageName", stage.getStageName());
-			val.put("raceName", stage.getRace().getRaceName());
-			val.put("currentRaceTotalDistance",
-					stageService.getTotalRaceDistance(stage.getRace(), false));
-			val.put("currentStageTotalDistance", stage.getDistance());
-			val.put("completedStagesDistance",
-					stageService.getTotalRaceDistance(stage.getRace(), true));
-			return val;
+			if (stage != null) {
+				Map<String, Object> val = new HashMap<String, Object>();
+				val.put("stageName", stage.getStageName());
+				val.put("raceName", stage.getRace().getRaceName());
+				val.put("currentRaceTotalDistance",
+						stageService.getTotalRaceDistance(stage.getRace(), false));
+				val.put("currentStageTotalDistance", stage.getDistance());
+				val.put("completedStagesDistance",
+						stageService.getTotalRaceDistance(stage.getRace(), true));
+				return val;
+			}
 		}
 
 		return null;
