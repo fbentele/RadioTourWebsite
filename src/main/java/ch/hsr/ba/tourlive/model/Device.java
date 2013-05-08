@@ -25,6 +25,9 @@ public class Device {
 
 	@Column
 	private String labelName;
+	
+	@Column
+	private String phoneNr;
 
 	public String getDeviceId() {
 		return deviceId;
@@ -58,6 +61,14 @@ public class Device {
 
 	public void setLabelName(String labelName) {
 		this.labelName = labelName;
+	}
+
+	public String getPhoneNr() {
+		return phoneNr;
+	}
+
+	public void setPhoneNr(String phoneNr) {
+		this.phoneNr = phoneNr;
 	}
 
 	@Override
