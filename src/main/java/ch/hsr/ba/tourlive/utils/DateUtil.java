@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class DateUtil {
 	private static final String TIME_FORMAT_PATTERN = "HH:mm:ss";
 	private static final String DATE_TIME_FORMAT_PATTERN = "dd.mm.yyyy - HH:mm:ss";

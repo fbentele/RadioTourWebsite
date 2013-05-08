@@ -68,12 +68,16 @@ public class RaceController {
 	@RequestMapping(value = "/race/{raceSlug}", method = RequestMethod.GET)
 	public String customRace(@PathVariable("raceSlug") String raceSlug, Locale locale, Model model) {
 		Race actualRace = raceService.getRaceBySlug(raceSlug);
-		model.addAttribute("race", actualRace);
-		model.addAttribute("navbarrace", "active");
-		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("menuitems", makeMenu(stageService.getAllVisibleByRace(actualRace)));
-		model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug));
-		return "actualrace";
+		if (actualRace != null) {
+			model.addAttribute("race", actualRace);
+			model.addAttribute("navbarrace", "active");
+			model.addAttribute("races", raceService.getAllVisible());
+			model.addAttribute("menuitems", makeMenu(stageService.getAllVisibleByRace(actualRace)));
+			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug));
+			return "actualrace";
+		} else {
+			return "redirect:/race";
+		}
 	}
 
 	@RequestMapping(value = "/race/{raceSlug}/stage", method = RequestMethod.GET)
@@ -84,8 +88,10 @@ public class RaceController {
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}", method = RequestMethod.GET)
 	public String stage(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, Model model) {
-
 		Stage stage = stageService.getStageBySlug(stageSlug);
+		if (stage != null) {
+
+		}
 		List<ValueContainer> valueContainers = valueContainerService
 				.getAllValueContainerForStage(stage);
 		model.addAttribute("races", raceService.getAllVisible());
@@ -98,7 +104,11 @@ public class RaceController {
 		model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
 		model.addAttribute("liveTickerItems",
 				liveTickerItemService.getAllByStageLimitedTo(stage, 10));
-		model.addAttribute("devices", stage.getDevices());
+		try {
+			model.addAttribute("devices", stage.getDevices());
+		} catch (Exception e) {
+
+		}
 		model.addAttribute("hostname", hostname);
 		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
 		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
@@ -117,7 +127,6 @@ public class RaceController {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		List<ValueContainer> valueContainers = valueContainerService
 				.getForStageByDistanceLimitedTo(stage, untilTime);
-		log.info("___________________number: " + valueContainers.size());
 		model.addAttribute("races", raceService.getAllVisible());
 		// model.addAttribute("menuitems",makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
 		model.addAttribute("menuitems", MenuItem.makeStageNavi());
@@ -148,5 +157,4 @@ public class RaceController {
 		}
 		return menu;
 	}
-
 }

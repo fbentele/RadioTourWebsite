@@ -68,7 +68,11 @@ public class StageDAOImpl implements StageDAO {
 
 	public Stage getStageBySlug(String slug) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
-		return (Stage) crit.add(Restrictions.eq("stageSlug", slug)).list().get(0);
+		try {
+			return (Stage) crit.add(Restrictions.eq("stageSlug", slug)).list().get(0);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	public Stage getMostRecentStageForDevice(Device device) {

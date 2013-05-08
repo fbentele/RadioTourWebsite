@@ -17,8 +17,6 @@ public interface RaceDAO {
 
 	public Race getRaceById(Long id);
 
-	public Race getActualTds();
-
 	public Race getRaceBySlug(String slug);
 
 }

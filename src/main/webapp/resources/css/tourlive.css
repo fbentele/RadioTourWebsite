@@ -47,6 +47,10 @@ html,body {
 	margin-top: 10px;
 }
 
+.formerror{
+	color: red;
+}
+
 .black-footer a {
 	color: #cfcfcf;
 }

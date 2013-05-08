@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,13 +11,19 @@
 		<p>
 			<form:form method="post" name="race" action="/admin/race/edit/${race.raceId}">
 				<div class="span3">
-					<input type="hidden" name="raceId" value="${race.raceId}" /> <label for="raceName">Rennname</label>
-					<input type="text" name="raceName" class="toRaceSlug" value="${race.raceName}"
-						tabindex="1" /><label for="raceSlug">Kurzname</label> <input type="text"
-						name="raceSlug" class="theRaceSlug" value="${race.raceSlug}" tabindex="1" /> <label
-						for="year">Jahr</label> <input type="number" name="year" value="${race.year}"
-						tabindex="2" /> <label for="visible"><input type="checkbox" name="visible"
-						value="true" <c:if test="${race.visible == true}">checked</c:if>> Sichtbar</label> <br>
+					<input type="hidden" name="raceId" value="${race.raceId}" />
+					<label for="raceName">Rennname</label>
+					<form:errors path="raceName" cssClass="formerror" />
+					<input type="text" name="raceName" class="toRaceSlug" value="${race.raceName}" tabindex="1" />
+					<label for="raceSlug">Kurzname</label>
+					<form:errors path="raceSlug" cssClass="formerror" />
+					<input type="text" name="raceSlug" class="theRaceSlug" value="${race.raceSlug}" tabindex="1" />
+					<label for="year">Jahr</label>
+					<form:errors path="year" cssClass="formerror" />					
+					<input type="number" name="year" value="${race.year}" tabindex="2" />
+					<label for="visible"><input type="checkbox" name="visible"
+						value="true" <c:if test="${race.visible == true}">checked</c:if>> Sichtbar</label>
+					<br>
 					<button type="submit" class="btn btn-primary">Speichern</button>
 				</div>
 				<div class="span4">
@@ -59,16 +66,19 @@
 		</c:choose>
 	</div>
 	<button id="adder" type="submit" class="btn btn-primary">Neue Etappe</button>
-	<div class="newItem row-fluid">
-		<form method="post" name="stage" action="/admin/race/${race.raceId}/stage/add"
+	<div <c:if test="${empty showhidden}">class="newItem"</c:if>>
+		<form:form commandName="stage" method="post" name="stage" action="/admin/race/${race.raceId}/stage/add"
 			enctype="multipart/form-data">
 			<div class="span4">
-				<label for="stageName">Etappenname</label> <input type="text" name="stageName"
-					class="toSlug" tabindex="4"> <label for="stageSlug">Etappenkurzname</label> <input
-					type="text" name="stageSlug" class="theSlug" tabindex="5"> <label
-					for="distance">Distanz</label>
+				<label path="stageName" for="stageName">Etappenname</label>
+				<form:errors path="stageName" cssClass="formerror" />
+				<form:input path="stageName" type="text" name="stageName" class="toSlug" tabindex="4" />
+				<label for="stageSlug">Etappenkurzname</label>
+				<form:errors path="stageSlug" cssClass="formerror" />
+				<form:input path="stageSlug" type="text" name="stageSlug" class="theSlug" tabindex="5" />
+				<label for="distance">Distanz</label>
 				<div class="input-append">
-					<input type="text" name="distance" tabindex="8"> <span class="add-on">km</span>
+					<form:input path="distance" type="text" name="distance" tabindex="8" /> <span class="add-on">km</span>
 				</div>
 				<label for="visible"> <input type="checkbox" name="visible" value="true">
 					Sichtbar
@@ -108,7 +118,7 @@
 				<label for="adCode">HTML Code für Werbeelement</label>
 				<textarea name="adCode" rows="6" tabindex="8"></textarea>
 			</div>
-		</form>
+		</form:form>
 	</div>
 </body>
 </html>

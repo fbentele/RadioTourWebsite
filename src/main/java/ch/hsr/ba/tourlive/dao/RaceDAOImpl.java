@@ -24,7 +24,7 @@ public class RaceDAOImpl implements RaceDAO {
 	}
 
 	public void delete(Long id) {
-		Race race = (Race) sessionFactory.getCurrentSession().load(Race.class, id);
+		Race race = (Race) sessionFactory.getCurrentSession().get(Race.class, id);
 		if (race != null) {
 			sessionFactory.getCurrentSession().delete(race);
 		}
@@ -42,21 +42,18 @@ public class RaceDAOImpl implements RaceDAO {
 		return (List<Race>) crit.list();
 	}
 
-	public Race getActualTds() {
-		/*
-		 * TODO: return latest Tour de Suiss Race Object or null if none
-		 * available
-		 */
-		return null;
-	}
-
 	public Race getRaceById(Long id) {
 		return (Race) sessionFactory.getCurrentSession().get(Race.class, id);
 	}
 
 	public Race getRaceBySlug(String slug) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Race.class);
-		return (Race) crit.add(Restrictions.eq("raceSlug", slug)).list().get(0);
+		crit.add(Restrictions.eq("raceSlug", slug));
+		try {
+			return (Race) crit.list().get(0);
+		} catch (IndexOutOfBoundsException e) {
+			// no race available
+			return null;
+		}
 	}
-
 }

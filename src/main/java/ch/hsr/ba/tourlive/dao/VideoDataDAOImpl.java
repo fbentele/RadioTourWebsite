@@ -30,7 +30,7 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 	public void delete(Long videoDataId) {
 		VideoData vid = (VideoData) sessionFactory.getCurrentSession().load(VideoData.class,
 				videoDataId);
-		if (null != vid) {
+		if (vid != null) {
 			sessionFactory.getCurrentSession().delete(vid);
 		}
 	}
@@ -56,16 +56,19 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 
 	public List<VideoData> getMostRecentByStage(Stage stage) {
 		List<VideoData> videoData = new ArrayList<VideoData>();
-		for (Device dev : stage.getDevices()) {
-			VideoData img = this.getMostRecentByDevice(dev);
+		if (stage != null) {
+			for (Device dev : stage.getDevices()) {
+				VideoData img = this.getMostRecentByDevice(dev);
 
-			if (img != null) {
-				if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
-						&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-					videoData.add(this.getMostRecentByDevice(dev));
+				if (img != null) {
+					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
+							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+						videoData.add(this.getMostRecentByDevice(dev));
+				}
 			}
+			return videoData;
 		}
-		return videoData;
+		return null;
 	}
 
 	public VideoData getById(Long id) {

@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -28,12 +29,14 @@ public class Stage {
 	@GeneratedValue
 	private Long stageId;
 
+	@NotEmpty
 	@Column(name = "STAGE_NAME")
 	private String stageName;
 
 	/**
 	 * A slug is a pathpart in an url.
 	 */
+	@NotEmpty
 	@Column(unique = true)
 	private String stageSlug;
 

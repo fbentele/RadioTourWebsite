@@ -11,6 +11,15 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+/**
+ * StageData provides information about the current position within a
+ * {@link Stage} (collected by a {@link Device} and inserted into a
+ * {@link ValueContainer}
+ * 
+ * @author flo
+ * 
+ */
+
 @Component
 @Scope("prototype")
 @Entity

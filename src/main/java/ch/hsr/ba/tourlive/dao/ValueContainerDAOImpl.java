@@ -23,21 +23,18 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	SessionFactory sessionFactory;
 	Logger log = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
 
-	@Override
 	public void save(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().save(valuecontainer);
 	}
 
-	@Override
 	public void update(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().update(valuecontainer);
 	}
 
-	@Override
 	public void delete(Long id) {
 		ValueContainer valuecontainer = (ValueContainer) sessionFactory.getCurrentSession().load(
 				ValueContainer.class, id);
-		if (null != valuecontainer) {
+		if (valuecontainer != null) {
 			sessionFactory.getCurrentSession().delete(valuecontainer);
 		}
 	}
@@ -52,60 +49,65 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		if (!stage.getDevices().isEmpty()) {
+		if (stage != null && !stage.getDevices().isEmpty()) {
 			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
+
+			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+					stage.getEndtimeAsTimestamp()));
+			crit.addOrder(Order.desc("timestamp"));
+			return crit.list();
 		}
-		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-				stage.getEndtimeAsTimestamp()));
-		crit.addOrder(Order.desc("timestamp"));
-		return crit.list();
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllForStageByDistance(Stage stage) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		if (!stage.getDevices().isEmpty()) {
+		if (stage != null && !stage.getDevices().isEmpty()) {
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
 			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
+			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+					stage.getEndtimeAsTimestamp()));
+			Criteria stageCriteria = crit.createCriteria("stageData");
+			stageCriteria.addOrder(Order.asc("distance"));
+			return (List<ValueContainer>) stageCriteria.list();
 		}
-		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-				stage.getEndtimeAsTimestamp()));
-		Criteria stageCriteria = crit.createCriteria("stageData");
-		stageCriteria.addOrder(Order.asc("distance"));
-		return (List<ValueContainer>) stageCriteria.list();
+		return null;
 	}
 
 	public ValueContainer getFirstByStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		if (!stage.getDevices().isEmpty()) {
+		if (stage != null && !stage.getDevices().isEmpty()) {
 			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
-		}
-		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-				stage.getEndtimeAsTimestamp()));
-		try {
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list().get(0);
-		} catch (Exception e) {
-			// TODO: do stuff here, if list is empty, cannot acces element 0
-			return null;
-		}
 
+			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+					stage.getEndtimeAsTimestamp()));
+
+			try {
+				Criteria stageCriteria = crit.createCriteria("stageData");
+				return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list()
+						.get(0);
+			} catch (IndexOutOfBoundsException e) {
+				// TODO: do stuff here, if list is empty, cannot acces element 0
+			}
+		}
+		return null;
 	}
 
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
 		List<ValueContainer> list = new ArrayList<ValueContainer>();
-		if (!stage.getDevices().isEmpty()) {
+		if (stage != null && !stage.getDevices().isEmpty()) {
 			for (Device device : stage.getDevices()) {
 				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 						ValueContainer.class);
@@ -125,17 +127,18 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		if (!stage.getDevices().isEmpty()) {
+		if (stage != null && !stage.getDevices().isEmpty()) {
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
 			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
+			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
+			Criteria stageCriteria = crit.createCriteria("stageData");
+			stageCriteria.addOrder(Order.asc("distance"));
+			return (List<ValueContainer>) stageCriteria.list();
 		}
-		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
-		Criteria stageCriteria = crit.createCriteria("stageData");
-		stageCriteria.addOrder(Order.asc("distance"));
-		return (List<ValueContainer>) stageCriteria.list();
+		return null;
 	}
 }

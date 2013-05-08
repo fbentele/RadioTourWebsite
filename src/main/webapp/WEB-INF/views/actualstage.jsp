@@ -7,13 +7,13 @@
 </head>
 <body>
 	<div>
-		<div id="top" class="row-fluid">
-			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
-			<c:if test="${not empty first.stageData.distance}">
+		<c:if test="${not empty first}">
+			<div id="top" class="row-fluid">
+				<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
 				<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
 					gefahren.</p>
-			</c:if>
-		</div>
+			</div>
+		</c:if>
 		<c:if test="${not empty stage.stageProfileImage}">
 			<div class="row-fluid">
 				<div class="span12">
@@ -33,7 +33,6 @@
 				</div>
 			</div>
 		</c:if>
-
 		<div id="livebilder" class="row-fluid">
 			<c:forEach items="${images}" var="image">
 				<div class="span4">
@@ -173,8 +172,8 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${marchtable}" var="mti">
-								<tr  <c:if test="${first.stageData.distance > mti.distance}">class="success"</c:if>>
-								
+								<tr <c:if test="${first.stageData.distance > mti.distance}">class="success"</c:if>>
+
 									<td><c:if test="${not empty mti.icon}">
 											<img width="20px" src="/resources/img/${mti.icon}.png" />
 										</c:if></td>

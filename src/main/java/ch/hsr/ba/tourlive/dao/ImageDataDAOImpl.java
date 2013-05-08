@@ -28,8 +28,11 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	}
 
 	public void delete(Long imageDataId) {
-		sessionFactory.getCurrentSession().delete(
-				sessionFactory.getCurrentSession().get(ImageData.class, imageDataId));
+		ImageData img = (ImageData) sessionFactory.getCurrentSession().get(ImageData.class,
+				imageDataId);
+		if (imageDataId != null) {
+			sessionFactory.getCurrentSession().delete(img);
+		}
 	}
 
 	public ImageData getById(Long imageDataId) {
@@ -39,32 +42,37 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllImageDataByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
-		crit.add(Restrictions.eq("device", device));
-		return crit.list();
+		if (device != null) {
+			crit.add(Restrictions.eq("device", device));
+			return crit.list();
+		}
+		return null;
 	}
 
 	public ImageData getMostRecentByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
-		try {
-			return (ImageData) crit.add(Restrictions.eq("device", device))
-					.addOrder(Order.desc("timestamp")).list().get(0);
-		} catch (NullPointerException e) {
-			return null;
-		} catch (IndexOutOfBoundsException e) {
-			return null;
+		if (device != null) {
+			try {
+				return (ImageData) crit.add(Restrictions.eq("device", device))
+						.addOrder(Order.desc("timestamp")).list().get(0);
+			} catch (NullPointerException e) {
+			} catch (IndexOutOfBoundsException e) {
+			}
 		}
+		return null;
 	}
 
 	@Override
 	public List<ImageData> getMostRecentByStage(Stage stage) {
 		List<ImageData> imageData = new ArrayList<ImageData>();
-		for (Device dev : stage.getDevices()) {
-			ImageData img = this.getMostRecentByDevice(dev);
-
-			if (img != null) {
-				if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
-						&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-					imageData.add(this.getMostRecentByDevice(dev));
+		if (stage != null) {
+			for (Device dev : stage.getDevices()) {
+				ImageData img = this.getMostRecentByDevice(dev);
+				if (img != null) {
+					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
+							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+						imageData.add(this.getMostRecentByDevice(dev));
+				}
 			}
 		}
 		return imageData;

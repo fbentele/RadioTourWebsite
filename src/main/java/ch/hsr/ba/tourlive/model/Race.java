@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -19,18 +22,22 @@ public class Race {
 	@GeneratedValue
 	private Long raceId;
 
+	@NotEmpty
 	@Column
 	private String raceName;
 
 	/*
 	 * A slug is a pathpart in an url
 	 */
+	@NotEmpty
 	@Column(unique = true)
 	private String raceSlug;
 
 	@Column
 	private String raceDescription;
 
+	@Min(value = 1999)
+	@Max(value = 2100)
 	@Column
 	private int year;
 

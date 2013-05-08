@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * The ValueContainer combines information about the current position of a
- * device
+ * device, the current stage and mobile networking information.
  * 
  * @author fbentele
  * 

@@ -2,6 +2,8 @@ package ch.hsr.ba.tourlive.view.admin;
 
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +11,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 
 import ch.hsr.ba.tourlive.model.Race;
+import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.LiveTickerItemService;
 import ch.hsr.ba.tourlive.service.RaceService;
@@ -56,26 +59,37 @@ public class AdminController {
 		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
+		model.addAttribute("race", new Race());
 		return "admin/manageRace";
 	}
 
 	@RequestMapping(value = "/admin/race/add", method = RequestMethod.POST)
-	public String newRace(@ModelAttribute("race") Race race,
-			@RequestParam(value = "visible", defaultValue = "") String visible,
-			SessionStatus status, Model model) {
-		if (visible.contains("true"))
-			race.setVisible(true);
-		raceService.save(race);
-		status.setComplete();
-		return "redirect:/admin/race";
+	public String newRace(@Valid @ModelAttribute("race") Race race, BindingResult binding,
+			@RequestParam(value = "visible", defaultValue = "") String visible, Locale locale,
+			Model model) {
+		if (binding.hasErrors()) {
+			model.addAttribute("race", race);
+			model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+			model.addAttribute("races", raceService.getAll());
+			model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
+			model.addAttribute("showhidden", true);
+			return "admin/manageRace";
+		} else {
+			if (visible.contains("true"))
+				race.setVisible(true);
+			raceService.save(race);
+			return "redirect:/admin/race";
+		}
 	}
 
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
 	public String editRace(@PathVariable("raceId") Long raceId,
-			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
+			@RequestParam(value = "visible", defaultValue = "") String visible,
+			BindingResult binding, Model model) {
 		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		Race race = raceService.getRaceById(raceId);
 		model.addAttribute("race", race);
+		model.addAttribute("stage", new Stage());
 		model.addAttribute("stages", stageService.getAllByRace(race));
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId));

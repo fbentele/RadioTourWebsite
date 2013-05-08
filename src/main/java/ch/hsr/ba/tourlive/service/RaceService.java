@@ -17,7 +17,5 @@ public interface RaceService {
 
 	public Race getRaceById(Long id);
 
-	public Race getActualTds();
-
 	public Race getRaceBySlug(String slug);
 }
