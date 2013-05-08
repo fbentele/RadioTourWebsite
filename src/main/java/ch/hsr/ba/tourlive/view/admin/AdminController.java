@@ -84,8 +84,8 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
 	public String editRace(@PathVariable("raceId") Long raceId,
-			@RequestParam(value = "visible", defaultValue = "") String visible,
-			BindingResult binding, Model model) {
+			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
+
 		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		Race race = raceService.getRaceById(raceId);
 		model.addAttribute("race", race);
