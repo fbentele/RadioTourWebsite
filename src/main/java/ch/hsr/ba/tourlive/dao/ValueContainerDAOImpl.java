@@ -206,32 +206,36 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 */
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
 		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
-		for (ValueContainer v : getAllForStageByDistance(stage)) {
-			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-			Disjunction d = Restrictions.or();
-			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-					stage.getEndtimeAsTimestamp()));
-			crit.addOrder(Order.asc("timestamp"));
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			stageCriteria.add(Restrictions.le("distance", v.getStageData().getDistance()));
-			try {
-				ValueContainer val = (ValueContainer) stageCriteria.list().get(0);
-				if (val.getTimestamp() < v.getTimestamp()
-						&& val.getStageData().getDistance() + 0.5 >= v.getStageData().getDistance()) {
-					map.put(v.getValueContainerId(),
-							(int) (v.getTimestamp() - val.getTimestamp()) / 1000);
-					log.info("__________ put " + v.getValueContainerId() + "____ and "
-							+ (v.getTimestamp() - val.getTimestamp()));
-				} else {
-					map.put(v.getValueContainerId(), 0);
-					log.info("__________ put zero");
+		if (stage.getDevices().size() >= 2) {
+			for (ValueContainer v : getAllForStageByDistance(stage)) {
+				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+						ValueContainer.class);
+				Disjunction d = Restrictions.or();
+				for (Device device : stage.getDevices()) {
+					d.add(Restrictions.eq("device", device));
 				}
-			} catch (IndexOutOfBoundsException e) {
-				map.put(v.getValueContainerId(), 0);
+				crit.add(d);
+				crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+						stage.getEndtimeAsTimestamp()));
+				crit.addOrder(Order.asc("timestamp"));
+				Criteria stageCriteria = crit.createCriteria("stageData");
+				stageCriteria.add(Restrictions.le("distance", v.getStageData().getDistance()));
+				try {
+					ValueContainer val = (ValueContainer) stageCriteria.list().get(0);
+					if (val.getTimestamp() < v.getTimestamp()
+							&& val.getStageData().getDistance() + 0.5 >= v.getStageData()
+									.getDistance()) {
+						map.put(v.getValueContainerId(),
+								(int) (v.getTimestamp() - val.getTimestamp()) / 1000);
+						log.info("__________ put " + v.getValueContainerId() + "____ and "
+								+ (v.getTimestamp() - val.getTimestamp()));
+					} else {
+						map.put(v.getValueContainerId(), 0);
+						log.info("__________ put zero");
+					}
+				} catch (IndexOutOfBoundsException e) {
+					map.put(v.getValueContainerId(), 0);
+				}
 			}
 		}
 		return map;
