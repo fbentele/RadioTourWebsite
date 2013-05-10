@@ -1,4 +1,4 @@
-package ch.hsr.ba.tourlive.view;
+package ch.hsr.ba.tourlive.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

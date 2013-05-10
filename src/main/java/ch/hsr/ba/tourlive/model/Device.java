@@ -25,9 +25,17 @@ public class Device {
 
 	@Column
 	private String labelName;
-	
+
 	@Column
 	private String phoneNr;
+
+	public Device() {
+
+	}
+
+	public Device(String devid) {
+		this.deviceId = devid;
+	}
 
 	public String getDeviceId() {
 		return deviceId;

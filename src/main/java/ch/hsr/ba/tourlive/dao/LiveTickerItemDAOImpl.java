@@ -46,7 +46,17 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 		crit.add(Restrictions.eq("stage", stage));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		crit.addOrder(Order.desc("timestamp"));
-		// crit.setFirstResult(0);
+		crit.setMaxResults(limit);
+		return (List<LiveTickerItem>) crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long timelimit) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		crit.add(Restrictions.eq("stage", stage));
+		crit.add(Restrictions.le("timestamp", timelimit));
+		crit.addOrder(Order.desc("timestamp"));
 		crit.setMaxResults(limit);
 		return (List<LiveTickerItem>) crit.list();
 	}

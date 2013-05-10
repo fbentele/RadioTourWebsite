@@ -19,5 +19,9 @@ public interface ImageDataService {
 
 	public List<ImageData> getMostRecentByStage(Stage stage);
 
+	public List<ImageData> getMostRecentByStage(Stage stage, Long limit);
+
 	public ImageData getById(Long id);
+
+	public List<ImageData> getAllByStage(Stage stage);
 }

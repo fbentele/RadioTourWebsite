@@ -11,24 +11,22 @@
 		<p>
 			<form:form method="post" name="race" action="/admin/race/edit/${race.raceId}">
 				<div class="span3">
-					<input type="hidden" name="raceId" value="${race.raceId}" />
-					<label for="raceName">Rennname</label>
+					<input type="hidden" name="raceId" value="${race.raceId}" /> <label for="raceName">Rennname</label>
 					<form:errors path="raceName" cssClass="formerror" />
-					<input type="text" name="raceName" class="toRaceSlug" value="${race.raceName}" tabindex="1" />
-					<label for="raceSlug">Kurzname</label>
+					<input type="text" name="raceName" class="toRaceSlug" value="${race.raceName}"
+						tabindex="1" /> <label for="raceSlug">Kurzname</label>
 					<form:errors path="raceSlug" cssClass="formerror" />
-					<input type="text" name="raceSlug" class="theRaceSlug" value="${race.raceSlug}" tabindex="1" />
-					<label for="year">Jahr</label>
-					<form:errors path="year" cssClass="formerror" />					
-					<input type="number" name="year" value="${race.year}" tabindex="2" />
-					<label for="visible"><input type="checkbox" name="visible"
-						value="true" <c:if test="${race.visible == true}">checked</c:if>> Sichtbar</label>
-					<br>
-					<button type="submit" class="btn btn-primary">Speichern</button>
+					<input type="text" name="raceSlug" class="theRaceSlug" value="${race.raceSlug}"
+						tabindex="2" /> <label for="year">Jahr</label>
+					<form:errors path="year" cssClass="formerror" />
+					<input type="number" name="year" value="${race.year}" tabindex="3" /> <label
+						for="visible"><input type="checkbox" name="visible" value="true"
+						<c:if test="${race.visible == true}">checked</c:if> tabindex="4" /> Sichtbar</label> <br>
+					<button type="submit" class="btn btn-primary" tabindex="6">Speichern</button>
 				</div>
 				<div class="span4">
 					<label for="raceDescription">Beschreibung</label>
-					<textarea name="raceDescription" rows="6" class="span12" tabindex="3">${race.raceDescription}</textarea>
+					<textarea name="raceDescription" rows="6" class="span12" tabindex="5">${race.raceDescription}</textarea>
 				</div>
 			</form:form>
 		</p>
@@ -67,56 +65,57 @@
 	</div>
 	<button id="adder" type="submit" class="btn btn-primary">Neue Etappe</button>
 	<div <c:if test="${empty showhidden}">class="newItem"</c:if>>
-		<form:form commandName="stage" method="post" name="stage" action="/admin/race/${race.raceId}/stage/add"
-			enctype="multipart/form-data">
+		<form:form commandName="stage" method="post" name="stage"
+			action="/admin/race/${race.raceId}/stage/add" enctype="multipart/form-data">
 			<div class="span4">
 				<label path="stageName" for="stageName">Etappenname</label>
 				<form:errors path="stageName" cssClass="formerror" />
-				<form:input path="stageName" type="text" name="stageName" class="toSlug" tabindex="4" />
+				<form:input path="stageName" type="text" name="stageName" class="toSlug" tabindex="10" />
 				<label for="stageSlug">Etappenkurzname</label>
 				<form:errors path="stageSlug" cssClass="formerror" />
-				<form:input path="stageSlug" type="text" name="stageSlug" class="theSlug" tabindex="5" />
+				<form:input path="stageSlug" type="text" name="stageSlug" class="theSlug" tabindex="11" />
 				<label for="distance">Distanz</label>
 				<div class="input-append">
-					<form:input path="distance" type="text" name="distance" tabindex="8" /> <span class="add-on">km</span>
+					<form:input path="distance" type="text" name="distance" tabindex="12" />
+					<span class="add-on">km</span>
 				</div>
-				<label for="visible"> <input type="checkbox" name="visible" value="true">
+				<label for="visible"> <input type="checkbox" name="visible" value="true" tabindex="13" />
 					Sichtbar
 				</label>
 				<div>
 					<label for="stageDescription">Beschreibung</label>
-					<textarea name="stageDescription" rows="6" tabindex="8"></textarea>
+					<textarea name="stageDescription" rows="6" tabindex="14"></textarea>
 				</div>
 				<br />
-				<button type="submit" class="btn btn-primary" tabindex="10">Speichern</button>
+				<button type="submit" class="btn btn-primary" tabindex="20">Speichern</button>
 			</div>
 			<div class="span4">
 				<label for="starttime">Startzeit</label>
 				<div id="datetimepicker1" class="input-append date">
-					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" tabindex="6" />
+					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" tabindex="15" />
 					<span class="add-on"> <i data-time-icon="icon-time"
 						data-date-icon="icon-calendar"></i></span>
 				</div>
 				<label for="endtime">Endzeit</label>
 				<div id="datetimepicker2" class="input-append">
-					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" tabindex="7" />
+					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" tabindex="16" />
 					<span class="add-on"> <i data-time-icon="icon-time"
 						data-date-icon="icon-calendar"></i></span>
 				</div>
 				<div>
 					<label for="bannerImageFile">Etappen Banner Bild hochladen:</label> <img
 						src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
-					<div id="fileuploadbutton" class="btn">Bild auswählen</div>
+					<div id="fileuploadbutton" class="btn" tabindex="17">Bild auswählen</div>
 					<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" /><br />
 				</div>
 				<div>
 					<label for="stageProfileFile">Etappen (höhen) Profilbild hochladen:</label> <img
 						src="http://www.placehold.it/300x50/EFEFEF/AAAAAA&text=kein+Bild" class="img-rounded">
-					<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
+					<div id="fileuploadbutton2" class="btn" tabindex="18">Bild auswählen</div>
 					<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" /><br />
 				</div>
 				<label for="adCode">HTML Code für Werbeelement</label>
-				<textarea name="adCode" rows="6" tabindex="8"></textarea>
+				<textarea name="adCode" rows="6" tabindex="19"></textarea>
 			</div>
 		</form:form>
 	</div>

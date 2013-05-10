@@ -1,17 +1,52 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <html>
 <head>
 <title>Tourlive - ${stage.stageName}</title>
+<meta http-equiv="refresh" content="30;">
 </head>
 <body>
 	<div>
 		<c:if test="${not empty first}">
 			<div id="top" class="row-fluid">
 				<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
-				<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
-					gefahren.</p>
+				<div class="span6">
+					<p class="lead">Es sind ${first.stageData.distance} km von ${stage.distance} km
+						gefahren.</p>
+				</div>
+				<div class="span4">
+					Aktuell angezeigter Zeitpunkt:
+					<jsp:useBean id="dateValue" class="java.util.Date" />
+					<jsp:setProperty name="dateValue" property="time" value="${limit}" />
+					<fmt:formatDate value="${dateValue}" pattern="HH:mm:ss" />
+					<br />
+					<div class="btn-group">
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}">+ 5min</a>
+						</div>
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 120000}">+ 2min</a>
+						</div>
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}">+ 1min</a>
+						</div>
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/">Jetzt</a>
+						</div>
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}">- 1min</a>
+						</div>
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 120000}">- 2min</a>
+						</div>
+						<div class="btn">
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}">- 5min</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</c:if>
 		<c:if test="${not empty stage.stageProfileImage}">
@@ -19,7 +54,7 @@
 				<div class="span12">
 					<h4 id="streckenprofil">Streckenprofil</h4>
 					<div id="image-drawing-wrapper">
-						<img width="940" src="${hostname}${stage.stageProfileImage}" />
+						<img width="940" height="350" src="${hostname}${stage.stageProfileImage}" />
 						<div id="strecken-canvas"></div>
 					</div>
 				</div>
@@ -63,7 +98,7 @@
 			<c:forEach items="${videos}" var="video">
 				<div class="span4">
 					<h4>${video.device.username}</h4>
-					<video width="320" height="240" controls>
+					<video id="liveVideo" width="320" height="240" autoplay controls autobuffer>
 						<source src="${hostname}${video.videoLocation}"
 							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
 					</video>
@@ -73,6 +108,7 @@
 				<div class="span4">${stage.adCode}</div>
 			</c:if>
 		</div>
+
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
 				<div class="span6">
@@ -173,7 +209,6 @@
 						<tbody>
 							<c:forEach items="${marchtable}" var="mti">
 								<tr <c:if test="${first.stageData.distance > mti.distance}">class="success"</c:if>>
-
 									<td><c:if test="${not empty mti.icon}">
 											<img width="20px" src="/resources/img/${mti.icon}.png" />
 										</c:if></td>
@@ -196,9 +231,8 @@
 
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
 
-	<!-- Strecken / Hoehenprofil  -->
+	<!-- Streckenprofil / Hoehenprofil  -->
 	<c:if test="${not empty stage.stageProfileImage}">
-
 		<script type="text/javascript">
 		var streckencanvas = Raphael("strecken-canvas", 940, 350);
 		<c:choose>
@@ -216,30 +250,44 @@
 	</script>
 	</c:if>
 
-	<!-- Abstandsentwicklung  -->
-	<script type="text/javascript">
-		var stageDistance = ${stage.distance};
-		var canvas = Raphael("abstand-canvas", 940, 220);
-		canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-		canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 
-		canvas.path("M230,190L230,210");
-		canvas.path("M450,190L450,210");
-		canvas.path("M670,190L670,210");
-		canvas.path("M890,190L890,210");
-		canvas.text(10,215, "0 " );
-		canvas.text(230,215, stageDistance/4);
-		canvas.text(450,215, stageDistance/2);
-		canvas.text(670,215, stageDistance/4 *3);
-		canvas.text(890,215, stageDistance);
-					
-		canvas.text(50, 10, "Rückstand in m");
-		canvas.text(900, 180, "Rennkilometer");
+	<!-- Abstandsentwicklung  -->
+	<c:if test="${not empty distances}">
+		<script type="text/javascript">
+			var stageDistance = ${stage.distance};
+			var canvas = Raphael("abstand-canvas", 940, 220);
+			canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+			canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 	
-		<c:forEach items="${distances}" var="distance">
-			var circle = canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 1000/${distance.valueContainerId}, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
-		</c:forEach>
-	</script>
+			canvas.path("M230,190L230,210");
+			canvas.path("M450,190L450,210");
+			canvas.path("M670,190L670,210");
+			canvas.path("M890,190L890,210");
+			canvas.text(10,215, "0 " );
+			canvas.text(230,215, stageDistance/4);
+			canvas.text(450,215, stageDistance/2);
+			canvas.text(670,215, stageDistance/4 *3);
+			canvas.text(890,215, stageDistance);
+			canvas.text(50, 10, "Rückstand in s");
+			canvas.text(900, 180, "Rennkilometer");
+		
+			<c:forEach items="${distances}" var="distance">
+				canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 200 - <c:out value="${deficitetimes[distance.valueContainerId]}"/>, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
+			</c:forEach>
+		</script>
+	</c:if>
+
+	<!-- Video -->
+	<c:if test="${not empty videos}">
+		<script type="text/javascript">
+				var nextVideo = "";
+				var videoPlayer = document.getElementById('liveVideo');
+				videoPlayer.addEventListener('ended', function(){
+					/* load video per ajax here */
+    				videoPlayer.src = nextVideo;
+				});
+			</script>
+	</c:if>
 
 	<!-- Karte -->
 	<c:if test="${not empty valuecontainers}">
@@ -248,7 +296,6 @@
 	</script>
 		<script type="text/javascript">
 		function initialize() {
-			
 			var myLatLng = new google.maps.LatLng(${first.positionData.latitude}, ${first.positionData.longitude});
 			var mapOptions = {
 				zoom : 14,

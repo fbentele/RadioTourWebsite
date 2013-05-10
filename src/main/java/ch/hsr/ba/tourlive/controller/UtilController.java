@@ -1,4 +1,4 @@
-package ch.hsr.ba.tourlive.view;
+package ch.hsr.ba.tourlive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

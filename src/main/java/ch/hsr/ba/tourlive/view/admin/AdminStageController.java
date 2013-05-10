@@ -30,7 +30,7 @@ import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.RiderService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.utils.DateUtil;
-import ch.hsr.ba.tourlive.utils.FileUploadUtil;
+import ch.hsr.ba.tourlive.utils.FileUtil;
 import ch.hsr.ba.tourlive.utils.importer.CSVReader;
 import ch.hsr.ba.tourlive.utils.importer.MarchTableImporter;
 import ch.hsr.ba.tourlive.utils.importer.RiderImporter;
@@ -72,7 +72,8 @@ public class AdminStageController {
 			@RequestParam("adCode") String adCode,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
-			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
+			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage,
+			Model model) {
 		Stage stage = new Stage();
 		stage.setStageName(stageName);
 		stage.setStageDescription(stageDescription);
@@ -87,11 +88,9 @@ public class AdminStageController {
 		stageService.save(stage);
 		// creates id, needed to save image properly
 		stage = stageService.getStageBySlug(stageSlug);
-
 		String rel = "stage" + stage.getStageId();
-
-		stage.setBannerImage(FileUploadUtil.safe(bannerimage, filePath, rel, "banner.png"));
-		stage.setStageProfileImage(FileUploadUtil.safe(stageProfileImage, filePath, rel,
+		stage.setBannerImage(FileUtil.safe(bannerimage, filePath, rel, "banner.png"));
+		stage.setStageProfileImage(FileUtil.safe(stageProfileImage, filePath, rel,
 				"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
@@ -102,6 +101,7 @@ public class AdminStageController {
 			@PathVariable("raceId") Long raceId, Model model) {
 		Stage stage = stageService.getStageById(stageId);
 		model.addAttribute("stage", stage);
+		model.addAttribute("hostname", hostname);
 		model.addAttribute("race", raceService.getRaceById(raceId));
 		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		model.addAttribute("races", raceService.getAllVisible());
@@ -150,8 +150,8 @@ public class AdminStageController {
 		if (visible.contains("true"))
 			stage.setVisible(true);
 		String rel = "stage" + stage.getStageId();
-		stage.setBannerImage(FileUploadUtil.safe(bannerimage, filePath, rel, "banner.png"));
-		stage.setStageProfileImage(FileUploadUtil.safe(stageProfileImage, filePath, rel,
+		stage.setBannerImage(FileUtil.safe(bannerimage, filePath, rel, "banner.png"));
+		stage.setStageProfileImage(FileUtil.safe(stageProfileImage, filePath, rel,
 				"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
@@ -162,6 +162,30 @@ public class AdminStageController {
 			@PathVariable("raceId") Long raceId) {
 		stageService.delete(stageId);
 		return "redirect:/admin/race/edit/" + raceId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/profileimage/delete", method = RequestMethod.GET)
+	public String deleteProfileImage(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId) {
+		Stage stage = stageService.getStageById(stageId);
+		if (stage != null) {
+			FileUtil.deleteFile(filePath + stage.getStageProfileImage());
+			stage.setStageProfileImage(null);
+			stageService.update(stage);
+		}
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/bannerimage/delete", method = RequestMethod.GET)
+	public String deleteBannerImage(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId) {
+		Stage stage = stageService.getStageById(stageId);
+		if (stage != null) {
+			FileUtil.deleteFile(filePath + stage.getBannerImage());
+			stage.setBannerImage(null);
+			stageService.update(stage);
+		}
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/add", method = RequestMethod.POST)
@@ -225,7 +249,7 @@ public class AdminStageController {
 	public String importRider(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId,
 			@RequestParam(value = "riderCsv", defaultValue = "") CommonsMultipartFile riderCsv) {
-		File csvFile = FileUploadUtil.safeCsv(riderCsv, filePath, "stage" + stageId);
+		File csvFile = FileUtil.safeCsv(riderCsv, filePath, "stage" + stageId);
 		Stage stage = stageService.getStageById(stageId);
 		CSVReader reader;
 		RiderImporter importer = new RiderImporter();
@@ -255,7 +279,7 @@ public class AdminStageController {
 			@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId,
 			@RequestParam(value = "marchTableCsv", defaultValue = "") CommonsMultipartFile marchTableCsv) {
-		File csvFile = FileUploadUtil.safeCsv(marchTableCsv, filePath, "stage" + stageId);
+		File csvFile = FileUtil.safeCsv(marchTableCsv, filePath, "stage" + stageId);
 		Stage stage = stageService.getStageById(stageId);
 		CSVReader reader;
 		MarchTableImporter importer = new MarchTableImporter();

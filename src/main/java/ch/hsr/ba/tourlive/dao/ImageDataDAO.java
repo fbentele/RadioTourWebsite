@@ -19,5 +19,9 @@ public interface ImageDataDAO {
 
 	public List<ImageData> getMostRecentByStage(Stage stage);
 
+	public List<ImageData> getMostRecentByStage(Stage stage, Long time);
+
 	public ImageData getById(Long id);
+
+	public List<ImageData> getAllByStage(Stage stage);
 }

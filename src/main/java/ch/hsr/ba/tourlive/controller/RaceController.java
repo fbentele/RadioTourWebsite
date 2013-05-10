@@ -1,4 +1,4 @@
-package ch.hsr.ba.tourlive.view;
+package ch.hsr.ba.tourlive.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,33 +90,35 @@ public class RaceController {
 			@PathVariable("raceSlug") String raceSlug, Model model) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {
-
+			List<ValueContainer> valueContainers = valueContainerService
+					.getAllValueContainerForStage(stage);
+			model.addAttribute("races", raceService.getAllVisible());
+			model.addAttribute("limit", System.currentTimeMillis());
+			model.addAttribute("menuitems", MenuItem.makeStageNavi());
+			model.addAttribute("stage", stage);
+			model.addAttribute("navbarrace", "active");
+			model.addAttribute("valuecontainers", valueContainers);
+			model.addAttribute("riders", riderService.getAllByStage(stage));
+			model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
+			model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
+			model.addAttribute("liveTickerItems",
+					liveTickerItemService.getAllByStageLimitedTo(stage, 10));
+			try {
+				model.addAttribute("devices", stage.getDevices());
+			} catch (Exception e) {
+				// no devices for this stage
+			}
+			model.addAttribute("deficitetimes",
+					valueContainerService.getDeficiteToLeaderForStage(stage));
+			model.addAttribute("hostname", hostname);
+			model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
+			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
+			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
+			model.addAttribute("first", valueContainerService.getFirstByStage(stage));
+			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
+					+ stageSlug));
+			model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
 		}
-		List<ValueContainer> valueContainers = valueContainerService
-				.getAllValueContainerForStage(stage);
-		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("menuitems", MenuItem.makeStageNavi());
-		model.addAttribute("stage", stage);
-		model.addAttribute("navbarrace", "active");
-		model.addAttribute("valuecontainers", valueContainers);
-		model.addAttribute("riders", riderService.getAllByStage(stage));
-		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
-		model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
-		model.addAttribute("liveTickerItems",
-				liveTickerItemService.getAllByStageLimitedTo(stage, 10));
-		try {
-			model.addAttribute("devices", stage.getDevices());
-		} catch (Exception e) {
-
-		}
-		model.addAttribute("hostname", hostname);
-		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
-		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
-		model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
-		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
-		model.addAttribute("breadcrumb",
-				new Breadcrumb("/race/" + raceSlug + "/stage/" + stageSlug));
-		model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
 		return "actualstage";
 	}
 
@@ -125,26 +127,39 @@ public class RaceController {
 			@PathVariable("raceSlug") String raceSlug, @PathVariable("untilTime") Long untilTime,
 			Model model) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
-		List<ValueContainer> valueContainers = valueContainerService
-				.getForStageByDistanceLimitedTo(stage, untilTime);
-		model.addAttribute("races", raceService.getAllVisible());
-		// model.addAttribute("menuitems",makeMenu(stageService.getAllVisibleByRace(raceService.getRaceBySlug(raceSlug))));
-		model.addAttribute("menuitems", MenuItem.makeStageNavi());
-		model.addAttribute("stage", stage);
-		model.addAttribute("navbarrace", "active");
-		model.addAttribute("valuecontainers", valueContainers);
-		model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
-		model.addAttribute("devices", stage.getDevices());
-		model.addAttribute("hostname", hostname);
-		model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
-		model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
-		model.addAttribute("first", valueContainerService.getFirstByStage(stage));
-		model.addAttribute("breadcrumb",
-				new Breadcrumb("/race/" + raceSlug + "/stage/" + stageSlug));
-		try {
-			model.addAttribute("current", valueContainers.get(0));
-		} catch (IndexOutOfBoundsException e) {
-			log.info("No ValueContainer for this Stage, so no Map available");
+		if (stage != null) {
+			List<ValueContainer> valueContainers = valueContainerService
+					.getForStageByDistanceLimitedTo(stage, untilTime);
+			model.addAttribute("limit", untilTime);
+			model.addAttribute("races", raceService.getAllVisible());
+			model.addAttribute("menuitems", MenuItem.makeStageNavi());
+			model.addAttribute("raceSlug", raceSlug);
+			model.addAttribute("stage", stage);
+			model.addAttribute("navbarrace", "active");
+			model.addAttribute("valuecontainers", valueContainers);
+			model.addAttribute("riders", riderService.getAllByStage(stage));
+			model.addAttribute("images", imageDataService.getMostRecentByStage(stage, untilTime));
+			model.addAttribute("videos",
+					videoDataService.getMostRecentByStageLimitedTo(stage, untilTime));
+			model.addAttribute("liveTickerItems",
+					liveTickerItemService.getAllByStageLimitedTo(stage, 10));
+			try {
+				model.addAttribute("devices", stage.getDevices());
+			} catch (Exception e) {
+				// no devices for this stage
+			}
+			model.addAttribute("deficitetimes",
+					valueContainerService.getDeficiteToLeaderForStage(stage, untilTime));
+			model.addAttribute("hostname", hostname);
+			model.addAttribute("latest",
+					valueContainerService.getLatestForDeviceByStage(stage, untilTime));
+			model.addAttribute("distances",
+					valueContainerService.getAllForStageByDistance(stage, untilTime));
+			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
+			model.addAttribute("first", valueContainerService.getFirstByStage(stage, untilTime));
+			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
+					+ stageSlug));
+			model.addAttribute("situation", raceSituationService.getLatestByStage(stage, untilTime));
 		}
 		return "actualstage";
 	}

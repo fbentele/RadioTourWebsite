@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
@@ -49,6 +50,7 @@ public class Stage {
 	@Column
 	private Long endtime;
 
+	@Min(value = 0)
 	@Column
 	private Float distance;
 

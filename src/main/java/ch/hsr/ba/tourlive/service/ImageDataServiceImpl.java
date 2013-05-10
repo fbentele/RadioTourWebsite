@@ -42,6 +42,11 @@ public class ImageDataServiceImpl implements ImageDataService {
 	}
 
 	@Transactional
+	public List<ImageData> getMostRecentByStage(Stage stage, Long limit) {
+		return imageDataDao.getMostRecentByStage(stage, limit);
+	}
+
+	@Transactional
 	public ImageData getById(Long id) {
 		return imageDataDao.getById(id);
 	}
@@ -49,6 +54,11 @@ public class ImageDataServiceImpl implements ImageDataService {
 	@Transactional
 	public List<ImageData> getMostRecentByStage(Stage stage) {
 		return imageDataDao.getMostRecentByStage(stage);
+	}
+
+	@Transactional
+	public List<ImageData> getAllByStage(Stage stage) {
+		return imageDataDao.getAllByStage(stage);
 	}
 
 }

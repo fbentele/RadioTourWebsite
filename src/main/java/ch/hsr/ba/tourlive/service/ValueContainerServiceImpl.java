@@ -1,5 +1,6 @@
 package ch.hsr.ba.tourlive.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,18 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	}
 
 	@Transactional
+	public List<ValueContainer> getAllForStageByDistance(Stage stage, Long limit) {
+		return valueDao.getAllForStageByDistance(stage, limit);
+	}
+
+	@Transactional
 	public ValueContainer getFirstByStage(Stage stage) {
 		return valueDao.getFirstByStage(stage);
+	}
+
+	@Transactional
+	public ValueContainer getFirstByStage(Stage stage, Long limit) {
+		return valueDao.getFirstByStage(stage, limit);
 	}
 
 	@Transactional
@@ -56,7 +67,22 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	}
 
 	@Transactional
+	public List<ValueContainer> getLatestForDeviceByStage(Stage stage, Long limit) {
+		return valueDao.getLatestForDeviceByStage(stage, limit);
+	}
+
+	@Transactional
 	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit) {
 		return valueDao.getForStageByDistanceLimitedTo(stage, limit);
+	}
+
+	@Transactional
+	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
+		return valueDao.getDeficiteToLeaderForStage(stage);
+	}
+
+	@Transactional
+	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit) {
+		return valueDao.getDeficiteToLeaderForStage(stage, limit);
 	}
 }

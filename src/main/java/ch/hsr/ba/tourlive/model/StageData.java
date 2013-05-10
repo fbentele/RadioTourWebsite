@@ -61,7 +61,11 @@ public class StageData implements Serializable {
 	}
 
 	public Double getStageUpAltitude() {
-		return (double) (Math.round(stageUpAltitude * 100) / 100.0);
+		if (stageUpAltitude != null) {
+			return (double) (Math.round(stageUpAltitude * 100) / 100.0);
+		} else {
+			return null;
+		}
 	}
 
 	public void setStageUpAltitude(Double stageUpAltitude) {

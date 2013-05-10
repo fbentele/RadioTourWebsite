@@ -2,7 +2,7 @@
 
 <c:if test="${not empty menuitems}">
 	<div id="menu-navi" class="span2 bs-docs-sidebar">
-		<ul class="well nav nav-pills nav-stacked affix">
+		<ul class="well nav">
 			<c:if test="${not empty menutitle}">
 				<li class="nav-header">${menutitle}</li>
 			</c:if>

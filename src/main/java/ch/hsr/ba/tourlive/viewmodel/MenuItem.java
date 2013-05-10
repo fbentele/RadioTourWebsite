@@ -38,6 +38,7 @@ public class MenuItem {
 		navi.add(new MenuItem("Live Ticker", "#liveticker"));
 		navi.add(new MenuItem("Rennsituation", "#rennsituation"));
 		navi.add(new MenuItem("Rangliste", "#rangliste"));
+		navi.add(new MenuItem("Marschtabelle", "#marschtabelle"));
 		return navi;
 	}
 

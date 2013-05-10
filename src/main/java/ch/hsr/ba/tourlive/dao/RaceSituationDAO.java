@@ -19,4 +19,7 @@ public interface RaceSituationDAO {
 	public List<RaceSituation> getAllByStage(Stage stage);
 
 	public RaceSituation getLatestByStage(Stage stage);
+
+	public RaceSituation getLatestByStage(Stage stage, Long limit);
+
 }

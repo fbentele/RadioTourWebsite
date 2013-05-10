@@ -47,8 +47,18 @@ public class VideoDataServiceImpl implements VideoDataService {
 	}
 
 	@Transactional
+	public List<VideoData> getMostRecentByStageLimitedTo(Stage stage, Long limit) {
+		return vidDao.getMostRecentByStageLimitedTo(stage, limit);
+	}
+
+	@Transactional
 	public VideoData getById(Long id) {
 		return vidDao.getById(id);
+	}
+
+	@Transactional
+	public List<VideoData> getAllByStage(Stage stage) {
+		return vidDao.getAllByStage(stage);
 	}
 
 }

@@ -54,7 +54,18 @@ public class RaceSituationDAOImpl implements RaceSituationDAO {
 		try {
 			return (RaceSituation) crit.list().get(0);
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("_____________ list is empty");
+		}
+		return null;
+	}
+
+	public RaceSituation getLatestByStage(Stage stage, Long limit) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(RaceSituation.class);
+		crit.add(Restrictions.eq("stage", stage));
+		crit.add(Restrictions.le("timestamp", limit));
+		crit.addOrder(Order.desc("timestamp"));
+		try {
+			return (RaceSituation) crit.list().get(0);
+		} catch (IndexOutOfBoundsException e) {
 		}
 		return null;
 	}

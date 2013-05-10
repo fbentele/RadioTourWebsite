@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,19 +63,63 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return null;
 	}
 
-	@Override
+	public ImageData getMostRecentByDeviceLimitedTo(Device device, Long limit) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
+		if (device != null) {
+			try {
+				crit.add(Restrictions.eq("device", device));
+				crit.add(Restrictions.le("timestamp", limit));
+				return (ImageData) crit.addOrder(Order.desc("timestamp")).list().get(0);
+			} catch (NullPointerException e) {
+			} catch (IndexOutOfBoundsException e) {
+			}
+		}
+		return null;
+	}
+
 	public List<ImageData> getMostRecentByStage(Stage stage) {
 		List<ImageData> imageData = new ArrayList<ImageData>();
 		if (stage != null) {
 			for (Device dev : stage.getDevices()) {
-				ImageData img = this.getMostRecentByDevice(dev);
+				ImageData img = getMostRecentByDevice(dev);
 				if (img != null) {
 					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
 							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-						imageData.add(this.getMostRecentByDevice(dev));
+						imageData.add(getMostRecentByDevice(dev));
 				}
 			}
 		}
 		return imageData;
+	}
+
+	public List<ImageData> getMostRecentByStage(Stage stage, Long limit) {
+		List<ImageData> imageData = new ArrayList<ImageData>();
+		if (stage != null) {
+			for (Device dev : stage.getDevices()) {
+				ImageData img = getMostRecentByDeviceLimitedTo(dev, limit);
+				if (img != null) {
+					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
+							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+						imageData.add(getMostRecentByDeviceLimitedTo(dev, limit));
+				}
+			}
+		}
+		return imageData;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ImageData> getAllByStage(Stage stage) {
+		if (stage != null) {
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
+			Disjunction d = Restrictions.or();
+			for (Device device : stage.getDevices()) {
+				d.add(Restrictions.eq("device", device));
+			}
+			crit.add(d);
+			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+					stage.getEndtimeAsTimestamp()));
+			return (List<ImageData>) crit.list();
+		}
+		return null;
 	}
 }

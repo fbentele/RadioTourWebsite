@@ -20,4 +20,6 @@ public interface RaceSituationService {
 
 	public RaceSituation getLatestByStage(Stage stage);
 
+	public RaceSituation getLatestByStage(Stage stage, Long limit);
+
 }

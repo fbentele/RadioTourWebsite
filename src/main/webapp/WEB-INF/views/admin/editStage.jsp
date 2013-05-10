@@ -16,52 +16,58 @@
 			enctype="multipart/form-data">
 			<div class="span4">
 				<input type="hidden" name="stageId" value="${stage.stageId}" /> <label for="stageName">Etappenname</label>
-				<input type="text" name="stageName" class="toSlug" value="${stage.stageName}" /> <label
+				<input type="text" name="stageName" class="toSlug" value="${stage.stageName}" tabindex="1" /> <label
 					for="stageSlug">Etappen Kurzname (slug)</label> <input type="text" name="stageSlug"
-					class="theSlug" value="${stage.stageSlug}" />
+					class="theSlug" value="${stage.stageSlug}" tabindex="2" />
 
 				<div class="input-append">
 					<label for="distance">Distanz</label> <input type="text" name="distance"
-						value="${stage.distance}"> <span class="add-on">km</span>
+						value="${stage.distance}" tabindex="3"> <span class="add-on">km</span>
 				</div>
 				<br> <label for="stageDescription">Beschreibung</label>
-				<textarea name="stageDescription" rows="6" class="span12">${stage.stageDescription}</textarea>
+				<textarea name="stageDescription" rows="6" class="span12" tabindex="4">${stage.stageDescription}</textarea>
 
-				<button type="submit" class="btn btn-primary">Speichern</button>
+				<button type="submit" class="btn btn-primary" tabindex="11">Speichern</button>
 			</div>
 			<div class="span4">
 				<label for="starttime">Startzeit</label>
 				<div id="datetimepicker1" class="input-append date">
-					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" tabindex="6"
-						value="${stage.starttime}" /> <span class="add-on"> <i
+					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" 
+						value="${stage.starttime}" tabindex="5"/> <span class="add-on"> <i
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
 				<label for="endtime">Endzeit</label>
 				<div id="datetimepicker2" class="input-append">
-					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" tabindex="7"
-						value="${stage.endtime}" /> <span class="add-on"> <i
+					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" 
+						value="${stage.endtime}" tabindex="6" /> <span class="add-on"> <i
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
 
 				<label for="visible"> <input type="checkbox" name="visible"
-					value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if>>
+					value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if> tabindex="7">
 					Öffentlich sichtbar
 				</label>
 				<div>
 					<label for="adCode">HTML Code für Werbeelement (300px X 200px)</label>
-					<textarea name="adCode">${stage.adCode}</textarea>
+					<textarea name="adCode" tabindex="8">${stage.adCode}</textarea>
 				</div>
 
 				<div>
-					<label for="bannerImageFile">Etappen Banner Bild hochladen: (940x210px)</label> <img
-						src="${bannerImage}" class="img-rounded">
-					<div id="fileuploadbutton" class="btn">Bild auswählen</div>
+					<label for="bannerImageFile">Etappen Banner Bild hochladen: (940x210px)</label>
+					<c:if test="${not empty stage.bannerImage}">
+						<img src="${hostname}${stage.bannerImage}" class="img-rounded" />
+						<a href="/admin/race/${race.raceId}/stage/${stage.stageId}/bannerimage/delete"><i class="icon-trash pull-right"></i></a>
+					</c:if>
+					<div id="fileuploadbutton" class="btn" tabindex="9">Bild auswählen</div>
 					<br /> <input type="file" accept="image/*" name="bannerImageFile" class="fileupload" />
 				</div>
 				<div>
-					<label for="stageProfileFile">Strecken Profil Bild hochladen: (940x210px)</label> <img
-						src="${stageProfileImage}" class="img-rounded">
-					<div id="fileuploadbutton2" class="btn">Bild auswählen</div>
+					<label for="stageProfileFile">Strecken Profil Bild hochladen: (940x350px)</label>
+					<c:if test="${not empty stage.stageProfileImage}">
+						<img src="${hostname}${stage.stageProfileImage}" class="img-rounded" />
+						<a href="/admin/race/${race.raceId}/stage/${stage.stageId}/profileimage/delete"><i class="icon-trash pull-right"></i></a>
+					</c:if>
+					<div id="fileuploadbutton2" class="btn" tabindex="10">Bild auswählen</div>
 					<br /> <input type="file" accept="image/*" name="stageProfileFile" class="fileupload2" />
 				</div>
 			</div>
@@ -86,7 +92,7 @@
 				</c:otherwise>
 			</c:choose>
 
-			<button id="adder" type="submit" class="btn btn-primary">Neues Gerät zuordnen</button>
+			<button id="adder" type="submit" class="btn btn-primary" tabindex="12">Neues Gerät zuordnen</button>
 			<div class="newItem row-fluid">
 				<c:choose>
 					<c:when test="${not empty devices}">
@@ -100,7 +106,7 @@
 											${device.deviceId })
 										</label>
 									</c:forEach>
-									<button type="submit" class="btn">Speichern</button>
+									<button type="submit" class="btn" tabindex="13">Speichern</button>
 								</div>
 							</div>
 						</form:form>
@@ -122,10 +128,10 @@
 				enctype="multipart/form-data">
 				<div>
 					<label for="marchTableCsv">Marschtabelle hochladen:</label>
-					<div id="fileuploadbutton4" class="btn">CSV Datei auswählen</div>
+					<div id="fileuploadbutton4" class="btn" tabindex="14">CSV Datei auswählen</div>
 					<br /> <input type="file" accept=".csv" name="marchTableCsv" class="fileupload4" />
 				</div>
-				<button type="submit" class="btn btn-primary">Importieren</button>
+				<button type="submit" class="btn btn-primary" tabindex="15">Importieren</button>
 			</form:form>
 			<c:if test="${not empty marchTable}">
 				<table class="table hover-table">
@@ -152,10 +158,10 @@
 				enctype="multipart/form-data">
 				<div>
 					<label for="riderCsv">Fahrerliste hochladen:</label>
-					<div id="fileuploadbutton3" class="btn">CSV Datei auswählen</div>
+					<div id="fileuploadbutton3" class="btn" tabindex="16">CSV Datei auswählen</div>
 					<br /> <input type="file" accept=".csv" name="riderCsv" class="fileupload3" />
 				</div>
-				<button type="submit" class="btn btn-primary">Importieren</button>
+				<button type="submit" class="btn btn-primary" tabindex="17">Importieren</button>
 
 			</form:form>
 			<c:if test="${not empty riders}">

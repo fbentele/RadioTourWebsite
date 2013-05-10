@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class FileUploadUtil {
+public class FileUtil {
 	public static String safe(CommonsMultipartFile multipartImage, String absolutePath,
 			String relativePath, String filename) {
 		if (!multipartImage.isEmpty()) {
@@ -51,4 +51,14 @@ public class FileUploadUtil {
 		}
 		return null;
 	}
+
+	public static void deleteFile(String file) {
+		File theFile = new File(file);
+		try {
+			theFile.delete();
+		} catch (SecurityException e) {
+			// no worries
+		}
+	}
+
 }

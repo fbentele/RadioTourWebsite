@@ -50,4 +50,9 @@ public class RaceSituationServiceImpl implements RaceSituationService {
 		return raceSituationDao.getLatestByStage(stage);
 	}
 
+	@Transactional
+	public RaceSituation getLatestByStage(Stage stage, Long limit) {
+		return raceSituationDao.getLatestByStage(stage, limit);
+	}
+
 }

@@ -35,7 +35,9 @@ public class StageDAOImpl implements StageDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllStages() {
-		return sessionFactory.getCurrentSession().createCriteria(Stage.class).list();
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return crit.list();
 	}
 
 	@SuppressWarnings("unchecked")

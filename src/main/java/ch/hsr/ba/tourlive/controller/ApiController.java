@@ -1,4 +1,4 @@
-package ch.hsr.ba.tourlive.view;
+package ch.hsr.ba.tourlive.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -69,15 +69,11 @@ public class ApiController {
 
 	private static final Logger log = LoggerFactory.getLogger(ApiController.class);
 
-	// @RequestMapping(value = "/api/positiondata", method = RequestMethod.POST)
-	// @ResponseBody
-	// public void api(@RequestBody final PositionData request) {
-	// positionDataService.save(request);
-	// }
-
 	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.POST)
 	@ResponseBody
 	public void valueContainer(@RequestBody final ValueContainer request) {
+		// not loosing device information on every request, refactoring
+		// needed...
 		try {
 			Device rec = request.getDevice();
 			Device d = deviceService.getDeviceById(rec.getDeviceId());
@@ -123,6 +119,9 @@ public class ApiController {
 					deviceId + "/" + imagefilename));
 		} catch (IOException e) {
 			// catch exception
+			// } catch (IllegalArgumentException e) {
+			// // ill arg exc
+			// log.info("_________ argument null (probably image == null");
 		} finally {
 			// implement handler here
 		}
@@ -141,6 +140,11 @@ public class ApiController {
 		File dest = new File(filePath, videoFilename);
 		try {
 			video.transferTo(dest);
+			Device device = deviceService.getDeviceById(deviceId);
+			if (device == null) {
+				device = new Device(deviceId);
+				log.info("___________________");
+			}
 			videoDataService.save(new VideoData(timestamp, deviceService.getDeviceById(deviceId),
 					deviceId + "/" + videoFilename));
 		} catch (IllegalStateException e) {
@@ -223,6 +227,8 @@ public class ApiController {
 // "averageSpeed": 0
 // }
 // }
-
-// curl -F "deviceId=testdevice" -F "image=@CydiaIcon.png" -F
-// "timestamp=1111" http://localhost:8080/api/image
+//
+// curl -F "deviceId=testdevice" -F "image=@CydiaIcon.png" -F "timestamp=1111"
+// http://localhost:8080/api/image
+// curl -F "deviceId=testdevice" -F "video=@testvid.m4v" -F
+// "timestamp=111111111" http://tlng.cnlab.ch/api/video

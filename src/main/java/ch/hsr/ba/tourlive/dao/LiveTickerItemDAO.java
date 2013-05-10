@@ -15,4 +15,6 @@ public interface LiveTickerItemDAO {
 	public List<LiveTickerItem> getAllByStage(Stage stage);
 
 	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit);
+
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long timelimit);
 }

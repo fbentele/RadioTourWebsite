@@ -19,5 +19,10 @@ public interface VideoDataService {
 
 	public List<VideoData> getMostRecentByStage(Stage stage);
 
+	public List<VideoData> getMostRecentByStageLimitedTo(Stage stage, Long limit);
+
 	public VideoData getById(Long id);
+
+	public List<VideoData> getAllByStage(Stage stage);
+
 }

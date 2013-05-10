@@ -2,38 +2,6 @@ html,body {
 	height: 100%;
 }
 
-@media ( min-width : 1200px) {
-	.well {
-		min-width: 150px;
-	}
-}
-
-@media ( min-width : 768px) {
-	.affix{
-		posistion:fixed;
-	}
-}
-
-@media ( min-width : 768px) and (max-width : 979px) {
-	.well {
-		display: block;
-		float: none;
-		width: auto;
-		margin-left: 0;
-		padding: 5px;
-		min-width: 100px;
-	}
-	.nav-tabs>li>a,.nav-pills>li>a {
-		padding: 5px;
-	}
-}
-
-@media (max-width : 768px){
-	.affix{
-		position: relative;
-	}
-}
-
 #map-canvas {
 	height: 300px;
 }
@@ -47,7 +15,7 @@ html,body {
 	margin-top: 10px;
 }
 
-.formerror{
+.formerror {
 	color: red;
 }
 
