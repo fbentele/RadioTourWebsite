@@ -35,7 +35,6 @@ import ch.hsr.ba.tourlive.utils.importer.CSVReader;
 import ch.hsr.ba.tourlive.utils.importer.MarchTableImporter;
 import ch.hsr.ba.tourlive.utils.importer.RiderImporter;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
-import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
 public class AdminStageController {
@@ -103,7 +102,7 @@ public class AdminStageController {
 		model.addAttribute("stage", stage);
 		model.addAttribute("hostname", hostname);
 		model.addAttribute("race", raceService.getRaceById(raceId));
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("devices", deviceService.getAll());
 		model.addAttribute("riders", riderService.getAllByStage(stage));
@@ -221,7 +220,7 @@ public class AdminStageController {
 		model.addAttribute("now", DateUtil.timeNow());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
 				+ stageId));
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
 		return "admin/liveticker";
 	}

@@ -1,6 +1,5 @@
 package ch.hsr.ba.tourlive.controller.admin;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import ch.hsr.ba.tourlive.model.Device;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
-import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
 public class AdminDeviceController {
@@ -30,7 +28,7 @@ public class AdminDeviceController {
 	@RequestMapping(value = "/admin/device", method = RequestMethod.GET)
 	public String manageDevice(Locale locale, Model model) {
 		model.addAttribute("devices", deviceService.getAll());
-		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device"));
 		return "admin/manageDevice";
@@ -48,7 +46,7 @@ public class AdminDeviceController {
 
 	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.GET)
 	public String editDevice(@PathVariable("deviceId") String deviceId, Model model) {
-		model.addAttribute("menuitems", makeMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("device", deviceService.getDeviceById(deviceId));
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device/" + deviceId));
@@ -60,12 +58,5 @@ public class AdminDeviceController {
 			@ModelAttribute("deice") Device device, Model model) {
 		deviceService.update(device);
 		return "redirect:/admin/device";
-	}
-
-	private ArrayList<MenuItem> makeMenu() {
-		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
-		menu.add(new MenuItem("Rennen", "/admin/race"));
-		menu.add(new MenuItem("Geräte", "/admin/device"));
-		return menu;
 	}
 }

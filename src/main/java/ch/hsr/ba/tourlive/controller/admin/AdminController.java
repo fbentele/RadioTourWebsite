@@ -26,7 +26,6 @@ import ch.hsr.ba.tourlive.service.LiveTickerItemService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
-import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 
 @Controller
 public class AdminController {
@@ -48,9 +47,9 @@ public class AdminController {
 	private Logger log = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin(Model model, Principal principal) {
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+	public String admin(Model model, Principal principal, Locale locale) {
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin"));
 		if (principal != null)
 			model.addAttribute("user", principal.getName());
@@ -59,7 +58,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/race", method = RequestMethod.GET)
 	public String manageRace(Locale locale, Model model) {
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
 		model.addAttribute("race", new Race());
@@ -72,7 +71,7 @@ public class AdminController {
 			Model model) {
 		if (binding.hasErrors()) {
 			model.addAttribute("race", race);
-			model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+			model.addAttribute("adminmenu", "true");
 			model.addAttribute("races", raceService.getAll());
 			model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
 			model.addAttribute("showhidden", true);
@@ -87,9 +86,10 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
 	public String editRace(@PathVariable("raceId") Long raceId,
-			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
+			@RequestParam(value = "visible", defaultValue = "") String visible, Locale locale,
+			Model model) {
 
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("adminmenu", "true");
 		Race race = raceService.getRaceById(raceId);
 		model.addAttribute("race", race);
 		model.addAttribute("stage", new Stage());
@@ -102,21 +102,23 @@ public class AdminController {
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.POST)
 	public String editedRace(@PathVariable("raceId") Long raceId,
 			@ModelAttribute("race") Race race,
-			@RequestParam(value = "visible", defaultValue = "") String visible, Model model) {
+			@RequestParam(value = "visible", defaultValue = "") String visible, Model model,
+			Locale locale) {
 		if (visible.contains("true"))
 			race.setVisible(true);
 		raceService.update(race);
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("race", raceService.getRaceById(raceId));
 		return "redirect:/admin/race";
 	}
 
 	@RequestMapping(value = "/admin/race/delete/{raceId}", method = RequestMethod.GET)
-	public String removeRace(@PathVariable("raceId") Long raceId, Model model) {
+	public String removeRace(@PathVariable("raceId") Long raceId, Locale locale, Model model) {
 		raceService.delete(raceId);
-		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
+		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
 		return "forward:/admin/race";
 	}
+
 }

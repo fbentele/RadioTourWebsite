@@ -41,11 +41,4 @@ public class MenuItem {
 		navi.add(new MenuItem("Marschtabelle", "#marschtabelle"));
 		return navi;
 	}
-
-	public static ArrayList<MenuItem> makeAdminMenu() {
-		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
-		menu.add(new MenuItem("Rennen", "/admin/race"));
-		menu.add(new MenuItem("Geräte", "/admin/device"));
-		return menu;
-	}
 }
