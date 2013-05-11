@@ -1,7 +1,5 @@
 package ch.hsr.ba.tourlive.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -30,20 +28,10 @@ public class HomeController {
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	/*
-	 * Default Controller for all Pages
-	 */
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG,
-				locale);
-		String formattedDate = dateFormat.format(date);
-		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("navbarhome", "active");
 		model.addAttribute("races", raceService.getAllVisible());
-		logger.info("____________ ää aa üü aa öö");
 		return "home";
 	}
 
@@ -52,16 +40,12 @@ public class HomeController {
 		logger.info("This is the archive Page");
 		model.addAttribute("navbararchive", "active");
 		model.addAttribute("races", raceService.getAllVisible());
-
 		return "archive";
 	}
 
-	@RequestMapping(value = "/about", method = RequestMethod.GET)
-	public String about(Locale locale, Model model) {
-		logger.info("This is the about Page");
-		model.addAttribute("navbarabout", "active");
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) {
 		model.addAttribute("races", raceService.getAllVisible());
-
-		return "about";
+		return "admin/login";
 	}
 }

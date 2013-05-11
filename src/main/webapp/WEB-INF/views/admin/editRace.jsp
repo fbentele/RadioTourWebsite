@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
@@ -68,7 +68,7 @@
 		<form:form commandName="stage" method="post" name="stage"
 			action="/admin/race/${race.raceId}/stage/add" enctype="multipart/form-data">
 			<div class="span4">
-				<label path="stageName" for="stageName"><spring:message code="label.admin.stageName" /></label>
+				<label for="stageName"><spring:message code="label.admin.stageName" /></label>
 				<form:errors path="stageName" cssClass="formerror" />
 				<form:input path="stageName" type="text" name="stageName" class="toSlug" tabindex="10" />
 				<label for="stageSlug"><spring:message code="label.admin.stageSlug" /></label>

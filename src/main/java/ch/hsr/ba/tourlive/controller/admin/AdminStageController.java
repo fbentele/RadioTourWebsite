@@ -1,4 +1,4 @@
-package ch.hsr.ba.tourlive.view.admin;
+package ch.hsr.ba.tourlive.controller.admin;
 
 import java.io.File;
 import java.io.FileInputStream;

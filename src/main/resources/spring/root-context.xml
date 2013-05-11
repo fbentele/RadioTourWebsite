@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
@@ -11,14 +11,14 @@ http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 http://www.springframework.org/schema/jdbc
 http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
 http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+http://www.springframework.org/schema/context/spring-context-3.2.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<!--  Root Context: defines shared resources visible to all other web components -->
-
+	<!-- Root Context: defines shared resources visible to all other web components -->
 	<tx:annotation-driven />
 
 	<context:component-scan base-package="ch.hsr.ba.tourlive.**" />
-
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -36,8 +36,9 @@ http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
+	<!-- File and image upload -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-
+	
 	<import resource="classpath:hibernate/hibernate.xml" />
 </beans>

@@ -1,5 +1,6 @@
-package ch.hsr.ba.tourlive.view.admin;
+package ch.hsr.ba.tourlive.controller.admin;
 
+import java.security.Principal;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -47,10 +48,12 @@ public class AdminController {
 	private Logger log = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin(Locale locale, Model model) {
+	public String admin(Model model, Principal principal) {
 		model.addAttribute("menuitems", MenuItem.makeAdminMenu());
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin"));
+		if (principal != null)
+			model.addAttribute("user", principal.getName());
 		return "admin/admin";
 	}
 

@@ -98,7 +98,7 @@
 			<c:forEach items="${videos}" var="video">
 				<div class="span4">
 					<h4>${video.device.username}</h4>
-					<video id="liveVideo" width="320" height="240" autoplay controls autobuffer>
+					<video id="liveVideo" width="320" height="240" autoplay controls>
 						<source src="${hostname}${video.videoLocation}"
 							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
 					</video>
@@ -307,7 +307,7 @@
 					document.getElementById("map-canvas"), mapOptions);
 			
 			<c:forEach items="${devices}" var="device">
-				var ${device.username} = []
+				var ${device.username} = [];
 			</c:forEach>
 
 			<c:forEach items="${valuecontainers}" var="valuecontainer">
