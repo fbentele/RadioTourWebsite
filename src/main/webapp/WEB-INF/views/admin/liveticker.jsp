@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,17 +11,17 @@
 		<div class="span6">
 			<form:form method="post" name="liveTickerItem"
 				action="/admin/race/${race.raceId}/stage/${stage.stageId}/liveticker/add">
-				<label for="timestamp">Zeitpunkt: </label>
+				<label for="timestamp"><spring:message code="label.admin.timestamp" />: </label>
 				<div id="datetimepicker1" class="input-append date">
 					<input data-format="hh:mm:ss" type="datetime" name="timestamp" value="${now}"
 						tabindex="1" /> <span class="add-on"> <i data-time-icon="icon-time"
 						data-date-icon="icon-calendar"></i></span>
 				</div>
 				<input type="hidden" name="stage">
-				<label for="news">Newseintrag: </label>
+				<label for="news"><spring:message code="label.admin.newsEntry" />: </label>
 				<textarea name="news" tabindex="2"> </textarea>
 				<br />
-				<button type="submit" class="btn btn-primary">Speichern</button>
+				<button type="submit" class="btn btn-primary"><spring:message code="label.admin.save" /></button>
 			</form:form>
 		</div>
 		<div class="span4">

@@ -7,7 +7,6 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +21,6 @@ import ch.hsr.ba.tourlive.service.StageService;
  */
 @Controller
 public class HomeController {
-	@Autowired
-	ApplicationContext context;
-
 	@Autowired
 	StageService st;
 	@Autowired
@@ -47,6 +43,7 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate);
 		model.addAttribute("navbarhome", "active");
 		model.addAttribute("races", raceService.getAllVisible());
+		logger.info("____________ ää aa üü aa öö");
 		return "home";
 	}
 
