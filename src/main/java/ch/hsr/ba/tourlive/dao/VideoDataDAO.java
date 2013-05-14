@@ -25,4 +25,6 @@ public interface VideoDataDAO {
 
 	public List<VideoData> getAllByStage(Stage stage);
 
+	public VideoData getNextForDevice(Device device, Long afterId);
+
 }

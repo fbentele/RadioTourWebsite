@@ -118,10 +118,6 @@ public class ApiController {
 			imageDataService.save(new ImageData(timestamp, deviceService.getDeviceById(deviceId),
 					deviceId + "/" + imagefilename));
 		} catch (IOException e) {
-			// catch exception
-			// } catch (IllegalArgumentException e) {
-			// // ill arg exc
-			// log.info("_________ argument null (probably image == null");
 		} finally {
 			// implement handler here
 		}
@@ -143,7 +139,6 @@ public class ApiController {
 			Device device = deviceService.getDeviceById(deviceId);
 			if (device == null) {
 				device = new Device(deviceId);
-				log.info("___________________");
 			}
 			videoDataService.save(new VideoData(timestamp, deviceService.getDeviceById(deviceId),
 					deviceId + "/" + videoFilename));

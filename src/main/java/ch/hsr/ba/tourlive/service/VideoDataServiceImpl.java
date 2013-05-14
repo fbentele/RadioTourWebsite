@@ -61,4 +61,8 @@ public class VideoDataServiceImpl implements VideoDataService {
 		return vidDao.getAllByStage(stage);
 	}
 
+	@Transactional
+	public VideoData getNextForDevice(Device device, Long afterId) {
+		return vidDao.getNextForDevice(device, afterId);
+	}
 }

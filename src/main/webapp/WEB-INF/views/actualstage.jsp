@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>Tourlive - ${stage.stageName}</title>
-<meta http-equiv="refresh" content="30;">
+<!-- <meta http-equiv="refresh" content="30;"> -->
 </head>
 <body>
 	<div>
@@ -98,7 +98,7 @@
 			<c:forEach items="${videos}" var="video">
 				<div class="span4">
 					<h4>${video.device.username}</h4>
-					<video id="liveVideo" width="320" height="240" autoplay controls>
+					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
 						<source src="${hostname}${video.videoLocation}"
 							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
 					</video>
@@ -280,13 +280,39 @@
 	<!-- Video -->
 	<c:if test="${not empty videos}">
 		<script type="text/javascript">
+			<c:forEach items="${videos}" var="video">
 				var nextVideo = "";
-				var videoPlayer = document.getElementById('liveVideo');
+				var videoPlayer = document.getElementById('${video.videoDataId}');
 				videoPlayer.addEventListener('ended', function(){
 					/* load video per ajax here */
-    				videoPlayer.src = nextVideo;
+					loadNext(videoPlayer);
 				});
-			</script>
+			</c:forEach>
+			
+			function loadNext(videoPlayer){
+				$.ajax({
+					type : "POST",
+					dataType: "json",
+					url : "/race/${raceSlug}/stage/${stage.stageSlug}/nextvideo",
+					data : {
+						deviceId : '${videos[0].device.deviceId}',
+						afterId: videoPlayer.id
+					},
+					success : function(data) {
+						if (data){
+							console.log('new video');
+							console.log(data.videoLocation);
+							videoPlayer.src = '${hostname}'+ data.videoLocation;
+							videoPlayer.id= data.videoDataId;
+						} else {
+							console.log('no new video');
+							console.log('i will try again');
+							window.setTimeout(function(){loadNext(videoPlayer)},8000);
+						}
+					}
+				});
+			}
+		</script>
 	</c:if>
 
 	<!-- Karte -->

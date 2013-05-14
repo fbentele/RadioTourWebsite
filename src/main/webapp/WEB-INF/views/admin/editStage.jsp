@@ -176,9 +176,7 @@
 									class="icon-trash pull-right"></i></a></td>
 						</tr>
 					</c:forEach>
-
 				</table>
-
 			</c:if>
 		</div>
 	</div>

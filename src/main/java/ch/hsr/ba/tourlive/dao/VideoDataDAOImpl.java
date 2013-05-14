@@ -55,6 +55,25 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		}
 	}
 
+	/**
+	 * 
+	 * @param device
+	 * @param afterId
+	 * @return Returns the next available Video after the one with the ID
+	 *         afterId
+	 */
+	public VideoData getNextForDevice(Device device, Long afterId) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
+		try {
+			crit.add(Restrictions.eq("device", device));
+			crit.add(Restrictions.gt("videoDataId", afterId));
+			return (VideoData) crit.addOrder(Order.asc("videoDataId")).list().get(0);
+		} catch (NullPointerException e) {
+		} catch (IndexOutOfBoundsException e) {
+		}
+		return null;
+	}
+
 	public VideoData getMostRecentByDevice(Device device, Long limit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
 		try {
@@ -73,11 +92,10 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		List<VideoData> videoData = new ArrayList<VideoData>();
 		if (stage != null) {
 			for (Device dev : stage.getDevices()) {
-				VideoData img = getMostRecentByDevice(dev);
-
-				if (img != null) {
-					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
-							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+				VideoData vid = getMostRecentByDevice(dev);
+				if (vid != null) {
+					if (stage.getStarttimeAsTimestamp() < vid.getRealTimestamp()
+							&& vid.getRealTimestamp() < stage.getEndtimeAsTimestamp())
 						videoData.add(getMostRecentByDevice(dev));
 				}
 			}

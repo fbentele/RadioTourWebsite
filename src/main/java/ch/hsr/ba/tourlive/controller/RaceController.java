@@ -14,10 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
+import ch.hsr.ba.tourlive.model.VideoData;
+import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.LiveTickerItemService;
 import ch.hsr.ba.tourlive.service.MarchTableService;
@@ -46,6 +50,8 @@ public class RaceController {
 	private VideoDataService videoDataService;
 	@Autowired
 	private RaceSituationService raceSituationService;
+	@Autowired
+	private DeviceService deviceService;
 	@Autowired
 	private RiderService riderService;
 	@Autowired
@@ -162,6 +168,15 @@ public class RaceController {
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage, untilTime));
 		}
 		return "actualstage";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/nextvideo", method = RequestMethod.POST)
+	public VideoData getNextVideoForDevice(@PathVariable("stageSlug") String stageSlug,
+			@PathVariable("raceSlug") String raceSlug, @RequestParam("deviceId") String deviceId,
+			@RequestParam("afterId") Long afterId, Model model) {
+		log.info("video Requested");
+		return videoDataService.getNextForDevice(deviceService.getDeviceById(deviceId), afterId);
 	}
 
 	private List<MenuItem> makeMenu(List<Stage> stages) {

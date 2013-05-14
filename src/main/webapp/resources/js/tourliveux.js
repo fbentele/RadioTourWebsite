@@ -45,6 +45,7 @@ $(document).ready(function() {
 	$('#fileuploadbutton4').bind("click", function() {
 		$('.fileupload4').click();
 	});
+	
 	// datetimepicker
 	// http://tarruda.github.io/bootstrap-datetimepicker/
 	$.fn.datetimepicker.defaults = {
@@ -57,6 +58,7 @@ $(document).ready(function() {
 		endDate : Infinity
 	// set a maximum date
 	};
+	
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
 			language : 'de-CH'
