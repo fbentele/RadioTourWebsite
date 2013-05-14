@@ -96,7 +96,7 @@
 
 		<div id="livevideo" class="row-fluid">
 			<c:forEach items="${videos}" var="video">
-				<div class="span4">
+				<div class="span5">
 					<h4>${video.device.username}</h4>
 					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
 						<source src="${hostname}${video.videoLocation}"
@@ -281,11 +281,9 @@
 	<c:if test="${not empty videos}">
 		<script type="text/javascript">
 			<c:forEach items="${videos}" var="video">
-				var nextVideo = "";
-				var videoPlayer = document.getElementById('${video.videoDataId}');
-				videoPlayer.addEventListener('ended', function(){
-					/* load video per ajax here */
-					loadNext(videoPlayer);
+				var videoPlayer${video.videoDataId} = document.getElementById('${video.videoDataId}');
+				videoPlayer${video.videoDataId}.addEventListener('ended', function(){
+					loadNext(videoPlayer${video.videoDataId});
 				});
 			</c:forEach>
 			

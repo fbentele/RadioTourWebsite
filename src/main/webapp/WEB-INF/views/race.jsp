@@ -9,14 +9,14 @@
 </head>
 <body>
 	<h2>Rennen</h2>
-	<table class="table table-hover">
+	<table class="table table-hover" data-provides="rowlink">
 		<tr>
 			<th>Name:</th>
 			<th>Beschreibung</th>
 		</tr>
 		<c:forEach items="${races}" var="race">
 			<tr>
-				<td>${race.raceName}</td>
+				<td><a href="/race/${race.raceSlug}" >${race.raceName}</a></td>
 				<td><c:choose>
 						<c:when test="${fn:length(race.raceDescription) > 60}">
 									${fn:substring(race.raceDescription, 0, 60)}...

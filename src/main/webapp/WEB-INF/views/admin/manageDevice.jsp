@@ -7,7 +7,7 @@
 
 <body>
 		<h2><spring:message code="label.admin.device" />:</h2>
-		<table class="table table-hover">
+		<table class="table table-hover" data-provides="rowlink">
 			<tr>
 				<th>ID</th>
 				<th>Username</th>
@@ -16,9 +16,8 @@
 			</tr>
 			<c:forEach items="${devices}" var="device">
 				<tr>
-					<td>${device.deviceId}</td>
+					<td><a href="/admin/device/edit/${device.deviceId}" target="_self">${device.deviceId}</a></td>
 					<td>${device.username}</td>
-					<td><a href="/admin/device/edit/${device.deviceId}" target="_self"><spring:message code="label.admin.edit" /></a></td>
 					<td><a href="/admin/device/delete/${device.deviceId}" target="_self"><spring:message code="label.admin.delete" /></a></td>
 				</tr>
 			</c:forEach>
