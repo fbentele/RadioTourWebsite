@@ -16,4 +16,6 @@ public interface LiveTickerItemService {
 
 	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit);
 
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long untilTime);
+
 }

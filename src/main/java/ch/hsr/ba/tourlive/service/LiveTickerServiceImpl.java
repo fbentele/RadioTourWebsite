@@ -41,4 +41,8 @@ public class LiveTickerServiceImpl implements LiveTickerItemService {
 		return ltidao.getAllByStageLimitedTo(stage, limit);
 	}
 
+	@Transactional
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long untilTime) {
+		return ltidao.getAllByStageLimitedTo(stage, limit, untilTime);
+	}
 }

@@ -98,8 +98,8 @@ public class RaceController {
 		if (stage != null) {
 			List<ValueContainer> valueContainers = valueContainerService
 					.getAllValueContainerForStage(stage);
-			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("limit", System.currentTimeMillis());
+			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("menuitems", MenuItem.makeStageNavi());
 			model.addAttribute("stage", stage);
 			model.addAttribute("navbarrace", "active");
@@ -111,11 +111,12 @@ public class RaceController {
 					liveTickerItemService.getAllByStageLimitedTo(stage, 10));
 			try {
 				model.addAttribute("devices", stage.getDevices());
+				if (stage.getDevices().size() > 1)
+					model.addAttribute("deficitetimes",
+							valueContainerService.getDeficiteToLeaderForStage(stage));
 			} catch (Exception e) {
 				// no devices for this stage
 			}
-			model.addAttribute("deficitetimes",
-					valueContainerService.getDeficiteToLeaderForStage(stage));
 			model.addAttribute("hostname", hostname);
 			model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
 			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
@@ -148,14 +149,15 @@ public class RaceController {
 			model.addAttribute("videos",
 					videoDataService.getMostRecentByStageLimitedTo(stage, untilTime));
 			model.addAttribute("liveTickerItems",
-					liveTickerItemService.getAllByStageLimitedTo(stage, 10));
+					liveTickerItemService.getAllByStageLimitedTo(stage, 10, untilTime));
 			try {
 				model.addAttribute("devices", stage.getDevices());
+				if (stage.getDevices().size() > 1)
+					model.addAttribute("deficitetimes",
+							valueContainerService.getDeficiteToLeaderForStage(stage, untilTime));
 			} catch (Exception e) {
 				// no devices for this stage
 			}
-			model.addAttribute("deficitetimes",
-					valueContainerService.getDeficiteToLeaderForStage(stage, untilTime));
 			model.addAttribute("hostname", hostname);
 			model.addAttribute("latest",
 					valueContainerService.getLatestForDeviceByStage(stage, untilTime));
