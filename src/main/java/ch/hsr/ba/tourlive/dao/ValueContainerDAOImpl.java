@@ -20,6 +20,7 @@ import ch.hsr.ba.tourlive.model.ValueContainer;
 
 @Repository
 public class ValueContainerDAOImpl implements ValueContainerDAO {
+	private static final int LIMIT_RESULTS_TO = 1000;
 	@Autowired
 	SessionFactory sessionFactory;
 	Logger log = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
@@ -59,6 +60,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
 					stage.getEndtimeAsTimestamp()));
 			crit.addOrder(Order.desc("timestamp"));
+			crit.setMaxResults(LIMIT_RESULTS_TO);
 			return crit.list();
 		}
 		return null;
