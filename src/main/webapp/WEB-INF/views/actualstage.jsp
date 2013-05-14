@@ -252,7 +252,7 @@
 
 
 	<!-- Abstandsentwicklung  -->
-	<c:if test="${not empty distances}">
+	<c:if test="${not empty distances && not empty deficitetimes}">
 		<script type="text/javascript">
 			var stageDistance = ${stage.distance};
 			var canvas = Raphael("abstand-canvas", 940, 220);
