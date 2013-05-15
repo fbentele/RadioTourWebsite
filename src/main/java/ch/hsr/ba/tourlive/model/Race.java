@@ -33,7 +33,7 @@ public class Race {
 	@Column(unique = true)
 	private String raceSlug;
 
-	@Column
+	@Column(columnDefinition = "text")
 	private String raceDescription;
 
 	@Min(value = 1999)

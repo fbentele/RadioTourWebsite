@@ -41,7 +41,7 @@ public class Stage {
 	@Column(unique = true)
 	private String stageSlug;
 
-	@Column
+	@Column(columnDefinition = "text")
 	private String stageDescription;
 
 	@Column
