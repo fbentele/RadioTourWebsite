@@ -82,7 +82,7 @@ public class ApiController {
 
 	@RequestMapping(value = "/api", method = RequestMethod.GET)
 	public String showdata(Locale locale, Model model) {
-		model.addAttribute("valueContainer", valueContainerService.getAll());
+		model.addAttribute("valueContainer", valueContainerService.getAllValueContainers());
 		model.addAttribute("positions", positionDataService.getAll());
 		model.addAttribute("current", positionDataService.getAll().get(0));
 		model.addAttribute("navbarapi", "active");

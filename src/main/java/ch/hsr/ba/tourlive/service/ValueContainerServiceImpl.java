@@ -32,7 +32,7 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	}
 
 	@Transactional
-	public List<ValueContainer> getAll() {
+	public List<ValueContainer> getAllValueContainers() {
 		return valueDao.getAll();
 	}
 
@@ -52,16 +52,6 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	}
 
 	@Transactional
-	public ValueContainer getFirstByStage(Stage stage) {
-		return valueDao.getFirstByStage(stage);
-	}
-
-	@Transactional
-	public ValueContainer getFirstByStage(Stage stage, Long limit) {
-		return valueDao.getFirstByStage(stage, limit);
-	}
-
-	@Transactional
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
 		return valueDao.getLatestForDeviceByStage(stage);
 	}
@@ -69,11 +59,6 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	@Transactional
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage, Long limit) {
 		return valueDao.getLatestForDeviceByStage(stage, limit);
-	}
-
-	@Transactional
-	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit) {
-		return valueDao.getForStageByDistanceLimitedTo(stage, limit);
 	}
 
 	@Transactional

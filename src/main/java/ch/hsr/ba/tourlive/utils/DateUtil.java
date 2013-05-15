@@ -42,7 +42,7 @@ public class DateUtil {
 
 	/**
 	 * 
-	 * @param timestamp_as_Long
+	 * @param timestamp
 	 * @return returns a String of the timestamp in the format HH:mm:ss
 	 */
 	public static String toTimeFormat(Long timestamp) {

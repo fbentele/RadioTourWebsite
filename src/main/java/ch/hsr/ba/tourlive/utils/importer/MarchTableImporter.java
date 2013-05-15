@@ -3,15 +3,15 @@ package ch.hsr.ba.tourlive.utils.importer;
 import ch.hsr.ba.tourlive.model.MarchTableItem;
 
 public class MarchTableImporter {
-	private final int icon = 0;
-	private final int altitude = 1;
-	private final int distance = 2;
-	private final int distanceToGo = 3;
-	private final int ortschaft = 4;
-	private final int werbekolonne = 5;
-	private final int raceSlow = 6;
-	private final int raceMedium = 7;
-	private final int raceFast = 8;
+	private final static int icon = 0;
+	private final static int altitude = 1;
+	private final static int distance = 2;
+	private final static int distanceToGo = 3;
+	private final static int ortschaft = 4;
+	private final static int werbekolonne = 5;
+	private final static int raceSlow = 6;
+	private final static int raceMedium = 7;
+	private final static int raceFast = 8;
 
 	// private enum Icon {
 	// achtung, kreisel, bahn, tunnel, verpflegung, rechts, links, bodenwelle,

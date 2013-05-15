@@ -118,7 +118,11 @@ public class RaceController {
 			model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
 			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
-			model.addAttribute("first", valueContainerService.getFirstByStage(stage));
+			try {
+				model.addAttribute("first", valueContainers.get(0));
+			} catch (IndexOutOfBoundsException e) {
+				LOG.info("no ValueContainers for the stage " + stage.getStageName());
+			}
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
 					+ stageSlug));
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
@@ -132,8 +136,8 @@ public class RaceController {
 			Model model) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {
-			List<ValueContainer> valueContainers = valueContainerService
-					.getForStageByDistanceLimitedTo(stage, untilTime);
+			List<ValueContainer> valueContainers = valueContainerService.getAllForStageByDistance(
+					stage, untilTime);
 			model.addAttribute("limit", untilTime);
 			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("menuitems", MenuItem.makeStageNavi());
@@ -161,7 +165,11 @@ public class RaceController {
 			model.addAttribute("distances",
 					valueContainerService.getAllForStageByDistance(stage, untilTime));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
-			model.addAttribute("first", valueContainerService.getFirstByStage(stage, untilTime));
+			try {
+				model.addAttribute("first", valueContainers.get(0));
+			} catch (IndexOutOfBoundsException e) {
+				LOG.info("no ValueContainers for the stage " + stage.getStageName());
+			}
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
 					+ stageSlug));
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage, untilTime));

@@ -14,7 +14,7 @@ public interface ValueContainerService {
 
 	public void delete(Long id);
 
-	public List<ValueContainer> getAll();
+	public List<ValueContainer> getAllValueContainers();
 
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage);
 
@@ -22,18 +22,11 @@ public interface ValueContainerService {
 
 	public List<ValueContainer> getAllForStageByDistance(Stage stage, Long limit);
 
-	public ValueContainer getFirstByStage(Stage stage);
-
-	public ValueContainer getFirstByStage(Stage stage, Long limit);
-
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage);
 
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage, Long limit);
 
-	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit);
-
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage);
 
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit);
-
 }

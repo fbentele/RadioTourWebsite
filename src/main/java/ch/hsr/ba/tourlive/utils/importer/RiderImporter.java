@@ -7,16 +7,16 @@ import java.util.Date;
 import ch.hsr.ba.tourlive.model.rider.Rider;
 
 public class RiderImporter {
-	private final int startNr = 0;
-	private final int name = 1;
-	private final int team = 2;
-	private final int teamShort = 3;
-	private final int country = 4;
-	private final int timeOff = 5;
-	private final int timeRue = 6;
-	private final int timeVir = 7;
-	private final int uci = 8;
-	private final int neo = 9;
+	private final static int startNr = 0;
+	private final static int name = 1;
+	private final static int team = 2;
+	private final static int teamShort = 3;
+	private final static int country = 4;
+	private final static int timeOff = 5;
+	private final static int timeRue = 6;
+	private final static int timeVir = 7;
+	private final static int uci = 8;
+	private final static int neo = 9;
 
 	public Rider convertTo(String[] strings) {
 		final Rider rider = new Rider();
@@ -29,7 +29,7 @@ public class RiderImporter {
 		rider.setTimeOff(strings[timeOff]);
 		rider.setTimeRueck(strings[timeRue]);
 		rider.setTimeVirt(strings[timeVir]);
-		rider.setNeo(!strings[neo].equals(0));
+		rider.setNeo(!strings[neo].equals("0"));
 		return rider;
 	}
 

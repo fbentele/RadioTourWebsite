@@ -39,10 +39,19 @@ public class Rider {
 	private String note;
 	@Column
 	private Boolean neo;
+	/**
+	 * Official Time
+	 */
 	@Column
 	private Long timeOff;
+	/**
+	 * Deficite Time
+	 */
 	@Column
 	private Long timeRueck;
+	/**
+	 * Virtual Time
+	 */
 	@Column
 	private Long timeVirt;
 	@ManyToOne

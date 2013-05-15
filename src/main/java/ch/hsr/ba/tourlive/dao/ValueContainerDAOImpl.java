@@ -66,22 +66,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllForStageByDistance(Stage stage) {
-		if (stage != null && !stage.getDevices().isEmpty()) {
-			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-			Disjunction d = Restrictions.or();
-			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-					stage.getEndtimeAsTimestamp()));
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			stageCriteria.addOrder(Order.asc("distance"));
-			return (List<ValueContainer>) stageCriteria.list();
-		}
-		return null;
+		return getAllForStageByDistance(stage, stage.getEndtimeAsTimestamp());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,47 +83,6 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			Criteria stageCriteria = crit.createCriteria("stageData");
 			stageCriteria.addOrder(Order.asc("distance"));
 			return (List<ValueContainer>) stageCriteria.list();
-		}
-		return null;
-	}
-
-	public ValueContainer getFirstByStage(Stage stage) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		if (stage != null && !stage.getDevices().isEmpty()) {
-			Disjunction d = Restrictions.or();
-			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-					stage.getEndtimeAsTimestamp()));
-			try {
-				Criteria stageCriteria = crit.createCriteria("stageData");
-				return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list()
-						.get(0);
-			} catch (IndexOutOfBoundsException e) {
-				LOG.info("no valueContainer found");
-			}
-		}
-		return null;
-	}
-
-	public ValueContainer getFirstByStage(Stage stage, Long limit) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-		if (stage != null && !stage.getDevices().isEmpty()) {
-			Disjunction d = Restrictions.or();
-			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
-			try {
-				Criteria stageCriteria = crit.createCriteria("stageData");
-				return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list()
-						.get(0);
-			} catch (IndexOutOfBoundsException e) {
-				LOG.info("no valueContainer found");
-			}
 		}
 		return null;
 	}
@@ -181,23 +126,6 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			}
 		}
 		return list;
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<ValueContainer> getForStageByDistanceLimitedTo(Stage stage, Long limit) {
-		if (stage != null && !stage.getDevices().isEmpty()) {
-			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-			Disjunction d = Restrictions.or();
-			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			stageCriteria.addOrder(Order.asc("distance"));
-			return (List<ValueContainer>) stageCriteria.list();
-		}
-		return null;
 	}
 
 	/**

@@ -24,8 +24,8 @@ public class CSVReader {
 	public ArrayList<String[]> readFile() {
 		final ArrayList<String[]> returnList = new ArrayList<String[]>();
 		Scanner scan = null;
+		scan = new Scanner(in, "UTF8");
 		try {
-			scan = new Scanner(in, "UTF8");
 			if (scan.hasNext()) {
 				// skip header
 				scan.nextLine();
