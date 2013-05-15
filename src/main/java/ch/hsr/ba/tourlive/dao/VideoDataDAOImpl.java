@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,7 @@ import ch.hsr.ba.tourlive.model.VideoData;
 public class VideoDataDAOImpl implements VideoDataDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	private final static Logger LOG = LoggerFactory.getLogger(VideoDataDAOImpl.class);
 
 	public void save(VideoData videoData) {
 		sessionFactory.getCurrentSession().save(videoData);
@@ -49,10 +52,11 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 			return (VideoData) crit.add(Restrictions.eq("device", device))
 					.addOrder(Order.desc("timestamp")).list().get(0);
 		} catch (NullPointerException e) {
-			return null;
+			LOG.error("device not set");
 		} catch (IndexOutOfBoundsException e) {
-			return null;
+			LOG.info("not VideoData found");
 		}
+		return null;
 	}
 
 	/**
@@ -69,7 +73,9 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 			crit.add(Restrictions.gt("videoDataId", afterId));
 			return (VideoData) crit.addOrder(Order.asc("videoDataId")).list().get(0);
 		} catch (NullPointerException e) {
+			LOG.error("device not set");
 		} catch (IndexOutOfBoundsException e) {
+			LOG.info("not VideoData found");
 		}
 		return null;
 	}
@@ -82,10 +88,11 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 			crit.addOrder(Order.desc("timestamp"));
 			return (VideoData) crit.list().get(0);
 		} catch (NullPointerException e) {
-			return null;
+			LOG.error("device not set");
 		} catch (IndexOutOfBoundsException e) {
-			return null;
+			LOG.info("not VideoData found");
 		}
+		return null;
 	}
 
 	public List<VideoData> getMostRecentByStage(Stage stage) {
@@ -93,11 +100,9 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		if (stage != null) {
 			for (Device dev : stage.getDevices()) {
 				VideoData vid = getMostRecentByDevice(dev);
-				if (vid != null) {
-					if (stage.getStarttimeAsTimestamp() < vid.getRealTimestamp()
-							&& vid.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-						videoData.add(getMostRecentByDevice(dev));
-				}
+				if (vid != null && stage.getStarttimeAsTimestamp() < vid.getRealTimestamp()
+						&& vid.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+					videoData.add(getMostRecentByDevice(dev));
 			}
 			return videoData;
 		}
@@ -109,11 +114,9 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		if (stage != null) {
 			for (Device dev : stage.getDevices()) {
 				VideoData vid = getMostRecentByDevice(dev, limit);
-				if (vid != null) {
-					if (stage.getStarttimeAsTimestamp() < vid.getRealTimestamp()
-							&& vid.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-						videoData.add(getMostRecentByDevice(dev, limit));
-				}
+				if (vid != null && stage.getStarttimeAsTimestamp() < vid.getRealTimestamp()
+						&& vid.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+					videoData.add(getMostRecentByDevice(dev, limit));
 			}
 			return videoData;
 		}

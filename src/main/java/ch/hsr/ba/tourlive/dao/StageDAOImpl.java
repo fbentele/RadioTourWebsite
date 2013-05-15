@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,7 @@ import ch.hsr.ba.tourlive.model.Stage;
 public class StageDAOImpl implements StageDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	private final static Logger LOG = LoggerFactory.getLogger(StageDAOImpl.class);
 
 	public void save(Stage stage) {
 		sessionFactory.getCurrentSession().save(stage);
@@ -83,7 +86,8 @@ public class StageDAOImpl implements StageDAO {
 		crit.addOrder(Order.desc("starttime"));
 		try {
 			return (Stage) crit.list().get(0);
-		} catch (Exception e) {
+		} catch (IndexOutOfBoundsException e) {
+			LOG.info("no Stage found");
 		}
 		return null;
 	}

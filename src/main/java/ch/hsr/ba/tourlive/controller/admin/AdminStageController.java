@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,8 +37,6 @@ import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 
 @Controller
 public class AdminStageController {
-	@Autowired
-	private ApplicationContext context;
 	@Autowired
 	private StageService stageService;
 	@Autowired
@@ -88,8 +85,8 @@ public class AdminStageController {
 		// creates id, needed to save image properly
 		stage = stageService.getStageBySlug(stageSlug);
 		String rel = "stage" + stage.getStageId();
-		stage.setBannerImage(FileUtil.safe(bannerimage, filePath, rel, "banner.png"));
-		stage.setStageProfileImage(FileUtil.safe(stageProfileImage, filePath, rel,
+		stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
+		stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
 				"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
@@ -149,8 +146,8 @@ public class AdminStageController {
 		if (visible.contains("true"))
 			stage.setVisible(true);
 		String rel = "stage" + stage.getStageId();
-		stage.setBannerImage(FileUtil.safe(bannerimage, filePath, rel, "banner.png"));
-		stage.setStageProfileImage(FileUtil.safe(stageProfileImage, filePath, rel,
+		stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
+		stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
 				"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;

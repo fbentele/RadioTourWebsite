@@ -6,6 +6,8 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,7 @@ import ch.hsr.ba.tourlive.model.rider.RaceSituation;
 public class RaceSituationDAOImpl implements RaceSituationDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	private final static Logger LOG = LoggerFactory.getLogger(RaceSituationDAOImpl.class);
 
 	public void save(RaceSituation raceSituation) {
 		sessionFactory.getCurrentSession().save(raceSituation);
@@ -54,6 +57,7 @@ public class RaceSituationDAOImpl implements RaceSituationDAO {
 		try {
 			return (RaceSituation) crit.list().get(0);
 		} catch (IndexOutOfBoundsException e) {
+			LOG.info("no RaceSituation found");
 		}
 		return null;
 	}
@@ -66,6 +70,7 @@ public class RaceSituationDAOImpl implements RaceSituationDAO {
 		try {
 			return (RaceSituation) crit.list().get(0);
 		} catch (IndexOutOfBoundsException e) {
+			LOG.info("no RaceSituation found");
 		}
 		return null;
 	}

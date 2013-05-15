@@ -1,14 +1,9 @@
 package ch.hsr.ba.tourlive.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,7 +28,6 @@ import ch.hsr.ba.tourlive.model.Stage;
 import ch.hsr.ba.tourlive.model.ValueContainer;
 import ch.hsr.ba.tourlive.model.VideoData;
 import ch.hsr.ba.tourlive.model.rider.RaceSituation;
-import ch.hsr.ba.tourlive.model.rider.Rider;
 import ch.hsr.ba.tourlive.service.DeviceService;
 import ch.hsr.ba.tourlive.service.ImageDataService;
 import ch.hsr.ba.tourlive.service.PositionDataService;
@@ -42,6 +36,7 @@ import ch.hsr.ba.tourlive.service.RaceSituationService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.service.ValueContainerService;
 import ch.hsr.ba.tourlive.service.VideoDataService;
+import ch.hsr.ba.tourlive.utils.FileUtil;
 
 @Controller
 public class ApiController {
@@ -65,7 +60,7 @@ public class ApiController {
 	RaceSituationService raceSituationService;
 
 	@Value("${config.api.imagePath}")
-	private String imagePath;
+	private String mediaPath;
 
 	private static final Logger log = LoggerFactory.getLogger(ApiController.class);
 
@@ -80,7 +75,7 @@ public class ApiController {
 			d.setUsername(rec.getUsername());
 			request.setDevice(d);
 		} catch (NullPointerException e) {
-
+			log.error("no deviceId found");
 		}
 		valueContainerService.save(request);
 	}
@@ -99,55 +94,30 @@ public class ApiController {
 	public void uploadImage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("image") CommonsMultipartFile image,
 			@RequestParam("timestamp") Long timestamp, @RequestParam("deviceId") String deviceId) {
-
-		InputStream is = null;
-		if (deviceId.isEmpty() || deviceId == null)
-			deviceId = "tempimage";
-		try {
-			is = image.getInputStream();
-			BufferedImage sourceImage = ImageIO.read(is);
-			File theImage = new File(imagePath + deviceId);
-			if (!theImage.exists()) {
-				boolean result = theImage.mkdir();
-				if (result) {
-					log.info("images folder created");
-				}
-			}
-			String imagefilename = deviceId + timestamp + ".png";
-			ImageIO.write(sourceImage, "png", new File(theImage, imagefilename));
-			imageDataService.save(new ImageData(timestamp, deviceService.getDeviceById(deviceId),
-					deviceId + "/" + imagefilename));
-		} catch (IOException e) {
-		} finally {
-			// implement handler here
+		Device device = deviceService.getDeviceById(deviceId);
+		if (device == null) {
+			device = new Device(deviceId);
+			deviceService.save(device);
 		}
+
+		String temp = FileUtil.safePng(image, mediaPath, deviceId, deviceId + "_" + timestamp
+				+ ".png");
+		imageDataService
+				.save(new ImageData(timestamp, deviceService.getDeviceById(deviceId), temp));
 	}
 
 	@RequestMapping(value = "/api/video", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
 	public void uploadVideoSequence(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("video") CommonsMultipartFile video,
 			@RequestParam("timestamp") Long timestamp, @RequestParam("deviceId") String deviceId) {
-
-		String videoFilename = timestamp + "_" + video.getOriginalFilename();
-		File filePath = new File(imagePath + deviceId);
-		if (!filePath.exists()) {
-			filePath.mkdir();
+		String vidLocation = FileUtil.safeVideo(video, mediaPath, deviceId, deviceId + "_"
+				+ timestamp);
+		Device device = deviceService.getDeviceById(deviceId);
+		if (device == null) {
+			device = new Device(deviceId);
+			deviceService.save(device);
 		}
-		File dest = new File(filePath, videoFilename);
-		try {
-			video.transferTo(dest);
-			Device device = deviceService.getDeviceById(deviceId);
-			if (device == null) {
-				device = new Device(deviceId);
-			}
-			videoDataService.save(new VideoData(timestamp, deviceService.getDeviceById(deviceId),
-					deviceId + "/" + videoFilename));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-		}
+		videoDataService.save(new VideoData(timestamp, device, vidLocation));
 	}
 
 	@RequestMapping(value = "/api/racesituation/stage/{stageId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
@@ -176,18 +146,7 @@ public class ApiController {
 				return val;
 			}
 		}
-
 		return null;
-		// stageName
-		// raceName
-		// currentRaceTotalDistance //sum of all stages.distance together
-		// currentStageTotalDistance
-		// completedStagesDistance // all passed stages.distance together
-	}
-
-	@RequestMapping(value = "/api/stage/{stageId}/rider/add", method = RequestMethod.POST)
-	public void addRider(@PathVariable("stageId") Long stageId, @RequestBody final Rider rider) {
-		// Stage stage = stageService.getStageById(stageId);
 	}
 }
 

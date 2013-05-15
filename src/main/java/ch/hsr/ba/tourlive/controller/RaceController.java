@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +36,6 @@ import ch.hsr.ba.tourlive.viewmodel.MenuItem;
 @Controller
 public class RaceController {
 	@Autowired
-	private ApplicationContext context;
-	@Autowired
 	private StageService stageService;
 	@Autowired
 	private RaceService raceService;
@@ -61,7 +58,7 @@ public class RaceController {
 	@Value("${config.dev.hostname}")
 	private String hostname;
 
-	Logger log = LoggerFactory.getLogger(RaceController.class);
+	private final static Logger LOG = LoggerFactory.getLogger(RaceController.class);
 
 	@RequestMapping(value = "/race", method = RequestMethod.GET)
 	public String race(Locale locale, Model model) {
@@ -115,7 +112,7 @@ public class RaceController {
 					model.addAttribute("deficitetimes",
 							valueContainerService.getDeficiteToLeaderForStage(stage));
 			} catch (Exception e) {
-				// no devices for this stage
+				LOG.info("no devices for this stage");
 			}
 			model.addAttribute("hostname", hostname);
 			model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
@@ -156,7 +153,7 @@ public class RaceController {
 					model.addAttribute("deficitetimes",
 							valueContainerService.getDeficiteToLeaderForStage(stage, untilTime));
 			} catch (Exception e) {
-				// no devices for this stage
+				LOG.info("no devices for this stage");
 			}
 			model.addAttribute("hostname", hostname);
 			model.addAttribute("latest",
@@ -177,7 +174,7 @@ public class RaceController {
 	public VideoData getNextVideoForDevice(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, @RequestParam("deviceId") String deviceId,
 			@RequestParam("afterId") Long afterId, Model model) {
-		log.info("video Requested");
+		LOG.info("video Requested");
 		return videoDataService.getNextForDevice(deviceService.getDeviceById(deviceId), afterId);
 	}
 

@@ -14,11 +14,18 @@
 			<div id="top" class="row-fluid">
 				<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
 				<div class="span6">
-					<p class="lead"><spring:message code="label.stage.distancestatus1" /> ${first.stageData.distance} km <spring:message code="label.stage.distancestatus2" /> ${stage.distance} km
-						<spring:message code="label.stage.distancestatus3" />.</p>
+					<p class="lead">
+						<spring:message code="label.stage.distancestatus1" />
+						${first.stageData.distance} km
+						<spring:message code="label.stage.distancestatus2" />
+						${stage.distance} km
+						<spring:message code="label.stage.distancestatus3" />
+						.
+					</p>
 				</div>
 				<div class="span4">
-					<spring:message code="label.stage.actualTime" />:
+					<spring:message code="label.stage.actualTime" />
+					:
 					<jsp:useBean id="dateValue" class="java.util.Date" />
 					<jsp:setProperty name="dateValue" property="time" value="${limit}" />
 					<fmt:formatDate value="${dateValue}" pattern="HH:mm:ss" />
@@ -34,7 +41,8 @@
 							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}">+ 1min</a>
 						</div>
 						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/"><spring:message code="label.stage.now" /></a>
+							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/"><spring:message
+									code="label.stage.now" /></a>
 						</div>
 						<div class="btn">
 							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}">- 1min</a>
@@ -52,7 +60,9 @@
 		<c:if test="${not empty stage.stageProfileImage}">
 			<div class="row-fluid">
 				<div class="span12">
-					<h4 id="streckenprofil"><spring:message code="label.stage.stageProfile" /></h4>
+					<h4 id="streckenprofil">
+						<spring:message code="label.stage.stageProfile" />
+					</h4>
 					<div id="image-drawing-wrapper">
 						<img width="940" height="350" src="${hostname}${stage.stageProfileImage}" />
 						<div id="strecken-canvas"></div>
@@ -63,7 +73,9 @@
 		<c:if test="${not empty distances}">
 			<div class="row-fluid">
 				<div class="span12">
-					<h4 id="abstand"><spring:message code="label.stage.deficiteTime" /></h4>
+					<h4 id="abstand">
+						<spring:message code="label.stage.deficiteTime" />
+					</h4>
 					<div id="abstand-canvas"></div>
 				</div>
 			</div>
@@ -76,19 +88,20 @@
 					<div id="">
 						<c:forEach items="${latest}" var="latest">
 							<c:if test="${latest.device.deviceId == image.device.deviceId}">
-						<spring:message code="label.stage.altitudeDif" />: <span class="pull-right">${latest.stageData.stageUpAltitude}</span>
+								<spring:message code="label.stage.altitudeDif" />: <span class="pull-right">${latest.stageData.stageUpAltitude}</span>
 								<br />
-						<spring:message code="label.stage.timeNow" />: <span class="pull-right">${latest.stageData.stageTime}</span>
+								<spring:message code="label.stage.timeNow" />: <span class="pull-right">${latest.stageData.stageTime}</span>
 								<br />
-						<spring:message code="label.stage.raceKm" />: <span class="pull-right">${latest.stageData.distance}</span>
+								<spring:message code="label.stage.raceKm" />: <span class="pull-right">${latest.stageData.distance}</span>
 								<br />
-						<spring:message code="label.stage.averageSpeed" />: <span class="pull-right">${latest.stageData.averageSpeed}</span>
+								<spring:message code="label.stage.averageSpeed" />: <span class="pull-right">${latest.stageData.averageSpeed}</span>
 								<br />
 							</c:if>
 						</c:forEach>
 					</div>
 					<div id="caption">
-						<spring:message code="label.stage.lastUpdate" />: <span class="pull-right">${image.timestamp}</span>
+						<spring:message code="label.stage.lastUpdate" />
+						: <span class="pull-right">${image.timestamp}</span>
 					</div>
 				</div>
 			</c:forEach>
@@ -99,8 +112,10 @@
 				<div class="span5">
 					<h4>${video.device.username}</h4>
 					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
-						<source src="${hostname}${video.videoLocation}"
+						<source src="${hostname}${video.videoLocation}.mp4"
 							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+						<source src="${hostname}${video.videoLocation}.ogg"
+							type='video/ogg'></source>
 					</video>
 				</div>
 			</c:forEach>
@@ -112,14 +127,20 @@
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
 				<div class="span6">
-					<h4 id="karte"><spring:message code="label.stage.map" /></h4>
+					<h4 id="karte">
+						<spring:message code="label.stage.map" />
+					</h4>
 					<div id="map-canvas"></div>
 				</div>
 			</c:if>
 			<c:if test="${not empty liveTickerItems}">
 				<div class="span6">
-					<h4 id="liveticker"><spring:message code="label.stage.liveticker" /></h4>
-					<p><spring:message code="label.stage.livetickertext" /></p>
+					<h4 id="liveticker">
+						<spring:message code="label.stage.liveticker" />
+					</h4>
+					<p>
+						<spring:message code="label.stage.livetickertext" />
+					</p>
 					<dl class="dl-horizontal">
 						<c:forEach items="${liveTickerItems}" var="lti">
 							<dt>${lti.timestamp}</dt>
@@ -136,14 +157,21 @@
 		<c:if test="${not empty situation}">
 			<div class="row-fluid">
 				<div class="span12">
-					<h4 id="rennsituation"><spring:message code="label.stage.raceSituation" /></h4>
-					<p><spring:message code="label.stage.atTime" />: ${situation.timestamp} <spring:message code="label.stage.andKm" />:
-						${first.stageData.distance} km</p>
+					<h4 id="rennsituation">
+						<spring:message code="label.stage.raceSituation" />
+					</h4>
+					<p>
+						<spring:message code="label.stage.atTime" />
+						: ${situation.timestamp}
+						<spring:message code="label.stage.andKm" />
+						: ${first.stageData.distance} km
+					</p>
 					<c:forEach items="${situation.situation}" var="sit">
 						<div class="span2">
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
-							<spring:message code="label.stage.rider" />: <br /> ${sit.handicaptime}
+							<spring:message code="label.stage.rider" />
+							: <br /> ${sit.handicaptime}
 							<ul>
 								<c:forEach items="${sit.drivernumber}" var="startNr">
 									<li id="testa"><a id="rider${startNr}" class="riders" href="#"
@@ -159,7 +187,9 @@
 		<c:if test="${not empty riders}">
 			<div class="row-fluid">
 				<div class="span12">
-					<h4 id="rangliste"><spring:message code="label.stage.liveRanking" /></h4>
+					<h4 id="rangliste">
+						<spring:message code="label.stage.liveRanking" />
+					</h4>
 					<table id="ridertable" class="table table-hover">
 						<thead>
 							<tr>
@@ -192,7 +222,9 @@
 		<c:if test="${not empty marchtable}">
 			<div class="row-fluid">
 				<div class="span12">
-					<h4 id="marschtabelle"><spring:message code="label.stage.marchtable" /></h4>
+					<h4 id="marschtabelle">
+						<spring:message code="label.stage.marchtable" />
+					</h4>
 					<table class="table table-hover">
 						<thead>
 							<tr>

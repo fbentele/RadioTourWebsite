@@ -20,10 +20,10 @@ import ch.hsr.ba.tourlive.model.ValueContainer;
 
 @Repository
 public class ValueContainerDAOImpl implements ValueContainerDAO {
-	private static final int LIMIT_RESULTS_TO = 1000;
 	@Autowired
-	SessionFactory sessionFactory;
-	Logger log = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
+	private SessionFactory sessionFactory;
+	private final static Logger LOG = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
+	private static final int LIMIT_RESULTS_TO = 1000;
 
 	public void save(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().save(valuecontainer);
@@ -116,7 +116,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list()
 						.get(0);
 			} catch (IndexOutOfBoundsException e) {
-				// TODO: do stuff here, if list is empty, cannot acces element 0
+				LOG.info("no valueContainer found");
 			}
 		}
 		return null;
@@ -136,7 +136,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				return (ValueContainer) stageCriteria.addOrder(Order.desc("distance")).list()
 						.get(0);
 			} catch (IndexOutOfBoundsException e) {
-				// TODO: do stuff here, if list is empty, cannot acces element 0
+				LOG.info("no valueContainer found");
 			}
 		}
 		return null;
@@ -156,7 +156,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				try {
 					list.add((ValueContainer) stageCriteria.list().get(0));
 				} catch (IndexOutOfBoundsException e) {
-					// no valuecontainer from device
+					LOG.info("no valueContainer found");
 				}
 			}
 		}
@@ -176,7 +176,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				try {
 					list.add((ValueContainer) stageCriteria.list().get(0));
 				} catch (IndexOutOfBoundsException e) {
-					// no valuecontainer from device
+					LOG.info("no valueContainer found");
 				}
 			}
 		}
@@ -229,11 +229,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 									.getDistance()) {
 						map.put(v.getValueContainerId(),
 								(int) (v.getTimestamp() - val.getTimestamp()) / 1000);
-						log.info("__________ put " + v.getValueContainerId() + "____ and "
-								+ (v.getTimestamp() - val.getTimestamp()));
 					} else {
 						map.put(v.getValueContainerId(), 0);
-						log.info("__________ put zero");
 					}
 				} catch (IndexOutOfBoundsException e) {
 					map.put(v.getValueContainerId(), 0);
@@ -262,11 +259,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 						&& val.getStageData().getDistance() + 0.5 >= v.getStageData().getDistance()) {
 					map.put(v.getValueContainerId(),
 							(int) (v.getTimestamp() - val.getTimestamp()) / 1000);
-					log.info("__________ put " + v.getValueContainerId() + "____ and "
-							+ (v.getTimestamp() - val.getTimestamp()));
 				} else {
 					map.put(v.getValueContainerId(), 0);
-					log.info("__________ put zero");
 				}
 			} catch (IndexOutOfBoundsException e) {
 				map.put(v.getValueContainerId(), 0);

@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Situation implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5090788260118136922L;
 	private int[] drivernumber;
 	private boolean isLeader;
@@ -16,7 +13,6 @@ public class Situation implements Serializable {
 	private boolean isField;
 
 	public Situation() {
-
 	}
 
 	public Situation(int[] drivernumber, boolean isLeader, int groupnr, Long handicaptime,
@@ -62,23 +58,23 @@ public class Situation implements Serializable {
 	}
 
 	public String getGroupSize() {
-		int i = 0;
+		int groupSize;
 		try {
-			i = drivernumber.length;
-		} catch (Exception e) {
-
+			groupSize = drivernumber.length;
+		} catch (NullPointerException e) {
+			groupSize = 0;
 		}
-		if (i < 1)
+		if (groupSize < 1)
 			return "none";
-		if (i == 1)
+		if (groupSize == 1)
 			return "one";
-		if (i == 2)
+		if (groupSize == 2)
 			return "two";
-		if (i < 5)
+		if (groupSize < 5)
 			return "small";
-		if (i < 10)
+		if (groupSize < 10)
 			return "medium";
-		if (i >= 10)
+		if (groupSize >= 10)
 			return "large";
 		return "none";
 	}

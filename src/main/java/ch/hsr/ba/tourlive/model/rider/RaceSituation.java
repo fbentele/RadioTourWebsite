@@ -42,10 +42,6 @@ public class RaceSituation {
 
 	}
 
-	public RaceSituation(Long timestamp, Stage stage, Situation situation) {
-		this.timestamp = timestamp;
-	}
-
 	public RaceSituation(Long timestamp) {
 		this.timestamp = timestamp;
 	}

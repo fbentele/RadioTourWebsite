@@ -8,6 +8,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,7 @@ import ch.hsr.ba.tourlive.model.Stage;
 public class ImageDataDAOImpl implements ImageDataDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	private final static Logger LOG = LoggerFactory.getLogger(ImageDataDAOImpl.class);
 
 	public void save(ImageData imageData) {
 		sessionFactory.getCurrentSession().save(imageData);
@@ -57,7 +60,9 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 				return (ImageData) crit.add(Restrictions.eq("device", device))
 						.addOrder(Order.desc("timestamp")).list().get(0);
 			} catch (NullPointerException e) {
+				LOG.error("Device not set");
 			} catch (IndexOutOfBoundsException e) {
+				LOG.info("no ImageData found");
 			}
 		}
 		return null;
@@ -71,7 +76,9 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 				crit.add(Restrictions.le("timestamp", limit));
 				return (ImageData) crit.addOrder(Order.desc("timestamp")).list().get(0);
 			} catch (NullPointerException e) {
+				LOG.error("Device not set");
 			} catch (IndexOutOfBoundsException e) {
+				LOG.info("no ImageData found");
 			}
 		}
 		return null;
@@ -82,11 +89,9 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		if (stage != null) {
 			for (Device dev : stage.getDevices()) {
 				ImageData img = getMostRecentByDevice(dev);
-				if (img != null) {
-					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
-							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-						imageData.add(getMostRecentByDevice(dev));
-				}
+				if (img != null && stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
+						&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+					imageData.add(getMostRecentByDevice(dev));
 			}
 		}
 		return imageData;
@@ -97,11 +102,9 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		if (stage != null) {
 			for (Device dev : stage.getDevices()) {
 				ImageData img = getMostRecentByDeviceLimitedTo(dev, limit);
-				if (img != null) {
-					if (stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
-							&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
-						imageData.add(getMostRecentByDeviceLimitedTo(dev, limit));
-				}
+				if (img != null && stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
+						&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
+					imageData.add(getMostRecentByDeviceLimitedTo(dev, limit));
 			}
 		}
 		return imageData;

@@ -66,9 +66,6 @@ public class Stage {
 	@Column
 	private Boolean visible;
 
-	@Column
-	private Boolean completed;
-
 	@ManyToOne
 	@JoinColumn(name = "raceId")
 	private Race race;

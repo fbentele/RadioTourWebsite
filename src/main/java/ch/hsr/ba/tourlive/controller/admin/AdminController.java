@@ -8,8 +8,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.hsr.ba.tourlive.model.Race;
 import ch.hsr.ba.tourlive.model.Stage;
-import ch.hsr.ba.tourlive.service.DeviceService;
-import ch.hsr.ba.tourlive.service.LiveTickerItemService;
 import ch.hsr.ba.tourlive.service.RaceService;
 import ch.hsr.ba.tourlive.service.StageService;
 import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
@@ -30,21 +26,11 @@ import ch.hsr.ba.tourlive.viewmodel.Breadcrumb;
 @Controller
 public class AdminController {
 	@Autowired
-	private ApplicationContext context;
-	@Autowired
 	private StageService stageService;
 	@Autowired
 	private RaceService raceService;
-	@Autowired
-	private DeviceService deviceService;
-	@Autowired
-	private LiveTickerItemService ltiService;
-	@Value("${config.api.imagePath}")
-	private String imagePath;
-	@Value("${config.dev.hostname}")
-	private String hostname;
 	@SuppressWarnings("unused")
-	private Logger log = LoggerFactory.getLogger(AdminController.class);
+	private final static Logger LOG = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model, Principal principal, Locale locale) {

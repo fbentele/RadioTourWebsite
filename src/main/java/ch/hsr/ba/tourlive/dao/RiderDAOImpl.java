@@ -18,8 +18,7 @@ import ch.hsr.ba.tourlive.model.rider.Rider;
 public class RiderDAOImpl implements RiderDAO {
 	@Autowired
 	SessionFactory sessionFactory;
-
-	private static final Logger LOG = LoggerFactory.getLogger(RiderDAOImpl.class);
+	private final static Logger LOG = LoggerFactory.getLogger(RiderDAOImpl.class);
 
 	public void save(Rider rider) {
 		sessionFactory.getCurrentSession().save(rider);
@@ -50,7 +49,6 @@ public class RiderDAOImpl implements RiderDAO {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Rider.class);
 		crit.add(Restrictions.eq("stage", stage));
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		System.out.println("__________ number of riders:" + crit.list().size());
 		return (List<Rider>) crit.list();
 	}
 
@@ -67,15 +65,12 @@ public class RiderDAOImpl implements RiderDAO {
 
 	public Rider getRiderByStartNrForStage(Stage stage, Integer startNr) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Rider.class);
-		LOG.info("_________________stageid " + stage.getStageId());
 		crit.add(Restrictions.eq("stage", stage));
-		LOG.info("_________________startnr " + startNr);
-
 		crit.add(Restrictions.eq("startNr", startNr));
 		try {
 			return (Rider) crit.list().get(0);
 		} catch (IndexOutOfBoundsException e) {
-
+			LOG.info("no Rider found");
 		}
 		return null;
 	}

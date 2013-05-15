@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class CSVReader {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class CSVReader {
 	private InputStream in = null;
 	private final String CSV_SEPARATOR = ";";
-
-	// private Logger log = Logger.getLogger(CSVReader.class);
+	private final static Logger LOG = LoggerFactory.getLogger(CSVReader.class);
 
 	public CSVReader(InputStream in) {
 		this.in = in;
@@ -33,11 +34,10 @@ public class CSVReader {
 				returnList.add(readLine(scan.nextLine()));
 			}
 		} catch (Exception e) {
-			// log.error("exception on:" + e.getStackTrace());
+			LOG.error("Error while importing csv file");
 		} finally {
 			scan.close();
 		}
-
 		return returnList;
 	}
 
@@ -49,5 +49,4 @@ public class CSVReader {
 		}
 		return array;
 	}
-
 }

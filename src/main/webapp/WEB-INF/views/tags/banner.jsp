@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:useBean id="random" class="ch.hsr.ba.tourlive.utils.Randomizer" scope="application" />
 
 <c:choose>
 	<c:when test="${not empty stage.bannerImage}">
@@ -17,5 +16,3 @@
 </div>
 	</c:otherwise>
 </c:choose>
-
-	
