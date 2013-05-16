@@ -120,7 +120,7 @@
 				</div>
 			</c:forEach>
 			<c:if test="${not empty stage.adCode}">
-				<div class="span4">${stage.adCode}</div>
+				<div id="ads" class="span4">${stage.adCode}</div>
 			</c:if>
 		</div>
 
@@ -247,8 +247,8 @@
 									<td>${mti.altitude}</td>
 									<td>${mti.distance}</td>
 									<td>${mti.distanceToGo}</td>
-									<td>${mti.ortschaft}</td>
-									<td>${mti.werbekolonne}</td>
+									<td>${mti.settlement}</td>
+									<td>${mti.advertisingColumn}</td>
 									<td>${mti.raceFast}</td>
 									<td>${mti.raceMedium}</td>
 									<td>${mti.raceSlow }</td>

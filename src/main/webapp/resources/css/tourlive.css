@@ -1,7 +1,11 @@
 html,body {
 	height: 100%;
 }
-
+#ads{
+	max-height:300px;
+	max-width: 300px;
+	padding:5px;
+}
 #map-canvas {
 	height: 300px;
 }
