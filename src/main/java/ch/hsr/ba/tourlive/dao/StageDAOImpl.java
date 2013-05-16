@@ -96,7 +96,6 @@ public class StageDAOImpl implements StageDAO {
 	public Float getTotalRaceDistance(Race race, Boolean completed) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
 		crit.add(Restrictions.eq("race", race));
-		System.out.println("_________" + crit.list().size());
 		if (completed)
 			crit.add(Restrictions.eq("completed", true));
 		float f = 0;

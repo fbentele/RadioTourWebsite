@@ -66,6 +66,9 @@ public class Stage {
 	@Column
 	private Boolean visible;
 
+	@Column
+	private Boolean completed;
+
 	@ManyToOne
 	@JoinColumn(name = "raceId")
 	private Race race;
@@ -182,6 +185,14 @@ public class Stage {
 
 	public void setRace(Race race) {
 		this.race = race;
+	}
+
+	public Boolean getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
 	}
 
 	public void addDevice(Device device) {
