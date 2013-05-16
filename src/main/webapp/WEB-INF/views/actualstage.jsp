@@ -332,7 +332,7 @@
 						if (data){
 							console.log('new video');
 							console.log(data.videoLocation);
-							videoPlayer.src = '${hostname}'+ data.videoLocation;
+							videoPlayer.src = '${hostname}'+ data.videoLocation + '.mp4';
 							videoPlayer.id= data.videoDataId;
 						} else {
 							console.log('no new video');

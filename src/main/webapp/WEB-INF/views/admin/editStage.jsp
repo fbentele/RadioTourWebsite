@@ -122,7 +122,7 @@
 		<div class="span6">
 			<h3><spring:message code="label.admin.marchtable" /></h3>
 			<p><spring:message code="label.admin.csvWithCol" />:</p>
-			<pre>icon , altitude, distance, distanceToGo, ortschaft, werbekolonne, raceSlow, raceMedium, raceFast</pre>
+			<pre>icon , altitude, distance, distanceToGo, settlement, advertisingColumn, raceSlow, raceMedium, raceFast</pre>
 			<form:form method="post" name="marchtableimport"
 				action="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/import"
 				enctype="multipart/form-data">
@@ -137,7 +137,7 @@
 				<table class="table hover-table">
 					<c:forEach items="${marchTable}" var="mti">
 						<tr>
-							<td>${mti.ortschaft}</td>
+							<td>${mti.settlement}</td>
 							<td>${mti.distance}</td>
 							<td><a
 								href="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/delete/${mti.marchTableItemId}"><i
