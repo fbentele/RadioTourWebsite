@@ -123,7 +123,6 @@
 				<div id="ads" class="span4">${stage.adCode}</div>
 			</c:if>
 		</div>
-
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
 				<div class="span6">

@@ -3,6 +3,7 @@ package ch.hsr.ba.tourlive.web.controller.admin;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Stage;
@@ -54,7 +56,7 @@ public class AdminStageController {
 	@Value("${config.dev.hostname}")
 	private String hostname;
 	@SuppressWarnings("unused")
-	private Logger log = LoggerFactory.getLogger(AdminStageController.class);
+	private final static Logger LOG = LoggerFactory.getLogger(AdminStageController.class);
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
 	public String addStage(
@@ -188,11 +190,20 @@ public class AdminStageController {
 	public String editDevice(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId, HttpServletRequest request) {
 		Stage stage = stageService.getStageById(stageId);
-		String[] deviceIds = request.getParameterValues("device");
-		for (String deviceId : deviceIds) {
-			stage.addDevice(deviceService.getDeviceById(deviceId));
+		try {
+			for (String deviceId : request.getParameterValues("device")) {
+				boolean found = false;
+				for (Device dev : stage.getDevices()) {
+					if (dev.getDeviceId().equals(deviceId))
+						found = true;
+				}
+				if (!found)
+					stage.addDevice(deviceService.getDeviceById(deviceId));
+			}
+			stageService.update(stage);
+		} catch (NullPointerException e) {
+			LOG.info("form had no device as parameter");
 		}
-		stageService.update(stage);
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
@@ -201,9 +212,15 @@ public class AdminStageController {
 			@PathVariable("raceId") Long raceId, @PathVariable("deviceId") String deviceId,
 			HttpServletRequest request) {
 		Stage stage = stageService.getStageById(stageId);
-		stage.removeDevice(deviceService.getDeviceById(deviceId));
+		List<Device> list = stage.getDevices();
+		for (Device device : list) {
+			if (device.getDeviceId().equals(deviceId)) {
+				list.remove(device);
+				break;
+			}
+		}
+		stage.setDevices(list);
 		stageService.update(stage);
-
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 

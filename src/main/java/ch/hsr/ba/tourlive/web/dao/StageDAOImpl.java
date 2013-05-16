@@ -22,7 +22,7 @@ public class StageDAOImpl implements StageDAO {
 	private final static Logger LOG = LoggerFactory.getLogger(StageDAOImpl.class);
 
 	public void save(Stage stage) {
-		sessionFactory.getCurrentSession().save(stage);
+		sessionFactory.getCurrentSession().saveOrUpdate(stage);
 	}
 
 	public void update(Stage stage) {

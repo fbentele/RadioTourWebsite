@@ -201,6 +201,7 @@ public class Stage {
 
 	public void removeDevice(Device device) {
 		devices.remove(device);
+
 	}
 
 	public String getBannerImage() {
