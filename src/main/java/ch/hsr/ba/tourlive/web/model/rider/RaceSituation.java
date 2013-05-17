@@ -73,6 +73,17 @@ public class RaceSituation {
 	}
 
 	public Situation[] getSituation() {
+		try {
+			if (situation[0].getIsLeader()) {
+				for (int i = 0; i < situation.length / 2; i++) {
+					Situation temp = situation[i];
+					situation[i] = situation[situation.length - i - 1];
+					situation[situation.length - i - 1] = temp;
+				}
+			}
+			return situation;
+		} catch (IndexOutOfBoundsException e) {
+		}
 		return situation;
 	}
 

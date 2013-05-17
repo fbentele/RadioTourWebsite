@@ -84,30 +84,4 @@ $(document).ready(function() {
 	$.extend($.fn.dataTableExt.oStdClasses, {
 		"sWrapper" : "dataTables_wrapper form-inline"
 	});
-
-	// load riders on the fly
-	function rider(stage, startNr) {
-		var theurl = "/utils/stage/" + stage + "/rider";
-		$.ajax({
-			type : "POST",
-			url : theurl,
-			data : {
-				startNr : startNr
-			},
-			success : function(data) {
-				$("#rider" + startNr).attr('title', data);
-			}
-		});
-	};
-
-	$("#testa").mouseover(function() {
-		var riderNr = $(this).children("a").text();
-		if ($("#rider"+riderNr).is('[title]').length > 0){
-		} else {
-			console.log("title not found, calling ajax");
-			rider(3, riderNr);
-		}
-	});
-
-	$('.riders').tooltip();
 });

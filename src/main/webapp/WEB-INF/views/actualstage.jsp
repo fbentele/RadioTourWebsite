@@ -20,7 +20,6 @@
 						<spring:message code="label.stage.distancestatus2" />
 						${stage.distance} km
 						<spring:message code="label.stage.distancestatus3" />
-						.
 					</p>
 				</div>
 				<div class="span4">
@@ -114,8 +113,7 @@
 					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
 						<source src="${hostname}${video.videoLocation}.mp4"
 							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
-						<source src="${hostname}${video.videoLocation}.ogg"
-							type='video/ogg'></source>
+						<source src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
 					</video>
 				</div>
 			</c:forEach>
@@ -169,16 +167,23 @@
 						<div class="span2">
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
-							<spring:message code="label.stage.rider" />
-							: <br /> ${sit.handicaptime}
-							<ul>
-								<c:forEach items="${sit.drivernumber}" var="startNr">
-									<li id="testa"><a id="rider${startNr}" class="riders" href="#"
-										data-toggle="tooltip">${startNr}</a></li>
+							<c:if test="${not sit.isLeader}"><spring:message code="label.stage.deficite" />: ${sit.handicaptime} </c:if><br />
+							<ul class="unstyled">
+								<c:forEach items="${sit.riderNumber}" var="situation">
+									<c:forEach items="${riders}" var="rider">
+										<c:if test="${rider.startNr == situation }">
+											<li><span id="rider${situation}" class="badge <c:if test="${rider.neo}">badge-success</c:if> <c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if> data-toggle="tooltip" data-placement="right" title="${rider.name} - ${rider.teamShort}">${situation}</span></li>
+										</c:if>
+									</c:forEach>
 								</c:forEach>
 							</ul>
 						</div>
 					</c:forEach>
+					<p>Legende:<br />
+					<span class="badge">Fahrer</span>
+					<span class="badge badge-success">Neo</span>
+					<span class="badge badge-warning">Leader</span>					
+					</p>
 				</div>
 			</div>
 		</c:if>
@@ -197,7 +202,7 @@
 								<th style="width: 40%"><spring:message code="label.stage.riderName" /></th>
 								<th style="width: 10%"><spring:message code="label.stage.team" /></th>
 								<th style="width: 10%"><spring:message code="label.stage.country" /></th>
-								<th style="width: 10%"><spring:message code="label.stage.time" /></th>
+								<th style="width: 10%"><spring:message code="label.stage.timeVirt" /></th>
 								<th style="width: 10%"><spring:message code="label.stage.deficite" /></th>
 							</tr>
 						</thead>
@@ -343,7 +348,14 @@
 			}
 		</script>
 	</c:if>
-
+	
+	<!-- Riders names tooltip -->
+	<script>
+		<c:forEach items="${riders}" var="rider">
+			$('#rider${rider.startNr}').tooltip();
+		</c:forEach>
+	</script>
+	
 	<!-- Karte -->
 	<c:if test="${not empty valuecontainers}">
 		<script type="text/javascript"

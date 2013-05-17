@@ -139,7 +139,7 @@ public class Rider {
 	}
 
 	public String getTimeOff() {
-		return DateUtil.toTimeFormat(timeOff);
+		return DateUtil.toShortTimeFormat(timeOff);
 	}
 
 	public void setTimeOff(String timeOff) {
@@ -147,8 +147,7 @@ public class Rider {
 	}
 
 	public String getTimeRueck() {
-		return DateUtil.toTimeFormat(timeRueck);
-
+		return DateUtil.toShortTimeFormat(timeRueck);
 	}
 
 	public void setTimeRueck(String timeRueck) {
@@ -156,7 +155,7 @@ public class Rider {
 	}
 
 	public String getTimeVirt() {
-		return DateUtil.toTimeFormat(timeVirt);
+		return DateUtil.toShortTimeFormat(timeVirt);
 	}
 
 	public void setTimeVirt(String timeVirt) {

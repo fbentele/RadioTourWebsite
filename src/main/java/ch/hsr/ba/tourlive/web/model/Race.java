@@ -26,7 +26,7 @@ public class Race {
 	@Column
 	private String raceName;
 
-	/*
+	/**
 	 * A slug is a pathpart in an url
 	 */
 	@NotEmpty

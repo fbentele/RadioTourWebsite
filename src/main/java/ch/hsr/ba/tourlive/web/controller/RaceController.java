@@ -95,7 +95,8 @@ public class RaceController {
 		if (stage != null) {
 			List<ValueContainer> valueContainers = valueContainerService
 					.getAllValueContainerForStage(stage);
-			model.addAttribute("limit", System.currentTimeMillis());
+			model.addAttribute("limit", stage.getCompleted() ? stage.getEndtimeAsTimestamp()
+					: System.currentTimeMillis());
 			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("menuitems", MenuItem.makeStageNavi());
 			model.addAttribute("stage", stage);

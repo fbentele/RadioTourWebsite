@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Situation implements Serializable {
 	private static final long serialVersionUID = -5090788260118136922L;
-	private int[] drivernumber;
+	private int[] riderNumber;
 	private boolean isLeader;
 	private int groupnr;
 	private Long handicaptime;
@@ -18,19 +18,19 @@ public class Situation implements Serializable {
 	public Situation(int[] drivernumber, boolean isLeader, int groupnr, Long handicaptime,
 			boolean isField) {
 		super();
-		this.drivernumber = drivernumber;
+		this.riderNumber = drivernumber;
 		this.isLeader = isLeader;
 		this.groupnr = groupnr;
 		this.handicaptime = handicaptime;
 		this.isField = isField;
 	}
 
-	public int[] getDrivernumber() {
-		return drivernumber;
+	public int[] getRiderNumber() {
+		return riderNumber;
 	}
 
-	public void setDrivernumber(int[] drivernumber) {
-		this.drivernumber = drivernumber;
+	public void setRiderNumber(int[] riderNumber) {
+		this.riderNumber = riderNumber;
 	}
 
 	public boolean getIsLeader() {
@@ -60,12 +60,12 @@ public class Situation implements Serializable {
 	public String getGroupSize() {
 		int groupSize;
 		try {
-			groupSize = drivernumber.length;
+			groupSize = riderNumber.length;
 		} catch (NullPointerException e) {
 			groupSize = 0;
 		}
 		if (groupSize < 1)
-			return "none";
+			return isField ? "large" : "none";
 		if (groupSize == 1)
 			return "one";
 		if (groupSize == 2)

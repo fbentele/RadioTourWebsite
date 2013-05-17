@@ -188,7 +188,7 @@ public class Stage {
 	}
 
 	public Boolean getCompleted() {
-		return completed;
+		return System.currentTimeMillis() > endtime;
 	}
 
 	public void setCompleted(Boolean completed) {

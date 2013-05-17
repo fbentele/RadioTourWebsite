@@ -18,6 +18,9 @@ html,body {
 	display: none;
 	margin-top: 10px;
 }
+.badge {
+	cursor: default;
+}
 
 .formerror {
 	color: red;

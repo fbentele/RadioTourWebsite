@@ -124,8 +124,8 @@ public class ApiController {
 		videoDataService.save(new VideoData(timestamp, device, vidLocation));
 	}
 
-	@RequestMapping(value = "/api/racesituation/stage/{stageId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	@ResponseBody
+	@RequestMapping(value = "/api/racesituation/stage/{stageId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void raceSituation(@PathVariable("stageId") Long stageId,
 			@RequestBody RaceSituation rawSituation) {
 		rawSituation.setStage(stageService.getStageById(stageId));

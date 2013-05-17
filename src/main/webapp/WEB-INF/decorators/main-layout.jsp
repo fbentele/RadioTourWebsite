@@ -20,6 +20,7 @@
 	type="text/css" />
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet"
 	type="text/css" />
+<c:import url="/WEB-INF/views/tags/javascripts.jsp" />
 
 <!-- for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -48,6 +49,5 @@
 	</div>
 
 	<c:import url="/WEB-INF/views/tags/footer.jsp" />
-	<c:import url="/WEB-INF/views/tags/javascripts.jsp" />
 </body>
 </html>
