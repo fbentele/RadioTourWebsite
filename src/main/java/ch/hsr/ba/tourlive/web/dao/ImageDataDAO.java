@@ -13,6 +13,8 @@ public interface ImageDataDAO {
 
 	public void delete(Long imageDataId);
 
+	public List<ImageData> getAllLimited();
+
 	public List<ImageData> getAllImageDataByDevice(Device device);
 
 	public ImageData getMostRecentByDevice(Device device);

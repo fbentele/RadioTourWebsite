@@ -61,6 +61,8 @@ public class ApiController {
 
 	@Value("${config.api.imagePath}")
 	private String mediaPath;
+	@Value("${config.dev.hostname}")
+	private String hostname;
 
 	private static final Logger log = LoggerFactory.getLogger(ApiController.class);
 
@@ -89,6 +91,8 @@ public class ApiController {
 			model.addAttribute("navbarapi", "active");
 			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("videos", videoDataService.getAllLimited());
+			model.addAttribute("images", imageDataService.getAllLimited());
+			model.addAttribute("hostname", hostname);
 		} catch (IndexOutOfBoundsException e) {
 			log.error("no valuecontainers");
 		}

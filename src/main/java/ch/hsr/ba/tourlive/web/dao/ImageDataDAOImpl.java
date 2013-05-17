@@ -44,6 +44,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<ImageData> getAllLimited() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
+		crit.setMaxResults(1000);
+		return (List<ImageData>) crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllImageDataByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
 		if (device != null) {

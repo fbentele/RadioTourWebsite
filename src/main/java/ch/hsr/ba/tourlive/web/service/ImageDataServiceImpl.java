@@ -32,6 +32,11 @@ public class ImageDataServiceImpl implements ImageDataService {
 	}
 
 	@Transactional
+	public List<ImageData> getAllLimited() {
+		return imageDataDao.getAllLimited();
+	}
+
+	@Transactional
 	public List<ImageData> getAllImageDataByDevice(Device device) {
 		return imageDataDao.getAllImageDataByDevice(device);
 	}
