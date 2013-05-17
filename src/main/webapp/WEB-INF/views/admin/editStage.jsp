@@ -8,7 +8,7 @@
 <body>
 	<h2><spring:message code="label.admin.editStage" />:</h2>
 	<p>
-		<a href="/admin/race/${race.raceId}/stage/${stage.stageId}/liveticker"><spring:message code="label.admin.startLiveticker" /></a>
+		<a class="badge badge-success" href="/admin/race/${race.raceId}/stage/${stage.stageId}/liveticker"><spring:message code="label.admin.startLiveticker" /></a>
 	</p>
 	<div class="row-fluid">
 		<form:form method="post" name="stage"
