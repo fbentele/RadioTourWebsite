@@ -88,6 +88,7 @@ public class ApiController {
 			model.addAttribute("current", positionDataService.getAll().get(0));
 			model.addAttribute("navbarapi", "active");
 			model.addAttribute("races", raceService.getAllVisible());
+			model.addAttribute("videos", videoDataService.getAllLimited());
 		} catch (IndexOutOfBoundsException e) {
 			log.error("no valuecontainers");
 		}

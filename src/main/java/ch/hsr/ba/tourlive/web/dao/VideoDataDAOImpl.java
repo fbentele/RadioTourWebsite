@@ -40,6 +40,14 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<VideoData> getAllLimited() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
+		crit.setMaxResults(1000);
+		crit.addOrder(Order.desc("timestamp"));
+		return (List<VideoData>) crit.list();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<VideoData> getAllVideoDataByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
 		crit.add(Restrictions.eq("device", device));

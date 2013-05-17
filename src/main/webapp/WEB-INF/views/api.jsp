@@ -11,31 +11,52 @@
 	<h2>Karte der Positionen</h2>
 
 	<div id="map-canvas"></div>
-
-	<c:if test="${not empty valueContainer}">
-		<table class="table">
-			<tr>
-				<th>vcID / pID</th>
-				<th>Zeit</th>
-				<th>latitude</th>
-				<th>longitude</th>
-			</tr>
-			<c:forEach items="${valueContainer}" var="item">
-				<jsp:useBean id="dateValue" class="java.util.Date" />
-				<jsp:setProperty name="dateValue" property="time"
-					value="${item.timestamp}" />
-				<tr>
-					<td>${item.valueContainerId} / ${item.positionData.positionid}</td>
-					<td>${item.timestamp} / <fmt:formatDate
-							pattern="dd.MM.yyy - HH:mm:ss" value="${dateValue}" />
-					</td>
-					<td>${item.positionData.latitude}</td>
-					<td>${item.positionData.longitude}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</c:if>
-
+	<div class="row-fluid">
+		<div class="span6">
+			<c:if test="${not empty valueContainer}">
+				<table class="table">
+					<tr>
+						<th>vcID / pID</th>
+						<th>Zeit</th>
+						<th>latitude</th>
+						<th>longitude</th>
+					</tr>
+					<c:forEach items="${valueContainer}" var="item">
+						<jsp:useBean id="dateValue" class="java.util.Date" />
+						<jsp:setProperty name="dateValue" property="time" value="${item.timestamp}" />
+						<tr>
+							<td>${item.valueContainerId} / ${item.positionData.positionid}</td>
+							<td><fmt:formatDate pattern="dd.MM.yyy - HH:mm:ss"
+									value="${dateValue}" />
+							</td>
+							<td>${item.positionData.latitude}</td>
+							<td>${item.positionData.longitude}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		</div>
+		<div class="span6">
+			<c:if test="${not empty videos}">
+				<table class="table">
+					<tr>
+						<th>Video ID</th>
+						<th>Zeit</th>
+						<th>path</th>
+						<th>device</th>
+					</tr>
+					<c:forEach items="${videos}" var="video">
+						<tr>
+							<td>${video.videoDataId}</td>
+							<td>${video.timestamp}</td>
+							<td>${video.device.deviceId}</td>
+							<td>${video.videoLocation}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:if>
+		</div>
+	</div>
 	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvuSLRcfTLJNtCNdz3wPwgQMEiSuDpnq0&sensor=false">
 		

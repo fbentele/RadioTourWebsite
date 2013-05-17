@@ -45,7 +45,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	public List<ValueContainer> getAll() {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(ValueContainer.class, "ValueContainer")
-				.addOrder(Order.desc("ValueContainer.valueContainerId")).list();
+				.addOrder(Order.desc("ValueContainer.valueContainerId")).setMaxResults(1000).list();
 	}
 
 	@SuppressWarnings("unchecked")

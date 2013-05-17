@@ -13,6 +13,8 @@ public interface VideoDataService {
 
 	public void delete(Long videoDataId);
 
+	public List<VideoData> getAllLimited();
+
 	public List<VideoData> getAllVideoDataByDevice(Device device);
 
 	public VideoData getMostRecentByDevice(Device device);

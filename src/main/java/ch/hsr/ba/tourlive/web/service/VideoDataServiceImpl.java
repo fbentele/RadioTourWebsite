@@ -32,6 +32,11 @@ public class VideoDataServiceImpl implements VideoDataService {
 	}
 
 	@Transactional
+	public List<VideoData> getAllLimited() {
+		return vidDao.getAllLimited();
+	}
+
+	@Transactional
 	public List<VideoData> getAllVideoDataByDevice(Device device) {
 		return vidDao.getAllVideoDataByDevice(device);
 	}
