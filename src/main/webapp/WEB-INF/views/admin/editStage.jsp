@@ -134,11 +134,12 @@
 				<button type="submit" class="btn btn-primary" tabindex="15"><spring:message code="label.admin.import" /></button>
 			</form:form>
 			<c:if test="${not empty marchTable}">
+			<p><a href="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/delete/all" class="badge badge-important pull-right"><spring:message code="label.admin.deleteAll" /></a></p>
 				<table class="table hover-table">
 					<c:forEach items="${marchTable}" var="mti">
 						<tr>
 							<td>${mti.settlement}</td>
-							<td>${mti.distance}</td>
+							<td>${mti.distance} km</td>
 							<td><a
 								href="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/delete/${mti.marchTableItemId}"><i
 									class="icon-trash pull-right"></i></a></td>
@@ -165,6 +166,7 @@
 
 			</form:form>
 			<c:if test="${not empty riders}">
+			<p><a href="/admin/race/${race.raceId}/stage/${stage.stageId}/rider/delete/all" class="badge badge-important pull-right"><spring:message code="label.admin.deleteAll" /></a></p>
 				<table class="table hover-table">
 					<c:forEach items="${riders}" var="rider">
 						<tr>

@@ -55,7 +55,6 @@ public class AdminStageController {
 	private String filePath;
 	@Value("${config.dev.hostname}")
 	private String hostname;
-	@SuppressWarnings("unused")
 	private final static Logger LOG = LoggerFactory.getLogger(AdminStageController.class);
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
@@ -266,7 +265,6 @@ public class AdminStageController {
 		Stage stage = stageService.getStageById(stageId);
 		CSVReader reader;
 		RiderImporter importer = new RiderImporter();
-
 		try {
 			reader = new CSVReader(new FileInputStream(csvFile));
 			for (String[] riderAsString : reader.readFile()) {
@@ -275,7 +273,9 @@ public class AdminStageController {
 				riderService.save(r);
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOG.error("File not found");
+		} catch (NullPointerException e) {
+			LOG.error("No File uploaded");
 		}
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
@@ -284,6 +284,19 @@ public class AdminStageController {
 	public String deleteRider(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, @PathVariable("riderId") Long riderId) {
 		riderService.delete(riderId);
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/rider/delete/all", method = RequestMethod.GET)
+	public String deleteAllRider(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId) {
+		try {
+			for (Rider r : riderService.getAllByStage(stageService.getStageById(stageId))) {
+				riderService.delete(r.getRiderId());
+			}
+		} catch (Exception e) {
+			LOG.error("either stage or rider in stage not found");
+		}
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
@@ -304,7 +317,9 @@ public class AdminStageController {
 				mtiService.save(mti);
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOG.error("File not found");
+		} catch (NullPointerException e) {
+			LOG.error("No File uploaded");
 		}
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
@@ -313,6 +328,19 @@ public class AdminStageController {
 	public String deleteMarchTableItem(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, @PathVariable("mtiId") Long mtiId) {
 		mtiService.delete(mtiId);
+		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/marchtable/delete/all", method = RequestMethod.GET)
+	public String deleteAllMarchTableItem(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId) {
+		try {
+			for (MarchTableItem mti : mtiService.getAllByStage(stageService.getStageById(stageId))) {
+				mtiService.delete(mti.getMarchTableItemId());
+			}
+		} catch (Exception e) {
+			LOG.error("Either stage oder MarchTableItem not found");
+		}
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
