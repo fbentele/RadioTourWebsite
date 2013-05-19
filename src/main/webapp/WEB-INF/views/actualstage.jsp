@@ -111,9 +111,9 @@
 				<div class="span5">
 					<h4>${video.device.username}</h4>
 					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
-						<source src="${hostname}${video.videoLocation}.mp4"
+						<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
 							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
-						<source src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
+						<source id="ogg" src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
 					</video>
 				</div>
 			</c:forEach>
@@ -336,7 +336,8 @@
 						if (data){
 							console.log('new video');
 							console.log(data.videoLocation);
-							videoPlayer.src = '${hostname}'+ data.videoLocation + '.mp4';
+							$('#mp4').src = '${hostname}'+ data.videoLocation + '.mp4';
+							$('#ogg').src = '${hostname}'+ data.videoLocation + '.ogg';
 							videoPlayer.id= data.videoDataId;
 						} else {
 							console.log('no new video');
@@ -391,7 +392,6 @@
 					strokeWeight : 2
 				});
 				flightPath_${device.username}.setMap(map);
-
 			</c:forEach>
 			}
 		google.maps.event.addDomListener(window, 'load', initialize);

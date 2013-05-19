@@ -38,7 +38,7 @@
 			<c:if test="${not empty videos}">
 				<table class="table">
 					<tr>
-						<th>Video ID</th>
+						<th>ID</th>
 						<th>Zeit</th>
 						<th>deviceid</th>
 						<th>device</th>
@@ -46,7 +46,9 @@
 					<c:forEach items="${videos}" var="video">
 						<tr>
 							<td>${video.videoDataId}</td>
-							<td>${video.timestamp}</td>
+							<jsp:useBean id="videoDate" class="java.util.Date" />
+							<jsp:setProperty name="videoDate" property="time" value="${video.realTimestamp}" />
+							<td><fmt:formatDate pattern="dd.MM.yyyy - HH:mm:ss" value="${videoDate}" /></td>
 							<td><c:choose>
 									<c:when test="${fn:length(video.device.deviceId) > 7}">
 									${fn:substring(video.device.deviceId, 0, 7)}...
@@ -65,7 +67,7 @@
 			<c:if test="${not empty images}">
 				<table class="table">
 					<tr>
-						<th>image ID</th>
+						<th>ID</th>
 						<th>Zeit</th>
 						<th>deviceid</th>
 						<th>image</th>
@@ -73,7 +75,9 @@
 					<c:forEach items="${images}" var="image">
 						<tr>
 							<td>${image.imageDataId}</td>
-							<td>${image.timestamp}</td>
+							<jsp:useBean id="imageDate" class="java.util.Date" />
+							<jsp:setProperty name="imageDate" property="time" value="${image.realTimestamp}" />
+							<td><fmt:formatDate pattern="dd.MM.yyyy - HH:mm:ss" value="${dateValue}" /></td>
 							<td><c:choose>
 									<c:when test="${fn:length(image.device.deviceId) > 7}">
 									${fn:substring(image.device.deviceId, 0, 7)}...

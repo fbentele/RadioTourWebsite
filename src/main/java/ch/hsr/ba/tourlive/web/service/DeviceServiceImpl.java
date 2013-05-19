@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ch.hsr.ba.tourlive.web.dao.DeviceDAO;
 import ch.hsr.ba.tourlive.web.model.Device;
+import ch.hsr.ba.tourlive.web.model.Stage;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
@@ -37,5 +38,10 @@ public class DeviceServiceImpl implements DeviceService {
 	@Transactional
 	public List<Device> getAll() {
 		return device.getAll();
+	}
+
+	@Transactional
+	public List<Device> getAllNotAlreadyAssignedTo(Stage stage) {
+		return device.getAllNotAlreadyAssignedTo(stage);
 	}
 }

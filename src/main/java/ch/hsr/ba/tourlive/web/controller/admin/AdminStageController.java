@@ -102,7 +102,7 @@ public class AdminStageController {
 		model.addAttribute("race", raceService.getRaceById(raceId));
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("devices", deviceService.getAll());
+		model.addAttribute("devices", deviceService.getAllNotAlreadyAssignedTo(stage));
 		model.addAttribute("riders", riderService.getAllByStage(stage));
 		model.addAttribute("marchTable", mtiService.getAllByStage(stage));
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"

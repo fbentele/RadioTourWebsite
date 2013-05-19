@@ -47,6 +47,7 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	public List<ImageData> getAllLimited() {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
 		crit.setMaxResults(1000);
+		crit.addOrder(Order.desc("timestamp"));
 		return (List<ImageData>) crit.list();
 	}
 
