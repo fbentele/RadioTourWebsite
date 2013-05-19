@@ -34,6 +34,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model, Principal principal, Locale locale) {
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("menutitle", "Admin");
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin"));
 		if (principal != null)

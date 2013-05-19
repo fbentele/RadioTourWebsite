@@ -99,9 +99,11 @@ public class RaceController {
 			model.addAttribute("limit", stage.getCompleted() ? stage.getEndtimeAsTimestamp()
 					: System.currentTimeMillis());
 			model.addAttribute("races", raceService.getAllVisible());
-			model.addAttribute("menuitems", MenuItem.makeStageNavi());
+			// model.addAttribute("menuitems", MenuItem.makeStageNavi());
+			model.addAttribute("stagemenu", true);
 			model.addAttribute("stage", stage);
 			model.addAttribute("navbarrace", "active");
+			model.addAttribute("menutitle", stage.getStageName());
 			model.addAttribute("valuecontainers", valueContainers);
 			model.addAttribute("riders", riderService.getAllByStage(stage));
 			model.addAttribute("images", imageDataService.getMostRecentByStage(stage));

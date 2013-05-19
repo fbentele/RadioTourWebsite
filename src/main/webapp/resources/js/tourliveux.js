@@ -1,11 +1,25 @@
 $(document).ready(function() {
+	// UX
 	$("#adder").click(function(event) {
 		event.stopPropagation();
 	});
-
 	$("#adder").click(function() {
 		$(".newItem").slideToggle('fast');
 	});
+	
+	var top = $('#menu').offset().top - parseFloat($('#menu').css('marginTop').replace(/auto/, 0));
+	  $(window).scroll(function (event) {
+	    // what the y position of the scroll is
+	    var y = $(this).scrollTop();
+	    // whether that's below the form
+	    if (y >= top) {
+	      // if so, ad the fixed class
+	      $('#menu').addClass('fixed');
+	    } else {
+	      // otherwise remove it
+	      $('#menu').removeClass('fixed');
+	    }
+	  });
 
 	// Slug generator
 	$('.toSlug').keyup(function() {
@@ -56,9 +70,7 @@ $(document).ready(function() {
 		pickSeconds : false, // disables seconds in the time picker
 		startDate : -Infinity, // set a minimum date
 		endDate : Infinity
-	// set a maximum date
 	};
-	
 	$(function() {
 		$('#datetimepicker1').datetimepicker({
 			language : 'de-CH'

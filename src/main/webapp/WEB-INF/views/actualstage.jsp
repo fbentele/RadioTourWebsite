@@ -79,7 +79,7 @@
 				</div>
 			</div>
 		</c:if>
-		<div id="livebilder" class="row-fluid">
+		<div id="livestream" class="row-fluid">
 			<c:forEach items="${images}" var="image">
 				<div class="span4">
 					<h4>${image.device.username}</h4>
