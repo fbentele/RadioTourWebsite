@@ -71,7 +71,7 @@
 							<td>${stage.endtime}</td>
 							<td>${stage.distance}</td>
 							<td>${stage.visible}</td>
-							<td><a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}"><i class="icon-trash"></i></a></td>
+							<td class="nolink"><a href="#modal_delete${stage.stageId}" data-toggle="modal"><i class="icon-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -147,5 +147,24 @@
 			</div>
 		</form:form>
 	</div>
+	<c:forEach items="${stages}" var="stage">
+		<div class="modal fade" id="modal_delete${stage.stageId}">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">&times;</a>
+				<h3>
+					<spring:message code="label.admin.deleteStage"></spring:message>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<p>
+					<spring:message code="label.admin.reallyDeleteStage" arguments="${stage.stageName}" />
+				</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal"><spring:message code="label.admin.cancel" /></a> <a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}"
+					class="btn btn-primary"><spring:message code="label.admin.delete" /></a>
+			</div>
+		</div>
+	</c:forEach>
 </body>
 </html>
