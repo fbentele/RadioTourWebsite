@@ -15,21 +15,16 @@
 			action="/admin/race/${race.raceId}/stage/edit/${stage.stageId}"
 			enctype="multipart/form-data">
 			<div class="span4">
-				<input type="hidden" name="stageId" value="${stage.stageId}" /> <label for="stageName"><spring:message code="label.admin.stageName" /></label>
-				<input type="text" name="stageName" class="toSlug" value="${stage.stageName}" tabindex="1" /> <label
-					for="stageSlug"><spring:message code="label.admin.stageSlug" /></label> <input type="text" name="stageSlug"
-					class="theSlug" value="${stage.stageSlug}" tabindex="2" />
-
+				<input type="hidden" name="stageId" value="${stage.stageId}" />
+				<label for="stageName"><spring:message code="label.admin.stageName" /></label>
+				<input type="text" name="stageName" class="toSlug" value="${stage.stageName}" tabindex="1" />
+				<label for="stageSlug"><spring:message code="label.admin.stageSlug" /></label>
+				<input type="text" name="stageSlug" class="theSlug" value="${stage.stageSlug}" tabindex="2" />
 				<div class="input-append">
-					<label for="distance"><spring:message code="label.admin.distance" /></label> <input type="text" name="distance"
-						value="${stage.distance}" tabindex="3"> <span class="add-on">km</span>
+					<label for="distance"><spring:message code="label.admin.distance" /></label>
+					<input type="text" name="distance" value="${stage.distance}" tabindex="3"> <span class="add-on">km</span>
 				</div>
-				<br> <label for="stageDescription"><spring:message code="label.description" /></label>
-				<textarea name="stageDescription" rows="6" class="span12" tabindex="4">${stage.stageDescription}</textarea>
-
-				<button type="submit" class="btn btn-primary" tabindex="11"><spring:message code="label.admin.save" /></button>
-			</div>
-			<div class="span4">
+				<br />
 				<label for="starttime"><spring:message code="label.admin.starttime" /></label>
 				<div id="datetimepicker1" class="input-append date">
 					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" 
@@ -42,14 +37,18 @@
 						value="${stage.endtime}" tabindex="6" /> <span class="add-on"> <i
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
-
 				<label for="visible"> <input type="checkbox" name="visible"
 					value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if> tabindex="7">
 					<spring:message code="label.admin.visible" />
 				</label>
+				<button type="submit" class="btn btn-primary" tabindex="11"><spring:message code="label.admin.save" /></button>
+			</div>
+			<div class="span8">
+			<label for="stageDescription"><spring:message code="label.description" /></label>
+				<textarea name="stageDescription" rows="5" class="span12" tabindex="4">${stage.stageDescription}</textarea>
 				<div>
 					<label for="adCode"><spring:message code="label.admin.htmlForAd" /> (300px X 200px)</label>
-					<textarea name="adCode" tabindex="8">${stage.adCode}</textarea>
+					<textarea name="adCode" rows="4" class="span12" tabindex="8">${stage.adCode}</textarea>
 				</div>
 
 				<div>
@@ -139,7 +138,9 @@
 					<c:forEach items="${marchTable}" var="mti">
 						<tr>
 							<td>${mti.settlement}</td>
+							<td>${mti.altitude} <spring:message code="label.admin.altitude" /></td>
 							<td>${mti.distance} km</td>
+							<td>${mti.raceMedium} &Oslash;</td>
 							<td><a
 								href="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/delete/${mti.marchTableItemId}"><i
 									class="icon-trash pull-right"></i></a></td>

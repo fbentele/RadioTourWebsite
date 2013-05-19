@@ -29,7 +29,6 @@ public class AdminController {
 	private StageService stageService;
 	@Autowired
 	private RaceService raceService;
-	@SuppressWarnings("unused")
 	private final static Logger LOG = LoggerFactory.getLogger(AdminController.class);
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -74,7 +73,6 @@ public class AdminController {
 	public String editRace(@PathVariable("raceId") Long raceId,
 			@RequestParam(value = "visible", defaultValue = "") String visible, Locale locale,
 			Model model) {
-
 		model.addAttribute("adminmenu", "true");
 		Race race = raceService.getRaceById(raceId);
 		model.addAttribute("race", race);
@@ -100,11 +98,17 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/race/delete/{raceId}", method = RequestMethod.GET)
 	public String removeRace(@PathVariable("raceId") Long raceId, Locale locale, Model model) {
+		try {
+			for (Stage stage : stageService.getAllByRace(raceService.getRaceById(raceId))) {
+				stageService.delete(stage.getStageId());
+			}
+		} catch (Exception e) {
+			LOG.info("Race or Stage does not exist");
+		}
 		raceService.delete(raceId);
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
 		return "forward:/admin/race";
 	}
-
 }

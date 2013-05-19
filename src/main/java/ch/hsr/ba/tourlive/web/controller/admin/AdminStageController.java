@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.web.model.MarchTableItem;
+import ch.hsr.ba.tourlive.web.model.Race;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.rider.Rider;
 import ch.hsr.ba.tourlive.web.service.DeviceService;
@@ -59,6 +63,8 @@ public class AdminStageController {
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
 	public String addStage(
+			@Valid @ModelAttribute("stage") Stage unUsedStage,
+			BindingResult binding,
 			@PathVariable("raceId") Long raceId,
 			@RequestParam("stageName") String stageName,
 			@RequestParam("stageDescription") String stageDescription,
@@ -71,26 +77,38 @@ public class AdminStageController {
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage,
 			Model model) {
-		Stage stage = new Stage();
-		stage.setStageName(stageName);
-		stage.setStageDescription(stageDescription);
-		stage.setStageSlug(stageSlug);
-		stage.setRace(raceService.getRaceById(raceId));
-		stage.setStarttime(starttime);
-		stage.setEndtime(endtime);
-		stage.setDistance(distance);
-		stage.setAdCode(adCode);
-		if (visible.contains("true"))
-			stage.setVisible(true);
-		stageService.save(stage);
-		// creates id, needed to save image properly
-		stage = stageService.getStageBySlug(stageSlug);
-		String rel = "stage" + stage.getStageId();
-		stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
-		stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
-				"stageProfile.png"));
-		stageService.update(stage);
-		return "redirect:/admin/race/edit/" + raceId;
+		if (binding.hasErrors()) {
+			LOG.error("____________aa__________");
+			model.addAttribute("races", raceService.getAll());
+			model.addAttribute("breadcrump", new Breadcrumb("/admin/race"));
+			Race race = raceService.getRaceById(raceId);
+			model.addAttribute("race", race);
+			model.addAttribute("stage", unUsedStage);
+			model.addAttribute("showhidden", true);
+			model.addAttribute("adminmenu", "true");
+			return "admin/editRace";
+		} else {
+			Stage stage = new Stage();
+			stage.setStageName(stageName);
+			stage.setStageDescription(stageDescription);
+			stage.setStageSlug(stageSlug);
+			stage.setRace(raceService.getRaceById(raceId));
+			stage.setStarttime(starttime);
+			stage.setEndtime(endtime);
+			stage.setDistance(distance);
+			stage.setAdCode(adCode);
+			if (visible.contains("true"))
+				stage.setVisible(true);
+			stageService.save(stage);
+			// creates id, needed to save image properly
+			stage = stageService.getStageBySlug(stageSlug);
+			String rel = "stage" + stage.getStageId();
+			stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
+			stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
+					"stageProfile.png"));
+			stageService.update(stage);
+			return "redirect:/admin/race/edit/" + raceId;
+		}
 	}
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.GET)

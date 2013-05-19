@@ -136,7 +136,7 @@ public class Stage {
 			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm").parse(unformatted);
 			this.starttime = date.getTime();
 		} catch (ParseException e) {
-			e.printStackTrace();
+			System.out.println("invalid date string");
 		}
 	}
 
@@ -159,7 +159,7 @@ public class Stage {
 			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm").parse(unformatted);
 			this.endtime = date.getTime();
 		} catch (ParseException e) {
-			e.printStackTrace();
+			System.out.println("invalid date string");
 		}
 	}
 

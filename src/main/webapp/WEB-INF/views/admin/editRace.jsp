@@ -10,7 +10,6 @@
 	<div class="row-fluid">
 		<h2>
 			<spring:message code="label.admin.editRace" />
-			:
 		</h2>
 		<p>
 			<form:form method="post" name="race" action="/admin/race/edit/${race.raceId}">
@@ -33,9 +32,9 @@
 						<spring:message code="label.admin.save" />
 					</button>
 				</div>
-				<div class="span4">
+				<div class="span9">
 					<label for="raceDescription"><spring:message code="label.admin.description" /></label>
-					<textarea name="raceDescription" rows="6" class="span12" tabindex="5">${race.raceDescription}</textarea>
+					<textarea name="raceDescription" rows="8" class="span12" tabindex="5">${race.raceDescription}</textarea>
 				</div>
 			</form:form>
 		</p>
@@ -54,7 +53,7 @@
 						<th><spring:message code="label.admin.to" /></th>
 						<th><spring:message code="label.admin.distance" /></th>
 						<th><spring:message code="label.admin.visible" /></th>
-						<th><spring:message code="label.admin.delete" /></th>
+						<th></th>
 					</tr>
 					<c:forEach items="${stages}" var="stage">
 						<tr>
@@ -72,7 +71,7 @@
 							<td>${stage.endtime}</td>
 							<td>${stage.distance}</td>
 							<td>${stage.visible}</td>
-							<td><a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}">Löschen</a></td>
+							<td><a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}"><i class="icon-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 				</table>

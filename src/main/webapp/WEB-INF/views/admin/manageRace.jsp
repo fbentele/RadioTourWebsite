@@ -16,8 +16,7 @@
 			<th><spring:message code="label.admin.raceName" /></th>
 			<th><spring:message code="label.admin.year" /></th>
 			<th><spring:message code="label.admin.description" /></th>
-			<th><spring:message code="label.admin.edit" /></th>
-			<th><spring:message code="label.admin.delete" /></th>
+			<th></th>
 		</tr>
 		<c:forEach items="${races}" var="race">
 			<tr>
@@ -32,10 +31,8 @@
 							${race.raceDescription}
 						</c:otherwise>
 					</c:choose></td>
-				<td><a href="/admin/race/edit/${race.raceId}" target="_self"><spring:message
-							code="label.admin.edit" /></a></td>
-				<td><a href="/admin/race/delete/${race.raceId}" target="_self"><spring:message
-							code="label.admin.delete" /></a></td>
+				<td class="nolink"><a href="#modal_delete${race.raceId}" data-toggle="modal" target="_self"><i
+						class="icon-trash"></i></a></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -57,7 +54,7 @@
 				<form:errors path="year" cssClass="formerror" />
 				<form:input path="year" type="number" name="year" tabindex="2" />
 				<label for="visible"> <input type="checkbox" name="visible" value="true">
-				<spring:message code="label.admin.visible" /></label>
+					<spring:message code="label.admin.visible" /></label>
 				<form:errors path="visible" cssClass="formerror" />
 				<input type="submit" value="Hinzufügen" tabindex="4" />
 			</div>
@@ -69,5 +66,24 @@
 			<br>
 		</form:form>
 	</div>
+	<c:forEach items="${races}" var="race">
+		<div class="modal fade" id="modal_delete${race.raceId}">
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">&times;</a>
+				<h3>
+					<spring:message code="label.admin.deleteRace"></spring:message>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<p>
+					<spring:message code="label.admin.reallyDeleteRace" arguments="${race.raceName}" />
+				</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal"><spring:message code="label.admin.cancel" /></a> <a href="/admin/race/delete/${race.raceId}"
+					class="btn btn-primary"><spring:message code="label.admin.delete" /></a>
+			</div>
+		</div>
+	</c:forEach>
 </body>
 </html>
