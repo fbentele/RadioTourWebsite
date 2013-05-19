@@ -2,13 +2,14 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <body>
 	<h2><spring:message code="label.admin.editDevice" /></h2>
 	<div class="row-fluid">
-		<form:form method="post" name="device" action="/admin/device/edit/${device.deviceId}">
-			<div class="span4">
+		<div class="span4">
+			<form:form method="post" name="device" action="/admin/device/edit/${device.deviceId}">
 				<label for="deviceId"><spring:message code="label.admin.deviceId" /></label>
 				<input type="text" name="deviceId" value="${device.deviceId}" readonly="readonly" />
 				<label for="username"><spring:message code="label.admin.username" /></label>
@@ -20,14 +21,21 @@
 					<input type="text" name="color" value="${device.color}" />
 					<span class="add-on"><i style="background-color: ${device.color}"></i></span>
 				</div>
-				
 				<label><spring:message code="label.admin.devicePresentationName" /></label><input type="text" name="labelName"
 					value="${device.labelName}" />
 				<button type="submit" class="btn btn-primary"><spring:message code="label.admin.save" /></button>
+			</form:form>
+		</div>
+		<c:if test="${not empty stages}">
+			<div class="span4">
+			<spring:message code="label.admin.deviceInStage"/>
+				<ul>
+				<c:forEach items="${stages}" var="stage">
+					<li>${stage.stageName}</li>
+				</c:forEach>
+				</ul>
 			</div>
-		</form:form>
+		</c:if>
 	</div>
-
-
 </body>
-</html> 
+</html>

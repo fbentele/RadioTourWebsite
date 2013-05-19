@@ -75,6 +75,7 @@ public class RaceController {
 			model.addAttribute("race", actualRace);
 			model.addAttribute("navbarrace", "active");
 			model.addAttribute("races", raceService.getAllVisible());
+			model.addAttribute("menutitle", "etappen");
 			model.addAttribute("menuitems", makeMenu(stageService.getAllVisibleByRace(actualRace)));
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug));
 			return "actualrace";

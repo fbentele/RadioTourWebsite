@@ -56,7 +56,9 @@
 				<label for="visible"> <input type="checkbox" name="visible" value="true">
 					<spring:message code="label.admin.visible" /></label>
 				<form:errors path="visible" cssClass="formerror" />
-				<input type="submit" value="Hinzufügen" tabindex="4" />
+				<button type="submit" class="btn btn-primary" tabindex="4">
+					<spring:message code="label.admin.add" />
+				</button>
 			</div>
 			<div class="span4">
 				<label for="raceDescription"><spring:message code="label.admin.description" /></label>

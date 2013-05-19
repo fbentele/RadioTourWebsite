@@ -27,5 +27,7 @@ public interface StageDAO {
 
 	public Stage getMostRecentStageForDevice(Device device);
 
+	public List<Stage> getAllStagesForDevice(Device device);
+
 	public Float getTotalRaceDistance(Race race, Boolean completed);
 }

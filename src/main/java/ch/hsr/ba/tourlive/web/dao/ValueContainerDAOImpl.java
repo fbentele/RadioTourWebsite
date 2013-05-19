@@ -42,6 +42,15 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	}
 
 	@SuppressWarnings("unchecked")
+	public void deleteAllFromDevice(Device device) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		crit.add(Restrictions.eq("device", device));
+		for (ValueContainer v : (List<ValueContainer>) crit.list()) {
+			sessionFactory.getCurrentSession().delete(v);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAll() {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(ValueContainer.class, "ValueContainer")

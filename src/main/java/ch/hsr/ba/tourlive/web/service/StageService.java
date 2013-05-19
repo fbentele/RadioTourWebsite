@@ -27,5 +27,7 @@ public interface StageService {
 
 	public Stage getMostRecentStageForDevice(Device device);
 
+	public List<Stage> getAllStagesForDevice(Device device);
+
 	public Float getTotalRaceDistance(Race race, Boolean completed);
 }

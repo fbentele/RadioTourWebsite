@@ -15,6 +15,8 @@ public interface ImageDataDAO {
 
 	public List<ImageData> getAllLimited();
 
+	public void deleteAllFromDevice(Device device);
+
 	public List<ImageData> getAllImageDataByDevice(Device device);
 
 	public ImageData getMostRecentByDevice(Device device);

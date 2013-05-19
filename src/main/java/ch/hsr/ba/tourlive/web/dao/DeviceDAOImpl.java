@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import ch.hsr.ba.tourlive.web.model.Device;
@@ -28,9 +29,13 @@ public class DeviceDAOImpl implements DeviceDAO {
 	}
 
 	public void delete(String id) {
-		Device device = (Device) sessionFactory.getCurrentSession().load(Device.class, id);
-		if (null != device) {
-			sessionFactory.getCurrentSession().delete(device);
+		try {
+			Device device = (Device) sessionFactory.getCurrentSession().get(Device.class, id);
+			if (null != device) {
+				sessionFactory.getCurrentSession().delete(device);
+			}
+		} catch (DataIntegrityViolationException e) {
+			LOG.info("could not be deleted becaus relation to other object exists");
 		}
 	}
 

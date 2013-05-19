@@ -32,6 +32,11 @@ public class VideoDataServiceImpl implements VideoDataService {
 	}
 
 	@Transactional
+	public void deleteAllFromDevice(Device device) {
+		vidDao.deleteAllFromDevice(device);
+	}
+
+	@Transactional
 	public List<VideoData> getAllLimited() {
 		return vidDao.getAllLimited();
 	}

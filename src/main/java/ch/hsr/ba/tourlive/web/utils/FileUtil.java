@@ -82,6 +82,7 @@ public class FileUtil {
 		File theFile = new File(file);
 		try {
 			theFile.delete();
+			LOG.info("File deleted " + file);
 		} catch (SecurityException e) {
 			LOG.info("File could not be deleted");
 		}

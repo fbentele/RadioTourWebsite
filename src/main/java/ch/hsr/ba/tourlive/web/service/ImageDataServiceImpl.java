@@ -32,6 +32,11 @@ public class ImageDataServiceImpl implements ImageDataService {
 	}
 
 	@Transactional
+	public void deleteAllFromDevice(Device device) {
+		imageDataDao.deleteAllFromDevice(device);
+	}
+
+	@Transactional
 	public List<ImageData> getAllLimited() {
 		return imageDataDao.getAllLimited();
 	}

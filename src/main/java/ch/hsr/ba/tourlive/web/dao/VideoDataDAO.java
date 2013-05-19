@@ -13,6 +13,8 @@ public interface VideoDataDAO {
 
 	public void delete(Long VideoDataId);
 
+	public void deleteAllFromDevice(Device device);
+
 	public List<VideoData> getAllLimited();
 
 	public List<VideoData> getAllVideoDataByDevice(Device device);

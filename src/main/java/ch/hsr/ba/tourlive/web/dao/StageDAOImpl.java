@@ -105,4 +105,12 @@ public class StageDAOImpl implements StageDAO {
 		}
 		return f;
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Stage> getAllStagesForDevice(Device device) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		crit.createAlias("devices", "d").add(Restrictions.eq("d.deviceId", device.getDeviceId()));
+		crit.addOrder(Order.asc("starttime"));
+		return (List<Stage>) crit.list();
+	}
 }

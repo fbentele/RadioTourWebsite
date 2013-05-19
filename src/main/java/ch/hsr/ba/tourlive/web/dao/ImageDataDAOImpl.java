@@ -11,16 +11,20 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.ImageData;
 import ch.hsr.ba.tourlive.web.model.Stage;
+import ch.hsr.ba.tourlive.web.utils.FileUtil;
 
 @Repository
 public class ImageDataDAOImpl implements ImageDataDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	@Value("${config.api.imagePath}")
+	private String filePath;
 	private final static Logger LOG = LoggerFactory.getLogger(ImageDataDAOImpl.class);
 
 	public void save(ImageData imageData) {
@@ -35,6 +39,17 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		ImageData img = (ImageData) sessionFactory.getCurrentSession().get(ImageData.class,
 				imageDataId);
 		if (imageDataId != null) {
+			FileUtil.deleteFile(filePath + img.getImageLocation());
+			sessionFactory.getCurrentSession().delete(img);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void deleteAllFromDevice(Device device) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
+		crit.add(Restrictions.eq("device", device));
+		for (ImageData img : (List<ImageData>) crit.list()) {
+			FileUtil.deleteFile(filePath + img.getImageLocation());
 			sessionFactory.getCurrentSession().delete(img);
 		}
 	}

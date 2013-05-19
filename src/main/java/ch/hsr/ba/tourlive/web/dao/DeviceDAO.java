@@ -17,5 +17,4 @@ public interface DeviceDAO {
 	public Device getDeviceById(String deviceId);
 
 	public List<Device> getAllNotAlreadyAssignedTo(Stage stage);
-
 }

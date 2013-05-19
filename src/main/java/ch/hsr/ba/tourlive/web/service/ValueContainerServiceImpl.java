@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ch.hsr.ba.tourlive.web.dao.ValueContainerDAO;
+import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
 
@@ -29,6 +30,11 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	@Transactional
 	public void delete(Long id) {
 		valueDao.delete(id);
+	}
+
+	@Transactional
+	public void deleteAllFromDevice(Device device) {
+		valueDao.deleteAllFromDevice(device);
 	}
 
 	@Transactional

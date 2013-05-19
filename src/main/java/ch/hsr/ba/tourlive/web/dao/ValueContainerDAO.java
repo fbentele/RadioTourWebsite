@@ -3,6 +3,7 @@ package ch.hsr.ba.tourlive.web.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
 
@@ -13,6 +14,8 @@ public interface ValueContainerDAO {
 	public void update(ValueContainer position);
 
 	public void delete(Long id);
+
+	public void deleteAllFromDevice(Device device);
 
 	public List<ValueContainer> getAll();
 

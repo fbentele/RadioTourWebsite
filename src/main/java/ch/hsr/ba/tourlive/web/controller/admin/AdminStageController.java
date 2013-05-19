@@ -78,7 +78,6 @@ public class AdminStageController {
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage,
 			Model model) {
 		if (binding.hasErrors()) {
-			LOG.error("____________aa__________");
 			model.addAttribute("races", raceService.getAll());
 			model.addAttribute("breadcrump", new Breadcrumb("/admin/race"));
 			Race race = raceService.getRaceById(raceId);

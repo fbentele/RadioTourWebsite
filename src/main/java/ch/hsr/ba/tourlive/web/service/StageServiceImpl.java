@@ -67,6 +67,11 @@ public class StageServiceImpl implements StageService {
 	}
 
 	@Transactional
+	public List<Stage> getAllStagesForDevice(Device device) {
+		return stagedao.getAllStagesForDevice(device);
+	}
+
+	@Transactional
 	public Float getTotalRaceDistance(Race race, Boolean completed) {
 		return stagedao.getTotalRaceDistance(race, completed);
 	}

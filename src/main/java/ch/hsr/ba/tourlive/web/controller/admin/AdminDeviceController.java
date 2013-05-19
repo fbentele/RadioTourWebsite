@@ -1,5 +1,6 @@
 package ch.hsr.ba.tourlive.web.controller.admin;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -13,8 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ch.hsr.ba.tourlive.web.model.Device;
+import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.service.DeviceService;
+import ch.hsr.ba.tourlive.web.service.ImageDataService;
 import ch.hsr.ba.tourlive.web.service.RaceService;
+import ch.hsr.ba.tourlive.web.service.StageService;
+import ch.hsr.ba.tourlive.web.service.ValueContainerService;
+import ch.hsr.ba.tourlive.web.service.VideoDataService;
 import ch.hsr.ba.tourlive.web.viewmodel.Breadcrumb;
 
 @Controller
@@ -23,7 +29,15 @@ public class AdminDeviceController {
 	DeviceService deviceService;
 	@Autowired
 	RaceService raceService;
-	Logger log = LoggerFactory.getLogger(AdminDeviceController.class);
+	@Autowired
+	StageService stageService;
+	@Autowired
+	ValueContainerService valueContainerService;
+	@Autowired
+	ImageDataService imageDataService;
+	@Autowired
+	VideoDataService videoDataService;
+	private final static Logger LOG = LoggerFactory.getLogger(AdminDeviceController.class);
 
 	@RequestMapping(value = "/admin/device", method = RequestMethod.GET)
 	public String manageDevice(Locale locale, Model model) {
@@ -35,21 +49,34 @@ public class AdminDeviceController {
 	}
 
 	@RequestMapping(value = "/admin/device/delete/{deviceId}")
-	public String deleteDevice(@PathVariable("deviceId") String deviceId, Model model)
-			throws Exception {
-		// deviceService.delete(deviceId);
-		log.error("If device is being deleted what happens to valuecontainer?");
-		if (1 == Integer.valueOf("1"))
-			throw new Exception();
-		return "hoi";
+	public String deleteDevice(@PathVariable("deviceId") String deviceId, Model model) {
+		Device d = deviceService.getDeviceById(deviceId);
+		for (Stage stage : stageService.getAllStagesForDevice(d)) {
+			List<Device> list = stage.getDevices();
+			for (Device device : list) {
+				if (device.getDeviceId().equals(deviceId)) {
+					list.remove(device);
+					break;
+				}
+			}
+			stage.setDevices(list);
+			stageService.update(stage);
+		}
+		valueContainerService.deleteAllFromDevice(d);
+		imageDataService.deleteAllFromDevice(d);
+		videoDataService.deleteAllFromDevice(d);
+		deviceService.delete(deviceId);
+		return "redirect:/admin/device";
 	}
 
 	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.GET)
 	public String editDevice(@PathVariable("deviceId") String deviceId, Model model) {
+		Device device = deviceService.getDeviceById(deviceId);
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("device", deviceService.getDeviceById(deviceId));
+		model.addAttribute("device", device);
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device/" + deviceId));
+		model.addAttribute("stages", stageService.getAllStagesForDevice(device));
 		return "admin/editDevice";
 	}
 

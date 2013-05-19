@@ -11,16 +11,20 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.VideoData;
+import ch.hsr.ba.tourlive.web.utils.FileUtil;
 
 @Repository
 public class VideoDataDAOImpl implements VideoDataDAO {
 	@Autowired
 	SessionFactory sessionFactory;
+	@Value("${config.api.imagePath}")
+	private String filePath;
 	private final static Logger LOG = LoggerFactory.getLogger(VideoDataDAOImpl.class);
 
 	public void save(VideoData videoData) {
@@ -35,7 +39,22 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		VideoData vid = (VideoData) sessionFactory.getCurrentSession().load(VideoData.class,
 				videoDataId);
 		if (vid != null) {
+			FileUtil.deleteFile(filePath + vid.getVideoLocation() + ".mp4");
+			FileUtil.deleteFile(filePath + vid.getVideoLocation() + ".ogg");
 			sessionFactory.getCurrentSession().delete(vid);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void deleteAllFromDevice(Device device) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
+		crit.add(Restrictions.eq("device", device));
+		LOG.error("_______number of videodatas to delete:" + crit.list().size());
+		for (VideoData v : (List<VideoData>) crit.list()) {
+			FileUtil.deleteFile(filePath + v.getVideoLocation() + ".mp4");
+			FileUtil.deleteFile(filePath + v.getVideoLocation() + ".ogg");
+			LOG.error("_______ deleted" + filePath + v.getVideoLocation());
+			sessionFactory.getCurrentSession().delete(v);
 		}
 	}
 
