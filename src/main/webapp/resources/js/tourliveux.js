@@ -7,16 +7,13 @@ $(document).ready(function() {
 		$(".newItem").slideToggle('fast');
 	});
 	
+	// follow me navigation
 	var top = $('#menu').offset().top - parseFloat($('#menu').css('marginTop').replace(/auto/, 0));
 	  $(window).scroll(function (event) {
-	    // what the y position of the scroll is
 	    var y = $(this).scrollTop();
-	    // whether that's below the form
 	    if (y >= top) {
-	      // if so, ad the fixed class
 	      $('#menu').addClass('fixed');
 	    } else {
-	      // otherwise remove it
 	      $('#menu').removeClass('fixed');
 	    }
 	  });
@@ -90,9 +87,7 @@ $(document).ready(function() {
 	$('tbody.rowlink').rowlink();
 
 	// table-data
-	$('#ridertable').dataTable({
-		"sDom" : "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
-	});
+	$('#ridertable').dataTable();
 	$.extend($.fn.dataTableExt.oStdClasses, {
 		"sWrapper" : "dataTables_wrapper form-inline"
 	});

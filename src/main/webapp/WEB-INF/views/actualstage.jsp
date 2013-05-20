@@ -398,6 +398,7 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</c:if>
+	
 	<!-- Progressbar Awesomeness -->
 	<script type="text/javascript">
 		var wrapper = document.getElementById('positionbar');
@@ -405,8 +406,9 @@
 		var status = ${first.stageData.distance} * 100 / ${stage.distance};
 		progress.style.width = status + "%";		
 		wrapper.addEventListener('click', function(e) {
-	  		progress.style.width = e.offsetX + "px";
-	  		var pct = Math.floor((e.offsetX / wrapper.offsetWidth) * ${stage.distance});
+			var offset=e.offsetX==undefined?e.layerX:e.offsetX;
+	  		progress.style.width = offset + "px";
+	  		var pct = Math.floor((offset / wrapper.offsetWidth) * ${stage.distance});
 	  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
 		}, false);
 	</script>

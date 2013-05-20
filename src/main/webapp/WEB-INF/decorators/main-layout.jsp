@@ -29,25 +29,19 @@
 </head>
 <body id="tourlive-site">
 	<div id="wrap">
-		<c:import url="/WEB-INF/views/tags/navbar.jsp" />
 		<div class="container">
+			<c:import url="/WEB-INF/views/tags/navbar.jsp" />
 			<c:import url="/WEB-INF/views/tags/banner.jsp" />
-			<div class="row-fluid">
+			<div class="row">
 				<c:import url="/WEB-INF/views/tags/menu.jsp" />
-				<div class="span10">
+				<div class="span10 offset2">
 					<c:import url="/WEB-INF/views/tags/breadcrumb.jsp" />
 					<decorator:body />
 				</div>
-
-				<!--/span-->
-				<!--/row-->
 			</div>
-			<!--/span-->
 		</div>
-		<!--/row-->
 		<div id="push"></div>
 	</div>
-
 	<c:import url="/WEB-INF/views/tags/footer.jsp" />
 </body>
 </html>
