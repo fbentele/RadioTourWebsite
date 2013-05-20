@@ -164,9 +164,11 @@ public class AdminStageController {
 		if (visible.contains("true"))
 			stage.setVisible(true);
 		String rel = "stage" + stage.getStageId();
-		stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
-		stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
-				"stageProfile.png"));
+		if (!bannerimage.isEmpty())
+			stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
+		if (!stageProfileImage.isEmpty())
+			stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
+					"stageProfile.png"));
 		stageService.update(stage);
 		return "redirect:/admin/race/edit/" + raceId;
 	}

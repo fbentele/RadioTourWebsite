@@ -13,7 +13,7 @@
 		<c:if test="${not empty first}">
 			<div id="top" class="row-fluid">
 				<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
-				<div class="span6">
+				<div class="span5">
 					<p class="lead">
 						<spring:message code="label.stage.distancestatus1" />
 						${first.stageData.distance} km
@@ -25,7 +25,7 @@
 						<div id="progress" class="bar" style="width: 0%;"></div>
 					</div>
 				</div>
-				<div class="span4">
+				<div class="span4 offset1">
 					<spring:message code="label.stage.actualTime" />
 					:
 					<jsp:useBean id="dateValue" class="java.util.Date" />
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 		</c:if>
-		<c:if test="${not empty distances}">
+		<c:if test="${not empty distances && not empty deficitetimes}">
 			<div class="row-fluid">
 				<div class="span12">
 					<h4 id="abstand">
