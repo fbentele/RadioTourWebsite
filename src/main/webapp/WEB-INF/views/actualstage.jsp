@@ -21,6 +21,9 @@
 						${stage.distance} km
 						<spring:message code="label.stage.distancestatus3" />
 					</p>
+					<div id="positionbar" class="progress progress-striped active">
+						<div id="progress" class="bar" style="width: 0%;"></div>
+					</div>
 				</div>
 				<div class="span4">
 					<spring:message code="label.stage.actualTime" />
@@ -167,22 +170,25 @@
 						<div class="span2">
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
-							<c:if test="${not sit.isLeader}"><spring:message code="label.stage.deficite" />: ${sit.handicaptime} </c:if><br />
+							<c:if test="${not sit.isLeader}">
+								<spring:message code="label.stage.deficite" />: ${sit.handicaptime} </c:if>
+							<br />
 							<ul class="unstyled">
 								<c:forEach items="${sit.riderNumber}" var="situation">
 									<c:forEach items="${riders}" var="rider">
 										<c:if test="${rider.startNr == situation }">
-											<li><span id="rider${situation}" class="badge <c:if test="${rider.neo}">badge-success</c:if> <c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if> data-toggle="tooltip" data-placement="right" title="${rider.name} - ${rider.teamShort}">${situation}</span></li>
+											<li><span id="rider${situation}"
+												class="badge <c:if test="${rider.neo}">badge-success</c:if> <c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if> data-toggle="
+												tooltip" data-placement="right" title="${rider.name} - ${rider.teamShort}">${situation}</span></li>
 										</c:if>
 									</c:forEach>
 								</c:forEach>
 							</ul>
 						</div>
 					</c:forEach>
-					<p>Legende:<br />
-					<span class="badge">Fahrer</span>
-					<span class="badge badge-success">Neo</span>
-					<span class="badge badge-warning">Leader</span>					
+					<p>
+						Legende:<br /> <span class="badge">Fahrer</span> <span class="badge badge-success">Neo</span>
+						<span class="badge badge-warning">Leader</span>
 					</p>
 				</div>
 			</div>
@@ -349,14 +355,14 @@
 			}
 		</script>
 	</c:if>
-	
+
 	<!-- Riders names tooltip -->
 	<script>
 		<c:forEach items="${riders}" var="rider">
 			$('#rider${rider.startNr}').tooltip();
 		</c:forEach>
 	</script>
-	
+
 	<!-- Karte -->
 	<c:if test="${not empty valuecontainers}">
 		<script type="text/javascript"
@@ -370,20 +376,15 @@
 				center : myLatLng,
 				mapTypeId : google.maps.MapTypeId['ROADMAP'],
 			};
-			
-			var map = new google.maps.Map(
-					document.getElementById("map-canvas"), mapOptions);
-			
+			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 			<c:forEach items="${devices}" var="device">
 				var ${device.username} = [];
 			</c:forEach>
-
 			<c:forEach items="${valuecontainers}" var="valuecontainer">
 				<c:if test="${not empty valuecontainer.positionData.latitude}">
 					${valuecontainer.device.username}.push(new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}))
 			 	</c:if>
 			</c:forEach>
-		
 			<c:forEach items="${devices}" var="device">
 				var flightPath_${device.username} = new google.maps.Polyline({
 					path : ${device.username},
@@ -397,5 +398,17 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</c:if>
+	<!-- Progressbar Awesomeness -->
+	<script type="text/javascript">
+		var wrapper = document.getElementById('positionbar');
+		var progress = document.getElementById('progress');
+		var status = ${first.stageData.distance} * 100 / ${stage.distance};
+		progress.style.width = status + "%";		
+		wrapper.addEventListener('click', function(e) {
+	  		progress.style.width = e.offsetX + "px";
+	  		var pct = Math.floor((e.offsetX / wrapper.offsetWidth) * ${stage.distance});
+	  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
+		}, false);
+	</script>
 </body>
 </html>

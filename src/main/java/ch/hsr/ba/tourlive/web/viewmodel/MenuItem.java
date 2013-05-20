@@ -3,6 +3,8 @@ package ch.hsr.ba.tourlive.web.viewmodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.hsr.ba.tourlive.web.model.Stage;
+
 public class MenuItem {
 	private String menutitle;
 	private String urlpath;
@@ -40,5 +42,14 @@ public class MenuItem {
 		navi.add(new MenuItem("Rangliste", "#rangliste"));
 		navi.add(new MenuItem("Marschtabelle", "#marschtabelle"));
 		return navi;
+	}
+
+	public static List<MenuItem> makeMenu(List<Stage> stages) {
+		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
+		for (Stage stage : stages) {
+			menu.add(new MenuItem(stage.getStageName(), "/race/" + stage.getRace().getRaceSlug()
+					+ "/stage/" + stage.getStageSlug()));
+		}
+		return menu;
 	}
 }

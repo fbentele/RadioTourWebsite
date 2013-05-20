@@ -49,11 +49,10 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 	public void deleteAllFromDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
 		crit.add(Restrictions.eq("device", device));
-		LOG.error("_______number of videodatas to delete:" + crit.list().size());
 		for (VideoData v : (List<VideoData>) crit.list()) {
 			FileUtil.deleteFile(filePath + v.getVideoLocation() + ".mp4");
 			FileUtil.deleteFile(filePath + v.getVideoLocation() + ".ogg");
-			LOG.error("_______ deleted" + filePath + v.getVideoLocation());
+			LOG.info("_______ deleted" + filePath + v.getVideoLocation());
 			sessionFactory.getCurrentSession().delete(v);
 		}
 	}

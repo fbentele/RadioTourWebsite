@@ -25,6 +25,10 @@ html,body {
 	cursor: default;
 }
 
+.btn{
+	padding:2px 10px;
+}
+
 #menu {
 	padding: 8px 0;
 	position: absolute;

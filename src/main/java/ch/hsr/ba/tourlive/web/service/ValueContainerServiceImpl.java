@@ -68,6 +68,11 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	}
 
 	@Transactional
+	public ValueContainer getFirstForStageByDistanceLimitedToRaceKm(Stage stage, Float raceKm) {
+		return valueDao.getFirstForStageByDistanceLimitedToRaceKm(stage, raceKm);
+	}
+
+	@Transactional
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
 		return valueDao.getDeficiteToLeaderForStage(stage);
 	}

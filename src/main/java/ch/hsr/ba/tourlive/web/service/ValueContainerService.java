@@ -29,6 +29,8 @@ public interface ValueContainerService {
 
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage, Long limit);
 
+	public ValueContainer getFirstForStageByDistanceLimitedToRaceKm(Stage stage, Float raceKm);
+
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage);
 
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit);

@@ -1,6 +1,5 @@
 package ch.hsr.ba.tourlive.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -76,7 +75,8 @@ public class RaceController {
 			model.addAttribute("navbarrace", "active");
 			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("menutitle", "etappen");
-			model.addAttribute("menuitems", makeMenu(stageService.getAllVisibleByRace(actualRace)));
+			model.addAttribute("menuitems",
+					MenuItem.makeMenu(stageService.getAllVisibleByRace(actualRace)));
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug));
 			return "actualrace";
 		} else {
@@ -146,7 +146,7 @@ public class RaceController {
 					stage, untilTime);
 			model.addAttribute("limit", untilTime);
 			model.addAttribute("races", raceService.getAllVisible());
-			model.addAttribute("menuitems", MenuItem.makeStageNavi());
+			model.addAttribute("stagemenu", true);
 			model.addAttribute("raceSlug", raceSlug);
 			model.addAttribute("stage", stage);
 			model.addAttribute("navbarrace", "active");
@@ -185,6 +185,20 @@ public class RaceController {
 		return "actualstage";
 	}
 
+	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/km/{raceKm}", method = RequestMethod.GET)
+	public String stageForKm(@PathVariable("stageSlug") String stageSlug,
+			@PathVariable("raceSlug") String raceSlug, @PathVariable("raceKm") Float raceKm,
+			Model model) {
+		try {
+			Stage stage = stageService.getStageBySlug(stageSlug);
+			ValueContainer v = valueContainerService.getFirstForStageByDistanceLimitedToRaceKm(
+					stage, raceKm);
+			return stageForTime(stageSlug, raceSlug, v.getTimestamp(), model);
+		} catch (NullPointerException e) {
+			return "redirect:/race/" + raceSlug + "/stage/" + stageSlug;
+		}
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/nextvideo", method = RequestMethod.POST)
 	public VideoData getNextVideoForDevice(@PathVariable("stageSlug") String stageSlug,
@@ -192,14 +206,5 @@ public class RaceController {
 			@RequestParam("afterId") Long afterId, Model model) {
 		LOG.info("video Requested");
 		return videoDataService.getNextForDevice(deviceService.getDeviceById(deviceId), afterId);
-	}
-
-	private List<MenuItem> makeMenu(List<Stage> stages) {
-		ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
-		for (Stage stage : stages) {
-			menu.add(new MenuItem(stage.getStageName(), "/race/" + stage.getRace().getRaceSlug()
-					+ "/stage/" + stage.getStageSlug()));
-		}
-		return menu;
 	}
 }
