@@ -187,8 +187,10 @@
 						</div>
 					</c:forEach>
 					<p>
-						Legende:<br /> <span class="badge">Fahrer</span> <span class="badge badge-success">Neo</span>
-						<span class="badge badge-warning">Leader</span>
+						<spring:message code="label.stage.legend" />
+						:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
+							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
+							class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
 					</p>
 				</div>
 			</div>
@@ -398,7 +400,28 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
 	</c:if>
-	
+
+	<!-- Ranking DataTable -->
+	<script type="text/javascript">
+		$('#ridertable').dataTable( {
+        	"oLanguage": {
+            	"sLengthMenu": "_MENU_ <spring:message code="label.stage.recordsperpage"/>",
+            	"sZeroRecords": "<spring:message code="label.stage.norecords"/>",
+            	"sInfo": "_START_ - _END_ <spring:message code="label.stage.of"/> _TOTAL_ <spring:message code="label.stage.rider"/>",
+            	"sInfoEmpty": " 0 - 0 <spring:message code="label.stage.of"/> 0",
+            	"sInfoFiltered": "(<spring:message code="label.stage.filtered"/> _MAX_ )",
+        		"sSearch": "<spring:message code="label.stage.search"/>",
+        		"oPaginate":{
+        			"sNext": "<spring:message code="label.stage.next"/>",
+        			"sPrevious": "<spring:message code="label.stage.previous"/>"
+        		}
+        	}
+    	});
+	$.extend($.fn.dataTableExt.oStdClasses, {
+		"sWrapper" : "dataTables_wrapper form-inline"
+	});
+	</script>
+
 	<!-- Progressbar Awesomeness -->
 	<script type="text/javascript">
 		var wrapper = document.getElementById('positionbar');

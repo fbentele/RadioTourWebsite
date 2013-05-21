@@ -85,10 +85,4 @@ $(document).ready(function() {
 
 	// table rowlink
 	$('tbody.rowlink').rowlink();
-
-	// table-data
-	$('#ridertable').dataTable();
-	$.extend($.fn.dataTableExt.oStdClasses, {
-		"sWrapper" : "dataTables_wrapper form-inline"
-	});
 });
