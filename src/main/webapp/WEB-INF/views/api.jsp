@@ -77,7 +77,7 @@
 							<td>${image.imageDataId}</td>
 							<jsp:useBean id="imageDate" class="java.util.Date" />
 							<jsp:setProperty name="imageDate" property="time" value="${image.realTimestamp}" />
-							<td><fmt:formatDate pattern="dd.MM.yyyy - HH:mm:ss" value="${dateValue}" /></td>
+							<td><fmt:formatDate pattern="dd.MM.yyyy - HH:mm:ss" value="${imageDate}" /></td>
 							<td><c:choose>
 									<c:when test="${fn:length(image.device.deviceId) > 7}">
 									${fn:substring(image.device.deviceId, 0, 7)}...
