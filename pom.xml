@@ -366,6 +366,11 @@
 			<properties>
 				<config.imagePath>/Users/flo/Sites/images/</config.imagePath>
 				<config.imageHost>http://localhost/images/</config.imageHost>
+				<config.jdbc.driverClassName>com.mysql.jdbc.Driver</config.jdbc.driverClassName>
+				<config.jdbc.dialect>org.hibernate.dialect.MySQLDialect</config.jdbc.dialect>
+				<config.jdbc.databaseurl>jdbc:mysql://localhost:3306/tourlive</config.jdbc.databaseurl>
+				<config.jdbc.username>tourlive</config.jdbc.username>
+				<config.jdbc.password>GjyNws22JjGPDcMq</config.jdbc.password>
 			</properties>
 		</profile>
 		<profile>
@@ -373,6 +378,11 @@
 			<properties>
 				<config.imagePath>/var/lib/tomcat7/webapps/images/</config.imagePath>
 				<config.imageHost>http://tlng.cnlab.ch/images/</config.imageHost>
+				<config.jdbc.driverClassName>com.mysql.jdbc.Driver</config.jdbc.driverClassName>
+				<config.jdbc.dialect>org.hibernate.dialect.MySQLDialect</config.jdbc.dialect>
+				<config.jdbc.databaseurl>jdbc:mysql://localhost:3306/tourlive</config.jdbc.databaseurl>
+				<config.jdbc.username>tourlive</config.jdbc.username>
+				<config.jdbc.password>GjyNws22JjGPDcMq</config.jdbc.password>
 			</properties>
 		</profile>
 	</profiles>

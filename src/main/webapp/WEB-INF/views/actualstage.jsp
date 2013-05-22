@@ -344,9 +344,10 @@
 						if (data){
 							console.log('new video');
 							console.log(data.videoLocation);
-							$('#mp4').src = '${hostname}'+ data.videoLocation + '.mp4';
-							$('#ogg').src = '${hostname}'+ data.videoLocation + '.ogg';
+							$('#mp4').attr('src', '${hostname}'+ data.videoLocation + '.mp4');
+							$('#ogg').attr('src', '${hostname}'+ data.videoLocation + '.ogg');
 							videoPlayer.id= data.videoDataId;
+							videoPlayer.load();
 						} else {
 							console.log('no new video');
 							console.log('i will try again');

@@ -1,3 +1,9 @@
+/**
+ * ValueContainerDAOImpl.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.ArrayList;
@@ -25,14 +31,17 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	private final static Logger LOG = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
 	private static final int LIMIT_RESULTS_TO = 1000;
 
+	@Override
 	public void save(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().save(valuecontainer);
 	}
 
+	@Override
 	public void update(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().update(valuecontainer);
 	}
 
+	@Override
 	public void delete(Long id) {
 		ValueContainer valuecontainer = (ValueContainer) sessionFactory.getCurrentSession().load(
 				ValueContainer.class, id);
@@ -41,6 +50,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		}
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public void deleteAllFromDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
@@ -50,6 +60,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		}
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAll() {
 		return sessionFactory.getCurrentSession()
@@ -57,6 +68,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				.addOrder(Order.desc("ValueContainer.valueContainerId")).setMaxResults(1000).list();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
@@ -75,10 +87,12 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
+	@Override
 	public List<ValueContainer> getAllForStageByDistance(Stage stage) {
 		return getAllForStageByDistance(stage, stage.getEndtimeAsTimestamp());
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllForStageByDistance(Stage stage, Long limit) {
 		if (stage != null && !stage.getDevices().isEmpty()) {
@@ -96,6 +110,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
+	@Override
 	public ValueContainer getFirstForStageByDistanceLimitedToRaceKm(Stage stage, Float raceKm) {
 		if (stage != null && !stage.getDevices().isEmpty()) {
 			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
@@ -118,6 +133,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
+	@Override
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
 		List<ValueContainer> list = new ArrayList<ValueContainer>();
 		if (stage != null && !stage.getDevices().isEmpty()) {
@@ -139,6 +155,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return list;
 	}
 
+	@Override
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage, Long limit) {
 		List<ValueContainer> list = new ArrayList<ValueContainer>();
 		if (stage != null && !stage.getDevices().isEmpty()) {
@@ -159,12 +176,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return list;
 	}
 
-	/**
-	 * 
-	 * @param stage
-	 * @return a HashMap with the ID of the Valuecontainer and the deficite in
-	 *         seconds
-	 */
+	@Override
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
 		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
 		if (stage.getDevices().size() >= 2) {
@@ -199,6 +211,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return map;
 	}
 
+	@Override
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit) {
 		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
 		for (ValueContainer v : getAllForStageByDistance(stage)) {
