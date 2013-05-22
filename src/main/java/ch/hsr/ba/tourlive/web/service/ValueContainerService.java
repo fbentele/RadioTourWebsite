@@ -13,7 +13,6 @@ import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ValueContainerService.
  */

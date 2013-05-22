@@ -1,3 +1,9 @@
+/**
+ * AdminStageController.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.controller.admin;
 
 import java.io.File;
@@ -59,24 +65,23 @@ public class AdminStageController {
 	private String filePath;
 	@Value("${config.dev.hostname}")
 	private String hostname;
+	private final String FILENAME_STAGEBANNER = "stageBanner.png";
+	private final String FILENAME_STAGEPROFILE = "stageProfile.png";
 	private final static Logger LOG = LoggerFactory.getLogger(AdminStageController.class);
 
+	/**
+	 * Add a new Stage
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/add", method = RequestMethod.POST)
 	public String addStage(
 			@Valid @ModelAttribute("stage") Stage unUsedStage,
 			BindingResult binding,
 			@PathVariable("raceId") Long raceId,
-			@RequestParam("stageName") String stageName,
-			@RequestParam("stageDescription") String stageDescription,
-			@RequestParam("stageSlug") String stageSlug,
-			@RequestParam("starttime") String starttime,
-			@RequestParam("endtime") String endtime,
-			@RequestParam("distance") Float distance,
-			@RequestParam("adCode") String adCode,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage,
 			Model model) {
+		// Form Validation
 		if (binding.hasErrors()) {
 			model.addAttribute("races", raceService.getAll());
 			model.addAttribute("breadcrump", new Breadcrumb("/admin/race"));
@@ -87,29 +92,23 @@ public class AdminStageController {
 			model.addAttribute("adminmenu", "true");
 			return "admin/editRace";
 		} else {
-			Stage stage = new Stage();
-			stage.setStageName(stageName);
-			stage.setStageDescription(stageDescription);
-			stage.setStageSlug(stageSlug);
-			stage.setRace(raceService.getRaceById(raceId));
-			stage.setStarttime(starttime);
-			stage.setEndtime(endtime);
-			stage.setDistance(distance);
-			stage.setAdCode(adCode);
+			unUsedStage.setRace(raceService.getRaceById(raceId));
 			if (visible.contains("true"))
-				stage.setVisible(true);
-			stageService.save(stage);
-			// creates id, needed to save image properly
-			stage = stageService.getStageBySlug(stageSlug);
+				unUsedStage.setVisible(true);
+			stageService.save(unUsedStage);
+			Stage stage = stageService.getStageBySlug(unUsedStage.getStageSlug());
 			String rel = "stage" + stage.getStageId();
-			stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, "banner.png"));
+			stage.setBannerImage(FileUtil.safePng(bannerimage, filePath, rel, FILENAME_STAGEBANNER));
 			stage.setStageProfileImage(FileUtil.safePng(stageProfileImage, filePath, rel,
-					"stageProfile.png"));
+					FILENAME_STAGEPROFILE));
 			stageService.update(stage);
 			return "redirect:/admin/race/edit/" + raceId;
 		}
 	}
 
+	/**
+	 * Show the Stage edit Site.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.GET)
 	public String editStage(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId, Model model) {
@@ -127,6 +126,9 @@ public class AdminStageController {
 		return "admin/editStage";
 	}
 
+	/**
+	 * Redirect to Edit Stage
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}", method = RequestMethod.GET)
 	public String showStage(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId) {
@@ -173,6 +175,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/edit/" + raceId;
 	}
 
+	/**
+	 * Deletes the stage with the ID stage.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/delete/{stageId}", method = RequestMethod.GET)
 	public String deleteStage(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId) {
@@ -180,6 +185,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/edit/" + raceId;
 	}
 
+	/**
+	 * Deletes the profile image for the stage.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/profileimage/delete", method = RequestMethod.GET)
 	public String deleteProfileImage(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId) {
@@ -192,6 +200,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Deletes the banner image.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/bannerimage/delete", method = RequestMethod.GET)
 	public String deleteBannerImage(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId) {
@@ -204,6 +215,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Assigne device to stage.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/add", method = RequestMethod.POST)
 	public String editDevice(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId, HttpServletRequest request) {
@@ -211,6 +225,7 @@ public class AdminStageController {
 		try {
 			for (String deviceId : request.getParameterValues("device")) {
 				boolean found = false;
+				// is the device already assigned to stage?
 				for (Device dev : stage.getDevices()) {
 					if (dev.getDeviceId().equals(deviceId))
 						found = true;
@@ -225,6 +240,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
+	/**
+	 * Removes device from a stage.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/{deviceId}/remove", method = RequestMethod.GET)
 	public String removeDevice(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId, @PathVariable("deviceId") String deviceId,
@@ -242,6 +260,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 
+	/**
+	 * Show live ticker form.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker", method = RequestMethod.GET)
 	public String showLiveTicker(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, Model model) {
@@ -257,6 +278,9 @@ public class AdminStageController {
 		return "admin/liveticker";
 	}
 
+	/**
+	 * Adds a new LiveTickerItem.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/add", method = RequestMethod.POST)
 	public String addLiveTickerItem(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, @RequestParam("timestamp") String timestamp,
@@ -269,6 +293,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId + "/liveticker";
 	}
 
+	/**
+	 * Removes a LiveTickerItem.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/delete/{ltiId}", method = RequestMethod.GET)
 	public String removeLTI(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, @PathVariable("ltiId") Long ltiId) {
@@ -276,6 +303,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId + "/liveticker";
 	}
 
+	/**
+	 * Import rider.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/rider/import", method = RequestMethod.POST)
 	public String importRider(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId,
@@ -299,6 +329,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Delete Rider.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/rider/delete/{riderId}", method = RequestMethod.GET)
 	public String deleteRider(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, @PathVariable("riderId") Long riderId) {
@@ -306,6 +339,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Deletes all riders in this stage.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/rider/delete/all", method = RequestMethod.GET)
 	public String deleteAllRider(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId) {
@@ -319,6 +355,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Import march table.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/marchtable/import", method = RequestMethod.POST)
 	public String importMarchTable(
 			@PathVariable("raceId") Long raceId,
@@ -343,6 +382,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Deletes a MarchTableItem.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/marchtable/delete/{mtiId}", method = RequestMethod.GET)
 	public String deleteMarchTableItem(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, @PathVariable("mtiId") Long mtiId) {
@@ -350,6 +392,9 @@ public class AdminStageController {
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId;
 	}
 
+	/**
+	 * Deletes all MarchTableItems.
+	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/marchtable/delete/all", method = RequestMethod.GET)
 	public String deleteAllMarchTableItem(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId) {

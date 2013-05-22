@@ -1,3 +1,9 @@
+/**
+ * StageDAOImpl.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.List;
@@ -15,20 +21,44 @@ import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Race;
 import ch.hsr.ba.tourlive.web.model.Stage;
 
+/**
+ * The Class StageDAOImpl.
+ */
 @Repository
 public class StageDAOImpl implements StageDAO {
+
+	/** The session factory. */
 	@Autowired
 	SessionFactory sessionFactory;
 	private final static Logger LOG = LoggerFactory.getLogger(StageDAOImpl.class);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#save(ch.hsr.ba.tourlive.web.model
+	 * .Stage)
+	 */
 	public void save(Stage stage) {
 		sessionFactory.getCurrentSession().saveOrUpdate(stage);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#update(ch.hsr.ba.tourlive.web.model
+	 * .Stage)
+	 */
 	public void update(Stage stage) {
 		sessionFactory.getCurrentSession().update(stage);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#delete(java.lang.Long)
+	 */
 	public void delete(Long id) {
 		Stage st = (Stage) sessionFactory.getCurrentSession().load(Stage.class, id);
 		if (null != st) {
@@ -36,6 +66,11 @@ public class StageDAOImpl implements StageDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#getAllStages()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllStages() {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
@@ -43,6 +78,11 @@ public class StageDAOImpl implements StageDAO {
 		return crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#getAllVisibleStages()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllVisibleStages() {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
@@ -50,6 +90,13 @@ public class StageDAOImpl implements StageDAO {
 		return (List<Stage>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#getAllVisibleByRace(ch.hsr.ba.tourlive
+	 * .web.model.Race)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllVisibleByRace(Race race) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
@@ -59,10 +106,22 @@ public class StageDAOImpl implements StageDAO {
 		return (List<Stage>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#getStageById(java.lang.Long)
+	 */
 	public Stage getStageById(Long id) {
 		return (Stage) sessionFactory.getCurrentSession().get(Stage.class, id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#getAllByRace(ch.hsr.ba.tourlive.web
+	 * .model.Race)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllByRace(Race race) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
@@ -71,6 +130,11 @@ public class StageDAOImpl implements StageDAO {
 		return (List<Stage>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#getStageBySlug(java.lang.String)
+	 */
 	public Stage getStageBySlug(String slug) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
 		try {
@@ -80,6 +144,13 @@ public class StageDAOImpl implements StageDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#getMostRecentStageForDevice(ch.hsr
+	 * .ba.tourlive.web.model.Device)
+	 */
 	public Stage getMostRecentStageForDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
 		crit.createAlias("devices", "d").add(Restrictions.eq("d.deviceId", device.getDeviceId()));
@@ -92,6 +163,13 @@ public class StageDAOImpl implements StageDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#getTotalRaceDistance(ch.hsr.ba.tourlive
+	 * .web.model.Race, java.lang.Boolean)
+	 */
 	@SuppressWarnings("unchecked")
 	public Float getTotalRaceDistance(Race race, Boolean completed) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
@@ -106,6 +184,13 @@ public class StageDAOImpl implements StageDAO {
 		return f;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.StageDAO#getAllStagesForDevice(ch.hsr.ba.tourlive
+	 * .web.model.Device)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Stage> getAllStagesForDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);

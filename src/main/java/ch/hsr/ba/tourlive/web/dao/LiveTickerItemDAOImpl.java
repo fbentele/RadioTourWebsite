@@ -1,3 +1,9 @@
+/**
+ * LiveTickerItemDAOImpl.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.List;
@@ -12,19 +18,41 @@ import org.springframework.stereotype.Repository;
 import ch.hsr.ba.tourlive.web.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.web.model.Stage;
 
+/**
+ * The Class LiveTickerItemDAOImpl.
+ */
 @Repository
 public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#save(ch.hsr.ba.tourlive.
+	 * web.model.LiveTickerItem)
+	 */
 	public void save(LiveTickerItem lti) {
 		sessionFactory.getCurrentSession().save(lti);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#update(ch.hsr.ba.tourlive
+	 * .web.model.LiveTickerItem)
+	 */
 	public void update(LiveTickerItem lti) {
 		sessionFactory.getCurrentSession().update(lti);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#delete(java.lang.Long)
+	 */
 	public void delete(Long id) {
 		LiveTickerItem lti = (LiveTickerItem) sessionFactory.getCurrentSession().load(
 				LiveTickerItem.class, id);
@@ -32,6 +60,13 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 			sessionFactory.getCurrentSession().delete(lti);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getAllByStage(ch.hsr.ba.
+	 * tourlive.web.model.Stage)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LiveTickerItem> getAllByStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);
@@ -40,6 +75,13 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 		return (List<LiveTickerItem>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getAllByStageLimitedTo(ch
+	 * .hsr.ba.tourlive.web.model.Stage, int)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);
@@ -50,6 +92,13 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 		return (List<LiveTickerItem>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getAllByStageLimitedTo(ch
+	 * .hsr.ba.tourlive.web.model.Stage, int, java.lang.Long)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long timelimit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);

@@ -1,3 +1,9 @@
+/**
+ * ImageDataDAOImpl.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.ArrayList;
@@ -19,22 +25,46 @@ import ch.hsr.ba.tourlive.web.model.ImageData;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.utils.FileUtil;
 
+/**
+ * The Class ImageDataDAOImpl.
+ */
 @Repository
 public class ImageDataDAOImpl implements ImageDataDAO {
+
+	/** The session factory. */
 	@Autowired
 	SessionFactory sessionFactory;
 	@Value("${config.api.imagePath}")
 	private String filePath;
 	private final static Logger LOG = LoggerFactory.getLogger(ImageDataDAOImpl.class);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#save(ch.hsr.ba.tourlive.web.model
+	 * .ImageData)
+	 */
 	public void save(ImageData imageData) {
 		sessionFactory.getCurrentSession().save(imageData);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#update(ch.hsr.ba.tourlive.web
+	 * .model.ImageData)
+	 */
 	public void update(ImageData imageData) {
 		sessionFactory.getCurrentSession().update(imageData);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.ImageDataDAO#delete(java.lang.Long)
+	 */
 	public void delete(Long imageDataId) {
 		ImageData img = (ImageData) sessionFactory.getCurrentSession().get(ImageData.class,
 				imageDataId);
@@ -44,6 +74,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#deleteAllFromDevice(ch.hsr.ba
+	 * .tourlive.web.model.Device)
+	 */
 	@SuppressWarnings("unchecked")
 	public void deleteAllFromDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
@@ -54,10 +91,20 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getById(java.lang.Long)
+	 */
 	public ImageData getById(Long imageDataId) {
 		return (ImageData) sessionFactory.getCurrentSession().get(ImageData.class, imageDataId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getAllLimited()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllLimited() {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
@@ -66,6 +113,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return (List<ImageData>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getAllImageDataByDevice(ch.hsr
+	 * .ba.tourlive.web.model.Device)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllImageDataByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
@@ -76,6 +130,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getMostRecentByDevice(ch.hsr.
+	 * ba.tourlive.web.model.Device)
+	 */
 	public ImageData getMostRecentByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
 		if (device != null) {
@@ -91,6 +152,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getMostRecentByDeviceLimitedTo
+	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Long)
+	 */
 	public ImageData getMostRecentByDeviceLimitedTo(Device device, Long limit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
 		if (device != null) {
@@ -107,6 +175,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getMostRecentByStage(ch.hsr.ba
+	 * .tourlive.web.model.Stage)
+	 */
 	public List<ImageData> getMostRecentByStage(Stage stage) {
 		List<ImageData> imageData = new ArrayList<ImageData>();
 		if (stage != null) {
@@ -120,6 +195,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return imageData;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getMostRecentByStage(ch.hsr.ba
+	 * .tourlive.web.model.Stage, java.lang.Long)
+	 */
 	public List<ImageData> getMostRecentByStage(Stage stage, Long limit) {
 		List<ImageData> imageData = new ArrayList<ImageData>();
 		if (stage != null) {
@@ -133,6 +215,13 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 		return imageData;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ImageDataDAO#getAllByStage(ch.hsr.ba.tourlive
+	 * .web.model.Stage)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ImageData> getAllByStage(Stage stage) {
 		if (stage != null) {

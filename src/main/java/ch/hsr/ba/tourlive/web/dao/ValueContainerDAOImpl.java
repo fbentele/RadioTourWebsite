@@ -24,6 +24,9 @@ import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
 
+/**
+ * The Class ValueContainerDAOImpl.
+ */
 @Repository
 public class ValueContainerDAOImpl implements ValueContainerDAO {
 	@Autowired
@@ -31,16 +34,35 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	private final static Logger LOG = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
 	private static final int LIMIT_RESULTS_TO = 1000;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#save(ch.hsr.ba.tourlive.
+	 * web.model.ValueContainer)
+	 */
 	@Override
 	public void save(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().save(valuecontainer);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#update(ch.hsr.ba.tourlive
+	 * .web.model.ValueContainer)
+	 */
 	@Override
 	public void update(ValueContainer valuecontainer) {
 		sessionFactory.getCurrentSession().update(valuecontainer);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#delete(java.lang.Long)
+	 */
 	@Override
 	public void delete(Long id) {
 		ValueContainer valuecontainer = (ValueContainer) sessionFactory.getCurrentSession().load(
@@ -50,6 +72,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#deleteAllFromDevice(ch.hsr
+	 * .ba.tourlive.web.model.Device)
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public void deleteAllFromDevice(Device device) {
@@ -60,6 +89,11 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getAll()
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAll() {
@@ -68,6 +102,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				.addOrder(Order.desc("ValueContainer.valueContainerId")).setMaxResults(1000).list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getAllValueContainerForStage
+	 * (ch.hsr.ba.tourlive.web.model.Stage)
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
@@ -87,11 +128,25 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getAllForStageByDistance
+	 * (ch.hsr.ba.tourlive.web.model.Stage)
+	 */
 	@Override
 	public List<ValueContainer> getAllForStageByDistance(Stage stage) {
 		return getAllForStageByDistance(stage, stage.getEndtimeAsTimestamp());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getAllForStageByDistance
+	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Long)
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllForStageByDistance(Stage stage, Long limit) {
@@ -110,6 +165,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#
+	 * getFirstForStageByDistanceLimitedToRaceKm
+	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Float)
+	 */
 	@Override
 	public ValueContainer getFirstForStageByDistanceLimitedToRaceKm(Stage stage, Float raceKm) {
 		if (stage != null && !stage.getDevices().isEmpty()) {
@@ -133,6 +195,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getLatestForDeviceByStage
+	 * (ch.hsr.ba.tourlive.web.model.Stage)
+	 */
 	@Override
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
 		List<ValueContainer> list = new ArrayList<ValueContainer>();
@@ -155,6 +224,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getLatestForDeviceByStage
+	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Long)
+	 */
 	@Override
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage, Long limit) {
 		List<ValueContainer> list = new ArrayList<ValueContainer>();
@@ -176,6 +252,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getDeficiteToLeaderForStage
+	 * (ch.hsr.ba.tourlive.web.model.Stage)
+	 */
 	@Override
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
 		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
@@ -211,6 +294,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return map;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getDeficiteToLeaderForStage
+	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Long)
+	 */
 	@Override
 	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit) {
 		HashMap<Long, Integer> map = new HashMap<Long, Integer>();

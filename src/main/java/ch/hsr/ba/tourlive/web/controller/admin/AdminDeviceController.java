@@ -3,8 +3,6 @@ package ch.hsr.ba.tourlive.web.controller.admin;
 import java.util.List;
 import java.util.Locale;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,8 +35,10 @@ public class AdminDeviceController {
 	ImageDataService imageDataService;
 	@Autowired
 	VideoDataService videoDataService;
-	private final static Logger LOG = LoggerFactory.getLogger(AdminDeviceController.class);
 
+	/**
+	 * Show all Devices
+	 */
 	@RequestMapping(value = "/admin/device", method = RequestMethod.GET)
 	public String manageDevice(Locale locale, Model model) {
 		model.addAttribute("devices", deviceService.getAll());
@@ -48,6 +48,9 @@ public class AdminDeviceController {
 		return "admin/manageDevice";
 	}
 
+	/**
+	 * Completely Delete a Device
+	 */
 	@RequestMapping(value = "/admin/device/delete/{deviceId}")
 	public String deleteDevice(@PathVariable("deviceId") String deviceId, Model model) {
 		Device d = deviceService.getDeviceById(deviceId);
@@ -69,6 +72,9 @@ public class AdminDeviceController {
 		return "redirect:/admin/device";
 	}
 
+	/**
+	 * Show Device Form
+	 */
 	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.GET)
 	public String editDevice(@PathVariable("deviceId") String deviceId, Model model) {
 		Device device = deviceService.getDeviceById(deviceId);
@@ -80,6 +86,9 @@ public class AdminDeviceController {
 		return "admin/editDevice";
 	}
 
+	/**
+	 * Edit Device values
+	 */
 	@RequestMapping(value = "/admin/device/edit/{deviceId}", method = RequestMethod.POST)
 	public String saveDevice(@PathVariable("deviceId") String deviceId,
 			@ModelAttribute("deice") Device device, Model model) {

@@ -35,6 +35,7 @@ public class FileUtil {
 			} catch (IllegalArgumentException e) {
 				LOG.info("one argument was illegal");
 			}
+			LOG.info("Successfully saved image to " + relativePath + "/" + filename);
 			return relativePath + "/" + filename;
 		}
 		return null;

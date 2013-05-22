@@ -1,3 +1,9 @@
+/**
+ * PublicAPIController.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.controller.api;
 
 import java.util.List;
@@ -20,21 +26,37 @@ import ch.hsr.ba.tourlive.web.service.VideoDataService;
 
 @Controller
 public class PublicAPIController {
+
 	@Autowired
 	ValueContainerService valueContainerService;
+
 	@Autowired
 	StageService stageService;
+
 	@Autowired
 	ImageDataService imageDataService;
+
 	@Autowired
 	VideoDataService videoDataService;
 
+	/**
+	 * Returns all public visivle stages.
+	 * 
+	 * @return list of all visivle Stages
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/public/stages", method = RequestMethod.GET)
 	public List<Stage> allStages() {
-		return stageService.getAll();
+		return stageService.getAllVisibleStages();
 	}
 
+	/**
+	 * Gets the value containers for stage.
+	 * 
+	 * @param stageId
+	 *            the stage id
+	 * @return the value containers for stage
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/public/stage/{stageId}/valuecontainer", method = RequestMethod.GET)
 	public List<ValueContainer> getValueContainersForStage(@PathVariable("stageId") Long stageId) {
@@ -46,6 +68,13 @@ public class PublicAPIController {
 		}
 	}
 
+	/**
+	 * Gets all image data objects for stage.
+	 * 
+	 * @param stageId
+	 *            the stage id
+	 * @return the image data for stage
+	 */
 	@ResponseBody
 	@RequestMapping(value = "public/stage/{stageId}/imagedata", method = RequestMethod.GET)
 	public List<ImageData> getImageDataForStage(@PathVariable("stageId") Long stageId) {
@@ -57,6 +86,13 @@ public class PublicAPIController {
 		}
 	}
 
+	/**
+	 * Gets all video data for stage.
+	 * 
+	 * @param stageId
+	 *            the stage id
+	 * @return the video data for stage
+	 */
 	@ResponseBody
 	@RequestMapping(value = "public/stage/{stageId}/videodata", method = RequestMethod.GET)
 	public List<VideoData> getVideoDataForStage(@PathVariable("stageId") Long stageId) {

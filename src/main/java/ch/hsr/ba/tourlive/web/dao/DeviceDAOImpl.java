@@ -1,3 +1,9 @@
+/**
+ * DeviceDAOImpl.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.List;
@@ -14,20 +20,42 @@ import org.springframework.stereotype.Repository;
 import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 
+/**
+ * The Class DeviceDAOImpl.
+ */
 @Repository
 public class DeviceDAOImpl implements DeviceDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 	private final static Logger LOG = LoggerFactory.getLogger(DeviceDAOImpl.class);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.DeviceDAO#save(ch.hsr.ba.tourlive.web.model
+	 * .Device)
+	 */
 	public void save(Device device) {
 		sessionFactory.getCurrentSession().save(device);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.DeviceDAO#update(ch.hsr.ba.tourlive.web.model
+	 * .Device)
+	 */
 	public void update(Device device) {
 		sessionFactory.getCurrentSession().update(device);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.DeviceDAO#delete(java.lang.String)
+	 */
 	public void delete(String id) {
 		try {
 			Device device = (Device) sessionFactory.getCurrentSession().get(Device.class, id);
@@ -39,15 +67,32 @@ public class DeviceDAOImpl implements DeviceDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.DeviceDAO#getDeviceById(java.lang.String)
+	 */
 	public Device getDeviceById(String deviceId) {
 		return (Device) sessionFactory.getCurrentSession().get(Device.class, deviceId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.DeviceDAO#getAll()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Device> getAll() {
 		return sessionFactory.getCurrentSession().createCriteria(Device.class).list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.DeviceDAO#getAllNotAlreadyAssignedTo(ch.hsr
+	 * .ba.tourlive.web.model.Stage)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Device> getAllNotAlreadyAssignedTo(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Device.class);

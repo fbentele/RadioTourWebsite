@@ -1,3 +1,9 @@
+/**
+ * ApiController.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.controller.api;
 
 import java.util.HashMap;
@@ -40,32 +46,45 @@ import ch.hsr.ba.tourlive.web.utils.FileUtil;
 
 @Controller
 public class ApiController {
+
 	@Autowired
 	ApplicationContext context;
+
 	@Autowired
 	PositionDataService positionDataService;
+
 	@Autowired
 	ValueContainerService valueContainerService;
+
 	@Autowired
 	RaceService raceService;
+
 	@Autowired
 	StageService stageService;
+
 	@Autowired
 	ImageDataService imageDataService;
+
 	@Autowired
 	DeviceService deviceService;
+
 	@Autowired
 	VideoDataService videoDataService;
+
 	@Autowired
 	RaceSituationService raceSituationService;
 
 	@Value("${config.api.imagePath}")
 	private String mediaPath;
+
 	@Value("${config.dev.hostname}")
 	private String hostname;
 
-	private static final Logger log = LoggerFactory.getLogger(ApiController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ApiController.class);
 
+	/**
+	 * Receiving Value container form Device.
+	 */
 	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.POST)
 	@ResponseBody
 	public void valueContainer(@RequestBody final ValueContainer request) {
@@ -77,11 +96,14 @@ public class ApiController {
 			d.setUsername(rec.getUsername());
 			request.setDevice(d);
 		} catch (NullPointerException e) {
-			log.error("no deviceId found");
+			LOG.error("no deviceId found");
 		}
 		valueContainerService.save(request);
 	}
 
+	/**
+	 * Developemode only! For Debugging what has been reveived from all devices.
+	 */
 	@RequestMapping(value = "/api", method = RequestMethod.GET)
 	public String showdata(Locale locale, Model model) {
 		try {
@@ -94,11 +116,14 @@ public class ApiController {
 			model.addAttribute("images", imageDataService.getAllLimited());
 			model.addAttribute("hostname", hostname);
 		} catch (IndexOutOfBoundsException e) {
-			log.error("no valuecontainers");
+			LOG.error("no valuecontainers");
 		}
 		return "api";
 	}
 
+	/**
+	 * Upload image.
+	 */
 	@RequestMapping(value = "/api/image", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
 	public void uploadImage(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("image") CommonsMultipartFile image,
@@ -115,6 +140,9 @@ public class ApiController {
 				.save(new ImageData(timestamp, deviceService.getDeviceById(deviceId), temp));
 	}
 
+	/**
+	 * Upload video sequence.
+	 */
 	@RequestMapping(value = "/api/video", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
 	public void uploadVideoSequence(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("video") CommonsMultipartFile video,
@@ -129,6 +157,9 @@ public class ApiController {
 		videoDataService.save(new VideoData(timestamp, device, vidLocation));
 	}
 
+	/**
+	 * Posting a Race situation.
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/racesituation/stage/{stageId}", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
 	public void raceSituation(@PathVariable("stageId") Long stageId,
@@ -137,6 +168,12 @@ public class ApiController {
 		raceSituationService.save(rawSituation);
 	}
 
+	/**
+	 * Assembling Information for Devices to be displayed on a device.
+	 * 
+	 * @return A HashMap with stageName, raceName, currentRaceTotalDistance,
+	 *         currentStageTotalDistance, completedStagesDistance
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/api/getstageinfo/{deviceId}", method = RequestMethod.GET, produces = "application/json")
 	public Map<String, Object> getStageInfo(@PathVariable("deviceId") String deviceId) {

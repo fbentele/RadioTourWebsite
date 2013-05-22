@@ -11,7 +11,6 @@ import java.util.List;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.rider.RaceSituation;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface RaceSituationService.
  */

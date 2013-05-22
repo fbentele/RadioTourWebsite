@@ -25,9 +25,11 @@ public class HomeController {
 	PositionDataService positionDataService;
 	@Autowired
 	RaceService raceService;
-
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+	/**
+	 * Default Home Controller
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		model.addAttribute("navbarhome", "active");
@@ -35,6 +37,9 @@ public class HomeController {
 		return "home";
 	}
 
+	/**
+	 * Controller for the archives Page
+	 */
 	@RequestMapping(value = "/archive", method = RequestMethod.GET)
 	public String archive(Locale locale, Model model) {
 		logger.info("This is the archive Page");
@@ -43,6 +48,9 @@ public class HomeController {
 		return "archive";
 	}
 
+	/**
+	 * Prepared a Login view, not in use yet
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		model.addAttribute("races", raceService.getAllVisible());

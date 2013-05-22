@@ -31,6 +31,9 @@ public class AdminController {
 	private RaceService raceService;
 	private final static Logger LOG = LoggerFactory.getLogger(AdminController.class);
 
+	/**
+	 * The admin page
+	 */
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model, Principal principal, Locale locale) {
 		model.addAttribute("races", raceService.getAll());
@@ -42,6 +45,9 @@ public class AdminController {
 		return "admin/admin";
 	}
 
+	/**
+	 * The admin race page
+	 */
 	@RequestMapping(value = "/admin/race", method = RequestMethod.GET)
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("adminmenu", "true");
@@ -51,6 +57,9 @@ public class AdminController {
 		return "admin/manageRace";
 	}
 
+	/**
+	 * Add a new Race
+	 */
 	@RequestMapping(value = "/admin/race/add", method = RequestMethod.POST)
 	public String newRace(@Valid @ModelAttribute("race") Race race, BindingResult binding,
 			@RequestParam(value = "visible", defaultValue = "") String visible, Locale locale,
@@ -70,6 +79,9 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * Show Race Form
+	 */
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.GET)
 	public String editRace(@PathVariable("raceId") Long raceId,
 			@RequestParam(value = "visible", defaultValue = "") String visible, Locale locale,
@@ -84,6 +96,9 @@ public class AdminController {
 		return "admin/editRace";
 	}
 
+	/**
+	 * Edit Race
+	 */
 	@RequestMapping(value = "/admin/race/edit/{raceId}", method = RequestMethod.POST)
 	public String editedRace(@PathVariable("raceId") Long raceId,
 			@ModelAttribute("race") Race race,
@@ -97,6 +112,9 @@ public class AdminController {
 		return "redirect:/admin/race";
 	}
 
+	/**
+	 * Remove Race and delete all stages as well
+	 */
 	@RequestMapping(value = "/admin/race/delete/{raceId}", method = RequestMethod.GET)
 	public String removeRace(@PathVariable("raceId") Long raceId, Locale locale, Model model) {
 		try {

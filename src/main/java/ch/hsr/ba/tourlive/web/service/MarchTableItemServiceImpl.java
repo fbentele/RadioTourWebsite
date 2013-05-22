@@ -16,7 +16,6 @@ import ch.hsr.ba.tourlive.web.dao.MarchTableItemDAO;
 import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Stage;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MarchTableItemServiceImpl.
  */
@@ -25,32 +24,47 @@ public class MarchTableItemServiceImpl implements MarchTableService {
 	@Autowired
 	private MarchTableItemDAO mtidao;
 
-	/* (non-Javadoc)
-	 * @see ch.hsr.ba.tourlive.web.service.MarchTableService#save(ch.hsr.ba.tourlive.web.model.MarchTableItem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.service.MarchTableService#save(ch.hsr.ba.tourlive
+	 * .web.model.MarchTableItem)
 	 */
 	@Transactional
 	public void save(MarchTableItem mti) {
 		mtidao.save(mti);
 	}
 
-	/* (non-Javadoc)
-	 * @see ch.hsr.ba.tourlive.web.service.MarchTableService#update(ch.hsr.ba.tourlive.web.model.MarchTableItem)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.service.MarchTableService#update(ch.hsr.ba.tourlive
+	 * .web.model.MarchTableItem)
 	 */
 	@Transactional
 	public void update(MarchTableItem mti) {
 		mtidao.update(mti);
 	}
 
-	/* (non-Javadoc)
-	 * @see ch.hsr.ba.tourlive.web.service.MarchTableService#delete(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.service.MarchTableService#delete(java.lang.Long)
 	 */
 	@Transactional
 	public void delete(Long id) {
 		mtidao.delete(id);
 	}
 
-	/* (non-Javadoc)
-	 * @see ch.hsr.ba.tourlive.web.service.MarchTableService#getAllByStage(ch.hsr.ba.tourlive.web.model.Stage)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.service.MarchTableService#getAllByStage(ch.hsr
+	 * .ba.tourlive.web.model.Stage)
 	 */
 	@Transactional
 	public List<MarchTableItem> getAllByStage(Stage stage) {

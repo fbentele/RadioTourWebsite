@@ -1,3 +1,9 @@
+/**
+ * VideoDataDAOImpl.java
+ * 
+ * @author Florian Bentele
+ * @date 22.05.2013
+ */
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.ArrayList;
@@ -19,22 +25,46 @@ import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.VideoData;
 import ch.hsr.ba.tourlive.web.utils.FileUtil;
 
+/**
+ * The Class VideoDataDAOImpl.
+ */
 @Repository
 public class VideoDataDAOImpl implements VideoDataDAO {
+
+	/** The session factory. */
 	@Autowired
 	SessionFactory sessionFactory;
 	@Value("${config.api.imagePath}")
 	private String filePath;
 	private final static Logger LOG = LoggerFactory.getLogger(VideoDataDAOImpl.class);
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#save(ch.hsr.ba.tourlive.web.model
+	 * .VideoData)
+	 */
 	public void save(VideoData videoData) {
 		sessionFactory.getCurrentSession().save(videoData);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#update(ch.hsr.ba.tourlive.web
+	 * .model.VideoData)
+	 */
 	public void update(VideoData videoData) {
 		sessionFactory.getCurrentSession().update(videoData);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.VideoDataDAO#delete(java.lang.Long)
+	 */
 	public void delete(Long videoDataId) {
 		VideoData vid = (VideoData) sessionFactory.getCurrentSession().load(VideoData.class,
 				videoDataId);
@@ -45,6 +75,13 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#deleteAllFromDevice(ch.hsr.ba
+	 * .tourlive.web.model.Device)
+	 */
 	@SuppressWarnings("unchecked")
 	public void deleteAllFromDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
@@ -57,6 +94,11 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getAllLimited()
+	 */
 	@SuppressWarnings("unchecked")
 	public List<VideoData> getAllLimited() {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
@@ -65,6 +107,13 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		return (List<VideoData>) crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getAllVideoDataByDevice(ch.hsr
+	 * .ba.tourlive.web.model.Device)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<VideoData> getAllVideoDataByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
@@ -72,6 +121,13 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		return crit.list();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getMostRecentByDevice(ch.hsr.
+	 * ba.tourlive.web.model.Device)
+	 */
 	public VideoData getMostRecentByDevice(Device device) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
 		try {
@@ -86,9 +142,12 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 	}
 
 	/**
+	 * Gets the next for device.
 	 * 
 	 * @param device
+	 *            the device
 	 * @param afterId
+	 *            the after id
 	 * @return Returns the next available Video after the one with the ID
 	 *         afterId
 	 */
@@ -106,6 +165,15 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		return null;
 	}
 
+	/**
+	 * Gets the most recent by device.
+	 * 
+	 * @param device
+	 *            the device
+	 * @param limit
+	 *            the limit
+	 * @return the most recent by device
+	 */
 	public VideoData getMostRecentByDevice(Device device, Long limit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(VideoData.class);
 		try {
@@ -121,6 +189,13 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getMostRecentByStage(ch.hsr.ba
+	 * .tourlive.web.model.Stage)
+	 */
 	public List<VideoData> getMostRecentByStage(Stage stage) {
 		List<VideoData> videoData = new ArrayList<VideoData>();
 		if (stage != null) {
@@ -135,6 +210,13 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getMostRecentByStageLimitedTo
+	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Long)
+	 */
 	public List<VideoData> getMostRecentByStageLimitedTo(Stage stage, Long limit) {
 		List<VideoData> videoData = new ArrayList<VideoData>();
 		if (stage != null) {
@@ -149,10 +231,22 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getById(java.lang.Long)
+	 */
 	public VideoData getById(Long id) {
 		return (VideoData) sessionFactory.getCurrentSession().get(VideoData.class, id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.VideoDataDAO#getAllByStage(ch.hsr.ba.tourlive
+	 * .web.model.Stage)
+	 */
 	@SuppressWarnings("unchecked")
 	public List<VideoData> getAllByStage(Stage stage) {
 		if (stage != null) {
