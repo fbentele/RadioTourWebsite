@@ -91,9 +91,10 @@ public class ApiController {
 		// not loosing device information on every request, refactoring
 		// needed...
 		try {
-			Device rec = request.getDevice();
-			Device d = deviceService.getDeviceById(rec.getDeviceId());
-			d.setUsername(rec.getUsername());
+			Device requestDevice = request.getDevice();
+			Device d = deviceService.getDeviceById(requestDevice.getDeviceId());
+			d.setUsername(requestDevice.getUsername());
+			d.setPhoneNr(requestDevice.getPhoneNr());
 			request.setDevice(d);
 		} catch (NullPointerException e) {
 			LOG.error("no deviceId found");
