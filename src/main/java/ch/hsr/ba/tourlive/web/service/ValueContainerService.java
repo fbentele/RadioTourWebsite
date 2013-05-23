@@ -24,7 +24,7 @@ public interface ValueContainerService {
 	 * @param valueContainer
 	 *            the ValueContainer to be saved
 	 */
-	public void save(ValueContainer valueContainer);
+	public Long save(ValueContainer valueContainer);
 
 	/**
 	 * Update the ValueContainer.

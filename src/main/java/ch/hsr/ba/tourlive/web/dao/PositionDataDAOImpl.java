@@ -32,8 +32,8 @@ public class PositionDataDAOImpl implements PositionDataDAO {
 	 * ch.hsr.ba.tourlive.web.dao.PositionDataDAO#save(ch.hsr.ba.tourlive.web
 	 * .model.PositionData)
 	 */
-	public void save(PositionData position) {
-		sessionFactory.getCurrentSession().save(position);
+	public Long save(PositionData position) {
+		return (Long) sessionFactory.getCurrentSession().save(position);
 	}
 
 	/*

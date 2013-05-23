@@ -31,8 +31,8 @@ public class NetDataServiceImpl implements NetDataService {
 	 * .web.model.NetData)
 	 */
 	@Transactional
-	public void save(NetData netdat) {
-		netdatadao.save(netdat);
+	public Integer save(NetData netdat) {
+		return netdatadao.save(netdat);
 	}
 
 	/*
@@ -53,7 +53,7 @@ public class NetDataServiceImpl implements NetDataService {
 	 * @see ch.hsr.ba.tourlive.web.service.NetDataService#delete(java.lang.Long)
 	 */
 	@Transactional
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		netdatadao.delete(id);
 	}
 

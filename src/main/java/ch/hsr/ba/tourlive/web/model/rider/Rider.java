@@ -1,7 +1,5 @@
 package ch.hsr.ba.tourlive.web.model.rider;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,8 +31,6 @@ public class Rider {
 	private String teamShort;
 	@Column
 	private String country;
-	@Column
-	private Date birthday;
 	@Column
 	private String note;
 	@Column
@@ -104,14 +100,6 @@ public class Rider {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
 	}
 
 	public String getNote() {

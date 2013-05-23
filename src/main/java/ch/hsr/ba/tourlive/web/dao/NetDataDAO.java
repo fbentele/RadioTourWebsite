@@ -21,7 +21,7 @@ public interface NetDataDAO {
 	 * @param netdata
 	 *            the netdata
 	 */
-	public void save(NetData netdata);
+	public Integer save(NetData netdata);
 
 	/**
 	 * Updates the object provided.
@@ -37,7 +37,7 @@ public interface NetDataDAO {
 	 * @param id
 	 *            the id
 	 */
-	public void delete(Long id);
+	public void delete(Integer id);
 
 	/**
 	 * Gets all.

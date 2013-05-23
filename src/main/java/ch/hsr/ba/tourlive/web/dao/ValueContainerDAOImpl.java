@@ -42,8 +42,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 * web.model.ValueContainer)
 	 */
 	@Override
-	public void save(ValueContainer valuecontainer) {
-		sessionFactory.getCurrentSession().save(valuecontainer);
+	public Long save(ValueContainer valuecontainer) {
+		return (Long) sessionFactory.getCurrentSession().save(valuecontainer);
 	}
 
 	/*

@@ -1,19 +1,13 @@
-/**
- * StageDataDAO.java
- * 
- * @author Florian Bentele
- * @date 22.05.2013
- */
-package ch.hsr.ba.tourlive.web.dao;
+package ch.hsr.ba.tourlive.web.service;
 
 import java.util.List;
 
 import ch.hsr.ba.tourlive.web.model.StageData;
 
 /**
- * The Interface StageDataDAO.
+ * The Interface StageDataService.
  */
-public interface StageDataDAO {
+public interface StageDataService {
 
 	/**
 	 * Saves the Object provided.

@@ -26,7 +26,7 @@ public interface ValueContainerDAO {
 	 *            to be saved
 	 * 
 	 */
-	public void save(ValueContainer valueContainer);
+	public Long save(ValueContainer valueContainer);
 
 	/**
 	 * Updates the ValueContainer.

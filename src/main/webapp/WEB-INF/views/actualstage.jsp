@@ -294,7 +294,6 @@
 	</script>
 	</c:if>
 
-
 	<!-- Abstandsentwicklung  -->
 	<c:if test="${not empty distances && not empty deficitetimes}">
 		<script type="text/javascript">

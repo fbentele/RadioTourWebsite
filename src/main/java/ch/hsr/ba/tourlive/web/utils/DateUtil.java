@@ -77,4 +77,13 @@ public class DateUtil {
 		return s.format(date);
 	}
 
+	/**
+	 * @param javaDate
+	 * @return returns a nicely formatted birthday
+	 */
+	public static String toBirthday(Date date) {
+		SimpleDateFormat s = new SimpleDateFormat(DATE_FORMAT_PATTERN);
+		return s.format(date);
+	}
+
 }

@@ -32,8 +32,8 @@ public class StageDataDAOImpl implements StageDataDAO {
 	 * .StageData)
 	 */
 	@Override
-	public void save(StageData stagedata) {
-		sessionFactory.getCurrentSession().save(stagedata);
+	public Long save(StageData stagedata) {
+		return (Long) sessionFactory.getCurrentSession().save(stagedata);
 	}
 
 	/*

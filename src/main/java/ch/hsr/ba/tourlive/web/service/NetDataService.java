@@ -20,8 +20,9 @@ public interface NetDataService {
 	 * 
 	 * @param netdata
 	 *            the netdata
+	 * @return
 	 */
-	public void save(NetData netdata);
+	public Integer save(NetData netdata);
 
 	/**
 	 * Updates the object provided.
@@ -37,7 +38,7 @@ public interface NetDataService {
 	 * @param id
 	 *            the id
 	 */
-	public void delete(Long id);
+	public void delete(Integer id);
 
 	/**
 	 * Gets all NetData objects.

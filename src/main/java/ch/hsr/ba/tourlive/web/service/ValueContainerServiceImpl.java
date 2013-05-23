@@ -37,8 +37,8 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	 */
 	@Override
 	@Transactional
-	public void save(ValueContainer valueContainer) {
-		valueDao.save(valueContainer);
+	public Long save(ValueContainer valueContainer) {
+		return valueDao.save(valueContainer);
 	}
 
 	/*

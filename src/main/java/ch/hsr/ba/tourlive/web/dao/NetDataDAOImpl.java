@@ -20,7 +20,6 @@ import ch.hsr.ba.tourlive.web.model.NetData;
 @Repository
 public class NetDataDAOImpl implements NetDataDAO {
 
-	/** The session factory. */
 	@Autowired
 	SessionFactory sessionFactory;
 
@@ -32,8 +31,8 @@ public class NetDataDAOImpl implements NetDataDAO {
 	 * .NetData)
 	 */
 	@Override
-	public void save(NetData netdata) {
-		sessionFactory.getCurrentSession().save(netdata);
+	public Integer save(NetData netdata) {
+		return (Integer) sessionFactory.getCurrentSession().save(netdata);
 	}
 
 	/*
@@ -55,7 +54,7 @@ public class NetDataDAOImpl implements NetDataDAO {
 	 * @see ch.hsr.ba.tourlive.web.dao.NetDataDAO#delete(java.lang.Long)
 	 */
 	@Override
-	public void delete(Long id) {
+	public void delete(Integer id) {
 		NetData netdata = (NetData) sessionFactory.getCurrentSession().load(NetData.class, id);
 		if (null != netdata) {
 			sessionFactory.getCurrentSession().delete(netdata);

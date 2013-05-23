@@ -31,8 +31,8 @@ public class PositionDataServiceImpl implements PositionDataService {
 	 * .web.model.PositionData)
 	 */
 	@Transactional
-	public void save(PositionData position) {
-		positiondao.save(position);
+	public Long save(PositionData position) {
+		return positiondao.save(position);
 	}
 
 	/*

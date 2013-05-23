@@ -21,7 +21,7 @@ public interface PositionDataDAO {
 	 * @param position
 	 *            the position
 	 */
-	public void save(PositionData position);
+	public Long save(PositionData position);
 
 	/**
 	 * Updates the object provided.

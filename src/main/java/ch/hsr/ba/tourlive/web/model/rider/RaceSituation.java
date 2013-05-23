@@ -83,8 +83,8 @@ public class RaceSituation {
 			}
 			return situation;
 		} catch (IndexOutOfBoundsException e) {
+			return situation;
 		}
-		return situation;
 	}
 
 	public void setSituation(Situation[] situation) {
