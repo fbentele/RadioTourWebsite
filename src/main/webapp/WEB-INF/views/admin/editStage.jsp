@@ -197,7 +197,7 @@
 				<spring:message code="label.admin.csvWithCol" />
 				:
 			</p>
-			<pre>"startNr", "name", "birthday yyyyMMdd", "team", "teamshort"</pre>
+			<pre>"startNr", "name", "team", "teamshort"</pre>
 			<form:form method="post" name="fahrerimport"
 				action="/admin/race/${race.raceId}/stage/${stage.stageId}/rider/import"
 				enctype="multipart/form-data">

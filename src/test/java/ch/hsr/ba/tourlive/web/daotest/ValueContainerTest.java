@@ -54,11 +54,10 @@ public class ValueContainerTest extends AbstractTestClass {
 	@Test
 	public void testPositionData() {
 		pos = new PositionData();
-		pos.setAccuracy(15F);
+		pos.setAccuracy(15);
 		pos.setAltitude(11);
 		pos.setLatitude(44.22F);
 		pos.setLongitude(11.34F);
-		pos.setIncline(15);
 		pos.setSatellites("10/12");
 		pos.setSpeed(34.8F);
 		int size = posService.getAll().size();
