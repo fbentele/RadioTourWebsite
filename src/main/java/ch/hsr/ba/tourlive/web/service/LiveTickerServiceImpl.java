@@ -65,6 +65,18 @@ public class LiveTickerServiceImpl implements LiveTickerItemService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
+	 * ch.hsr.ba.tourlive.web.service.LiveTickerItemService#getById(java.lang
+	 * .Long)
+	 */
+	@Transactional
+	public LiveTickerItem getById(Long id) {
+		return ltidao.getById(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
 	 * ch.hsr.ba.tourlive.web.service.LiveTickerItemService#getAllByStage(ch
 	 * .hsr.ba.tourlive.web.model.Stage)
 	 */

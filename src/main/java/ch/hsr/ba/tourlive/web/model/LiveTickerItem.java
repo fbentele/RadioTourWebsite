@@ -1,9 +1,5 @@
 package ch.hsr.ba.tourlive.web.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +11,8 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ch.hsr.ba.tourlive.web.utils.DateUtil;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component
@@ -22,8 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "LiveTickerItem")
 public class LiveTickerItem {
-
-	private static final String TIME_FORMAT_PATTERN = "HH:mm:ss";
 
 	@Id
 	@Column
@@ -62,13 +58,7 @@ public class LiveTickerItem {
 	}
 
 	public String getTimestamp() {
-		SimpleDateFormat date = new SimpleDateFormat(TIME_FORMAT_PATTERN);
-		try {
-			Date d = new Date(this.timestamp);
-			return date.format(d);
-		} catch (NullPointerException e) {
-			return "Zeitpunkt unbekannt";
-		}
+		return DateUtil.toTimeFormat(timestamp);
 	}
 
 	public void setTimestampAsTimestamp(Long timestamp) {
@@ -76,12 +66,7 @@ public class LiveTickerItem {
 	}
 
 	public void setTimestamp(String timestamp) {
-		try {
-			Date date = new SimpleDateFormat(TIME_FORMAT_PATTERN).parse(timestamp);
-			this.timestamp = date.getTime();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		this.timestamp = DateUtil.timeToTimestamp(timestamp);
 	}
 
 	public String getNews() {

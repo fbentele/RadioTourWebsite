@@ -102,6 +102,8 @@ public class ValueContainerTest extends AbstractTestClass {
 		vc.setTimestamp(1311111111111L);
 		int size = valueContainerService.getAllValueContainers().size();
 		Long id = valueContainerService.save(vc);
+		// TODO: Valuecontainers limited to 1000 so this test wont work
+		// properly...
 		// assertEquals(size + 1,
 		// valueContainerService.getAllValueContainers().size());
 		valueContainerService.delete(id);

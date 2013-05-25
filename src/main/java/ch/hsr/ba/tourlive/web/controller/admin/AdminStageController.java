@@ -261,12 +261,19 @@ public class AdminStageController {
 	}
 
 	/**
-	 * Show live ticker form.
+	 * Show live ticker (edit) form.
 	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker", method = RequestMethod.GET)
 	public String showLiveTicker(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId, Model model) {
+		return "forward:/admin/race/" + raceId + "/stage/" + stageId + "/liveticker/0";
+	}
+
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/{ltiId}", method = RequestMethod.GET)
+	public String editLiveTicker(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId, @PathVariable("ltiId") Long ltiId, Model model) {
 		Stage stage = stageService.getStageById(stageId);
+		model.addAttribute("hostname", hostname);
 		model.addAttribute("race", raceService.getRaceById(raceId));
 		model.addAttribute("stage", stage);
 		model.addAttribute("liveTickerItems", ltiService.getAllByStage(stage));
@@ -275,6 +282,7 @@ public class AdminStageController {
 				+ stageId));
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
+		model.addAttribute("lti", ltiId > 0 ? ltiService.getById(ltiId) : new LiveTickerItem());
 		return "admin/liveticker";
 	}
 
@@ -283,13 +291,18 @@ public class AdminStageController {
 	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/add", method = RequestMethod.POST)
 	public String addLiveTickerItem(@PathVariable("raceId") Long raceId,
-			@PathVariable("stageId") Long stageId, @RequestParam("timestamp") String timestamp,
-			@RequestParam("news") String news) {
+			@PathVariable("stageId") Long stageId, @RequestParam("liveTickerId") Long ltiId,
+			@RequestParam("timestamp") String timestamp, @RequestParam("news") String news) {
 		LiveTickerItem lti = new LiveTickerItem();
 		lti.setTimestamp(timestamp);
 		lti.setNews(news);
 		lti.setStage(stageService.getStageById(stageId));
-		ltiService.save(lti);
+		if (ltiId != null) {
+			lti.setLiveTickerId(ltiId);
+			ltiService.update(lti);
+		} else {
+			ltiService.save(lti);
+		}
 		return "redirect:/admin/race/" + raceId + "/stage/" + stageId + "/liveticker";
 	}
 

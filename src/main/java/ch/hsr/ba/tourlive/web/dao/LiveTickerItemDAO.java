@@ -41,6 +41,13 @@ public interface LiveTickerItemDAO {
 	public void delete(Long id);
 
 	/**
+	 * 
+	 * @param id
+	 * @return lti, returns the Object with ID
+	 */
+	public LiveTickerItem getById(Long id);
+
+	/**
 	 * Gets all by stage.
 	 * 
 	 * @param stage

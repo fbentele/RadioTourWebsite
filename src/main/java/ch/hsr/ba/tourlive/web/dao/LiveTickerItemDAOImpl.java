@@ -63,6 +63,15 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getById(java.lang.Long)
+	 */
+	public LiveTickerItem getById(Long id) {
+		return (LiveTickerItem) sessionFactory.getCurrentSession().get(LiveTickerItem.class, id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getAllByStage(ch.hsr.ba.
 	 * tourlive.web.model.Stage)

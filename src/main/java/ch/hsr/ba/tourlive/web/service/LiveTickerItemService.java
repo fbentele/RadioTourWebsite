@@ -41,6 +41,15 @@ public interface LiveTickerItemService {
 	public void delete(Long id);
 
 	/**
+	 * Get one Object by its Id
+	 * 
+	 * @param the
+	 *            id of the object
+	 * @return lti returns one Item with ID
+	 */
+	public LiveTickerItem getById(Long id);
+
+	/**
 	 * Gets all by stage.
 	 * 
 	 * @param stage
