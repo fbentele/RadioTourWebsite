@@ -32,29 +32,20 @@
 					<jsp:setProperty name="dateValue" property="time" value="${limit}" />
 					<fmt:formatDate value="${dateValue}" pattern="HH:mm:ss" />
 					<br />
-					<div class="btn-group">
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}">+ 5min</a>
-						</div>
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 120000}">+ 2min</a>
-						</div>
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}">+ 1min</a>
-						</div>
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/"><spring:message
-									code="label.stage.now" /></a>
-						</div>
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}">- 1min</a>
-						</div>
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 120000}">- 2min</a>
-						</div>
-						<div class="btn">
-							<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}">- 5min</a>
-						</div>
+					<div id="timenav" class="btn-group">
+						<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 1800000}" class="btn btn-small">-
+							30min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 600000}"
+							class="btn btn-small">- 10min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}" class="btn btn-small">-
+							5min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}"
+							class="btn btn-small">- 1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/"
+							class="btn btn-small"><spring:message code="label.stage.now" /></a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}" class="btn btn-small">+
+							1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}"
+							class="btn btn-small">+ 5min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 600000}" class="btn btn-small">+
+							10min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 1800000}"
+							class="btn btn-small">+ 30min</a>
 					</div>
 				</div>
 			</div>
@@ -242,7 +233,8 @@
 							<tr>
 								<th></th>
 								<th><spring:message code="label.stage.altitude" /></th>
-								<th colspan="2"><spring:message code="label.stage.distance" /></th>
+								<th><spring:message code="label.stage.distance" /></th>
+								<th><spring:message code="label.stage.togo" /></th>
 								<th><spring:message code="label.stage.place" /></th>
 								<th><spring:message code="label.stage.adTime" /></th>
 								<th><spring:message code="label.stage.timeFast" /></th>
@@ -421,7 +413,7 @@
 		"sWrapper" : "dataTables_wrapper form-inline"
 	});
 	</script>
-	
+
 	<!-- Marchtable DataTable -->
 	<script type="text/javascript">
 		$('#marchtable').dataTable( {

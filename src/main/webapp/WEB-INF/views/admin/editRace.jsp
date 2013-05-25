@@ -15,19 +15,23 @@
 			<form:form method="post" name="race" action="/admin/race/edit/${race.raceId}">
 				<div class="span3">
 					<input type="hidden" name="raceId" value="${race.raceId}" /> <label for="raceName"><spring:message
-							code="label.admin.raceName" /></label>
+							code="label.admin.raceName" /> *</label>
 					<form:errors path="raceName" cssClass="formerror" />
 					<input type="text" name="raceName" class="toRaceSlug" value="${race.raceName}"
 						tabindex="1" /> <label for="raceSlug"><spring:message
-							code="label.admin.raceSlug" /></label>
+							code="label.admin.raceSlug" /> *</label>
 					<form:errors path="raceSlug" cssClass="formerror" />
 					<input type="text" name="raceSlug" class="theRaceSlug" value="${race.raceSlug}"
-						tabindex="2" /> <label for="year"><spring:message code="label.admin.year" /></label>
+						tabindex="2" /> <label for="year"><spring:message code="label.admin.year" />
+						*</label>
 					<form:errors path="year" cssClass="formerror" />
 					<input type="number" name="year" value="${race.year}" tabindex="3" /> <label
 						for="visible"><input type="checkbox" name="visible" value="true"
 						<c:if test="${race.visible == true}">checked</c:if> tabindex="4" /> <spring:message
-							code="label.admin.visible" /></label> <br>
+							code="label.admin.visible" /></label>
+					<spring:message code="label.admin.required" />
+					<br />
+
 					<button type="submit" class="btn btn-primary" tabindex="6">
 						<spring:message code="label.admin.save" />
 					</button>
@@ -58,20 +62,20 @@
 					<c:forEach items="${stages}" var="stage">
 						<tr>
 							<td><a href="/admin/race/${race.raceId}/stage/edit/${stage.stageId}">${stage.stageName}</a></td>
-							<td>
-							<c:choose>
-								<c:when test="${fn:length(stage.stageDescription) > 120}">
+							<td><c:choose>
+									<c:when test="${fn:length(stage.stageDescription) > 120}">
 									${fn:substring(stage.stageDescription, 0, 120)}...
 								</c:when>
-								<c:otherwise>
+									<c:otherwise>
 									${stage.stageDescription}
 								</c:otherwise>
-							</c:choose></td>
+								</c:choose></td>
 							<td>${stage.starttime}</td>
 							<td>${stage.endtime}</td>
 							<td>${stage.distance}</td>
 							<td>${stage.visible}</td>
-							<td class="nolink"><a href="#modal_delete${stage.stageId}" data-toggle="modal"><i class="icon-trash"></i></a></td>
+							<td class="nolink"><a href="#modal_delete${stage.stageId}" data-toggle="modal"><i
+									class="icon-trash"></i></a></td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -90,10 +94,10 @@
 		<form:form commandName="stage" method="post" name="stage"
 			action="/admin/race/${race.raceId}/stage/add" enctype="multipart/form-data">
 			<div class="span4">
-				<label for="stageName"><spring:message code="label.admin.stageName" /></label>
+				<label for="stageName"><spring:message code="label.admin.stageName" /> *</label>
 				<form:errors path="stageName" cssClass="formerror" />
 				<form:input path="stageName" type="text" name="stageName" class="toSlug" tabindex="10" />
-				<label for="stageSlug"><spring:message code="label.admin.stageSlug" /></label>
+				<label for="stageSlug"><spring:message code="label.admin.stageSlug" /> *</label>
 				<form:errors path="stageSlug" cssClass="formerror" />
 				<form:input path="stageSlug" type="text" name="stageSlug" class="theSlug" tabindex="11" />
 				<label for="distance"><spring:message code="label.admin.distance" /></label>
@@ -108,6 +112,7 @@
 					<label for="stageDescription"><spring:message code="label.admin.description" /></label>
 					<textarea name="stageDescription" rows="6" tabindex="14"></textarea>
 				</div>
+				<spring:message code="label.admin.required" />
 				<br />
 				<button type="submit" class="btn btn-primary" tabindex="20">Speichern</button>
 			</div>
@@ -161,13 +166,15 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal"><spring:message code="label.admin.cancel" /></a> <a href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}"
-					class="btn btn-primary"><spring:message code="label.admin.delete" /></a>
+				<a href="#" class="btn" data-dismiss="modal"><spring:message
+						code="label.admin.cancel" /></a> <a
+					href="/admin/race/${race.raceId}/stage/delete/${stage.stageId}" class="btn btn-primary"><spring:message
+						code="label.admin.delete" /></a>
 			</div>
 		</div>
 	</c:forEach>
-	
-		<!-- DateTime Picker -->
+
+	<!-- DateTime Picker -->
 	<script type="text/javascript">
 		// datetimepicker
 		// http://tarruda.github.io/bootstrap-datetimepicker/

@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ch.hsr.ba.tourlive.web.utils.DateUtil;
+
 /**
  * StageData provides information about the current position within a
  * {@link Stage} (collected by a {@link Device} and inserted into a
@@ -33,7 +35,7 @@ public class StageData implements Serializable {
 	private Long stagedataid;
 
 	@Column
-	private String stageTime;
+	private Long stageTime;
 
 	@Column
 	private Double stageUpAltitude;
@@ -56,10 +58,10 @@ public class StageData implements Serializable {
 	}
 
 	public String getStageTime() {
-		return stageTime;
+		return DateUtil.toTimeFormat(stageTime);
 	}
 
-	public void setStageTime(String stageTime) {
+	public void setStageTime(Long stageTime) {
 		this.stageTime = stageTime;
 	}
 

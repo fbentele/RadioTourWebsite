@@ -44,18 +44,19 @@
 	<div <c:if test="${empty showhidden}">class="newItem"</c:if>>
 		<form:form method="post" name="race" action="/admin/race/add" commandName="race">
 			<div class="span3">
-				<label for="raceName"><spring:message code="label.admin.raceName" /></label>
+				<label for="raceName"><spring:message code="label.admin.raceName" /> *</label>
 				<form:errors path="raceName" cssClass="formerror" />
-				<form:input path="raceName" class="toRaceSlug" type="text" name="raceName" tabindex="1" />
-				<label for="raceSlug"><spring:message code="label.admin.raceSlug" /> (Slug)</label>
+				<form:input path="raceName" class="toRaceSlug" type="text" name="raceName" tabindex="1"/>
+				<label for="raceSlug"><spring:message code="label.admin.raceSlug" /> (Slug) *</label>
 				<form:errors path="raceSlug" cssClass="formerror" />
 				<form:input path="raceSlug" type="text" name="raceSlug" class="theRaceSlug" tabindex="1" />
-				<label for="year"><spring:message code="label.admin.year" /></label>
+				<label for="year"><spring:message code="label.admin.year" /> *</label>
 				<form:errors path="year" cssClass="formerror" />
 				<form:input path="year" type="number" name="year" tabindex="2" />
 				<label for="visible"> <input type="checkbox" name="visible" value="true">
 					<spring:message code="label.admin.visible" /></label>
 				<form:errors path="visible" cssClass="formerror" />
+				<spring:message code="label.admin.required" />
 				<button type="submit" class="btn btn-primary" tabindex="4">
 					<spring:message code="label.admin.add" />
 				</button>
