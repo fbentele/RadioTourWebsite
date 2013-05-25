@@ -44,6 +44,9 @@ public class StageData implements Serializable {
 	@Column
 	private Float averageSpeed;
 
+	@Column
+	private Integer incline;
+
 	public Long getStagedataid() {
 		return stagedataid;
 	}
@@ -90,6 +93,14 @@ public class StageData implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Integer getIncline() {
+		return incline;
+	}
+
+	public void setIncline(Integer incline) {
+		this.incline = incline;
 	}
 
 	@Override

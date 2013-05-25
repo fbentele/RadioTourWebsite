@@ -19,15 +19,15 @@ public class NetData {
 	@Column(name = "NETDATA_ID")
 	private int netDataID;
 	@Column
-	private int cellNumber;
+	private Integer cellNumber;
 	@Column
-	private int locationArea;
+	private Integer locationArea;
 	@Column
-	private int signalStrength;
+	private Integer signalStrength;
 	@Column
 	private String mncmcc;
 	@Column
-	private int upstream;
+	private Integer upstream;
 	@Column
 	private String technology;
 
@@ -35,39 +35,39 @@ public class NetData {
 		return netDataID;
 	}
 
-	public void setNetDataID(int netDataID) {
+	public void setNetDataID(Integer netDataID) {
 		this.netDataID = netDataID;
 	}
 
-	public int getCellNumber() {
+	public Integer getCellNumber() {
 		return cellNumber;
 	}
 
-	public void setCellNumber(int cellNumber) {
+	public void setCellNumber(Integer cellNumber) {
 		this.cellNumber = cellNumber;
 	}
 
-	public int getLocationArea() {
+	public Integer getLocationArea() {
 		return locationArea;
 	}
 
-	public void setLocationArea(int locationArea) {
+	public void setLocationArea(Integer locationArea) {
 		this.locationArea = locationArea;
 	}
 
-	public int getSignalStrength() {
+	public Integer getSignalStrength() {
 		return signalStrength;
 	}
 
-	public void setSignalStrength(int signalStrength) {
+	public void setSignalStrength(Integer signalStrength) {
 		this.signalStrength = signalStrength;
 	}
 
-	public int getUpstream() {
+	public Integer getUpstream() {
 		return upstream;
 	}
 
-	public void setUpstream(int upstream) {
+	public void setUpstream(Integer upstream) {
 		this.upstream = upstream;
 	}
 
@@ -89,9 +89,8 @@ public class NetData {
 
 	@Override
 	public String toString() {
-		return "NetData [netDataID=" + netDataID + ", cellNumber=" + cellNumber
-				+ ", locationArea=" + locationArea + ", signalStrength="
-				+ signalStrength + ", mncmcc=" + mncmcc + ", upstream="
-				+ upstream + ", technology=" + technology + "]";
+		return "NetData [netDataID=" + netDataID + ", cellNumber=" + cellNumber + ", locationArea="
+				+ locationArea + ", signalStrength=" + signalStrength + ", mncmcc=" + mncmcc
+				+ ", upstream=" + upstream + ", technology=" + technology + "]";
 	}
 }

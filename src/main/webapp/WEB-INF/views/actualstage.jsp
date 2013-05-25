@@ -237,7 +237,7 @@
 					<h4 id="marschtabelle">
 						<spring:message code="label.stage.marchtable" />
 					</h4>
-					<table class="table table-hover">
+					<table id="marchtable" class="table table-hover">
 						<thead>
 							<tr>
 								<th></th>
@@ -404,6 +404,27 @@
 	<!-- Ranking DataTable -->
 	<script type="text/javascript">
 		$('#ridertable').dataTable( {
+        	"oLanguage": {
+            	"sLengthMenu": "_MENU_ <spring:message code="label.stage.recordsperpage"/>",
+            	"sZeroRecords": "<spring:message code="label.stage.norecords"/>",
+            	"sInfo": "_START_ - _END_ <spring:message code="label.stage.of"/> _TOTAL_ <spring:message code="label.stage.rider"/>",
+            	"sInfoEmpty": " 0 - 0 <spring:message code="label.stage.of"/> 0",
+            	"sInfoFiltered": "(<spring:message code="label.stage.filtered"/> _MAX_ )",
+        		"sSearch": "<spring:message code="label.stage.search"/>",
+        		"oPaginate":{
+        			"sNext": "<spring:message code="label.stage.next"/>",
+        			"sPrevious": "<spring:message code="label.stage.previous"/>"
+        		}
+        	}
+    	});
+	$.extend($.fn.dataTableExt.oStdClasses, {
+		"sWrapper" : "dataTables_wrapper form-inline"
+	});
+	</script>
+	
+	<!-- Marchtable DataTable -->
+	<script type="text/javascript">
+		$('#marchtable').dataTable( {
         	"oLanguage": {
             	"sLengthMenu": "_MENU_ <spring:message code="label.stage.recordsperpage"/>",
             	"sZeroRecords": "<spring:message code="label.stage.norecords"/>",

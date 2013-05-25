@@ -20,31 +20,25 @@ public class PositionData {
 	private Long positionid;
 
 	@Column
-	private float longitude;
+	private Float longitude;
 
 	@Column
-	private float latitude;
+	private Float latitude;
 
 	@Column
-	private float speed;
+	private Float speed;
 
 	@Column
-	private double altitude;
+	private Integer altitude;
 
 	@Column
-	private float direction;
-
-	@Column
-	private int incline;
+	private Integer direction;
 
 	@Column
 	private String satellites;
 
 	@Column
-	private Integer transferInterval;
-
-	@Column
-	private Float accuracy;
+	private Integer accuracy;
 
 	public Long getPositionid() {
 		return positionid;
@@ -54,52 +48,44 @@ public class PositionData {
 		this.positionid = positionid;
 	}
 
-	public float getLongitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(float longitude) {
+	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 
-	public float getLatitude() {
+	public Float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
 
-	public float getSpeed() {
+	public Float getSpeed() {
 		return speed;
 	}
 
-	public void setSpeed(float speed) {
+	public void setSpeed(Float speed) {
 		this.speed = speed;
 	}
 
-	public double getAltitude() {
+	public Integer getAltitude() {
 		return altitude;
 	}
 
-	public void setAltitude(double altitude) {
+	public void setAltitude(Integer altitude) {
 		this.altitude = altitude;
 	}
 
-	public float getDirection() {
+	public Integer getDirection() {
 		return direction;
 	}
 
-	public void setDirection(float direction) {
+	public void setDirection(Integer direction) {
 		this.direction = direction;
-	}
-
-	public int getIncline() {
-		return incline;
-	}
-
-	public void setIncline(int incline) {
-		this.incline = incline;
 	}
 
 	public String getSatellites() {
@@ -110,19 +96,11 @@ public class PositionData {
 		this.satellites = satellites;
 	}
 
-	public Integer getTransferInterval() {
-		return transferInterval;
-	}
-
-	public void setTransferInterval(Integer transferInterval) {
-		this.transferInterval = transferInterval;
-	}
-
-	public Float getAccuracy() {
+	public Integer getAccuracy() {
 		return accuracy;
 	}
 
-	public void setAccuracy(Float accuracy) {
+	public void setAccuracy(Integer accuracy) {
 		this.accuracy = accuracy;
 	}
 
@@ -130,7 +108,6 @@ public class PositionData {
 	public String toString() {
 		return "PositionData [positionid=" + positionid + ", longitude=" + longitude
 				+ ", latitude=" + latitude + ", speed=" + speed + ", altitude=" + altitude
-				+ ", direction=" + direction + ", incline=" + incline + ", satellites="
-				+ satellites + ", transferInterval=" + transferInterval + "]";
+				+ ", direction=" + direction + ", satellites=" + satellites + "]";
 	}
 }
