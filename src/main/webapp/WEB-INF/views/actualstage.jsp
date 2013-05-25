@@ -33,18 +33,23 @@
 					<fmt:formatDate value="${dateValue}" pattern="HH:mm:ss" />
 					<br />
 					<div id="timenav" class="btn-group">
-						<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 1800000}" class="btn btn-small">-
-							30min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 600000}"
+						<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 1800000}"
+							class="btn btn-small">- 30min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 600000}"
 							class="btn btn-small">- 10min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}" class="btn btn-small">-
-							5min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}"
-							class="btn btn-small">- 1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/"
-							class="btn btn-small"><spring:message code="label.stage.now" /></a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}" class="btn btn-small">+
-							1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}"
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}"
+							class="btn btn-small">- 5min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}"
+							class="btn btn-small">- 1min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/" class="btn btn-small"><spring:message
+								code="label.stage.now" /></a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}"
+							class="btn btn-small">+ 1min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}"
 							class="btn btn-small">+ 5min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 600000}" class="btn btn-small">+
-							10min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 1800000}"
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 600000}"
+							class="btn btn-small">+ 10min</a> <a
+							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 1800000}"
 							class="btn btn-small">+ 30min</a>
 					</div>
 				</div>
@@ -151,14 +156,8 @@
 					<h4 id="rennsituation">
 						<spring:message code="label.stage.raceSituation" />
 					</h4>
-					<p>
-						<spring:message code="label.stage.atTime" />
-						: ${situation.timestamp}
-						<spring:message code="label.stage.andKm" />
-						: ${first.stageData.distance} km
-					</p>
 					<c:forEach items="${situation.situation}" var="sit">
-						<div class="span2">
+						<div class="span3 ridergroup">
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
 							<c:if test="${not sit.isLeader}">
@@ -169,20 +168,21 @@
 									<c:forEach items="${riders}" var="rider">
 										<c:if test="${rider.startNr == situation }">
 											<li><span id="rider${situation}"
-												class="badge <c:if test="${rider.neo}">badge-success</c:if> <c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if> data-toggle="
-												tooltip" data-placement="right" title="${rider.name} - ${rider.teamShort}">${situation}</span></li>
+												class="badge <c:if test="${rider.neo}">badge-success</c:if> <c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if>">${situation}</span>
+												<small>${rider.name} - ${rider.teamShort}</small></li>
 										</c:if>
 									</c:forEach>
 								</c:forEach>
 							</ul>
 						</div>
 					</c:forEach>
-					<p>
-						<spring:message code="label.stage.legend" />
-						:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
-							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
-							class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
-					</p>
+					<br />
+					<div class="span3">
+							<spring:message code="label.stage.legend" />
+							:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
+								class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
+								class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
+					</div>
 				</div>
 			</div>
 		</c:if>
@@ -196,8 +196,8 @@
 					<table id="ridertable" class="table table-hover">
 						<thead>
 							<tr>
-								<th style="width: 10%"><spring:message code="label.stage.startNr" /></th>
 								<th style="width: 10%"><spring:message code="label.stage.rank" /></th>
+								<th style="width: 10%"><spring:message code="label.stage.startNr" /></th>
 								<th style="width: 40%"><spring:message code="label.stage.riderName" /></th>
 								<th style="width: 10%"><spring:message code="label.stage.team" /></th>
 								<th style="width: 10%"><spring:message code="label.stage.country" /></th>

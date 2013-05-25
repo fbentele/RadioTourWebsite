@@ -25,6 +25,10 @@ html,body {
 	cursor: default;
 }
 
+.ridergroup {
+	margin-left: 1px !important;
+}
+
 #timenav>.btn {
 	padding: 2px 5px;
 }

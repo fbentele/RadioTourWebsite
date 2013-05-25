@@ -114,7 +114,7 @@
 				</div>
 				<spring:message code="label.admin.required" />
 				<br />
-				<button type="submit" class="btn btn-primary" tabindex="20">Speichern</button>
+				<button type="submit" class="btn btn-primary" tabindex="20"><spring:message code="label.admin.save" /></button>
 			</div>
 			<div class="span4">
 				<label for="starttime"><spring:message code="label.admin.starttime" /></label>

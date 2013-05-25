@@ -90,7 +90,7 @@ public class RaceController {
 	}
 
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}", method = RequestMethod.GET)
-	public String stage(@PathVariable("stageSlug") String stageSlug,
+	public String showStage(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, Model model) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {

@@ -1,8 +1,8 @@
 package ch.hsr.ba.tourlive.web.model.rider;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import ch.hsr.ba.tourlive.web.utils.DateUtil;
 
 public class Situation implements Serializable {
 	private static final long serialVersionUID = -5090788260118136922L;
@@ -84,13 +84,7 @@ public class Situation implements Serializable {
 	}
 
 	public String getHandicaptime() {
-		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
-		try {
-			Date d = new Date(this.handicaptime);
-			return date.format(d);
-		} catch (NullPointerException e) {
-			return "00:00";
-		}
+		return DateUtil.toShortTimeFormat(handicaptime);
 	}
 
 	public void setHandicaptime(Long handicaptime) {

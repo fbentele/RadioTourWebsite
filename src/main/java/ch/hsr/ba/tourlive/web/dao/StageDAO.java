@@ -92,6 +92,13 @@ public interface StageDAO {
 	public Stage getStageBySlug(String slug);
 
 	/**
+	 * Get The most recent stage which is visible
+	 * 
+	 * @return the most recent visible stage
+	 */
+	public Stage getLatestVisible();
+
+	/**
 	 * Gets the most recent stage for device.
 	 * 
 	 * @param device
@@ -119,4 +126,11 @@ public interface StageDAO {
 	 * @return the total race distance
 	 */
 	public Float getTotalRaceDistance(Race race, Boolean completed);
+
+	/**
+	 * Gets all Stages older than one Year
+	 * 
+	 * @return all older (1y) races
+	 */
+	public List<Stage> getAllOlderThanAYear();
 }

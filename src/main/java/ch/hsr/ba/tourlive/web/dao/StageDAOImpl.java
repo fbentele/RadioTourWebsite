@@ -31,6 +31,7 @@ public class StageDAOImpl implements StageDAO {
 	@Autowired
 	SessionFactory sessionFactory;
 	private final static Logger LOG = LoggerFactory.getLogger(StageDAOImpl.class);
+	private final static long YEAR = 31536000000L;
 
 	/*
 	 * (non-Javadoc)
@@ -118,6 +119,18 @@ public class StageDAOImpl implements StageDAO {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#getAllOlderThanAYear()
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Stage> getAllOlderThanAYear() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		crit.add(Restrictions.le("starttime", System.currentTimeMillis() - YEAR));
+		return (List<Stage>) crit.list();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * ch.hsr.ba.tourlive.web.dao.StageDAO#getAllByRace(ch.hsr.ba.tourlive.web
 	 * .model.Race)
@@ -182,6 +195,23 @@ public class StageDAOImpl implements StageDAO {
 			f += stage.getDistance();
 		}
 		return f;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.dao.StageDAO#getLatestPublic()
+	 */
+	public Stage getLatestVisible() {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Stage.class);
+		crit.add(Restrictions.eq("visible", true));
+		crit.addOrder(Order.desc("starttime"));
+		try {
+			return (Stage) crit.list().get(0);
+		} catch (IndexOutOfBoundsException e) {
+			LOG.error("no stage found");
+			return null;
+		}
 	}
 
 	/*

@@ -105,6 +105,26 @@ public class StageServiceImpl implements StageService {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see ch.hsr.ba.tourlive.web.service.StageService#getLatestPublic()
+	 */
+	@Transactional
+	public Stage getLatestVisible() {
+		return stagedao.getLatestVisible();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.service.StageService#getAllOlderThanAYear()
+	 */
+	@Transactional
+	public List<Stage> getAllOlderThanAYear() {
+		return stagedao.getAllOlderThanAYear();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * ch.hsr.ba.tourlive.web.service.StageService#getAllByRace(ch.hsr.ba.tourlive
 	 * .web.model.Race)

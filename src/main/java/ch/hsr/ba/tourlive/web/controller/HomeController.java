@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.service.PositionDataService;
 import ch.hsr.ba.tourlive.web.service.RaceService;
 import ch.hsr.ba.tourlive.web.service.StageService;
@@ -25,6 +26,8 @@ public class HomeController {
 	PositionDataService positionDataService;
 	@Autowired
 	RaceService raceService;
+	@Autowired
+	StageService stageService;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	/**
@@ -32,9 +35,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		model.addAttribute("navbarhome", "active");
-		model.addAttribute("races", raceService.getAllVisible());
-		return "home";
+		Stage stage = stageService.getLatestVisible();
+		return "forward:/race/" + stage.getRace().getRaceSlug() + " /stage/" + stage.getStageSlug();
 	}
 
 	/**
@@ -45,6 +47,7 @@ public class HomeController {
 		logger.info("This is the archive Page");
 		model.addAttribute("navbararchive", "active");
 		model.addAttribute("races", raceService.getAllVisible());
+		model.addAttribute("stages", stageService.getAllOlderThanAYear());
 		return "archive";
 	}
 

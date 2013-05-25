@@ -47,7 +47,7 @@
 				<label for="raceName"><spring:message code="label.admin.raceName" /> *</label>
 				<form:errors path="raceName" cssClass="formerror" />
 				<form:input path="raceName" class="toRaceSlug" type="text" name="raceName" tabindex="1"/>
-				<label for="raceSlug"><spring:message code="label.admin.raceSlug" /> (Slug) *</label>
+				<label for="raceSlug"><spring:message code="label.admin.raceSlug" /> *</label>
 				<form:errors path="raceSlug" cssClass="formerror" />
 				<form:input path="raceSlug" type="text" name="raceSlug" class="theRaceSlug" tabindex="1" />
 				<label for="year"><spring:message code="label.admin.year" /> *</label>
@@ -57,6 +57,7 @@
 					<spring:message code="label.admin.visible" /></label>
 				<form:errors path="visible" cssClass="formerror" />
 				<spring:message code="label.admin.required" />
+				<br />
 				<button type="submit" class="btn btn-primary" tabindex="4">
 					<spring:message code="label.admin.add" />
 				</button>

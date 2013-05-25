@@ -40,6 +40,9 @@ public class StageData implements Serializable {
 	@Column
 	private Double stageUpAltitude;
 
+	/**
+	 * Renndistanz in km
+	 */
 	@Column
 	private Float distance;
 
