@@ -71,7 +71,7 @@ public class ValueContainerTest extends AbstractTestClass {
 		sta = new StageData();
 		sta.setAverageSpeed(28.9F);
 		sta.setDistance(12.7F);
-		sta.setStageTime("11:45:00");
+		sta.setStageTime(1369486242777L);
 		sta.setStageUpAltitude(812D);
 		int size = stageDataService.getAll().size();
 		long id = stageDataService.save(sta);
