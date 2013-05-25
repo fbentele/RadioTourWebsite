@@ -9,45 +9,23 @@
 	<h2>LiveTicker: ${stage.stageName}</h2>
 	<div class="row-fluid">
 		<div class="span6">
-			<c:choose>
-				<c:when test="${not empty lti}">
 					<form:form method="post" name="liveTickerItem"
 						action="/admin/race/${race.raceId}/stage/${stage.stageId}/liveticker/add">
 						<input type="hidden" value="${lti.liveTickerId}" name="liveTickerId" />
 						<label for="timestamp"><spring:message code="label.admin.timestamp" />: </label>
 						<div id="datetimepicker1" class="input-append date">
 							<input data-format="hh:mm:ss" type="datetime" name="timestamp"
-								value="${lti.timestamp}" tabindex="1" /> <span class="add-on"> <i
+								value="${lti.timestamp}<c:if test="${empty lti.timestamp}">${now}</c:if>" tabindex="1" /> <span class="add-on"> <i
 								data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 						</div>
 						<input type="hidden" name="stage">
 						<label for="news"><spring:message code="label.admin.newsEntry" />: </label>
-						<textarea name="news" tabindex="2">${lti.news}</textarea>
+						<textarea name="news" tabindex="2" rows="7">${lti.news}</textarea>
 						<br />
 						<button type="submit" class="btn btn-primary">
 							<spring:message code="label.admin.save" />
 						</button>
 					</form:form>
-				</c:when>
-				<c:otherwise>
-					<form:form method="post" name="liveTickerItem"
-						action="/admin/race/${race.raceId}/stage/${stage.stageId}/liveticker/add">
-						<label for="timestamp"><spring:message code="label.admin.timestamp" />: </label>
-						<div id="datetimepicker1" class="input-append date">
-							<input data-format="hh:mm:ss" type="datetime" name="timestamp" value="${now} dafux"
-								tabindex="1" /> <span class="add-on"> <i data-time-icon="icon-time"
-								data-date-icon="icon-calendar"></i></span>
-						</div>
-						<input type="hidden" name="stage">
-						<label for="news"><spring:message code="label.admin.newsEntry" />: </label>
-						<textarea name="news" tabindex="2"></textarea>
-						<br />
-						<button type="submit" class="btn btn-primary">
-							<spring:message code="label.admin.save" />
-						</button>
-					</form:form>
-				</c:otherwise>
-			</c:choose>
 		</div>
 		<div class="span4">
 			<c:if test="${not empty liveTickerItems}">
