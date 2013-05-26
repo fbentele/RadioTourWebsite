@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Entity
-@Table(name = "Position")
+@Table(name = "PositionData")
 public class PositionData {
 	@Id
-	@Column(name = "POSITION_ID")
+	@Column(name = "POSITIONDATA_ID")
 	@GeneratedValue
 	private Long positionid;
 

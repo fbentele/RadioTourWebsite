@@ -34,6 +34,9 @@ public class ValueContainer {
 	@Column(columnDefinition = "bigint(20)")
 	private Long timestamp;
 
+	@Column
+	private Long deficiteTime;
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "DEVICE_ID")
 	private Device device;
@@ -64,6 +67,14 @@ public class ValueContainer {
 
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public Long getDeficiteTime() {
+		return deficiteTime;
+	}
+
+	public void setDeficiteTime(Long deficiteTime) {
+		this.deficiteTime = deficiteTime;
 	}
 
 	public PositionData getPositionData() {

@@ -6,7 +6,6 @@
  */
 package ch.hsr.ba.tourlive.web.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +100,8 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	 */
 	@Override
 	@Transactional
-	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
-		return valueDao.getAllValueContainerForStage(stage);
+	public List<ValueContainer> getLatest1000ValueContainerForStage(Stage stage) {
+		return valueDao.getLatest1000ValueContainerForStage(stage);
 	}
 
 	/*
@@ -177,20 +176,7 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	 */
 	@Override
 	@Transactional
-	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
-		return valueDao.getDeficiteToLeaderForStage(stage);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ch.hsr.ba.tourlive.web.service.ValueContainerService#
-	 * getDeficiteToLeaderForStage(ch.hsr.ba.tourlive.web.model.Stage,
-	 * java.lang.Long)
-	 */
-	@Override
-	@Transactional
-	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit) {
-		return valueDao.getDeficiteToLeaderForStage(stage, limit);
+	public void getDeficiteToLeaderForStage(Stage stage) {
+		valueDao.getDeficiteToLeaderForStage(stage);
 	}
 }

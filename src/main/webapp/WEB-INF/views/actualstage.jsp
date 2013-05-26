@@ -1,7 +1,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@page trimDirectiveWhitespaces="true"%>
 
 <html>
 <head>
@@ -68,7 +69,7 @@
 				</div>
 			</div>
 		</c:if>
-		<c:if test="${not empty distances && not empty deficitetimes}">
+		<c:if test="${not empty valuecontainers}">
 			<div class="row-fluid">
 				<div class="span12">
 					<h4 id="abstand">
@@ -287,7 +288,7 @@
 	</c:if>
 
 	<!-- Abstandsentwicklung  -->
-	<c:if test="${not empty distances && not empty deficitetimes}">
+	<c:if test="${not empty valuecontainers}">
 		<script type="text/javascript">
 			var stageDistance = ${stage.distance};
 			var canvas = Raphael("abstand-canvas", 940, 220);
@@ -305,9 +306,10 @@
 			canvas.text(890,215, stageDistance);
 			canvas.text(50, 10, "<spring:message code="label.stage.deficiteInS" />");
 			canvas.text(900, 180, "<spring:message code="label.stage.raceKm" />");
-		
-			<c:forEach items="${distances}" var="distance">
-				canvas.circle(${distance.stageData.distance}*900/${stage.distance} + 10, 200 - <c:out value="${deficitetimes[distance.valueContainerId]}"/>, 3).attr({"fill":"${distance.device.color}", "stroke":"${distance.device.color}"});
+			<c:forEach items="${valuecontainers}" var="vc">
+				<c:if test="${vc.deficiteTime > 0}">
+					canvas.circle(${vc.stageData.distance}*900/${stage.distance} + 10, 200 - (${vc.deficiteTime}/60000), 3).attr({"fill":"${vc.device.color}", "stroke":"${vc.device.color}"});
+				</c:if>
 			</c:forEach>
 		</script>
 	</c:if>
@@ -349,13 +351,6 @@
 			}
 		</script>
 	</c:if>
-
-	<!-- Riders names tooltip -->
-	<script>
-		<c:forEach items="${riders}" var="rider">
-			$('#rider${rider.startNr}').tooltip();
-		</c:forEach>
-	</script>
 
 	<!-- Karte -->
 	<c:if test="${not empty valuecontainers}">

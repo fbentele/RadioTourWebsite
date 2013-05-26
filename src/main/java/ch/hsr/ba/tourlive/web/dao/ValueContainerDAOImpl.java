@@ -7,7 +7,6 @@
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -111,7 +110,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ValueContainer> getAllValueContainerForStage(Stage stage) {
+	public List<ValueContainer> getLatest1000ValueContainerForStage(Stage stage) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
 		if (stage != null && !stage.getDevices().isEmpty()) {
 			Disjunction d = Restrictions.or();
@@ -158,9 +157,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			}
 			crit.add(d);
 			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit + 1));
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			stageCriteria.addOrder(Order.asc("distance"));
-			return (List<ValueContainer>) stageCriteria.list();
+			crit.addOrder(Order.desc("timestamp"));
+			return (List<ValueContainer>) crit.list();
 		}
 		return null;
 	}
@@ -260,74 +258,38 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 * (ch.hsr.ba.tourlive.web.model.Stage)
 	 */
 	@Override
-	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage) {
-		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
+	public void getDeficiteToLeaderForStage(Stage stage) {
 		if (stage.getDevices().size() >= 2) {
 			for (ValueContainer v : getAllForStageByDistance(stage)) {
+				if (v.getDeficiteTime() != null)
+					continue;
 				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 						ValueContainer.class);
 				Disjunction d = Restrictions.or();
 				for (Device device : stage.getDevices()) {
-					d.add(Restrictions.eq("device", device));
+					if (!device.getDeviceId().equals(v.getDevice().getDeviceId()))
+						d.add(Restrictions.eq("device", device));
 				}
 				crit.add(d);
 				crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
 						stage.getEndtimeAsTimestamp()));
-				crit.addOrder(Order.asc("timestamp"));
+				crit.addOrder(Order.desc("timestamp"));
 				Criteria stageCriteria = crit.createCriteria("stageData");
 				stageCriteria.add(Restrictions.le("distance", v.getStageData().getDistance()));
 				try {
 					ValueContainer val = (ValueContainer) stageCriteria.list().get(0);
 					if (val.getTimestamp() < v.getTimestamp()
-							&& val.getStageData().getDistance() + 0.5 >= v.getStageData()
+							&& val.getStageData().getDistance() + 1 >= v.getStageData()
 									.getDistance()) {
-						map.put(v.getValueContainerId(),
-								(int) (v.getTimestamp() - val.getTimestamp()) / 1000);
+						v.setDeficiteTime(v.getTimestamp() - val.getTimestamp());
 					} else {
-						map.put(v.getValueContainerId(), 0);
+						v.setDeficiteTime(-1L);
 					}
 				} catch (IndexOutOfBoundsException e) {
-					map.put(v.getValueContainerId(), 0);
+					v.setDeficiteTime(-1L);
 				}
+				update(v);
 			}
 		}
-		return map;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getDeficiteToLeaderForStage
-	 * (ch.hsr.ba.tourlive.web.model.Stage, java.lang.Long)
-	 */
-	@Override
-	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit) {
-		HashMap<Long, Integer> map = new HashMap<Long, Integer>();
-		for (ValueContainer v : getAllForStageByDistance(stage)) {
-			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-			Disjunction d = Restrictions.or();
-			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
-			crit.addOrder(Order.asc("timestamp"));
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			stageCriteria.add(Restrictions.le("distance", v.getStageData().getDistance()));
-			try {
-				ValueContainer val = (ValueContainer) stageCriteria.list().get(0);
-				if (val.getTimestamp() < v.getTimestamp()
-						&& val.getStageData().getDistance() + 0.5 >= v.getStageData().getDistance()) {
-					map.put(v.getValueContainerId(),
-							(int) (v.getTimestamp() - val.getTimestamp()) / 1000);
-				} else {
-					map.put(v.getValueContainerId(), 0);
-				}
-			} catch (IndexOutOfBoundsException e) {
-				map.put(v.getValueContainerId(), 0);
-			}
-		}
-		return map;
 	}
 }

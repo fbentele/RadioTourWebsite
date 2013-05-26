@@ -6,7 +6,6 @@
  */
 package ch.hsr.ba.tourlive.web.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import ch.hsr.ba.tourlive.web.model.Device;
@@ -67,7 +66,7 @@ public interface ValueContainerDAO {
 	 *            the stage to filter
 	 * @return all value container for stage
 	 */
-	public List<ValueContainer> getAllValueContainerForStage(Stage stage);
+	public List<ValueContainer> getLatest1000ValueContainerForStage(Stage stage);
 
 	/**
 	 * Gets all valuecontainers for stage.
@@ -134,18 +133,5 @@ public interface ValueContainerDAO {
 	 * @return a HashMap with the ID of the Valuecontainer and the deficite as
 	 *         time in seconds
 	 */
-	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage);
-
-	/**
-	 * Gets the deficite to the current leader of the stage. !!!Attention!!!
-	 * very expensive Method, should be cached in a temporary table.
-	 * 
-	 * @param stage
-	 *            the stage
-	 * @param limit
-	 *            the limit
-	 * @return a HashMap with the ID of the Valuecontainer and the deficite as
-	 *         time in seconds
-	 */
-	public HashMap<Long, Integer> getDeficiteToLeaderForStage(Stage stage, Long limit);
+	public void getDeficiteToLeaderForStage(Stage stage);
 }

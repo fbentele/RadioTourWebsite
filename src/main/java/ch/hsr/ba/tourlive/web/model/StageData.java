@@ -25,7 +25,7 @@ import ch.hsr.ba.tourlive.web.utils.DateUtil;
 @Component
 @Scope("prototype")
 @Entity
-@Table(name = "Stagedata")
+@Table(name = "StageData")
 public class StageData implements Serializable {
 	private static final long serialVersionUID = -6609689730044394749L;
 
