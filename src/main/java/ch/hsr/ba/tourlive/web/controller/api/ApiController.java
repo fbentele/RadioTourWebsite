@@ -190,6 +190,8 @@ public class ApiController {
 				val.put("currentStageTotalDistance", stage.getDistance());
 				val.put("completedStagesDistance",
 						stageService.getTotalRaceDistance(stage.getRace(), true));
+				val.put("currentStageStarttime", stage.getStarttimeAsTimestamp());
+				val.put("currentStageEndtime", stage.getEndtimeAsTimestamp());
 				return val;
 			}
 		}
