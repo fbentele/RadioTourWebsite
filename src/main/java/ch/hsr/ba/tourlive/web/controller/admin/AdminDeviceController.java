@@ -44,7 +44,7 @@ public class AdminDeviceController {
 		model.addAttribute("devices", deviceService.getAll());
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device"));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device", ""));
 		return "admin/manageDevice";
 	}
 
@@ -81,7 +81,7 @@ public class AdminDeviceController {
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("device", device);
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device/" + deviceId));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device/" + deviceId, ""));
 		model.addAttribute("stages", stageService.getAllStagesForDevice(device));
 		return "admin/editDevice";
 	}

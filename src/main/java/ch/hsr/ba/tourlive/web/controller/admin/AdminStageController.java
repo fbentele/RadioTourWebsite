@@ -84,7 +84,7 @@ public class AdminStageController {
 		// Form Validation
 		if (binding.hasErrors()) {
 			model.addAttribute("races", raceService.getAll());
-			model.addAttribute("breadcrump", new Breadcrumb("/admin/race"));
+			model.addAttribute("breadcrump", new Breadcrumb("/admin/race", ""));
 			Race race = raceService.getRaceById(raceId);
 			model.addAttribute("race", race);
 			model.addAttribute("stage", unUsedStage);
@@ -122,7 +122,7 @@ public class AdminStageController {
 		model.addAttribute("riders", riderService.getAllByStage(stage));
 		model.addAttribute("marchTable", mtiService.getAllByStage(stage));
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
-				+ stageId));
+				+ stageId, ""));
 		return "admin/editStage";
 	}
 
@@ -279,7 +279,7 @@ public class AdminStageController {
 		model.addAttribute("liveTickerItems", ltiService.getAllByStage(stage));
 		model.addAttribute("now", DateUtil.timeNow());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
-				+ stageId));
+				+ stageId, ""));
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("lti", ltiId > 0 ? ltiService.getById(ltiId) : new LiveTickerItem());

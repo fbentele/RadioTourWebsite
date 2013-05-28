@@ -39,7 +39,7 @@ public class AdminController {
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("menutitle", "Admin");
 		model.addAttribute("adminmenu", "true");
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin"));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin", ""));
 		if (principal != null)
 			model.addAttribute("user", principal.getName());
 		return "admin/admin";
@@ -52,7 +52,7 @@ public class AdminController {
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race", ""));
 		model.addAttribute("race", new Race());
 		return "admin/manageRace";
 	}
@@ -68,7 +68,7 @@ public class AdminController {
 			model.addAttribute("race", race);
 			model.addAttribute("adminmenu", "true");
 			model.addAttribute("races", raceService.getAll());
-			model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
+			model.addAttribute("breadcrumb", new Breadcrumb("/admin/race", ""));
 			model.addAttribute("showhidden", true);
 			return "admin/manageRace";
 		} else {
@@ -92,7 +92,7 @@ public class AdminController {
 		model.addAttribute("stage", new Stage());
 		model.addAttribute("stages", stageService.getAllByRace(race));
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId, ""));
 		return "admin/editRace";
 	}
 
@@ -127,7 +127,7 @@ public class AdminController {
 		raceService.delete(raceId);
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race"));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race", ""));
 		return "forward:/admin/race";
 	}
 }
