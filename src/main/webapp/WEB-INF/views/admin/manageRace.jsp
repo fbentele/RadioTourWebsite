@@ -31,8 +31,8 @@
 							${race.raceDescription}
 						</c:otherwise>
 					</c:choose></td>
-				<td class="nolink"><a href="#modal_delete${race.raceId}" data-toggle="modal" target="_self"><i
-						class="icon-trash"></i></a></td>
+				<td class="nolink"><a href="#modal_delete${race.raceId}" data-toggle="modal"
+					target="_self"><i class="icon-trash"></i></a></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -46,7 +46,7 @@
 			<div class="span3">
 				<label for="raceName"><spring:message code="label.admin.raceName" /> *</label>
 				<form:errors path="raceName" cssClass="formerror" />
-				<form:input path="raceName" class="toRaceSlug" type="text" name="raceName" tabindex="1"/>
+				<form:input path="raceName" class="toRaceSlug" type="text" name="raceName" tabindex="1" />
 				<label for="raceSlug"><spring:message code="label.admin.raceSlug" /> *</label>
 				<form:errors path="raceSlug" cssClass="formerror" />
 				<form:input path="raceSlug" type="text" name="raceSlug" class="theRaceSlug" tabindex="1" />
@@ -84,10 +84,39 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal"><spring:message code="label.admin.cancel" /></a> <a href="/admin/race/delete/${race.raceId}"
+				<a href="#" class="btn" data-dismiss="modal"><spring:message
+						code="label.admin.cancel" /></a> <a href="/admin/race/delete/${race.raceId}"
 					class="btn btn-primary"><spring:message code="label.admin.delete" /></a>
 			</div>
 		</div>
 	</c:forEach>
+	<!-- Slug Generator -->
+	<script type="text/javascript">
+		// Slug generator
+		$('.toSlug').keyup(function() {
+			$.ajax({
+				type : "POST",
+				url : "/utils/slug",
+				data : {
+					toSlug : $('.toSlug').val()
+				},
+				success : function(data) {
+					$('.theSlug').val(data);
+				}
+			});
+		});
+		$('.toRaceSlug').keyup(function() {
+			$.ajax({
+				type : "POST",
+				url : "/utils/slug",
+				data : {
+					toSlug : $('.toRaceSlug').val()
+				},
+				success : function(data) {
+					$('.theRaceSlug').val(data);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

@@ -134,4 +134,14 @@ public interface ValueContainerDAO {
 	 *         time in seconds
 	 */
 	public void getDeficiteToLeaderForStage(Stage stage);
+
+	/**
+	 * Get all latest position of a device, for admin purpose only
+	 * 
+	 * @param a
+	 *            list of devices
+	 * @return returns a list of ValueContainers
+	 */
+	public List<ValueContainer> getMostRecentForEachDevice(List<Device> devices);
+
 }

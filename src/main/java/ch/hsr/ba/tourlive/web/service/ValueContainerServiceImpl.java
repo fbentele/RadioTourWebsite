@@ -179,4 +179,17 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	public void getDeficiteToLeaderForStage(Stage stage) {
 		valueDao.getDeficiteToLeaderForStage(stage);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.service.ValueContainerService#
+	 * getMostRecentForEachDevice(java.util.List)
+	 */
+	@Override
+	@Transactional
+	public List<ValueContainer> getMostRecentForEachDevice(List<Device> devices) {
+		return valueDao.getMostRecentForEachDevice(devices);
+	}
+
 }

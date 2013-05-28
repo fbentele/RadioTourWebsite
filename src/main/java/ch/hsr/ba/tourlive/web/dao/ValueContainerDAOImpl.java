@@ -7,6 +7,7 @@
 package ch.hsr.ba.tourlive.web.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
+import ch.hsr.ba.tourlive.web.utils.SortValueContainer;
 
 /**
  * The Class ValueContainerDAOImpl.
@@ -98,7 +100,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	public List<ValueContainer> getAll() {
 		return sessionFactory.getCurrentSession()
 				.createCriteria(ValueContainer.class, "ValueContainer")
-				.addOrder(Order.desc("ValueContainer.valueContainerId")).setMaxResults(1000).list();
+				.addOrder(Order.desc("ValueContainer.valueContainerId")).list();
 	}
 
 	/*
@@ -202,24 +204,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 */
 	@Override
 	public List<ValueContainer> getLatestForDeviceByStage(Stage stage) {
-		List<ValueContainer> list = new ArrayList<ValueContainer>();
-		if (stage != null && !stage.getDevices().isEmpty()) {
-			for (Device device : stage.getDevices()) {
-				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-						ValueContainer.class);
-				crit.add(Restrictions.eq("device", device));
-				crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-						stage.getEndtimeAsTimestamp()));
-				Criteria stageCriteria = crit.createCriteria("stageData");
-				stageCriteria.addOrder(Order.desc("distance"));
-				try {
-					list.add((ValueContainer) stageCriteria.list().get(0));
-				} catch (IndexOutOfBoundsException e) {
-					LOG.info("No ValueContainer found");
-				}
-			}
-		}
-		return list;
+		return getLatestForDeviceByStage(stage, stage.getEndtimeAsTimestamp());
 	}
 
 	/*
@@ -245,6 +230,22 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				} catch (IndexOutOfBoundsException e) {
 					LOG.info("No ValueContainer found");
 				}
+			}
+		}
+		Collections.sort(list, new SortValueContainer());
+		return list;
+	}
+
+	public List<ValueContainer> getMostRecentForEachDevice(List<Device> devices) {
+		List<ValueContainer> list = new ArrayList<ValueContainer>();
+		for (Device device : devices) {
+			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+			crit.add(Restrictions.eq("device", device));
+			crit.addOrder(Order.desc("timestamp"));
+			try {
+				list.add((ValueContainer) crit.list().get(0));
+			} catch (IndexOutOfBoundsException e) {
+				LOG.info("No ValueContainer found");
 			}
 		}
 		return list;

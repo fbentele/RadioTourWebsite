@@ -160,8 +160,11 @@
 					<c:forEach items="${situation.situation}" var="sit">
 						<div class="span3 ridergroup">
 							<h4>${sit.groupName}</h4>
-							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" /><br />
+							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" />
 							<c:if test="${not sit.isLeader}">
+								<img class="pull-right" src="<c:url value="/resources/img/arrow.png"/>" />
+								<br />
+
 								<spring:message code="label.stage.deficite" />: ${sit.handicaptime} </c:if>
 							<br />
 							<ul class="unstyled">
@@ -178,12 +181,12 @@
 						</div>
 					</c:forEach>
 					<br />
-					<div class="span3">
-						<spring:message code="label.stage.legend" />
-						:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
-							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
-							class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
-					</div>
+				</div>
+				<div class="span3">
+					<spring:message code="label.stage.legend" />
+					:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
+						class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
+						class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
 				</div>
 			</div>
 		</c:if>
@@ -245,7 +248,12 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${marchtable}" var="mti">
-								<tr <c:if test="${first.stageData.distance > mti.distance}">class="success"</c:if>>
+								<c:forEach items="${latest}" var="vc">
+									<c:if test="${vc.stageData.distance > mti.distance}">
+										<c:set var="color" value="${vc.device.colorAsRGB}" />
+									</c:if>
+								</c:forEach>
+								<tr style="background-color: rgba(${color}0.3);">
 									<td><c:if test="${not empty mti.icon}">
 											<img width="20px" src="/resources/img/${mti.icon}.png" />
 										</c:if></td>
@@ -258,6 +266,7 @@
 									<td>${mti.raceMedium}</td>
 									<td>${mti.raceSlow }</td>
 								</tr>
+								<c:set var="color" value="" />
 							</c:forEach>
 						</tbody>
 					</table>
@@ -415,7 +424,7 @@
         	"oLanguage": {
             	"sLengthMenu": "_MENU_ <spring:message code="label.stage.recordsperpage"/>",
             	"sZeroRecords": "<spring:message code="label.stage.norecords"/>",
-            	"sInfo": "_START_ - _END_ <spring:message code="label.stage.of"/> _TOTAL_ <spring:message code="label.stage.rider"/>",
+            	"sInfo": "_START_ - _END_ <spring:message code="label.stage.of"/> _TOTAL_ <spring:message code="label.stage.places"/>",
             	"sInfoEmpty": " 0 - 0 <spring:message code="label.stage.of"/> 0",
             	"sInfoFiltered": "(<spring:message code="label.stage.filtered"/> _MAX_ )",
         		"sSearch": "<spring:message code="label.stage.search"/>",
@@ -439,7 +448,7 @@
 		wrapper.addEventListener('click', function(e) {
 			var offset=e.offsetX==undefined?e.layerX:e.offsetX;
 	  		progress.style.width = offset + "px";
-	  		var pct = Math.floor((offset / wrapper.offsetWidth) * ${stage.distance});
+	  		var pct = (offset / wrapper.offsetWidth) * ${stage.distance};
 	  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
 		}, false);
 	</script>

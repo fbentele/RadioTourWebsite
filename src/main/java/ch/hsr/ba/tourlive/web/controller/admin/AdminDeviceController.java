@@ -45,6 +45,8 @@ public class AdminDeviceController {
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device", ""));
+		model.addAttribute("positions",
+				valueContainerService.getMostRecentForEachDevice(deviceService.getAll()));
 		return "admin/manageDevice";
 	}
 

@@ -6,28 +6,38 @@
 <html lang="en">
 
 <body>
-		<h2><spring:message code="label.admin.device" />:</h2>
-		<table class="table table-hover" data-provides="rowlink">
-			<tr>
-				<th>ID</th>
-				<th><spring:message code="label.admin.username"/></th>
-				<th><spring:message code="label.admin.labelName"/></th>
-				<th><spring:message code="label.admin.phoneNr"/></th>
-				<th><spring:message code="label.admin.colorOnMap"/></th>
-				<th></th>
-			</tr>
-			<c:forEach items="${devices}" var="device">
-				<tr>
-					<td><a href="/admin/device/edit/${device.deviceId}" target="_self">${device.deviceId}</a></td>
-					<td>${device.username}</td>
-					<td>${device.labelName}</td>
-					<td>${device.phoneNr}</td>
-					<td><span style="background-color: ${device.color}">&nbsp;&nbsp;</span></td>
-					<td class="nolink"><a href="#modal_delete${device.deviceId}" data-toggle="modal" target="_self"><i class="icon-trash"></i></a></td>
-				</tr>
-			</c:forEach>
-		</table>
+	<h2>
+		<spring:message code="label.admin.device" />
+		:
+	</h2>
+	<table class="table table-hover" data-provides="rowlink">
+		<tr>
+			<th>ID</th>
+			<th><spring:message code="label.admin.username" /></th>
+			<th><spring:message code="label.admin.labelName" /></th>
+			<th><spring:message code="label.admin.phoneNr" /></th>
+			<th><spring:message code="label.admin.colorOnMap" /></th>
+			<th><spring:message code="label.admin.lastPosition" /></th>
+			<th></th>
+		</tr>
 		<c:forEach items="${devices}" var="device">
+			<tr>
+				<td><a href="/admin/device/edit/${device.deviceId}" target="_self">${device.deviceId}</a></td>
+				<td>${device.username}</td>
+				<td>${device.labelName}</td>
+				<td>${device.phoneNr}</td>
+				<td><span style="background-color: ${device.color}">&nbsp;&nbsp;</span></td>
+				<c:forEach items="${positions}" var="pos">
+					<c:if test="${pos.device.deviceId == device.deviceId}">
+						<td class="nolink"><a href="https://maps.google.ch/?saddr=${pos.positionData.latitude},${pos.positionData.longitude}" target="_blank">Link</a></td>
+					</c:if>
+				</c:forEach>
+				<td class="nolink"><a href="#modal_delete${device.deviceId}" data-toggle="modal"
+					target="_self"><i class="icon-trash"></i></a></td>
+			</tr>
+		</c:forEach>
+	</table>
+	<c:forEach items="${devices}" var="device">
 		<div class="modal fade" id="modal_delete${device.deviceId}">
 			<div class="modal-header">
 				<a class="close" data-dismiss="modal">&times;</a>
@@ -41,7 +51,8 @@
 				</p>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal"><spring:message code="label.admin.cancel" /></a> <a href="/admin/device/delete/${device.deviceId}"
+				<a href="#" class="btn" data-dismiss="modal"><spring:message
+						code="label.admin.cancel" /></a> <a href="/admin/device/delete/${device.deviceId}"
 					class="btn btn-primary"><spring:message code="label.admin.delete" /></a>
 			</div>
 		</div>

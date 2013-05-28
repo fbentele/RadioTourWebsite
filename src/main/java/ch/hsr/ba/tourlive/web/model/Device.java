@@ -57,6 +57,16 @@ public class Device {
 		return color;
 	}
 
+	public String getColorAsRGB() {
+		StringBuilder rgb = new StringBuilder();
+		if (color.length() > 6) {
+			rgb.append(Integer.valueOf(color.substring(1, 3), 16) + ",");
+			rgb.append(Integer.valueOf(color.substring(3, 5), 16) + ",");
+			rgb.append(Integer.valueOf(color.substring(5, 7), 16) + ",");
+		}
+		return rgb.toString();
+	}
+
 	public void setColor(String color) {
 		if (color.length() > 0) {
 			this.color = color;

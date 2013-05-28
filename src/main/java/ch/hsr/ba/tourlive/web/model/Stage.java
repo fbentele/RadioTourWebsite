@@ -20,6 +20,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ch.hsr.ba.tourlive.web.model.enums.StageType;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -76,6 +78,17 @@ public class Stage {
 	@Column
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Device> devices;
+
+	@Column
+	private StageType stagetype;
+
+	public StageType getStagetype() {
+		return stagetype;
+	}
+
+	public void setStagetype(StageType stagetype) {
+		this.stagetype = stagetype;
+	}
 
 	public Float getDistance() {
 		return distance;

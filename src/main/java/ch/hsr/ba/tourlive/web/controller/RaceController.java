@@ -130,7 +130,8 @@ public class RaceController {
 			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
 			try {
-				model.addAttribute("first", valueContainers.get(0));
+				model.addAttribute("first", valueContainerService.getLatestForDeviceByStage(stage)
+						.get(0));
 			} catch (NullPointerException e) {
 				LOG.info("no ValueContainers for the stage " + stage.getStageName());
 			} catch (IndexOutOfBoundsException e) {
@@ -176,7 +177,8 @@ public class RaceController {
 					valueContainerService.getAllForStageByDistance(stage, untilTime));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
 			try {
-				model.addAttribute("first", valueContainers.get(0));
+				model.addAttribute("first",
+						valueContainerService.getLatestForDeviceByStage(stage, untilTime).get(0));
 			} catch (NullPointerException e) {
 				LOG.info("no ValueContainers for the stage " + stage.getStageName());
 			} catch (IndexOutOfBoundsException e) {

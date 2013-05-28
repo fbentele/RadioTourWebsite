@@ -30,17 +30,41 @@
 						type="text" name="distance" value="${stage.distance}" tabindex="3"> <span
 						class="add-on">km</span>
 				</div>
-				<br /> <label for="starttime"><spring:message code="label.admin.starttime" /></label>
+				<br /> <label for="starttime"><spring:message code="label.admin.starttime" />
+					<spring:message code="label.admin.starttimeformat" /></label>
 				<div id="datetimepicker1" class="input-append date">
 					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime"
 						value="${stage.starttime}" tabindex="5" /> <span class="add-on"> <i
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
-				<label for="endtime"><spring:message code="label.admin.endtime" /></label>
+				<label for="endtime"><spring:message code="label.admin.endtime" /> <spring:message
+						code="label.admin.starttimeformat" /></label>
 				<div id="datetimepicker2" class="input-append">
 					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime"
 						value="${stage.endtime}" tabindex="6" /> <span class="add-on"> <i
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
+				</div>
+				<div>
+					<label for="stagetype"><spring:message code="label.admin.stagetype" /></label> <select name="stageType">
+						<option value="SINGLETIMERACE" <c:if test="${stagetype == 'SINGLETIMERACE'}">selected</c:if> >
+							<spring:message code="label.stage.type.singeltimerace" />
+						</option>
+						<option value="GROUPTIMERACE" <c:if test="${stagetype == 'GROUPTIMERACE'}">selected</c:if> >
+							<spring:message code="label.stage.type.grouptimerace" />
+						</option>
+						<option value="PROLOG" <c:if test="${stagetype == 'PROLOG'}">selected</c:if> >
+							<spring:message code="label.stage.type.prolog" />
+						</option>
+						<option value="MOUNTAINSTAGE" <c:if test="${stagetype == 'MOUNTAINSTAGE'}">selected</c:if> >
+							<spring:message code="label.stage.type.mountainstage" />
+						</option>
+						<option value="FLATSTAGE" <c:if test="${stagetype == 'FLATSTAGE'}">selected</c:if> >
+							<spring:message code="label.stage.type.flatstage" />
+						</option>
+						<option value="OTHER" <c:if test="${stagetype == 'OTHER'}">selected</c:if> >
+							<spring:message code="label.stage.type.other" />
+						</option>
+					</select>
 				</div>
 				<label for="visible"> <input type="checkbox" name="visible"
 					value="true${stage.visible}" <c:if test="${stage.visible==true}">checked</c:if>
@@ -88,7 +112,7 @@
 			</div>
 		</form:form>
 	</div>
-
+	<hr>
 	<div class="row-fluid">
 		<div class="span6">
 			<c:choose>
@@ -142,6 +166,7 @@
 			</div>
 		</div>
 	</div>
+	<hr>
 	<div class="row-fluid">
 		<div class="span6">
 			<h3>
@@ -188,6 +213,8 @@
 			</c:if>
 		</div>
 	</div>
+	<hr>
+
 	<div class="row-fluid">
 		<div class="span6">
 			<h3>
@@ -255,6 +282,61 @@
 				language : 'de-CH'
 			});
 		});
+	</script>
+
+	<!-- Slug Generator -->
+	<script type="text/javascript">
+		// Slug generator
+		$('.toSlug').keyup(function() {
+			$.ajax({
+				type : "POST",
+				url : "/utils/slug",
+				data : {
+					toSlug : $('.toSlug').val()
+				},
+				success : function(data) {
+					$('.theSlug').val(data);
+				}
+			});
+		});
+		$('.toRaceSlug').keyup(function() {
+			$.ajax({
+				type : "POST",
+				url : "/utils/slug",
+				data : {
+					toSlug : $('.toRaceSlug').val()
+				},
+				success : function(data) {
+					$('.theRaceSlug').val(data);
+				}
+			});
+		});
+	</script>
+
+	<!-- Admin Scripts -->
+	<script type="text/javascript">
+		// UX
+		$("#adder").click(function(event) {
+			event.stopPropagation();
+		});
+		$("#adder").click(function() {
+			$(".newItem").slideToggle('fast');
+		});
+		$('#fileuploadbutton').bind("click", function() {
+			$('.fileupload').click();
+		});
+		$('#fileuploadbutton2').bind("click", function() {
+			$('.fileupload2').click();
+		});
+		$('#fileuploadbutton3').bind("click", function() {
+			$('.fileupload3').click();
+		});
+		$('#fileuploadbutton4').bind("click", function() {
+			$('.fileupload4').click();
+		});
+
+		// color picker
+		$('.colorpicker').colorpicker();
 	</script>
 </body>
 </html>

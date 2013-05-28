@@ -33,6 +33,7 @@ import ch.hsr.ba.tourlive.web.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Race;
 import ch.hsr.ba.tourlive.web.model.Stage;
+import ch.hsr.ba.tourlive.web.model.enums.StageType;
 import ch.hsr.ba.tourlive.web.model.rider.Rider;
 import ch.hsr.ba.tourlive.web.service.DeviceService;
 import ch.hsr.ba.tourlive.web.service.LiveTickerItemService;
@@ -123,6 +124,7 @@ public class AdminStageController {
 		model.addAttribute("marchTable", mtiService.getAllByStage(stage));
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
 				+ stageId, ""));
+		model.addAttribute("stagetype", stage.getStagetype());
 		return "admin/editStage";
 	}
 
@@ -151,6 +153,7 @@ public class AdminStageController {
 			@RequestParam("distance") float stageDistance,
 			@RequestParam("endtime") String endtime,
 			@RequestParam("adCode") String adCode,
+			@RequestParam("stageType") String stageType,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
@@ -163,6 +166,7 @@ public class AdminStageController {
 		stage.setEndtime(endtime);
 		stage.setAdCode(adCode);
 		stage.setVisible(false);
+		stage.setStagetype(StageType.valueOf(stageType));
 		if (visible.contains("true"))
 			stage.setVisible(true);
 		String rel = "stage" + stage.getStageId();

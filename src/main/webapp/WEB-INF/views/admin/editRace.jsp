@@ -114,16 +114,20 @@
 				</div>
 				<spring:message code="label.admin.required" />
 				<br />
-				<button type="submit" class="btn btn-primary" tabindex="20"><spring:message code="label.admin.save" /></button>
+				<button type="submit" class="btn btn-primary" tabindex="20">
+					<spring:message code="label.admin.save" />
+				</button>
 			</div>
 			<div class="span4">
-				<label for="starttime"><spring:message code="label.admin.starttime" /></label>
+				<label for="starttime"><spring:message code="label.admin.starttime" /> <spring:message
+						code="label.admin.starttimeformat" /></label>
 				<div id="datetimepicker1" class="input-append date">
 					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="starttime" tabindex="15" />
 					<span class="add-on"> <i data-time-icon="icon-time"
 						data-date-icon="icon-calendar"></i></span>
 				</div>
-				<label for="endtime"><spring:message code="label.admin.endtime" /></label>
+				<label for="endtime"><spring:message code="label.admin.endtime" /> <spring:message
+						code="label.admin.starttimeformat" /></label>
 				<div id="datetimepicker2" class="input-append">
 					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime" tabindex="16" />
 					<span class="add-on"> <i data-time-icon="icon-time"
@@ -195,6 +199,61 @@
 				language : 'de-CH'
 			});
 		});
+	</script>
+
+	<!-- Slug Generator -->
+	<script type="text/javascript">
+		// Slug generator
+		$('.toSlug').keyup(function() {
+			$.ajax({
+				type : "POST",
+				url : "/utils/slug",
+				data : {
+					toSlug : $('.toSlug').val()
+				},
+				success : function(data) {
+					$('.theSlug').val(data);
+				}
+			});
+		});
+		$('.toRaceSlug').keyup(function() {
+			$.ajax({
+				type : "POST",
+				url : "/utils/slug",
+				data : {
+					toSlug : $('.toRaceSlug').val()
+				},
+				success : function(data) {
+					$('.theRaceSlug').val(data);
+				}
+			});
+		});
+	</script>
+	
+	<!-- Admin Scripts -->
+	<script type="text/javascript">
+		// UX
+		$("#adder").click(function(event) {
+			event.stopPropagation();
+		});
+		$("#adder").click(function() {
+			$(".newItem").slideToggle('fast');
+		});
+		$('#fileuploadbutton').bind("click", function() {
+			$('.fileupload').click();
+		});
+		$('#fileuploadbutton2').bind("click", function() {
+			$('.fileupload2').click();
+		});
+		$('#fileuploadbutton3').bind("click", function() {
+			$('.fileupload3').click();
+		});
+		$('#fileuploadbutton4').bind("click", function() {
+			$('.fileupload4').click();
+		});
+
+		// color picker
+		$('.colorpicker').colorpicker();
 	</script>
 </body>
 </html>
