@@ -16,8 +16,10 @@
 				<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
 				<div class="span5">
 					<p class="lead">
-						<spring:message code="label.stage.distancestatus1" /> ${first.stageData.distance} km
-						<spring:message code="label.stage.distancestatus2" /> ${stage.distance} km
+						<spring:message code="label.stage.distancestatus1" />
+						&nbsp;${first.stageData.distance} km
+						<spring:message code="label.stage.distancestatus2" />
+						&nbsp;${stage.distance} km
 						<spring:message code="label.stage.distancestatus3" />
 					</p>
 					<div id="positionbar" class="progress progress-striped active">
@@ -177,10 +179,10 @@
 					</c:forEach>
 					<br />
 					<div class="span3">
-							<spring:message code="label.stage.legend" />
-							:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
-								class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
-								class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
+						<spring:message code="label.stage.legend" />
+						:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
+							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
+							class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
 					</div>
 				</div>
 			</div>

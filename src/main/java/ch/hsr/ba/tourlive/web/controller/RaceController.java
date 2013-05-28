@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +57,8 @@ public class RaceController {
 	private LiveTickerItemService liveTickerItemService;
 	@Value("${config.dev.hostname}")
 	private String hostname;
+	@Autowired
+	private ReloadableResourceBundleMessageSource messageSource;
 
 	private final static Logger LOG = LoggerFactory.getLogger(RaceController.class);
 
@@ -63,7 +66,9 @@ public class RaceController {
 	public String race(Locale locale, Model model) {
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("navbarrace", "active");
-		model.addAttribute("breadcrumb", new Breadcrumb("/race"));
+		model.addAttribute(
+				"breadcrumb",
+				new Breadcrumb("/race", messageSource.getMessage("label.actualRaces", null, locale)));
 		return "race";
 	}
 
@@ -77,7 +82,10 @@ public class RaceController {
 			model.addAttribute("menutitle", "etappen");
 			model.addAttribute("menuitems",
 					MenuItem.makeMenu(stageService.getAllVisibleByRace(actualRace)));
-			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug));
+			model.addAttribute(
+					"breadcrumb",
+					new Breadcrumb("/race/" + raceSlug, messageSource.getMessage(
+							"label.actualRaces", null, locale)));
 			return "actualrace";
 		} else {
 			return "redirect:/race";
@@ -91,7 +99,7 @@ public class RaceController {
 
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}", method = RequestMethod.GET)
 	public String showStage(@PathVariable("stageSlug") String stageSlug,
-			@PathVariable("raceSlug") String raceSlug, Model model) {
+			@PathVariable("raceSlug") String raceSlug, Model model, Locale locale) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {
 			List<ValueContainer> valueContainers = valueContainerService
@@ -129,7 +137,7 @@ public class RaceController {
 				LOG.info("no ValueContainers for the stage " + stage.getStageName());
 			}
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
-					+ stageSlug));
+					+ stageSlug, messageSource.getMessage("label.actualRaces", null, locale)));
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
 		}
 		return "actualstage";
@@ -138,7 +146,7 @@ public class RaceController {
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/{untilTime}", method = RequestMethod.GET)
 	public String stageForTime(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, @PathVariable("untilTime") Long untilTime,
-			Model model) {
+			Model model, Locale locale) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {
 			List<ValueContainer> valueContainers = valueContainerService.getAllForStageByDistance(
@@ -175,7 +183,7 @@ public class RaceController {
 				LOG.info("no ValueContainers for the stage " + stage.getStageName());
 			}
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
-					+ stageSlug));
+					+ stageSlug, messageSource.getMessage("label.actualRaces", null, locale)));
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage, untilTime));
 		}
 		return "actualstage";
@@ -184,12 +192,12 @@ public class RaceController {
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/km/{raceKm}", method = RequestMethod.GET)
 	public String stageForKm(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, @PathVariable("raceKm") Float raceKm,
-			Model model) {
+			Model model, Locale locale) {
 		try {
 			Stage stage = stageService.getStageBySlug(stageSlug);
 			ValueContainer v = valueContainerService.getFirstForStageByDistanceLimitedToRaceKm(
 					stage, raceKm);
-			return stageForTime(stageSlug, raceSlug, v.getTimestamp(), model);
+			return stageForTime(stageSlug, raceSlug, v.getTimestamp(), model, locale);
 		} catch (NullPointerException e) {
 			return "redirect:/race/" + raceSlug + "/stage/" + stageSlug;
 		}

@@ -3,19 +3,42 @@ package ch.hsr.ba.tourlive.web.viewmodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+
 public class Breadcrumb {
 	private List<Page> parentPages = new ArrayList<Page>();
 	private Page activepage;
+	@Autowired
+	ReloadableResourceBundleMessageSource messageSource;
 
-	public Breadcrumb(String path) {
+	public Breadcrumb(String path, String actualRaces) {
 		List<Page> parent = new ArrayList<Page>();
 		String[] items = path.split("/");
 		String linkstring = "";
 		for (String string : items) {
 			if (string.length() > 0) {
 				linkstring += string + "/";
+				if (string.equals("race")) {
+					parent.add(new Page(actualRaces, "/race"));
+					continue;
+				}
+				if (string.equals("stage")) {
+					continue;
+				}
 				char[] stringArray = string.toCharArray();
 				stringArray[0] = Character.toUpperCase(stringArray[0]);
+				boolean next = false;
+				for (int i = 0; i < stringArray.length; i++) {
+					if (next) {
+						stringArray[i] = Character.toUpperCase(stringArray[i]);
+						next = false;
+					}
+					if (stringArray[i] == '-') {
+						stringArray[i] = ' ';
+						next = true;
+					}
+				}
 				parent.add(new Page(new String(stringArray), "/" + linkstring));
 			}
 		}

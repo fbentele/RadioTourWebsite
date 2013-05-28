@@ -26,7 +26,7 @@
 					<li id="menu-stageProfile" class=""><a href="#streckenprofil" target="_self"><spring:message
 								code="label.stage.stageProfile" /></a></li>
 				</c:if>
-				<c:if test="${not empty distances && not empty deficitetimes}">
+				<c:if test="${not empty valuecontainers}">
 					<li id="menu-distance" class=""><a href="#abstand" target="_self"><spring:message
 								code="label.stage.deficiteTime" /></a></li>
 				</c:if>
