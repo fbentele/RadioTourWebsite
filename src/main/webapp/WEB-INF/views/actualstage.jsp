@@ -26,7 +26,7 @@
 						<div id="progress" class="bar" style="width: 0%;"></div>
 					</div>
 				</div>
-				<div class="span4 offset1">
+				<div class="span6 pull-right">
 					<spring:message code="label.stage.actualTime" />
 					:
 					<jsp:useBean id="dateValue" class="java.util.Date" />
@@ -58,7 +58,7 @@
 		</c:if>
 		<c:if test="${not empty stage.stageProfileImage}">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span12 border">
 					<h4 id="streckenprofil">
 						<spring:message code="label.stage.stageProfile" />
 					</h4>
@@ -71,7 +71,7 @@
 		</c:if>
 		<c:if test="${not empty valuecontainers}">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span12 border">
 					<h4 id="abstand">
 						<spring:message code="label.stage.deficiteTime" />
 					</h4>
@@ -81,7 +81,7 @@
 		</c:if>
 		<div id="livestream" class="row-fluid">
 			<c:forEach items="${images}" var="image">
-				<div class="span4">
+				<div class="span4 border">
 					<h4>${image.device.username}</h4>
 					<img width="350" src="<c:url value="${hostname}${image.imageLocation}"/>" />
 					<div id="">
@@ -108,7 +108,7 @@
 
 		<div id="livevideo" class="row-fluid">
 			<c:forEach items="${videos}" var="video">
-				<div class="span5">
+				<div class="span5 border">
 					<h4>${video.device.username}</h4>
 					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
 						<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
@@ -118,12 +118,12 @@
 				</div>
 			</c:forEach>
 			<c:if test="${not empty stage.adCode}">
-				<div id="ads" class="span4">${stage.adCode}</div>
+				<div id="ads" class="span4 border">${stage.adCode}</div>
 			</c:if>
 		</div>
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
-				<div class="span6">
+				<div class="span6 border">
 					<h4 id="karte">
 						<spring:message code="label.stage.map" />
 					</h4>
@@ -131,7 +131,7 @@
 				</div>
 			</c:if>
 			<c:if test="${not empty liveTickerItems}">
-				<div class="span6">
+				<div class="span5 border">
 					<h4 id="liveticker">
 						<spring:message code="label.stage.liveticker" />
 					</h4>
@@ -153,7 +153,7 @@
 
 		<c:if test="${not empty situation}">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span12 border">
 					<h4 id="rennsituation">
 						<spring:message code="label.stage.raceSituation" />
 					</h4>
@@ -181,19 +181,19 @@
 						</div>
 					</c:forEach>
 					<br />
-				</div>
-				<div class="span3">
-					<spring:message code="label.stage.legend" />
-					:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
-						class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
-						class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
+					<div class="span3">
+						<spring:message code="label.stage.legend" />
+						:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
+							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
+							class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
+					</div>
 				</div>
 			</div>
 		</c:if>
 
 		<c:if test="${not empty riders}">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span12 border">
 					<h4 id="rangliste">
 						<spring:message code="label.stage.liveRanking" />
 					</h4>
@@ -228,7 +228,7 @@
 		</c:if>
 		<c:if test="${not empty marchtable}">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span12 border">
 					<h4 id="marschtabelle">
 						<spring:message code="label.stage.marchtable" />
 					</h4>

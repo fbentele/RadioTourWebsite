@@ -53,7 +53,7 @@ public class AdminDeviceController {
 	/**
 	 * Completely Delete a Device
 	 */
-	@RequestMapping(value = "/admin/device/delete/{deviceId}")
+	@RequestMapping(value = "/admin/device/delete/{deviceId}", method = RequestMethod.GET)
 	public String deleteDevice(@PathVariable("deviceId") String deviceId, Model model) {
 		Device d = deviceService.getDeviceById(deviceId);
 		for (Stage stage : stageService.getAllStagesForDevice(d)) {

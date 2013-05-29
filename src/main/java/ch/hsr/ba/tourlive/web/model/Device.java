@@ -26,8 +26,20 @@ public class Device {
 	@Column
 	private String labelName;
 
+	/**
+	 * The Phone Number of the device (usually not callable, since data contract
+	 * only)
+	 */
 	@Column
 	private String phoneNr;
+
+	/**
+	 * The Phone Number of the driver who is carrying the phone
+	 */
+	@Column
+	private String driverPhoneNr;
+	@Column
+	private String driverName;
 
 	public Device() {
 
@@ -87,6 +99,22 @@ public class Device {
 
 	public void setPhoneNr(String phoneNr) {
 		this.phoneNr = phoneNr;
+	}
+
+	public String getDriverPhoneNr() {
+		return driverPhoneNr;
+	}
+
+	public void setDriverPhoneNr(String driverPhoneNr) {
+		this.driverPhoneNr = driverPhoneNr;
+	}
+
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
 	}
 
 	@Override
