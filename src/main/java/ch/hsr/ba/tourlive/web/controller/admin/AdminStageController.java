@@ -9,6 +9,8 @@ package ch.hsr.ba.tourlive.web.controller.admin;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +49,7 @@ import ch.hsr.ba.tourlive.web.utils.importer.CSVReader;
 import ch.hsr.ba.tourlive.web.utils.importer.MarchTableImporter;
 import ch.hsr.ba.tourlive.web.utils.importer.RiderImporter;
 import ch.hsr.ba.tourlive.web.viewmodel.Breadcrumb;
+import ch.hsr.ba.tourlive.web.viewmodel.Page;
 
 @Controller
 public class AdminStageController {
@@ -128,12 +131,14 @@ public class AdminStageController {
 		model.addAttribute("devices", deviceService.getAllNotAlreadyAssignedTo(stage));
 		model.addAttribute("riders", riderService.getAllByStage(stage));
 		model.addAttribute("marchTable", mtiService.getAllByStage(stage));
-		model.addAttribute(
-				"breadcrumb",
-				new Breadcrumb("/admin/race/" + race.getRaceName() + "/stage/"
-						+ stage.getStageName(), messageSource
-						.getMessage("label.race", null, locale)));
 		model.addAttribute("stagetype", stage.getStagetype());
+
+		List<Page> p = new ArrayList<Page>();
+		p.add(new Page("Admin", "/admin"));
+		p.add(new Page(messageSource.getMessage("label.race", null, locale), "/admin/race"));
+		p.add(new Page(race.getRaceName(), "/admin/race/edit/" + raceId.toString()));
+		Breadcrumb b = new Breadcrumb(p, new Page(stage.getStageName(), stageId.toString()));
+		model.addAttribute("breadcrumb", b);
 		return "admin/editStage";
 	}
 

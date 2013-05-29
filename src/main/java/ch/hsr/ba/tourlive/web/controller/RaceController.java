@@ -102,44 +102,44 @@ public class RaceController {
 			@PathVariable("raceSlug") String raceSlug, Model model, Locale locale) {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {
-			List<ValueContainer> valueContainers = valueContainerService
-					.getAllForStageByDistance(stage);
-			model.addAttribute("limit", stage.getCompleted() ? stage.getEndtimeAsTimestamp()
-					: System.currentTimeMillis());
-			model.addAttribute("races", raceService.getAllVisible());
-			// model.addAttribute("menuitems", MenuItem.makeStageNavi());
-			model.addAttribute("stagemenu", true);
-			model.addAttribute("stage", stage);
-			model.addAttribute("navbarrace", "active");
-			model.addAttribute("menutitle", stage.getStageName());
-			model.addAttribute("valuecontainers", valueContainers);
-			model.addAttribute("riders", riderService.getAllByStage(stage));
-			model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
-			model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
-			model.addAttribute("liveTickerItems",
-					liveTickerItemService.getAllByStageLimitedTo(stage, 10));
+			List<ValueContainer> valueContainers = null;
 			try {
+				valueContainers = valueContainerService.getAllForStageByDistance(stage);
+				model.addAttribute("limit", stage.getCompleted() ? stage.getEndtimeAsTimestamp()
+						: System.currentTimeMillis());
+				model.addAttribute("races", raceService.getAllVisible());
+				// model.addAttribute("menuitems", MenuItem.makeStageNavi());
+				model.addAttribute("stagemenu", true);
+				model.addAttribute("stage", stage);
+				model.addAttribute("navbarrace", "active");
+				model.addAttribute("menutitle", stage.getStageName());
+				model.addAttribute("valuecontainers", valueContainers);
+				model.addAttribute("riders", riderService.getAllByStage(stage));
+				model.addAttribute("images", imageDataService.getMostRecentByStage(stage));
+				model.addAttribute("videos", videoDataService.getMostRecentByStage(stage));
+				model.addAttribute("liveTickerItems",
+						liveTickerItemService.getAllByStageLimitedTo(stage, 10));
 				model.addAttribute("devices", stage.getDevices());
 				if (stage.getDevices().size() > 1)
 					valueContainerService.getDeficiteToLeaderForStage(stage);
-			} catch (Exception e) {
-				LOG.info("no devices for this stage");
-			}
-			model.addAttribute("hostname", hostname);
-			model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
-			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
-			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
-			try {
+
+				model.addAttribute("hostname", hostname);
+				model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
+				model.addAttribute("distances",
+						valueContainerService.getAllForStageByDistance(stage));
+				model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
 				model.addAttribute("first", valueContainerService.getLatestForDeviceByStage(stage)
 						.get(0));
+				model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
 			} catch (NullPointerException e) {
-				LOG.info("no ValueContainers for the stage " + stage.getStageName());
+				LOG.info("Important Information (ValueContainers, Devices, Start and Endtime, missing for Stage: "
+						+ stage.getStageName());
 			} catch (IndexOutOfBoundsException e) {
-				LOG.info("no ValueContainers for the stage " + stage.getStageName());
+				LOG.info("Important Information (ValueContainers, Devices, Start and Endtime, missing for Stage: "
+						+ stage.getStageName());
 			}
 			model.addAttribute("breadcrumb", new Breadcrumb("/race/" + raceSlug + "/stage/"
 					+ stageSlug, messageSource.getMessage("label.actualRaces", null, locale)));
-			model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
 		}
 		return "actualstage";
 	}

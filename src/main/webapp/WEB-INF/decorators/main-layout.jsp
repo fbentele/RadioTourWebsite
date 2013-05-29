@@ -21,6 +21,7 @@
 <link href="<c:url value="/resources/css/jquery.dataTables.css" />" rel="stylesheet"
 	type="text/css" />
 <c:import url="/WEB-INF/views/tags/javascripts.jsp" />
+<link rel="shortcut icon" href="<c:url value="/resources/img/favicon.ico" />" />
 
 <!-- for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
