@@ -118,5 +118,30 @@
 			});
 		});
 	</script>
+		<!-- Admin Scripts -->
+	<script type="text/javascript">
+		// UX
+		$("#adder").click(function(event) {
+			event.stopPropagation();
+		});
+		$("#adder").click(function() {
+			$(".newItem").slideToggle('fast');
+		});
+		$('#fileuploadbutton').bind("click", function() {
+			$('.fileupload').click();
+		});
+		$('#fileuploadbutton2').bind("click", function() {
+			$('.fileupload2').click();
+		});
+		$('#fileuploadbutton3').bind("click", function() {
+			$('.fileupload3').click();
+		});
+		$('#fileuploadbutton4').bind("click", function() {
+			$('.fileupload4').click();
+		});
+
+		// color picker
+		$('.colorpicker').colorpicker();
+	</script>
 </body>
 </html>

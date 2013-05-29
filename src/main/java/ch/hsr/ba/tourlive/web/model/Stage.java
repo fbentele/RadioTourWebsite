@@ -209,12 +209,31 @@ public class Stage {
 	}
 
 	public void addDevice(Device device) {
-		devices.add(device);
+		boolean found = false;
+		for (Device d : devices) {
+			if (d.getDeviceId().equals(device.getDeviceId()))
+				found = true;
+		}
+		if (!found)
+			devices.add(device);
 	}
 
 	public void removeDevice(Device device) {
-		devices.remove(device);
+		for (Device d : devices) {
+			if (d.getDeviceId().equals(device.getDeviceId())) {
+				devices.remove(d);
+				break;
+			}
+		}
+	}
 
+	public void removeDevice(String deviceId) {
+		for (Device d : devices) {
+			if (d.getDeviceId().equals(deviceId)) {
+				devices.remove(d);
+				break;
+			}
+		}
 	}
 
 	public String getBannerImage() {

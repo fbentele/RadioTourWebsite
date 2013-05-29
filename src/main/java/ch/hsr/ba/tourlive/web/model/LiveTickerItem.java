@@ -27,7 +27,7 @@ public class LiveTickerItem {
 	private Long liveTickerId;
 	@Column
 	private Long timestamp;
-	@Column
+	@Column(columnDefinition = "text")
 	private String news;
 	@JsonIgnore
 	@ManyToOne

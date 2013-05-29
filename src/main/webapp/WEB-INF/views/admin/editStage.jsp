@@ -45,23 +45,27 @@
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
 				<div>
-					<label for="stagetype"><spring:message code="label.admin.stagetype" /></label> <select name="stageType">
-						<option value="SINGLETIMERACE" <c:if test="${stagetype == 'SINGLETIMERACE'}">selected</c:if> >
+					<label for="stagetype"><spring:message code="label.admin.stagetype" /></label> <select
+						name="stageType">
+						<option value="SINGLETIMERACE"
+							<c:if test="${stagetype == 'SINGLETIMERACE'}">selected</c:if>>
 							<spring:message code="label.stage.type.singeltimerace" />
 						</option>
-						<option value="GROUPTIMERACE" <c:if test="${stagetype == 'GROUPTIMERACE'}">selected</c:if> >
+						<option value="GROUPTIMERACE"
+							<c:if test="${stagetype == 'GROUPTIMERACE'}">selected</c:if>>
 							<spring:message code="label.stage.type.grouptimerace" />
 						</option>
-						<option value="PROLOG" <c:if test="${stagetype == 'PROLOG'}">selected</c:if> >
+						<option value="PROLOG" <c:if test="${stagetype == 'PROLOG'}">selected</c:if>>
 							<spring:message code="label.stage.type.prolog" />
 						</option>
-						<option value="MOUNTAINSTAGE" <c:if test="${stagetype == 'MOUNTAINSTAGE'}">selected</c:if> >
+						<option value="MOUNTAINSTAGE"
+							<c:if test="${stagetype == 'MOUNTAINSTAGE'}">selected</c:if>>
 							<spring:message code="label.stage.type.mountainstage" />
 						</option>
-						<option value="FLATSTAGE" <c:if test="${stagetype == 'FLATSTAGE'}">selected</c:if> >
+						<option value="FLATSTAGE" <c:if test="${stagetype == 'FLATSTAGE'}">selected</c:if>>
 							<spring:message code="label.stage.type.flatstage" />
 						</option>
-						<option value="OTHER" <c:if test="${stagetype == 'OTHER'}">selected</c:if> >
+						<option value="OTHER" <c:if test="${stagetype == 'OTHER'}">selected</c:if>>
 							<spring:message code="label.stage.type.other" />
 						</option>
 					</select>
@@ -139,6 +143,7 @@
 			<button id="adder" type="submit" class="btn btn-primary" tabindex="12">
 				<spring:message code="label.admin.assignNewDevice" />
 			</button>
+			<br />
 			<div class="newItem row-fluid">
 				<c:choose>
 					<c:when test="${not empty devices}">
@@ -153,6 +158,10 @@
 										</label>
 									</c:forEach>
 									<button type="submit" class="btn" tabindex="13">Speichern</button>
+									 <br /> <br />
+									<p class="alert alert-info">
+										<spring:message code="label.admin.assignToAllStages" />
+									</p>
 								</div>
 							</div>
 						</form:form>

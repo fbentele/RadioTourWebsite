@@ -99,10 +99,8 @@ public class AdminController {
 		model.addAttribute("stage", new Stage());
 		model.addAttribute("stages", stageService.getAllByRace(race));
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute(
-				"breadcrumb",
-				new Breadcrumb("/admin/race/" + raceId, messageSource.getMessage("label.race",
-						null, locale)));
+		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + race.getRaceName(),
+				messageSource.getMessage("label.race", null, locale)));
 		return "admin/editRace";
 	}
 
@@ -135,10 +133,6 @@ public class AdminController {
 			LOG.info("Race or Stage does not exist");
 		}
 		raceService.delete(raceId);
-		model.addAttribute("adminmenu", "true");
-		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb",
-				new Breadcrumb("/admin/race", messageSource.getMessage("label.race", null, locale)));
 		return "forward:/admin/race";
 	}
 }

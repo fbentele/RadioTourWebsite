@@ -9,7 +9,7 @@ package ch.hsr.ba.tourlive.web.controller.admin;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Race;
@@ -66,6 +66,8 @@ public class AdminStageController {
 	private String filePath;
 	@Value("${config.dev.hostname}")
 	private String hostname;
+	@Autowired
+	private ReloadableResourceBundleMessageSource messageSource;
 	private final String FILENAME_STAGEBANNER = "stageBanner.png";
 	private final String FILENAME_STAGEPROFILE = "stageProfile.png";
 	private final static Logger LOG = LoggerFactory.getLogger(AdminStageController.class);
@@ -81,11 +83,14 @@ public class AdminStageController {
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage,
-			Model model) {
+			Model model, Locale locale) {
 		// Form Validation
 		if (binding.hasErrors()) {
 			model.addAttribute("races", raceService.getAll());
-			model.addAttribute("breadcrump", new Breadcrumb("/admin/race", ""));
+			model.addAttribute(
+					"breadcrumb",
+					new Breadcrumb("/admin/race", messageSource.getMessage("label.race", null,
+							locale)));
 			Race race = raceService.getRaceById(raceId);
 			model.addAttribute("race", race);
 			model.addAttribute("stage", unUsedStage);
@@ -112,18 +117,22 @@ public class AdminStageController {
 	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/edit/{stageId}", method = RequestMethod.GET)
 	public String editStage(@PathVariable("stageId") Long stageId,
-			@PathVariable("raceId") Long raceId, Model model) {
+			@PathVariable("raceId") Long raceId, Model model, Locale locale) {
+		Race race = raceService.getRaceById(raceId);
 		Stage stage = stageService.getStageById(stageId);
 		model.addAttribute("stage", stage);
 		model.addAttribute("hostname", hostname);
-		model.addAttribute("race", raceService.getRaceById(raceId));
+		model.addAttribute("race", race);
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("devices", deviceService.getAllNotAlreadyAssignedTo(stage));
 		model.addAttribute("riders", riderService.getAllByStage(stage));
 		model.addAttribute("marchTable", mtiService.getAllByStage(stage));
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
-				+ stageId, ""));
+		model.addAttribute(
+				"breadcrumb",
+				new Breadcrumb("/admin/race/" + race.getRaceName() + "/stage/"
+						+ stage.getStageName(), messageSource
+						.getMessage("label.race", null, locale)));
 		model.addAttribute("stagetype", stage.getStagetype());
 		return "admin/editStage";
 	}
@@ -220,7 +229,7 @@ public class AdminStageController {
 	}
 
 	/**
-	 * Assigne device to stage.
+	 * Assign device to all stages in a race.
 	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/add", method = RequestMethod.POST)
 	public String editDevice(@PathVariable("stageId") Long stageId,
@@ -228,18 +237,13 @@ public class AdminStageController {
 		Stage stage = stageService.getStageById(stageId);
 		try {
 			for (String deviceId : request.getParameterValues("device")) {
-				boolean found = false;
-				// is the device already assigned to stage?
-				for (Device dev : stage.getDevices()) {
-					if (dev.getDeviceId().equals(deviceId))
-						found = true;
+				for (Stage s : stageService.getAllByRace(stage.getRace())) {
+					s.addDevice(deviceService.getDeviceById(deviceId));
+					stageService.update(s);
 				}
-				if (!found)
-					stage.addDevice(deviceService.getDeviceById(deviceId));
 			}
-			stageService.update(stage);
 		} catch (NullPointerException e) {
-			LOG.info("form had no device as parameter");
+			LOG.info("Device is either invalid or has no deviceId");
 		}
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
@@ -252,14 +256,7 @@ public class AdminStageController {
 			@PathVariable("raceId") Long raceId, @PathVariable("deviceId") String deviceId,
 			HttpServletRequest request) {
 		Stage stage = stageService.getStageById(stageId);
-		List<Device> list = stage.getDevices();
-		for (Device device : list) {
-			if (device.getDeviceId().equals(deviceId)) {
-				list.remove(device);
-				break;
-			}
-		}
-		stage.setDevices(list);
+		stage.removeDevice(deviceId);
 		stageService.update(stage);
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
@@ -275,15 +272,20 @@ public class AdminStageController {
 
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/liveticker/{ltiId}", method = RequestMethod.GET)
 	public String editLiveTicker(@PathVariable("raceId") Long raceId,
-			@PathVariable("stageId") Long stageId, @PathVariable("ltiId") Long ltiId, Model model) {
+			@PathVariable("stageId") Long stageId, @PathVariable("ltiId") Long ltiId, Model model,
+			Locale locale) {
+		Race race = raceService.getRaceById(raceId);
 		Stage stage = stageService.getStageById(stageId);
 		model.addAttribute("hostname", hostname);
-		model.addAttribute("race", raceService.getRaceById(raceId));
+		model.addAttribute("race", race);
 		model.addAttribute("stage", stage);
 		model.addAttribute("liveTickerItems", ltiService.getAllByStage(stage));
 		model.addAttribute("now", DateUtil.timeNow());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId + "/stage/"
-				+ stageId, ""));
+		model.addAttribute(
+				"breadcrumb",
+				new Breadcrumb("/admin/race/" + race.getRaceName() + "/stage/"
+						+ stage.getStageName(), messageSource
+						.getMessage("label.race", null, locale)));
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
 		model.addAttribute("lti", ltiId > 0 ? ltiService.getById(ltiId) : new LiveTickerItem());
