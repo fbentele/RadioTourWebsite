@@ -1,6 +1,5 @@
 package ch.hsr.ba.tourlive.web.controller.admin;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,19 +56,12 @@ public class AdminDeviceController {
 	public String deleteDevice(@PathVariable("deviceId") String deviceId, Model model) {
 		Device d = deviceService.getDeviceById(deviceId);
 		for (Stage stage : stageService.getAllStagesForDevice(d)) {
-			List<Device> list = stage.getDevices();
-			for (Device device : list) {
-				if (device.getDeviceId().equals(deviceId)) {
-					list.remove(device);
-					break;
-				}
-			}
-			stage.setDevices(list);
+			stage.removeDevice(d);
 			stageService.update(stage);
 		}
-		valueContainerService.deleteAllFromDevice(d);
 		imageDataService.deleteAllFromDevice(d);
 		videoDataService.deleteAllFromDevice(d);
+		valueContainerService.deleteAllFromDevice(d);
 		deviceService.delete(deviceId);
 		return "redirect:/admin/device";
 	}
