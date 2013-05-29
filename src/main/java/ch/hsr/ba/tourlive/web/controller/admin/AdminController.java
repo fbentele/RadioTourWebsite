@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,8 @@ public class AdminController {
 	@Autowired
 	private RaceService raceService;
 	private final static Logger LOG = LoggerFactory.getLogger(AdminController.class);
+	@Autowired
+	private ReloadableResourceBundleMessageSource messageSource;
 
 	/**
 	 * The admin page
@@ -52,7 +55,8 @@ public class AdminController {
 	public String manageRace(Locale locale, Model model) {
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAll());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race", ""));
+		model.addAttribute("breadcrumb",
+				new Breadcrumb("/admin/race", messageSource.getMessage("label.race", null, locale)));
 		model.addAttribute("race", new Race());
 		return "admin/manageRace";
 	}
@@ -68,7 +72,10 @@ public class AdminController {
 			model.addAttribute("race", race);
 			model.addAttribute("adminmenu", "true");
 			model.addAttribute("races", raceService.getAll());
-			model.addAttribute("breadcrumb", new Breadcrumb("/admin/race", ""));
+			model.addAttribute(
+					"breadcrumb",
+					new Breadcrumb("/admin/race", messageSource.getMessage("label.race", null,
+							locale)));
 			model.addAttribute("showhidden", true);
 			return "admin/manageRace";
 		} else {
@@ -92,7 +99,10 @@ public class AdminController {
 		model.addAttribute("stage", new Stage());
 		model.addAttribute("stages", stageService.getAllByRace(race));
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race/" + raceId, ""));
+		model.addAttribute(
+				"breadcrumb",
+				new Breadcrumb("/admin/race/" + raceId, messageSource.getMessage("label.race",
+						null, locale)));
 		return "admin/editRace";
 	}
 
@@ -127,7 +137,8 @@ public class AdminController {
 		raceService.delete(raceId);
 		model.addAttribute("adminmenu", "true");
 		model.addAttribute("races", raceService.getAllVisible());
-		model.addAttribute("breadcrumb", new Breadcrumb("/admin/race", ""));
+		model.addAttribute("breadcrumb",
+				new Breadcrumb("/admin/race", messageSource.getMessage("label.race", null, locale)));
 		return "forward:/admin/race";
 	}
 }
