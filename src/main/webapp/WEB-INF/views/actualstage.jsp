@@ -447,7 +447,7 @@
 
 	<!-- Marchtable DataTable -->
 	<script type="text/javascript">
-		$('#marchtable').dataTable( {
+		var oTable = $('#marchtable').dataTable( {
         	"oLanguage": {
             	"sLengthMenu": "_MENU_ <spring:message code="label.stage.recordsperpage"/>",
             	"sZeroRecords": "<spring:message code="label.stage.norecords"/>",
@@ -458,9 +458,9 @@
         	},
         	"sScrollY": "200px",
     		"sDom": "frtiS",
-    		"bDeferRender": true,
+    		"bDeferRender": false,
     		"fnInitComplete": function () {
-    			<!-- this.fnSettings().oScroller.fnScrollToRow( 12 ); -->
+    			this.fnSettings().oScroller.fnScrollToRow( 12 );
     		}
     	});
 	$.extend($.fn.dataTableExt.oStdClasses, {

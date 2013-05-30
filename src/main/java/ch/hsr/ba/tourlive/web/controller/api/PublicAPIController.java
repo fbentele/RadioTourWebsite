@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ch.hsr.ba.tourlive.web.model.ImageData;
+import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
 import ch.hsr.ba.tourlive.web.model.VideoData;
 import ch.hsr.ba.tourlive.web.service.ImageDataService;
+import ch.hsr.ba.tourlive.web.service.MarchTableService;
 import ch.hsr.ba.tourlive.web.service.StageService;
 import ch.hsr.ba.tourlive.web.service.ValueContainerService;
 import ch.hsr.ba.tourlive.web.service.VideoDataService;
@@ -38,6 +40,9 @@ public class PublicAPIController {
 
 	@Autowired
 	VideoDataService videoDataService;
+
+	@Autowired
+	MarchTableService mtiService;
 
 	/**
 	 * Returns all public visivle stages.
@@ -99,6 +104,24 @@ public class PublicAPIController {
 		Stage stage = stageService.getStageById(stageId);
 		if (stage != null) {
 			return videoDataService.getAllByStage(stage);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Gets all MarchTableItems for stage.
+	 * 
+	 * @param stageId
+	 *            the stage id
+	 * @return the video data for stage
+	 */
+	@ResponseBody
+	@RequestMapping(value = "public/stage/{stageId}/marchtableitem", method = RequestMethod.GET)
+	public List<MarchTableItem> getMarchTableItemsForStage(@PathVariable("stageId") Long stageId) {
+		Stage stage = stageService.getStageById(stageId);
+		if (stage != null) {
+			return mtiService.getAllByStage(stage);
 		} else {
 			return null;
 		}
