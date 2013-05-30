@@ -1,5 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <div class="navbar">
 	<div class="navbar-inner">
@@ -20,7 +21,10 @@
 				</c:if>
 				<li class="${navbararchive}"><a href="<c:url value="/archive" />"><spring:message
 							code="label.archive" /></a></li>
-				<li class="${navbarapi}"><a href="<c:url value="/api" />">API</a></li>
+				<sec:authorize access="isAuthenticated()">
+					<li class="${navbarapi}"><a href="<c:url value="/api" />">API</a></li>
+					<li class="${navbaradmin}"><a href="/admin">Admin</a></li>
+				</sec:authorize>
 			</ul>
 			<ul class="nav pull-right">
 				<li class="dropdown"><a href="#" data-toggle="dropdown"><spring:message
@@ -29,7 +33,6 @@
 						<li><a href="?lang=de">Deutsch</a></li>
 						<li><a href="?lang=en">English</a></li>
 					</ul></li>
-
 			</ul>
 		</div>
 	</div>

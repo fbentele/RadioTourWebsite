@@ -403,21 +403,21 @@
 			};
 			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 			<c:forEach items="${devices}" var="device">
-				var ${device.username} = [];
+				var device_${device.deviceId} = [];
 			</c:forEach>
 			<c:forEach items="${valuecontainers}" var="valuecontainer">
 				<c:if test="${not empty valuecontainer.positionData.latitude}">
-					${valuecontainer.device.username}.push(new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}))
+					device_${valuecontainer.device.deviceId}.push(new google.maps.LatLng(${valuecontainer.positionData.latitude}, ${valuecontainer.positionData.longitude}))
 			 	</c:if>
 			</c:forEach>
 			<c:forEach items="${devices}" var="device">
-				var flightPath_${device.username} = new google.maps.Polyline({
-					path : ${device.username},
+				var flightPath_${device.deviceId} = new google.maps.Polyline({
+					path : device_${device.deviceId},
 					strokeColor : "${device.color}",
 					strokeOpacity : 1.0,
 					strokeWeight : 2
 				});
-				flightPath_${device.username}.setMap(map);
+				flightPath_${device.deviceId}.setMap(map);
 			</c:forEach>
 			}
 		google.maps.event.addDomListener(window, 'load', initialize);
@@ -454,12 +454,14 @@
             	"sInfo": "_START_ - _END_ <spring:message code="label.stage.of"/> _TOTAL_ <spring:message code="label.stage.places"/>",
             	"sInfoEmpty": " 0 - 0 <spring:message code="label.stage.of"/> 0",
             	"sInfoFiltered": "(<spring:message code="label.stage.filtered"/> _MAX_ )",
-        		"sSearch": "<spring:message code="label.stage.search"/>",
-        		"oPaginate":{
-        			"sNext": "<spring:message code="label.stage.next"/>",
-        			"sPrevious": "<spring:message code="label.stage.previous"/>"
-        		}
-        	}
+        		"sSearch": "<spring:message code="label.stage.search"/>"
+        	},
+        	"sScrollY": "200px",
+    		"sDom": "frtiS",
+    		"bDeferRender": true,
+    		"fnInitComplete": function () {
+    			<!-- this.fnSettings().oScroller.fnScrollToRow( 12 ); -->
+    		}
     	});
 	$.extend($.fn.dataTableExt.oStdClasses, {
 		"sWrapper" : "dataTables_wrapper form-inline"
