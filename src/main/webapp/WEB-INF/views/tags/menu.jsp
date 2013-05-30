@@ -3,7 +3,7 @@
 
 	<c:if test="${not empty menuitems}">
 	<div class="span2">
-		<div id="menu" class="well">
+		<div id="menu" class="well visible-desktop">
 			<ul class="nav nav-list">
 				<c:if test="${not empty menutitle}">
 					<li class="nav-header">${menutitle}</li>
@@ -17,7 +17,7 @@
 	</c:if>
 	<c:if test="${not empty stagemenu}">
 	<div class="span2">
-		<div id="menu" class="well">
+		<div id="menu" class="well visible-desktop">
 			<ul class="nav nav-list">
 				<c:if test="${not empty menutitle}">
 					<li class="nav-header">${menutitle}</li>
@@ -62,7 +62,7 @@
 	</c:if>
 	<c:if test="${not empty adminmenu}">
 	<div class="span2">
-		<div id="menu" class="well" style="padding: 8px 0;">
+		<div id="menu" class="well visible-desktop" style="padding: 8px 0;">
 			<ul class="nav nav-list">
 				<li class="nav-header">Admin</li>
 				<li id="menu-races" class=""><a href="/admin/race" target="_self"><spring:message

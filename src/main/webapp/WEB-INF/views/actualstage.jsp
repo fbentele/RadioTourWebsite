@@ -325,16 +325,16 @@
 	<!-- Abstandsentwicklung  -->
 	<c:if test="${not empty valuecontainers}">
 		<script type="text/javascript">
-			var factor = .957446809;
+			var factor  = .957446809;
+			var factor2 = .978723404;
 			var stageDistance = ${stage.distance};
 			var canvas = Raphael("abstand-canvas", profilewidth, 220);
 			canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-			canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
-	
-			canvas.path("M230,190L230,210");
-			canvas.path("M450,190L450,210");
-			canvas.path("M670,190L670,210");
-			canvas.path("M890,190L890,210");
+			canvas.path("M10,200H" + (profilewidth * factor2)).attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
+			canvas.path("M"+ (profilewidth*.244680851) +",190L"+ (profilewidth*.244680851) +",210");
+			canvas.path("M"+ (profilewidth*.478723404) +",190L"+ (profilewidth*.478723404) +",210");
+			canvas.path("M"+ (profilewidth*.712765957) +",190L"+ (profilewidth*.712765957) +",210");
+			canvas.path("M" + (profilewidth*.946808511)+",190L"+(profilewidth*.946808511)+",210");
 			canvas.text(10,215, "0 " );
 			canvas.text((profilewidth*.244680851),215, stageDistance/4);
 			canvas.text((profilewidth*.478723404),215, stageDistance/2);

@@ -127,9 +127,9 @@
 					<ul>
 						<c:forEach items="${stage.devices}" var="device">
 							<li>${device.username} (<spring:message code="label.admin.devices" /> ID:
-								${device.deviceId}) <a
+								${device.deviceId}) <a class="badge badge-important"
 								href="/admin/race/${race.raceId}/stage/${stage.stageId}/device/${device.deviceId}/remove"
-								target="_self"><spring:message code="label.admin.delete" /></a></li>
+								target="_self"><spring:message code="label.admin.removeDevice" /></a></li>
 						</c:forEach>
 					</ul>
 				</c:when>
