@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<div class="span2">
 	<c:if test="${not empty menuitems}">
+	<div class="span2">
 		<div id="menu" class="well">
 			<ul class="nav nav-list">
 				<c:if test="${not empty menutitle}">
@@ -13,8 +13,10 @@
 				</c:forEach>
 			</ul>
 		</div>
+	</div>
 	</c:if>
 	<c:if test="${not empty stagemenu}">
+	<div class="span2">
 		<div id="menu" class="well">
 			<ul class="nav nav-list">
 				<c:if test="${not empty menutitle}">
@@ -56,8 +58,10 @@
 				</c:if>
 			</ul>
 		</div>
+	</div>
 	</c:if>
 	<c:if test="${not empty adminmenu}">
+	<div class="span2">
 		<div id="menu" class="well" style="padding: 8px 0;">
 			<ul class="nav nav-list">
 				<li class="nav-header">Admin</li>
@@ -67,5 +71,5 @@
 							code="label.admin.devices" /></a></li>
 			</ul>
 		</div>
+	</div>
 	</c:if>
-</div>

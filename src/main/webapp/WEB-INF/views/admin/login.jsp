@@ -8,24 +8,22 @@
 </head>
 <body>
 	<div class="row-fluid">
-		<div class="login-form">
+		<div class="span4 well">
 			<h2>
 				<spring:message code="label.login" />
 			</h2>
 			<form name='f' action="/j_spring_security_check" method='POST'>
-				<table>
-					<tr>
-						<td>User:</td>
-						<td><input type='text' name='j_username' value=''></td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><input type='password' name='j_password' /></td>
-					</tr>
-					<tr>
-						<td><input name="submit" type="submit" value="submit" /></td>
-					</tr>
-				</table>
+				<fieldset>
+					<div class="clearfix">
+						<input type='text' name='j_username' value=''  placeholder="<spring:message code="label.username" />">
+					</div>
+					<div class="clearfix">
+						
+						<input type='password' name='j_password' placeholder="<spring:message code="label.password" />"/>
+						<input name="submit" type="submit"
+							class="btn" value="Login" />
+					</div>
+				</fieldset>
 			</form>
 		</div>
 	</div>

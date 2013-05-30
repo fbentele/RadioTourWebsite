@@ -77,6 +77,7 @@ public class AdminDeviceController {
 		model.addAttribute("device", device);
 		model.addAttribute("breadcrumb", new Breadcrumb("/admin/device/" + deviceId, ""));
 		model.addAttribute("stages", stageService.getAllStagesForDevice(device));
+		model.addAttribute("position", valueContainerService.getMostRecentForDevice(device));
 		return "admin/editDevice";
 	}
 

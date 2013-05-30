@@ -143,4 +143,12 @@ public interface ValueContainerService {
 	 */
 	public List<ValueContainer> getMostRecentForEachDevice(List<Device> devices);
 
+	/**
+	 * Get latest ValueContainer for a device (for localization used)
+	 * 
+	 * @param device
+	 * @return returns a ValueContainers
+	 */
+	public ValueContainer getMostRecentForDevice(Device d);
+
 }

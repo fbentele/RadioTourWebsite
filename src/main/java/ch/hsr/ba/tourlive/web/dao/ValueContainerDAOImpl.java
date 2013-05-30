@@ -236,6 +236,13 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getMostRecentForEachDevice
+	 * (java.util.List)
+	 */
 	public List<ValueContainer> getMostRecentForEachDevice(List<Device> devices) {
 		List<ValueContainer> list = new ArrayList<ValueContainer>();
 		for (Device device : devices) {
@@ -249,6 +256,25 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			}
 		}
 		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.dao.ValueContainerDAO#getMostRecentForDevice(ch
+	 * .hsr.ba.tourlive.web.model.Device)
+	 */
+	public ValueContainer getMostRecentForDevice(Device d) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		crit.add(Restrictions.eq("device", d));
+		crit.addOrder(Order.desc("timestamp"));
+		try {
+			return (ValueContainer) crit.list().get(0);
+		} catch (IndexOutOfBoundsException e) {
+			LOG.info("No position known for this device");
+			return null;
+		}
 	}
 
 	/*

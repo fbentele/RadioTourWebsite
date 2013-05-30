@@ -27,7 +27,9 @@
 				<label><spring:message code="label.admin.devicePresentationName" /></label>
 				<input type="text" name="labelName" value="${device.labelName}" />
 				<hr>
-				<h4><spring:message code="label.admin.driverInformation" /></h4>
+				<h4>
+					<spring:message code="label.admin.driverInformation" />
+				</h4>
 				<label for="driverPhoneNr"><spring:message code="label.admin.driverPhoneNr" /></label>
 				<input type="text" name="driverPhoneNr" value="${device.driverPhoneNr}" />
 				<label for="driverName"><spring:message code="label.admin.driverName" /></label>
@@ -39,8 +41,8 @@
 			</form:form>
 		</div>
 		<c:if test="${not empty stages}">
-			<div class="span4">
-				<spring:message code="label.admin.deviceInStage" />
+			<div class="span3">
+				<h4><spring:message code="label.admin.deviceInStage" /></h4>
 				<ul>
 					<c:forEach items="${stages}" var="stage">
 						<li>${stage.stageName}</li>
@@ -48,6 +50,16 @@
 				</ul>
 			</div>
 		</c:if>
+		<c:if test="${not empty position}">
+			<div class="span5">
+			<h4><spring:message code="label.admin.lastPosition" /></h4>
+			<iframe width="380" height="400" frameborder="0" scrolling="no" src="http://maps.google.com/maps/?saddr=${position.positionData.latitude},${position.positionData.longitude}&output=embed"> </iframe>
+			</div>
+		</c:if>
 	</div>
+	<script type="text/javascript">
+	// color picker
+	$('.colorpicker').colorpicker();
+	</script>
 </body>
 </html>

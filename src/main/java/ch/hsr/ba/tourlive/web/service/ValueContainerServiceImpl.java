@@ -192,4 +192,17 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 		return valueDao.getMostRecentForEachDevice(devices);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ch.hsr.ba.tourlive.web.service.ValueContainerService#getMostRecentForDevice
+	 * (ch.hsr.ba.tourlive.web.model.Device)
+	 */
+	@Override
+	@Transactional
+	public ValueContainer getMostRecentForDevice(Device d) {
+		return valueDao.getMostRecentForDevice(d);
+	}
+
 }
