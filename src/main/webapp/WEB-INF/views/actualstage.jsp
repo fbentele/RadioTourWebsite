@@ -276,16 +276,42 @@
 	</div>
 
 	<script type="text/javascript" src="<c:url value="/resources/js/raphael-min.js" />"></script>
+	<script type="text/javascript">
+		var profilewidth = 940;
+		var lineheight=320;
+		var lineheightend=135;
+		function setScreenParams(){
+			var screensize = $(window).width();
+			if (screensize >=1200){
+				profilewidth = 940;
+				lineheight=320;
+				lineheightend=135;
+			} else if (screensize < 1200 && screensize >= 980 ){
+				profilewidth = 768;
+				lineheight=265;
+				lineheightend= 105;
+			} else if (screensize < 980) {
+				profilewidth = 588;
+				lineheight=200;
+				lineheightend= 80;			
+			}
+		}
+		setScreenParams();
+		window.onresize = function(event) {
+			setScreenParams();
+		}
+	</script>
 
 	<!-- Streckenprofil / Hoehenprofil  -->
 	<c:if test="${not empty stage.stageProfileImage}">
 		<script type="text/javascript">
-		var streckencanvas = Raphael("strecken-canvas", 940, 350);
+		var factor = .925531915;
+		var streckencanvas = Raphael("strecken-canvas", profilewidth, 350);
 		<c:choose>
 			<c:when test="${not empty latest}">
 				<c:forEach items="${latest}" var="latest">
-					var m = ${latest.stageData.distance}*870/${stage.distance}+50;
-					var drawstring = "M" + m + ",330L"+m+",135";
+					var m = ${latest.stageData.distance}*(profilewidth * factor)/${stage.distance}+50;
+					var drawstring = "M" + m + "," + lineheight +"L" + m + "," + lineheightend;
 					var line_${latest.device.deviceId} = streckencanvas.path(drawstring).attr({"stroke": "${latest.device.color}", "stroke-width":"2"});
 				</c:forEach>
 			</c:when>
@@ -299,8 +325,9 @@
 	<!-- Abstandsentwicklung  -->
 	<c:if test="${not empty valuecontainers}">
 		<script type="text/javascript">
+			var factor = .957446809;
 			var stageDistance = ${stage.distance};
-			var canvas = Raphael("abstand-canvas", 940, 220);
+			var canvas = Raphael("abstand-canvas", profilewidth, 220);
 			canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 			canvas.path("M10,200H920").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
 	
@@ -309,15 +336,15 @@
 			canvas.path("M670,190L670,210");
 			canvas.path("M890,190L890,210");
 			canvas.text(10,215, "0 " );
-			canvas.text(230,215, stageDistance/4);
-			canvas.text(450,215, stageDistance/2);
-			canvas.text(670,215, stageDistance/4 *3);
-			canvas.text(890,215, stageDistance);
+			canvas.text((profilewidth*.244680851),215, stageDistance/4);
+			canvas.text((profilewidth*.478723404),215, stageDistance/2);
+			canvas.text((profilewidth*.712765957),215, stageDistance/4 *3);
+			canvas.text((profilewidth*.946808511),215, stageDistance);
 			canvas.text(50, 10, "<spring:message code="label.stage.deficiteInS" />");
-			canvas.text(900, 180, "<spring:message code="label.stage.raceKm" />");
+			canvas.text((factor * profilewidth), 180, "<spring:message code="label.stage.raceKm" />");
 			<c:forEach items="${valuecontainers}" var="vc">
 				<c:if test="${vc.deficiteTime > 0}">
-					canvas.circle(${vc.stageData.distance}*900/${stage.distance} + 10, 200 - (${vc.deficiteTime}/60000), 3).attr({"fill":"${vc.device.color}", "stroke":"${vc.device.color}"});
+					canvas.circle(${vc.stageData.distance}*(factor * profilewidth)/${stage.distance} + 10, 200 - (${vc.deficiteTime}/60000), 3).attr({"fill":"${vc.device.color}", "stroke":"${vc.device.color}"});
 				</c:if>
 			</c:forEach>
 		</script>
