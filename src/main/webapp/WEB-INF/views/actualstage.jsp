@@ -158,13 +158,17 @@
 					<h4 id="rennsituation">
 						<spring:message code="label.stage.raceSituation" />
 					</h4>
+					<p>
+						<spring:message code="label.stage.atTime" />
+						&nbsp;${situation.timestamp}
+					</p>
 					<c:forEach items="${situation.situation}" var="sit">
 						<div class="span3 ridergroup">
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" />
 							<c:if test="${not sit.isLeader}">
 								<br />
-								<spring:message code="label.stage.deficite" />: ${sit.handicaptime} </c:if>
+								${sit.handicaptime} </c:if>
 							<br />
 							<ul class="unstyled">
 								<c:forEach items="${sit.riderNumber}" var="situation">
@@ -179,10 +183,12 @@
 							</ul>
 						</div>
 					</c:forEach>
-					<br />
-					<div class="span3">
+					<div class="span8">
+						<br />
+						<spring:message code="label.stage.deficite" />
+						<br />
 						<spring:message code="label.stage.legend" />
-						:<br /> <span class="badge"><spring:message code="label.stage.rider" /></span> <span
+						: <span class="badge"><spring:message code="label.stage.rider" /></span> <span
 							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
 							class="badge badge-warning"><spring:message code="label.stage.leader" /></span>
 					</div>
@@ -252,7 +258,7 @@
 										<c:set var="color" value="${vc.device.colorAsRGB}" />
 									</c:if>
 								</c:forEach>
-								<tr style="background-color: rgba(${color}0.3);">
+								<tr class="<c:if test="${color != ''}">tagged</c:if>" style="background-color: rgba(${color}0.3);">
 									<td><c:if test="${not empty mti.icon}">
 											<img width="20px" src="/resources/img/${mti.icon}.png" />
 										</c:if></td>
@@ -446,6 +452,10 @@
 
 	<!-- Marchtable DataTable -->
 	<script type="text/javascript">
+		var marchtableline = $('#marchtable > tbody > tr[class="tagged"]').length;
+		if (marchtableline < 4){
+			marchtableline = -3;
+		}
 		var oTable = $('#marchtable').dataTable( {
         	"oLanguage": {
             	"sLengthMenu": "_MENU_ <spring:message code="label.stage.recordsperpage"/>",
@@ -459,7 +469,7 @@
     		"sDom": "frtiS",
     		"bDeferRender": true,
     		"fnInitComplete": function () {
-    			this.fnSettings().oScroller.fnScrollToRow( 12 );
+    			this.fnSettings().oScroller.fnScrollToRow( marchtableline + 2 );
     		}
     	});
 	$.extend($.fn.dataTableExt.oStdClasses, {

@@ -1,8 +1,5 @@
 package ch.hsr.ba.tourlive.web.model.rider;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ch.hsr.ba.tourlive.web.model.Stage;
+import ch.hsr.ba.tourlive.web.utils.DateUtil;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -59,13 +57,7 @@ public class RaceSituation {
 	}
 
 	public String getTimestamp() {
-		SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss");
-		try {
-			Date d = new Date(this.timestamp);
-			return date.format(d);
-		} catch (NullPointerException e) {
-			return "unbekannt";
-		}
+		return DateUtil.toTimeFormat(timestamp);
 	}
 
 	public void setTimestamp(Long timestamp) {
