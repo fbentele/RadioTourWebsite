@@ -33,8 +33,8 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#save(ch.hsr.ba.tourlive.
 	 * web.model.LiveTickerItem)
 	 */
-	public void save(LiveTickerItem lti) {
-		sessionFactory.getCurrentSession().save(lti);
+	public Long save(LiveTickerItem lti) {
+		return (Long) sessionFactory.getCurrentSession().save(lti);
 	}
 
 	/*

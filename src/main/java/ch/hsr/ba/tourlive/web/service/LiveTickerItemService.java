@@ -22,7 +22,7 @@ public interface LiveTickerItemService {
 	 * @param lti
 	 *            the LiveTickerItem to be saved
 	 */
-	public void save(LiveTickerItem lti);
+	public Long save(LiveTickerItem lti);
 
 	/**
 	 * Updates the object provided.

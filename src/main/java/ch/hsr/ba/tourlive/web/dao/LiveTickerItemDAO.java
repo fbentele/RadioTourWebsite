@@ -22,7 +22,7 @@ public interface LiveTickerItemDAO {
 	 * @param lti
 	 *            the LiveTickerItem
 	 */
-	public void save(LiveTickerItem lti);
+	public Long save(LiveTickerItem lti);
 
 	/**
 	 * Updates the object provided.

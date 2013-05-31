@@ -33,8 +33,8 @@ public class LiveTickerServiceImpl implements LiveTickerItemService {
 	 * .web.model.LiveTickerItem)
 	 */
 	@Transactional
-	public void save(LiveTickerItem lti) {
-		ltidao.save(lti);
+	public Long save(LiveTickerItem lti) {
+		return ltidao.save(lti);
 	}
 
 	/*

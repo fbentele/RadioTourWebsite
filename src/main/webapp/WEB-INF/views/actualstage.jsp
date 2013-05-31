@@ -21,9 +21,6 @@
 					&nbsp;${stage.distance} km
 					<spring:message code="label.stage.distancestatus3" />
 				</p>
-				<div id="positionbar" class="progress progress-striped active">
-					<div id="progress" class="bar" style="width: 0%;"></div>
-				</div>
 			</div>
 			<div class="span6 pull-right">
 				<spring:message code="label.stage.actualTime" />
@@ -62,6 +59,9 @@
 					<div id="image-drawing-wrapper">
 						<img width="940" height="350" src="${hostname}${stage.stageProfileImage}" />
 						<div id="strecken-canvas"></div>
+					</div>
+					<div id="positionbar" class="progress progress-striped active">
+						<div id="progress" class="bar" style="width: 0%;"></div>
 					</div>
 				</div>
 			</div>
@@ -121,7 +121,7 @@
 
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
-				<div class="span6 border">
+				<div class="span6 border" style="height: 400px;">
 					<h4 id="karte">
 						<spring:message code="label.stage.map" />
 					</h4>
@@ -129,14 +129,13 @@
 				</div>
 			</c:if>
 			<c:if test="${not empty liveTickerItems}">
-				<div class="span6 border" style="height: 350px;">
+				<div class="span6 border" style="height: 400px;">
 					<h4 id="liveticker">
 						<spring:message code="label.stage.liveticker" />
 					</h4>
 					<p>
 						<spring:message code="label.stage.livetickertext" />
-						<br />
-						<img class="offset1" src="<c:url value="/resources/img/loading.gif"/>" />
+						<br /> <img class="offset1" src="<c:url value="/resources/img/loading.gif"/>" />
 					</p>
 					<div id="livetickercontainer">
 						<ul class="unstyled offset1">

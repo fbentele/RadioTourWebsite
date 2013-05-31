@@ -53,13 +53,19 @@ public class RaceStageTest extends AbstractTestClass {
 		s.setStagetype(StageType.FLATSTAGE);
 		s.setVisible(true);
 		s.setStageId(stageService.save(s));
+
 		l = new LiveTickerItem();
+		l.setNews("Junit Live Ticker News");
+		l.setStage(s);
+		l.setTimestampAsTimestamp(1369495260000L);
+		l.setLiveTickerId(ltiService.save(l));
 	}
 
 	@Test
 	public void testRace() {
 		r = raceService.getRaceById(r.getRaceId());
 		Assert.assertNotNull(r);
+		Assert.assertEquals("RaceName", "Junit Race Test Name", r.getRaceName());
 	}
 
 	@Test
@@ -72,6 +78,7 @@ public class RaceStageTest extends AbstractTestClass {
 	@After
 	public void cleanUp() {
 		System.out.println("________deleting " + s.getStageId());
+		ltiService.delete(l.getLiveTickerId());
 		stageService.delete(s.getStageId());
 		raceService.delete(r.getRaceId());
 	}
