@@ -33,8 +33,8 @@ public class RaceDAOImpl implements RaceDAO {
 	 * ch.hsr.ba.tourlive.web.dao.RaceDAO#save(ch.hsr.ba.tourlive.web.model.
 	 * Race)
 	 */
-	public void save(Race race) {
-		sessionFactory.getCurrentSession().save(race);
+	public Long save(Race race) {
+		return (Long) sessionFactory.getCurrentSession().save(race);
 	}
 
 	/*
@@ -54,7 +54,7 @@ public class RaceDAOImpl implements RaceDAO {
 	 * @see ch.hsr.ba.tourlive.web.dao.RaceDAO#delete(java.lang.Long)
 	 */
 	public void delete(Long id) {
-		Race race = (Race) sessionFactory.getCurrentSession().get(Race.class, id);
+		Race race = (Race) sessionFactory.getCurrentSession().load(Race.class, id);
 		if (race != null) {
 			sessionFactory.getCurrentSession().delete(race);
 		}

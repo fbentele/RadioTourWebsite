@@ -89,33 +89,15 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 	 * 
 	 * @see
 	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getAllByStageLimitedTo(ch
-	 * .hsr.ba.tourlive.web.model.Stage, int)
-	 */
-	@SuppressWarnings("unchecked")
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit) {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);
-		crit.add(Restrictions.eq("stage", stage));
-		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		crit.addOrder(Order.desc("timestamp"));
-		crit.setMaxResults(limit);
-		return (List<LiveTickerItem>) crit.list();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.hsr.ba.tourlive.web.dao.LiveTickerItemDAO#getAllByStageLimitedTo(ch
 	 * .hsr.ba.tourlive.web.model.Stage, int, java.lang.Long)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long timelimit) {
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, Long timelimit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		crit.add(Restrictions.eq("stage", stage));
 		crit.add(Restrictions.le("timestamp", timelimit));
 		crit.addOrder(Order.desc("timestamp"));
-		crit.setMaxResults(limit);
 		return (List<LiveTickerItem>) crit.list();
 	}
 

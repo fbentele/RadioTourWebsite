@@ -90,22 +90,10 @@ public class LiveTickerServiceImpl implements LiveTickerItemService {
 	 * 
 	 * @see
 	 * ch.hsr.ba.tourlive.web.service.LiveTickerItemService#getAllByStageLimitedTo
-	 * (ch.hsr.ba.tourlive.web.model.Stage, int)
-	 */
-	@Transactional
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit) {
-		return ltidao.getAllByStageLimitedTo(stage, limit);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ch.hsr.ba.tourlive.web.service.LiveTickerItemService#getAllByStageLimitedTo
 	 * (ch.hsr.ba.tourlive.web.model.Stage, int, java.lang.Long)
 	 */
 	@Transactional
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long untilTime) {
-		return ltidao.getAllByStageLimitedTo(stage, limit, untilTime);
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, Long untilTime) {
+		return ltidao.getAllByStageLimitedTo(stage, untilTime);
 	}
 }

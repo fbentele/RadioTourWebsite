@@ -21,9 +21,9 @@
 				</div>
 				<input type="hidden" name="stage">
 				<label for="news"><spring:message code="label.admin.newsEntry" />: </label>
-				<textarea name="news" tabindex="2" rows="7">${lti.news}</textarea>
+				<textarea name="news" tabindex="2" rows="7" maxlength="250">${lti.news}</textarea>
 				<br />
-				<button type="submit" class="btn btn-primary">
+				<button type="submit" class="btn btn-primary" tabindex="3">
 					<spring:message code="label.admin.save" />
 				</button>
 			</form:form>

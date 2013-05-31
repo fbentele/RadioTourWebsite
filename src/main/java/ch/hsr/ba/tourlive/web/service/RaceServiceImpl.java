@@ -31,8 +31,8 @@ public class RaceServiceImpl implements RaceService {
 	 * .model.Race)
 	 */
 	@Transactional
-	public void save(Race race) {
-		racedao.save(race);
+	public Long save(Race race) {
+		return racedao.save(race);
 	}
 
 	/*

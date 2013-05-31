@@ -64,22 +64,11 @@ public interface LiveTickerItemService {
 	 * @param stage
 	 *            the stage
 	 * @param limit
-	 *            the limit as number
-	 * @return all by stage limited to
-	 */
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit);
-
-	/**
-	 * Gets all by stage limited to.
-	 * 
-	 * @param stage
-	 *            the stage
-	 * @param limit
 	 *            the limit
 	 * @param untilTime
 	 *            the until time
 	 * @return all by stage limited to time
 	 */
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long untilTime);
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, Long untilTime);
 
 }

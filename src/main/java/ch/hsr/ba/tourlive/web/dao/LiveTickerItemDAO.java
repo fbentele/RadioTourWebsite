@@ -63,20 +63,9 @@ public interface LiveTickerItemDAO {
 	 *            the stage
 	 * @param limit
 	 *            the limit
-	 * @return all by stage limited to
-	 */
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit);
-
-	/**
-	 * Gets all by stage limited to.
-	 * 
-	 * @param stage
-	 *            the stage
-	 * @param limit
-	 *            the limit
 	 * @param timelimit
 	 *            the timelimit
 	 * @return all by stage limited to
 	 */
-	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, int limit, Long timelimit);
+	public List<LiveTickerItem> getAllByStageLimitedTo(Stage stage, Long timelimit);
 }

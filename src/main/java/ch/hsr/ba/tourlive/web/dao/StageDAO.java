@@ -23,7 +23,7 @@ public interface StageDAO {
 	 * @param stage
 	 *            the stage
 	 */
-	public void save(Stage stage);
+	public Long save(Stage stage);
 
 	/**
 	 * Updates the object provided.

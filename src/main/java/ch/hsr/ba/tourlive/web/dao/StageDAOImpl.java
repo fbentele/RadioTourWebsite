@@ -40,11 +40,12 @@ public class StageDAOImpl implements StageDAO {
 	 * ch.hsr.ba.tourlive.web.dao.StageDAO#save(ch.hsr.ba.tourlive.web.model
 	 * .Stage)
 	 */
-	public void save(Stage stage) {
-		sessionFactory.getCurrentSession().saveOrUpdate(stage);
+	public Long save(Stage stage) {
+		return (Long) sessionFactory.getCurrentSession().save(stage);
 	}
 
 	/*
+	 * 
 	 * (non-Javadoc)
 	 * 
 	 * @see
@@ -52,7 +53,7 @@ public class StageDAOImpl implements StageDAO {
 	 * .Stage)
 	 */
 	public void update(Stage stage) {
-		sessionFactory.getCurrentSession().update(stage);
+		sessionFactory.getCurrentSession().saveOrUpdate(stage);
 	}
 
 	/*

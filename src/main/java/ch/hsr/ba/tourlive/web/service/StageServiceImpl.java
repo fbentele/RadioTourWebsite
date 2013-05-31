@@ -33,8 +33,8 @@ public class StageServiceImpl implements StageService {
 	 * .model.Stage)
 	 */
 	@Transactional
-	public void save(Stage stage) {
-		stagedao.save(stage);
+	public Long save(Stage stage) {
+		return stagedao.save(stage);
 	}
 
 	/*

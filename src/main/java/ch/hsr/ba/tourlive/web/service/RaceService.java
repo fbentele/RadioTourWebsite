@@ -21,7 +21,7 @@ public interface RaceService {
 	 * @param race
 	 *            the race
 	 */
-	public void save(Race race);
+	public Long save(Race race);
 
 	/**
 	 * Updates the object provided.

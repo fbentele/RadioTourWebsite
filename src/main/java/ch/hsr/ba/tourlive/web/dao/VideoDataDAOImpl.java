@@ -89,7 +89,6 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 		for (VideoData v : (List<VideoData>) crit.list()) {
 			FileUtil.deleteFile(filePath + v.getVideoLocation() + ".mp4");
 			FileUtil.deleteFile(filePath + v.getVideoLocation() + ".ogg");
-			LOG.info("_______ deleted" + filePath + v.getVideoLocation());
 			sessionFactory.getCurrentSession().delete(v);
 		}
 	}

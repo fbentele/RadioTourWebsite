@@ -36,7 +36,12 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		Stage stage = stageService.getLatestVisible();
-		return "forward:/race/" + stage.getRace().getRaceSlug() + " /stage/" + stage.getStageSlug();
+		try {
+			return "forward:/race/" + stage.getRace().getRaceSlug() + " /stage/"
+					+ stage.getStageSlug();
+		} catch (NullPointerException e) {
+			return "forward:/info";
+		}
 	}
 
 	/**
@@ -49,6 +54,15 @@ public class HomeController {
 		model.addAttribute("races", raceService.getAllVisible());
 		model.addAttribute("stages", stageService.getAllOlderThanAYear());
 		return "archive";
+	}
+
+	/**
+	 * Controller for info Page
+	 */
+	@RequestMapping(value = "/info", method = RequestMethod.GET)
+	public String info(Locale locale, Model model) {
+		model.addAttribute("races", raceService.getAllVisible());
+		return "about";
 	}
 
 	/**

@@ -76,48 +76,49 @@
 				</div>
 			</div>
 		</c:if>
-		<div id="livestream" class="row-fluid">
-			<c:forEach items="${images}" var="image">
-				<div class="span4 border">
-					<h4>${image.device.username}</h4>
-					<img width="350" src="<c:url value="${hostname}${image.imageLocation}"/>" />
-					<div id="">
-						<c:forEach items="${latest}" var="latest">
-							<c:if test="${latest.device.deviceId == image.device.deviceId}">
-								<spring:message code="label.stage.altitudeDif" />: <span class="pull-right">${latest.stageData.stageUpAltitude}</span>
-								<br />
-								<spring:message code="label.stage.timeNow" />: <span class="pull-right">${latest.stageData.stageTime}</span>
-								<br />
-								<spring:message code="label.stage.raceKm" />: <span class="pull-right">${latest.stageData.distance}</span>
-								<br />
-								<spring:message code="label.stage.averageSpeed" />: <span class="pull-right">${latest.stageData.averageSpeed}</span>
-								<br />
-							</c:if>
-						</c:forEach>
+		<c:if test="${not empty images}">
+			<div id="livestream" class="row-fluid">
+				<c:forEach items="${images}" var="image">
+					<div class="span4 border">
+						<h4>${image.device.username}</h4>
+						<img width="350" src="<c:url value="${hostname}${image.imageLocation}"/>" />
+						<div id="">
+							<c:forEach items="${latest}" var="latest">
+								<c:if test="${latest.device.deviceId == image.device.deviceId}">
+									<spring:message code="label.stage.altitudeDif" />: <span class="pull-right">${latest.stageData.stageUpAltitude}</span>
+									<br />
+									<spring:message code="label.stage.timeNow" />: <span class="pull-right">${latest.stageData.stageTime}</span>
+									<br />
+									<spring:message code="label.stage.raceKm" />: <span class="pull-right">${latest.stageData.distance}</span>
+									<br />
+									<spring:message code="label.stage.averageSpeed" />: <span class="pull-right">${latest.stageData.averageSpeed}</span>
+									<br />
+								</c:if>
+							</c:forEach>
+						</div>
+						<div id="caption">
+							<spring:message code="label.stage.lastUpdate" />
+							: <span class="pull-right">${image.timestamp}</span>
+						</div>
 					</div>
-					<div id="caption">
-						<spring:message code="label.stage.lastUpdate" />
-						: <span class="pull-right">${image.timestamp}</span>
+				</c:forEach>
+			</div>
+		</c:if>
+		<c:if test="${not empty videos}">
+			<div id="livevideo" class="row-fluid">
+				<c:forEach items="${videos}" var="video">
+					<div class="span5 border">
+						<h4>${video.device.username}</h4>
+						<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
+							<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
+								type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+							<source id="ogg" src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
+						</video>
 					</div>
-				</div>
-			</c:forEach>
-		</div>
+				</c:forEach>
+			</div>
+		</c:if>
 
-		<div id="livevideo" class="row-fluid">
-			<c:forEach items="${videos}" var="video">
-				<div class="span5 border">
-					<h4>${video.device.username}</h4>
-					<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
-						<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
-							type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
-						<source id="ogg" src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
-					</video>
-				</div>
-			</c:forEach>
-			<c:if test="${not empty stage.adCode}">
-				<div id="ads" class="span4 border">${stage.adCode}</div>
-			</c:if>
-		</div>
 		<div class="row-fluid">
 			<c:if test="${not empty valuecontainers}">
 				<div class="span6 border">
@@ -128,26 +129,30 @@
 				</div>
 			</c:if>
 			<c:if test="${not empty liveTickerItems}">
-				<div class="span5 border">
+				<div class="span6 border" style="height: 350px;">
 					<h4 id="liveticker">
 						<spring:message code="label.stage.liveticker" />
 					</h4>
 					<p>
 						<spring:message code="label.stage.livetickertext" />
+						<br />
+						<img class="offset1" src="<c:url value="/resources/img/loading.gif"/>" />
 					</p>
-					<dl class="dl-horizontal">
-						<c:forEach items="${liveTickerItems}" var="lti">
-							<dt>${lti.timestamp}</dt>
-							<dd>${lti.news}</dd>
-						</c:forEach>
-						<dt>
-							<img src="<c:url value="/resources/img/loading.gif"/>" />
-						</dt>
-					</dl>
+					<div id="livetickercontainer">
+						<ul class="unstyled offset1">
+							<c:forEach items="${liveTickerItems}" var="lti">
+								<li><b>${lti.timestamp}</b>: ${lti.news}</li>
+							</c:forEach>
+						</ul>
+					</div>
 				</div>
 			</c:if>
 		</div>
-
+		<div class="row-fluid">
+			<c:if test="${not empty stage.adCode}">
+				<div id="ads" class="span4 border">${stage.adCode}</div>
+			</c:if>
+		</div>
 		<c:if test="${not empty situation}">
 			<div class="row-fluid">
 				<div class="span12 border">
