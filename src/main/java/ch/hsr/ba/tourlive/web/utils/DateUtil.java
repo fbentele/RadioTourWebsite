@@ -60,6 +60,8 @@ public class DateUtil {
 	 *         {@value #TIME_FORMAT_PATTERN}
 	 */
 	public static String toTimeFormat(Long timestamp) {
+		if (timestamp == -1)
+			return "";
 		if (timestamp != null) {
 			Date date = new Date(timestamp);
 			SimpleDateFormat s = new SimpleDateFormat(TIME_FORMAT_PATTERN);
@@ -76,6 +78,8 @@ public class DateUtil {
 	 *         {@value #TIME_SHORT_PATTERN}
 	 */
 	public static String toShortTimeFormat(Long timestamp) {
+		if (timestamp == -1)
+			return "";
 		Date date = new Date(timestamp);
 		SimpleDateFormat s = new SimpleDateFormat(TIME_SHORT_PATTERN);
 		return s.format(date);

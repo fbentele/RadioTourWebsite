@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import ch.hsr.ba.tourlive.web.utils.DateUtil;
+
 /**
  * The ValueContainer combines information about the current position of a
  * device, the current stage and mobile networking information.
@@ -69,8 +71,16 @@ public class ValueContainer {
 		this.timestamp = timestamp;
 	}
 
+	public Long getDeficiteTimeAsTimestamp() {
+		return deficiteTime;
+	}
+
 	public Long getDeficiteTime() {
 		return deficiteTime;
+	}
+
+	public String getDeficiteTimeAsString() {
+		return DateUtil.toShortTimeFormat(deficiteTime);
 	}
 
 	public void setDeficiteTime(Long deficiteTime) {

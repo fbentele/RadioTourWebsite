@@ -291,7 +291,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	public void getDeficiteToLeaderForStage(Stage stage) {
 		if (stage.getDevices().size() >= 2) {
 			for (ValueContainer v : getAllForStageByDistance(stage)) {
-				if (v.getDeficiteTime() != null)
+				if (v.getDeficiteTimeAsTimestamp() != null)
 					continue;
 				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 						ValueContainer.class);

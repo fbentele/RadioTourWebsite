@@ -168,14 +168,19 @@
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" />
 							<c:if test="${not sit.isLeader}">
 								<br />
-								${sit.handicaptime} </c:if>
+								${sit.handicaptime} 
+								<c:forEach items="${latest}" var="vc">
+									<c:if test="${vc.device.labelName == sit.groupName}">&nbsp;(${vc.deficiteTimeAsString})</c:if>
+								</c:forEach>
+								</c:if>
 							<br />
 							<ul class="unstyled">
 								<c:forEach items="${sit.riderNumber}" var="situation">
 									<c:forEach items="${riders}" var="rider">
 										<c:if test="${rider.startNr == situation }">
 											<li><span id="rider${situation}"
-												class="badge <c:if test="${rider.neo}">badge-success</c:if> <c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if>">${situation}</span>
+												class="badge <c:if test="${rider.neo}">badge-success</c:if>
+												<c:if test="${rider.timeRueck=='00:00'}">badge-warning</c:if>">${situation}</span>
 												<small>${rider.name} - ${rider.teamShort}</small></li>
 										</c:if>
 									</c:forEach>
@@ -258,7 +263,8 @@
 										<c:set var="color" value="${vc.device.colorAsRGB}" />
 									</c:if>
 								</c:forEach>
-								<tr class="<c:if test="${color != ''}">tagged</c:if>" style="background-color: rgba(${color}0.3);">
+								<tr class="<c:if test="${color != ''}">tagged</c:if>"
+									style="background-color: rgba(${color}0.3);">
 									<td><c:if test="${not empty mti.icon}">
 											<img width="20px" src="/resources/img/${mti.icon}.png" />
 										</c:if></td>

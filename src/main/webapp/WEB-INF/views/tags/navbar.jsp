@@ -27,6 +27,10 @@
 				</sec:authorize>
 			</ul>
 			<ul class="nav pull-right">
+				<sec:authorize access="isAuthenticated()">
+					<li class="${navbaradmin}"><a href="#">Angemeldet als: Admin</a></li>
+					<li class=""><a href="/j_spring_security_logout">Logout</a></li>
+				</sec:authorize>
 				<li class="dropdown"><a href="#" data-toggle="dropdown"><spring:message
 							code="label.language" /> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
