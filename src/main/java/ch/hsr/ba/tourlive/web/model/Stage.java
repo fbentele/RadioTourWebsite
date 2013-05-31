@@ -144,7 +144,12 @@ public class Stage {
 	}
 
 	public Long getCorrectedStarttimeAsTimestamp() {
-		return starttime + offsettime;
+		// try {
+		// return starttime + offsettime;
+		// } catch (NullPointerException e) {
+		// return null;
+		// }
+		return 1L;
 	}
 
 	public void setStarttime(Long starttime) {

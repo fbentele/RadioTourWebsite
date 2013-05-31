@@ -184,15 +184,17 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	 */
 	public List<ImageData> getMostRecentByStage(Stage stage) {
 		List<ImageData> imageData = new ArrayList<ImageData>();
-		if (stage != null) {
+		try {
 			for (Device dev : stage.getDevices()) {
 				ImageData img = getMostRecentByDevice(dev);
 				if (img != null && stage.getStarttimeAsTimestamp() < img.getRealTimestamp()
 						&& img.getRealTimestamp() < stage.getEndtimeAsTimestamp())
 					imageData.add(getMostRecentByDevice(dev));
 			}
+			return imageData;
+		} catch (NullPointerException e) {
+			return null;
 		}
-		return imageData;
 	}
 
 	/*

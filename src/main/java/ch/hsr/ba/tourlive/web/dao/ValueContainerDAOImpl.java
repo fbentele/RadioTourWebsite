@@ -151,7 +151,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ValueContainer> getAllForStageByDistance(Stage stage, Long limit) {
-		if (stage != null && !stage.getDevices().isEmpty()) {
+		try {
 			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
 			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
@@ -162,8 +162,9 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 					limit + 1));
 			crit.addOrder(Order.desc("timestamp"));
 			return (List<ValueContainer>) crit.list();
+		} catch (NullPointerException e) {
+			return null;
 		}
-		return null;
 	}
 
 	/*

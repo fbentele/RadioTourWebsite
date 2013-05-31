@@ -197,7 +197,7 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 	 */
 	public List<VideoData> getMostRecentByStage(Stage stage) {
 		List<VideoData> videoData = new ArrayList<VideoData>();
-		if (stage != null) {
+		try {
 			for (Device dev : stage.getDevices()) {
 				VideoData vid = getMostRecentByDevice(dev);
 				if (vid != null && stage.getStarttimeAsTimestamp() < vid.getRealTimestamp()
@@ -205,8 +205,9 @@ public class VideoDataDAOImpl implements VideoDataDAO {
 					videoData.add(getMostRecentByDevice(dev));
 			}
 			return videoData;
+		} catch (NullPointerException e) {
+			return null;
 		}
-		return null;
 	}
 
 	/*
