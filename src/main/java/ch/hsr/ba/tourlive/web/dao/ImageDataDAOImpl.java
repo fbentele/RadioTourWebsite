@@ -161,16 +161,14 @@ public class ImageDataDAOImpl implements ImageDataDAO {
 	 */
 	public ImageData getMostRecentByDeviceLimitedTo(Device device, Long limit) {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ImageData.class);
-		if (device != null) {
-			try {
-				crit.add(Restrictions.eq("device", device));
-				crit.add(Restrictions.le("timestamp", limit));
-				return (ImageData) crit.addOrder(Order.desc("timestamp")).list().get(0);
-			} catch (NullPointerException e) {
-				LOG.error("Device not set");
-			} catch (IndexOutOfBoundsException e) {
-				LOG.info("no ImageData found");
-			}
+		try {
+			crit.add(Restrictions.eq("device", device));
+			crit.add(Restrictions.le("timestamp", limit));
+			return (ImageData) crit.addOrder(Order.desc("timestamp")).list().get(0);
+		} catch (NullPointerException e) {
+			LOG.error("Device not set");
+		} catch (IndexOutOfBoundsException e) {
+			LOG.info("no ImageData found");
 		}
 		return null;
 	}
