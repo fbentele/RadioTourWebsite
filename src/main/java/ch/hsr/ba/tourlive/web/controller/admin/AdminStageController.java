@@ -168,6 +168,7 @@ public class AdminStageController {
 			@RequestParam("endtime") String endtime,
 			@RequestParam("adCode") String adCode,
 			@RequestParam("stageType") String stageType,
+			@RequestParam("offsettime") String offsettime,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
 			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
@@ -180,6 +181,7 @@ public class AdminStageController {
 		stage.setEndtime(endtime);
 		stage.setAdCode(adCode);
 		stage.setVisible(false);
+		stage.setOffsettime(offsettime);
 		stage.setStagetype(StageType.valueOf(stageType));
 		if (visible.contains("true"))
 			stage.setVisible(true);

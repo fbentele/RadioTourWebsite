@@ -11,51 +11,48 @@
 </head>
 <body>
 	<div>
-		<c:if test="${not empty first}">
-			<div id="top" class="row-fluid">
-				<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
-				<div class="span5">
-					<p class="lead">
-						<spring:message code="label.stage.distancestatus1" />
-						&nbsp;${first.stageData.distance} km
-						<spring:message code="label.stage.distancestatus2" />
-						&nbsp;${stage.distance} km
-						<spring:message code="label.stage.distancestatus3" />
-					</p>
-					<div id="positionbar" class="progress progress-striped active">
-						<div id="progress" class="bar" style="width: 0%;"></div>
-					</div>
-				</div>
-				<div class="span6 pull-right">
-					<spring:message code="label.stage.actualTime" />
-					:
-					<jsp:useBean id="dateValue" class="java.util.Date" />
-					<jsp:setProperty name="dateValue" property="time" value="${limit}" />
-					<fmt:formatDate value="${dateValue}" pattern="HH:mm:ss" />
-					<br />
-					<div id="timenav" class="btn-group">
-						<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 1800000}"
-							class="btn btn-small">- 30min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 600000}"
-							class="btn btn-small">- 10min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}"
-							class="btn btn-small">- 5min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}"
-							class="btn btn-small">- 1min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/" class="btn btn-small"><spring:message
-								code="label.stage.now" /></a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}"
-							class="btn btn-small">+ 1min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}"
-							class="btn btn-small">+ 5min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 600000}"
-							class="btn btn-small">+ 10min</a> <a
-							href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 1800000}"
-							class="btn btn-small">+ 30min</a>
-					</div>
+		<div id="top" class="row-fluid">
+			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
+			<div class="span5">
+				<p class="lead">
+					<spring:message code="label.stage.distancestatus1" />
+					&nbsp;${first.stageData.distance} km
+					<spring:message code="label.stage.distancestatus2" />
+					&nbsp;${stage.distance} km
+					<spring:message code="label.stage.distancestatus3" />
+				</p>
+				<div id="positionbar" class="progress progress-striped active">
+					<div id="progress" class="bar" style="width: 0%;"></div>
 				</div>
 			</div>
-		</c:if>
+			<div class="span6 pull-right">
+				<spring:message code="label.stage.actualTime" />
+				:
+				<jsp:useBean id="dateValue" class="java.util.Date" />
+				<jsp:setProperty name="dateValue" property="time" value="${limit}" />
+				<fmt:formatDate value="${dateValue}" pattern="HH:mm:ss" />
+				<br />
+				<div id="timenav" class="btn-group">
+					<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 1800000}"
+						class="btn btn-small">- 30min</a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 600000}"
+						class="btn btn-small">- 10min</a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}"
+						class="btn btn-small">- 5min</a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}"
+						class="btn btn-small">- 1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/"
+						class="btn btn-small"><spring:message code="label.stage.now" /></a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}"
+						class="btn btn-small">+ 1min</a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}"
+						class="btn btn-small">+ 5min</a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 600000}"
+						class="btn btn-small">+ 10min</a> <a
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 1800000}"
+						class="btn btn-small">+ 30min</a>
+				</div>
+			</div>
+		</div>
 		<c:if test="${not empty stage.stageProfileImage}">
 			<div class="row-fluid">
 				<div class="span12 border">
@@ -162,9 +159,7 @@
 							<h4>${sit.groupName}</h4>
 							<img src="<c:url value="/resources/img/driver_${sit.groupSize}.png"/>" />
 							<c:if test="${not sit.isLeader}">
-								<img class="pull-right" src="<c:url value="/resources/img/arrow.png"/>" />
 								<br />
-
 								<spring:message code="label.stage.deficite" />: ${sit.handicaptime} </c:if>
 							<br />
 							<ul class="unstyled">
@@ -458,7 +453,7 @@
         	},
         	"sScrollY": "200px",
     		"sDom": "frtiS",
-    		"bDeferRender": false,
+    		"bDeferRender": true,
     		"fnInitComplete": function () {
     			this.fnSettings().oScroller.fnScrollToRow( 12 );
     		}

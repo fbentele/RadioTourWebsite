@@ -120,7 +120,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+			crit.add(Restrictions.between("timestamp", stage.getCorrectedStarttimeAsTimestamp(),
 					stage.getEndtimeAsTimestamp()));
 			crit.addOrder(Order.desc("timestamp"));
 			crit.setMaxResults(LIMIT_RESULTS_TO);
@@ -158,7 +158,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit + 1));
+			crit.add(Restrictions.between("timestamp", stage.getCorrectedStarttimeAsTimestamp(),
+					limit + 1));
 			crit.addOrder(Order.desc("timestamp"));
 			return (List<ValueContainer>) crit.list();
 		}
@@ -181,7 +182,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				d.add(Restrictions.eq("device", device));
 			}
 			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
+			crit.add(Restrictions.between("timestamp", stage.getCorrectedStarttimeAsTimestamp(),
 					stage.getEndtimeAsTimestamp()));
 			Criteria stageCriteria = crit.createCriteria("stageData");
 			stageCriteria.add(Restrictions.le("distance", raceKm));
@@ -222,7 +223,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
 						ValueContainer.class);
 				crit.add(Restrictions.eq("device", device));
-				crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), limit));
+				crit.add(Restrictions.between("timestamp",
+						stage.getCorrectedStarttimeAsTimestamp(), limit));
 				Criteria stageCriteria = crit.createCriteria("stageData");
 				stageCriteria.addOrder(Order.desc("distance"));
 				try {
@@ -298,8 +300,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 						d.add(Restrictions.eq("device", device));
 				}
 				crit.add(d);
-				crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(),
-						stage.getEndtimeAsTimestamp()));
+				crit.add(Restrictions.between("timestamp",
+						stage.getCorrectedStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
 				crit.addOrder(Order.desc("timestamp"));
 				Criteria stageCriteria = crit.createCriteria("stageData");
 				stageCriteria.add(Restrictions.le("distance", v.getStageData().getDistance()));

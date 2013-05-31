@@ -4,12 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@SuppressWarnings("unused")
 public class DateUtil {
 	private static final String TIME_FORMAT_PATTERN = "HH:mm:ss";
 	private static final String TIME_SHORT_PATTERN = "mm:ss";
-	private static final String DATE_TIME_FORMAT_PATTERN = "dd.mm.yyyy - HH:mm:ss";
-	private static final String DATE_FORMAT_PATTERN = "dd.mm.yyyy";
+	private static final String DATE_TIME_FORMAT_PATTERN = "dd.MM.yyyy - HH:mm:ss";
+	private static final String DATE_TIME_SHORT_FORMAT_PATTERN = "dd.MM.yyyy - HH:mm";
+	private static final String DATE_FORMAT_PATTERN = "dd.MM.yyyy";
 
 	/**
 	 * 
@@ -90,4 +90,67 @@ public class DateUtil {
 		return s.format(date);
 	}
 
+	/**
+	 * @param a
+	 *            full time string in the format
+	 *            {@value #DATE_TIME_FORMAT_PATTERN}
+	 * @return
+	 */
+	public static Long fullDateToTimestamp(String fullDate) {
+		try {
+			Date d = new SimpleDateFormat(DATE_TIME_FORMAT_PATTERN).parse(fullDate);
+			return d.getTime();
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param the
+	 *            timestamp to be converted
+	 * @return a formatted datetim string for the timestamp
+	 *         {@value #DATE_TIME_FORMAT_PATTERN}
+	 */
+	public static String timestampToFullDate(Long timestamp) {
+		SimpleDateFormat date = new SimpleDateFormat(DATE_TIME_FORMAT_PATTERN);
+		try {
+			Date d = new Date(timestamp);
+			return date.format(d);
+		} catch (NullPointerException e) {
+			return "";
+		}
+	}
+
+	/**
+	 * 
+	 * @param the
+	 *            timestamp to be converted
+	 * @return a formatted datetim string for the timestamp
+	 *         {@value #DATE_TIME_SHORT_FORMAT_PATTERN}
+	 */
+	public static String timestampToShortDate(Long timestamp) {
+		SimpleDateFormat date = new SimpleDateFormat(DATE_TIME_SHORT_FORMAT_PATTERN);
+		try {
+			Date d = new Date(timestamp);
+			return date.format(d);
+		} catch (NullPointerException e) {
+			return "";
+		}
+	}
+
+	/**
+	 * @param a
+	 *            full time string in the format
+	 *            {@value #DATE_TIME_SHORT_FORMAT_PATTERN}
+	 * @return
+	 */
+	public static Long shortDateToTimestamp(String fullDate) {
+		try {
+			Date d = new SimpleDateFormat(DATE_TIME_SHORT_FORMAT_PATTERN).parse(fullDate);
+			return d.getTime();
+		} catch (ParseException e) {
+			return null;
+		}
+	}
 }

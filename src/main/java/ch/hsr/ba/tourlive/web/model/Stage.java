@@ -1,8 +1,5 @@
 package ch.hsr.ba.tourlive.web.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ch.hsr.ba.tourlive.web.model.enums.StageType;
+import ch.hsr.ba.tourlive.web.utils.DateUtil;
 
 @Component
 @Scope("prototype")
@@ -51,6 +49,13 @@ public class Stage {
 
 	@Column
 	private Long endtime;
+
+	/**
+	 * The Time difference between starrtime and when 'spitze' crossed the
+	 * startline
+	 */
+	@Column
+	private Long offsettime;
 
 	@Min(value = 0)
 	@Column
@@ -122,22 +127,24 @@ public class Stage {
 		this.stageSlug = stageSlug;
 	}
 
+	public String getOffsettime() {
+		return DateUtil.toTimeFormat(offsettime);
+	}
+
+	public void setOffsettime(String offsettime) {
+		this.offsettime = DateUtil.timeToTimestamp(offsettime);
+	}
+
 	public String getStarttime() {
-		SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
-		try {
-			Date d = new Date(this.starttime);
-			return date.format(d);
-		} catch (NullPointerException e) {
-			return "01.01.1970 - 00:00";
-		}
+		return DateUtil.timestampToShortDate(starttime);
 	}
 
 	public Long getStarttimeAsTimestamp() {
 		return this.starttime;
 	}
 
-	public Long getEndtimeAsTimestamp() {
-		return this.endtime;
+	public Long getCorrectedStarttimeAsTimestamp() {
+		return starttime + offsettime;
 	}
 
 	public void setStarttime(Long starttime) {
@@ -145,22 +152,15 @@ public class Stage {
 	}
 
 	public void setStarttime(String unformatted) {
-		try {
-			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm").parse(unformatted);
-			this.starttime = date.getTime();
-		} catch (ParseException e) {
-			System.out.println("invalid date string");
-		}
+		starttime = DateUtil.shortDateToTimestamp(unformatted);
+	}
+
+	public Long getEndtimeAsTimestamp() {
+		return this.endtime;
 	}
 
 	public String getEndtime() {
-		SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
-		try {
-			Date d = new Date(this.endtime);
-			return date.format(d);
-		} catch (NullPointerException e) {
-			return "01.01.1970 - 00:00";
-		}
+		return DateUtil.timestampToShortDate(endtime);
 	}
 
 	public void setEndtime(Long endtime) {
@@ -168,12 +168,7 @@ public class Stage {
 	}
 
 	public void setEndtime(String unformatted) {
-		try {
-			Date date = new SimpleDateFormat("dd.MM.yyyy - HH:mm").parse(unformatted);
-			this.endtime = date.getTime();
-		} catch (ParseException e) {
-			System.out.println("invalid date string");
-		}
+		endtime = DateUtil.shortDateToTimestamp(unformatted);
 	}
 
 	public List<Device> getDevices() {

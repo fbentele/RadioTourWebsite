@@ -30,10 +30,10 @@
 				<h4>
 					<spring:message code="label.admin.driverInformation" />
 				</h4>
-				<label for="driverPhoneNr"><spring:message code="label.admin.driverPhoneNr" /></label>
-				<input type="text" name="driverPhoneNr" value="${device.driverPhoneNr}" />
 				<label for="driverName"><spring:message code="label.admin.driverName" /></label>
 				<input type="text" name="driverName" value="${device.driverName}" />
+				<label for="driverPhoneNr"><spring:message code="label.admin.driverPhoneNr" /></label>
+				<input type="text" name="driverPhoneNr" value="${device.driverPhoneNr}" />
 
 				<button type="submit" class="btn btn-primary">
 					<spring:message code="label.admin.save" />

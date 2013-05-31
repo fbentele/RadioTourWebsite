@@ -44,6 +44,11 @@
 						value="${stage.endtime}" tabindex="6" /> <span class="add-on"> <i
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
+				<label for="offsettime"><spring:message code="label.admin.offsettime" /> (hh:mm:ss)</label>
+				<div id="datetimepicker3" class="input-append time">
+					<input data-format="hh:mm:ss" type="datetime" name="offsettime" value="${stage.offsettime}" tabindex="7" /><span class="add-on"> <i
+						data-time-icon="icon-time"></i></span>
+				</div>
 				<div>
 					<label for="stagetype"><spring:message code="label.admin.stagetype" /></label> <select
 						name="stageType">
@@ -275,6 +280,7 @@
 		// datetimepicker
 		// http://tarruda.github.io/bootstrap-datetimepicker/
 		$.fn.datetimepicker.defaults = {
+			language : 'de-CH',
 			maskInput : true, // disables the text input mask
 			pickDate : true, // disables the date picker
 			pickTime : true, // disables de time picker
@@ -285,10 +291,12 @@
 		};
 		$(function() {
 			$('#datetimepicker1').datetimepicker({
-				language : 'de-CH'
 			});
 			$('#datetimepicker2').datetimepicker({
-				language : 'de-CH'
+			});
+			$('#datetimepicker3').datetimepicker({
+				pickDate : false,
+				pickSeconds : true
 			});
 		});
 	</script>
