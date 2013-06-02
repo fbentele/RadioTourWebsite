@@ -49,7 +49,7 @@ public class PositionData {
 	}
 
 	public Float getLongitude() {
-		return longitude;
+		return longitude != null ? longitude : 0;
 	}
 
 	public void setLongitude(Float longitude) {
@@ -57,7 +57,7 @@ public class PositionData {
 	}
 
 	public Float getLatitude() {
-		return latitude;
+		return latitude != null ? latitude : 0;
 	}
 
 	public void setLatitude(Float latitude) {
