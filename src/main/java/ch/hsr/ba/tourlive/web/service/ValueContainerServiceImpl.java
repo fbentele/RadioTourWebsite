@@ -205,4 +205,15 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 		return valueDao.getMostRecentForDevice(d);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ch.hsr.ba.tourlive.web.service.ValueContainerService#
+	 * getHighestDeficiteForStage(ch.hsr.ba.tourlive.web.model.Stage)
+	 */
+	@Override
+	@Transactional
+	public Long getHighestDeficiteForStage(Stage stage) {
+		return valueDao.getHighestDeficiteForStage(stage);
+	}
 }

@@ -340,6 +340,7 @@
 		<script type="text/javascript">
 			var factor  = .957446809;
 			var factor2 = .978723404;
+			var heightfactor = 200 / ${highestdeficite}/1000;
 			var stageDistance = ${stage.distance};
 			var canvas = Raphael("abstand-canvas", profilewidth, 220);
 			canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
@@ -357,7 +358,7 @@
 			canvas.text((factor * profilewidth), 180, "<spring:message code="label.stage.raceKm" />");
 			<c:forEach items="${valuecontainers}" var="vc">
 				<c:if test="${vc.deficiteTime > 0}">
-					canvas.circle(${vc.stageData.distance}*(factor * profilewidth)/${stage.distance} + 10, 200 - (${vc.deficiteTime}/60000), 3).attr({"fill":"${vc.device.color}", "stroke":"${vc.device.color}"});
+					canvas.circle(${vc.stageData.distance}*(factor * profilewidth)/${stage.distance} + 10, 200 - ((${vc.deficiteTime}/1000)*heightfactor), 3).attr({"fill":"${vc.device.color}", "stroke":"${vc.device.color}"});
 				</c:if>
 			</c:forEach>
 		</script>

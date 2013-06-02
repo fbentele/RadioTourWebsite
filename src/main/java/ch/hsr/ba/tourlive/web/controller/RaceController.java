@@ -120,7 +120,8 @@ public class RaceController {
 			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
-
+			model.addAttribute("highestdeficite",
+					valueContainerService.getHighestDeficiteForStage(stage));
 			try {
 				model.addAttribute("limit", stage.getCompleted() ? stage.getEndtimeAsTimestamp()
 						: System.currentTimeMillis());
@@ -169,6 +170,8 @@ public class RaceController {
 			model.addAttribute("distances",
 					valueContainerService.getAllForStageByDistance(stage, untilTime));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
+			model.addAttribute("highestdeficite",
+					valueContainerService.getHighestDeficiteForStage(stage));
 			try {
 				model.addAttribute("devices", stage.getDevices());
 			} catch (Exception e) {

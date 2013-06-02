@@ -322,4 +322,21 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 			}
 		}
 	}
+
+	public Long getHighestDeficiteForStage(Stage stage) {
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
+		crit.add(Restrictions.between("timestamp", stage.getCorrectedStarttimeAsTimestamp(),
+				stage.getEndtimeAsTimestamp()));
+		Disjunction d = Restrictions.or();
+		for (Device device : stage.getDevices()) {
+			d.add(Restrictions.eq("device", device));
+		}
+		crit.add(d);
+		crit.addOrder(Order.desc("deficiteTime"));
+		try {
+			return ((ValueContainer) crit.list().get(0)).getDeficiteTimeAsTimestamp();
+		} catch (IndexOutOfBoundsException e) {
+			return 1000L;
+		}
+	}
 }

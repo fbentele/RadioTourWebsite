@@ -152,4 +152,12 @@ public interface ValueContainerDAO {
 	 */
 	public ValueContainer getMostRecentForDevice(Device d);
 
+	/**
+	 * 
+	 * @param the
+	 *            stage
+	 * @return returns the highest deficite time to size the graph
+	 */
+	public Long getHighestDeficiteForStage(Stage stage);
+
 }
