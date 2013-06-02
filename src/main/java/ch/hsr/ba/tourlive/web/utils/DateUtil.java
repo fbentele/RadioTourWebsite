@@ -60,13 +60,13 @@ public class DateUtil {
 	 *         {@value #TIME_FORMAT_PATTERN}
 	 */
 	public static String toTimeFormat(Long timestamp) {
-		if (timestamp == -1)
-			return "";
-		if (timestamp != null) {
+		try {
+			if (timestamp == -1)
+				return "";
 			Date date = new Date(timestamp);
 			SimpleDateFormat s = new SimpleDateFormat(TIME_FORMAT_PATTERN);
 			return s.format(date);
-		} else {
+		} catch (NullPointerException e) {
 			return "";
 		}
 	}
