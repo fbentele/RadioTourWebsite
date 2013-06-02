@@ -15,11 +15,11 @@
 			<form name='f' action="/j_spring_security_check" method='POST'>
 				<fieldset>
 					<div class="clearfix">
-						<input type='text' name='j_username' value=''  placeholder="<spring:message code="label.username" />">
+						<input type='text' name='j_username' value=''  placeholder="<spring:message code="label.username" />" tabindex="1">
 					</div>
 					<div class="clearfix">
 						
-						<input type='password' name='j_password' placeholder="<spring:message code="label.password" />"/>
+						<input type='password' name='j_password' placeholder="<spring:message code="label.password" />" tabindex="2"/>
 						<input name="submit" type="submit"
 							class="btn" value="Login" />
 					</div>

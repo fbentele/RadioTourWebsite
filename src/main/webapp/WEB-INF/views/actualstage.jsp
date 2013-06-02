@@ -340,7 +340,8 @@
 		<script type="text/javascript">
 			var factor  = .957446809;
 			var factor2 = .978723404;
-			var heightfactor = 200 / ${highestdeficite}/1000;
+			var highestdeficite = ${highestdeficite}/1000;
+			var heightfactor = 175 / highestdeficite;
 			var stageDistance = ${stage.distance};
 			var canvas = Raphael("abstand-canvas", profilewidth, 220);
 			canvas.path("M10,200L10,10").attr({"stroke": "#000", "stroke-width":"2", 'arrow-end': 'classic-wide-long'});
@@ -349,11 +350,13 @@
 			canvas.path("M"+ (profilewidth*.478723404) +",190L"+ (profilewidth*.478723404) +",210");
 			canvas.path("M"+ (profilewidth*.712765957) +",190L"+ (profilewidth*.712765957) +",210");
 			canvas.path("M" + (profilewidth*.946808511)+",190L"+(profilewidth*.946808511)+",210");
+			canvas.path("M5,25L15,25");
 			canvas.text(10,215, "0 " );
-			canvas.text((profilewidth*.244680851),215, stageDistance/4);
-			canvas.text((profilewidth*.478723404),215, stageDistance/2);
-			canvas.text((profilewidth*.712765957),215, stageDistance/4 *3);
-			canvas.text((profilewidth*.946808511),215, stageDistance);
+			canvas.text((profilewidth*.244680851),215, Math.round(stageDistance/4));
+			canvas.text((profilewidth*.478723404),215, Math.round(stageDistance/2));
+			canvas.text((profilewidth*.712765957),215, Math.round(stageDistance/4 *3));
+			canvas.text((profilewidth*.946808511),215, Math.round(stageDistance));
+			canvas.text(25,25, Math.round(highestdeficite) + " s");
 			canvas.text(50, 10, "<spring:message code="label.stage.deficiteInS" />");
 			canvas.text((factor * profilewidth), 180, "<spring:message code="label.stage.raceKm" />");
 			<c:forEach items="${valuecontainers}" var="vc">
