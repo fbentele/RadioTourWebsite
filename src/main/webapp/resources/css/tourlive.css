@@ -21,10 +21,6 @@ html,body {
 	margin-top: 10px;
 }
 
-#positionbar{
-	margin:0 5%;
-}
-
 #livetickercontainer{
 	height:260px;
 	overflow:auto;

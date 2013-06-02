@@ -107,7 +107,7 @@
 				</div>
 				<div>
 					<label for="stageProfileFile"><spring:message code="label.admin.uploadProfile" />:
-						(940x350px)</label>
+						(940x350px) <spring:message code="label.admin.bannerInfo" /> 879x195px</label>
 					<c:if test="${not empty stage.stageProfileImage}">
 						<img src="${hostname}${stage.stageProfileImage}" class="img-rounded" />
 						<a href="/admin/race/${race.raceId}/stage/${stage.stageId}/profileimage/delete"><i

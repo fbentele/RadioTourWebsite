@@ -31,22 +31,22 @@
 				<br />
 				<div id="timenav" class="btn-group">
 					<a href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 1800000}"
-						class="btn btn-small">- 30min</a> <a
+						class="btn btn-mini visible-desktop">-30min</a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 600000}"
-						class="btn btn-small">- 10min</a> <a
+						class="btn btn-mini">-10min</a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 300000}"
-						class="btn btn-small">- 5min</a> <a
+						class="btn btn-mini">-5min</a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit - 60000}"
-						class="btn btn-small">- 1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/"
-						class="btn btn-small"><spring:message code="label.stage.now" /></a> <a
+						class="btn btn-mini">-1min</a> <a href="/race/${raceSlug}/stage/${stage.stageSlug}/"
+						class="btn btn-mini"><spring:message code="label.stage.now" /></a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 60000}"
-						class="btn btn-small">+ 1min</a> <a
+						class="btn btn-mini">+1min</a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 300000}"
-						class="btn btn-small">+ 5min</a> <a
+						class="btn btn-mini">+5min</a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 600000}"
-						class="btn btn-small">+ 10min</a> <a
+						class="btn btn-mini">+10min</a> <a
 						href="/race/${raceSlug}/stage/${stage.stageSlug}/${limit + 1800000}"
-						class="btn btn-small">+ 30min</a>
+						class="btn btn-mini visible-desktop">+ 30min</a>
 				</div>
 			</div>
 		</div>
@@ -317,7 +317,9 @@
 	<c:if test="${not empty stage.stageProfileImage}">
 		<script type="text/javascript">
 		var factor = .925531915;
-		var streckencanvas = Raphael("strecken-canvas", profilewidth, 350);
+		$('#positionbar').width(profilewidth*factor);
+		$('#positionbar').css( { "width" : (profilewidth*factor), "margin-left" : 50*(profilewidth/1000) } );
+		var streckencanvas = Raphael("strecken-canvas", (profilewidth * factor), 350);
 		<c:choose>
 			<c:when test="${not empty latest}">
 				<c:forEach items="${latest}" var="latest">
