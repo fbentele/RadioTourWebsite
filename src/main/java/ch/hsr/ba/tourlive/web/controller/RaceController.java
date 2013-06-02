@@ -103,13 +103,14 @@ public class RaceController {
 		Stage stage = stageService.getStageBySlug(stageSlug);
 		if (stage != null) {
 			List<ValueContainer> valueContainers = null;
+			List<ValueContainer> latest = valueContainerService.getLatestForDeviceByStage(stage);
 			valueContainers = valueContainerService.getAllForStageByDistance(stage);
 			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("stagemenu", true);
 			model.addAttribute("stage", stage);
 			model.addAttribute("menutitle", stage.getStageName());
 			model.addAttribute("hostname", hostname);
-			model.addAttribute("latest", valueContainerService.getLatestForDeviceByStage(stage));
+			model.addAttribute("latest", latest);
 			model.addAttribute("navbarrace", "active");
 			model.addAttribute("valuecontainers", valueContainers);
 			model.addAttribute("riders", riderService.getAllByStage(stage));
@@ -126,8 +127,7 @@ public class RaceController {
 				model.addAttribute("devices", stage.getDevices());
 				if (stage.getDevices().size() > 1)
 					valueContainerService.getDeficiteToLeaderForStage(stage);
-				model.addAttribute("first", valueContainerService.getLatestForDeviceByStage(stage)
-						.get(0));
+				model.addAttribute("first", latest.get(latest.size() - 1));
 			} catch (NullPointerException e) {
 				LOG.info("Important Information (ValueContainers, Devices, Start and Endtime, missing for Stage: "
 						+ stage.getStageName());
@@ -149,6 +149,8 @@ public class RaceController {
 		if (stage != null) {
 			List<ValueContainer> valueContainers = valueContainerService.getAllForStageByDistance(
 					stage, untilTime);
+			List<ValueContainer> latest = valueContainerService.getLatestForDeviceByStage(stage,
+					untilTime);
 			model.addAttribute("limit", untilTime);
 			model.addAttribute("races", raceService.getAllVisible());
 			model.addAttribute("stagemenu", true);
@@ -163,8 +165,7 @@ public class RaceController {
 			model.addAttribute("liveTickerItems",
 					liveTickerItemService.getAllByStageLimitedTo(stage, untilTime));
 			model.addAttribute("hostname", hostname);
-			model.addAttribute("latest",
-					valueContainerService.getLatestForDeviceByStage(stage, untilTime));
+			model.addAttribute("latest", latest);
 			model.addAttribute("distances",
 					valueContainerService.getAllForStageByDistance(stage, untilTime));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
@@ -174,8 +175,7 @@ public class RaceController {
 				LOG.info("no devices for this stage");
 			}
 			try {
-				model.addAttribute("first",
-						valueContainerService.getLatestForDeviceByStage(stage, untilTime).get(0));
+				model.addAttribute("first", latest.get(latest.size() - 1));
 			} catch (NullPointerException e) {
 				LOG.info("no ValueContainers for the stage " + stage.getStageName());
 			} catch (IndexOutOfBoundsException e) {
