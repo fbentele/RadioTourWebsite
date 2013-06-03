@@ -46,5 +46,4 @@
 	<mvc:resources location="/site/" mapping="/site/**"/>
 
 	<import resource="classpath:spring/root-context.xml" />
-
 </beans>

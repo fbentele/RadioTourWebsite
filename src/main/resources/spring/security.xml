@@ -13,7 +13,7 @@
 
 		<form-login login-page='/login' default-target-url="/admin"
 			authentication-failure-url="/login?error=true" login-processing-url="/j_spring_security_check" />
-		<logout logout-success-url="/login" />
+		<logout logout-success-url="/login?logout=true" />
 	</http>
 	<authentication-manager>
 		<authentication-provider>
