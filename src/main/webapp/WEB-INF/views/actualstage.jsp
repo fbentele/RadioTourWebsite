@@ -189,8 +189,8 @@
 						</div>
 					</c:forEach>
 					<div class="span8">
+						<spring:message code="label.stage.deficiteToLeader" />
 						<br />
-						<spring:message code="label.stage.deficite" />
 						<br />
 						<spring:message code="label.stage.legend" />
 						: <span class="badge"><spring:message code="label.stage.rider" /></span> <span
@@ -301,10 +301,14 @@
 				profilewidth = 768;
 				lineheight=265;
 				lineheightend= 105;
-			} else if (screensize < 980) {
+			} else if (screensize < 980 && screensize >= 768) {
 				profilewidth = 588;
 				lineheight=200;
 				lineheightend= 80;			
+			} else if (screensize < 768){
+				profilewidth = 520;
+				lineheight=180;
+				lineheightend=70;
 			}
 		}
 		setScreenParams();

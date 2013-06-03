@@ -118,7 +118,7 @@
 					<spring:message code="label.admin.save" />
 				</button>
 			</div>
-			<div class="span4">
+			<!-- 			<div class="span4">
 				<label for="starttime"><spring:message code="label.admin.starttime" /> <spring:message
 						code="label.admin.starttimeformat" /></label>
 				<div id="datetimepicker1" class="input-append date">
@@ -154,6 +154,7 @@
 				<label for="adCode"><spring:message code="label.admin.htmlForAd" /></label>
 				<textarea name="adCode" rows="6" tabindex="19"></textarea>
 			</div>
+			 -->
 		</form:form>
 	</div>
 	<c:forEach items="${stages}" var="stage">
@@ -229,7 +230,7 @@
 			});
 		});
 	</script>
-	
+
 	<!-- Admin Scripts -->
 	<script type="text/javascript">
 		// UX

@@ -15,30 +15,25 @@ http://www.springframework.org/schema/context/spring-context-3.2.xsd
 http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
 	<tx:annotation-driven />
 
 	<context:component-scan base-package="ch.hsr.ba.tourlive.**" />
+
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:jdbc.properties</value>
+				<value>classpath:hibernate/jdbc.properties</value>
 				<value>classpath:config.properties</value>
 			</list>
 		</property>
-	</bean>
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
-		<property name="url" value="${jdbc.databaseurl}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 	<!-- File and image upload -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	
+	<!-- Import Database Stuff -->
 	<import resource="classpath:hibernate/hibernate.xml" />
+
 </beans>

@@ -171,7 +171,12 @@ public class AdminStageController {
 			@RequestParam("offsettime") String offsettime,
 			@RequestParam(value = "visible", defaultValue = "") String visible,
 			@RequestParam(value = "bannerImageFile", defaultValue = "") CommonsMultipartFile bannerimage,
-			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage) {
+			@RequestParam(value = "stageProfileFile", defaultValue = "") CommonsMultipartFile stageProfileImage,
+			Model model, Locale locale) {
+		if (DateUtil.shortDateToTimestamp(endtime) < DateUtil.shortDateToTimestamp(starttime)) {
+			model.addAttribute("timeerror", true);
+			return editStage(stageId, raceId, model, locale);
+		}
 		Stage stage = stageService.getStageById(stageId);
 		stage.setStageName(stageName);
 		stage.setStageDescription(stageDescription);

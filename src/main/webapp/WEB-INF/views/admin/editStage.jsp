@@ -38,7 +38,7 @@
 						data-time-icon="icon-time" data-date-icon="icon-calendar"></i></span>
 				</div>
 				<label for="endtime"><spring:message code="label.admin.endtime" /> <spring:message
-						code="label.admin.starttimeformat" /></label>
+						code="label.admin.starttimeformat" /><c:if test="${not empty timeerror}"><br /><span class="formerror"><spring:message code="label.admin.timeError" /></span></c:if></label>
 				<div id="datetimepicker2" class="input-append">
 					<input data-format="dd.MM.yyyy - hh:mm" type="datetime" name="endtime"
 						value="${stage.endtime}" tabindex="6" /> <span class="add-on"> <i

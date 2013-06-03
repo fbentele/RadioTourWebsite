@@ -61,7 +61,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:jdbc.properties</value>
+				<value>classpath:hibernate/jdbc.properties</value>
 				<value>classpath:config.properties</value>
 			</list>
 		</property>
