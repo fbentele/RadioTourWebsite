@@ -4,12 +4,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DateUtil {
 	private static final String TIME_FORMAT_PATTERN = "HH:mm:ss";
 	private static final String TIME_SHORT_PATTERN = "mm:ss";
 	private static final String DATE_TIME_FORMAT_PATTERN = "dd.MM.yyyy - HH:mm:ss";
 	private static final String DATE_TIME_SHORT_FORMAT_PATTERN = "dd.MM.yyyy - HH:mm";
 	private static final String DATE_FORMAT_PATTERN = "dd.MM.yyyy";
+	private static final Logger LOG = LoggerFactory.getLogger(DateUtil.class);
 
 	/**
 	 * 
@@ -48,9 +52,9 @@ public class DateUtil {
 			Date date = new SimpleDateFormat(TIME_FORMAT_PATTERN).parse(time);
 			return date.getTime();
 		} catch (ParseException e) {
-			e.printStackTrace();
+			LOG.info("Wrong input format");
+			return 0L;
 		}
-		return null;
 	}
 
 	/**
@@ -154,7 +158,11 @@ public class DateUtil {
 			Date d = new SimpleDateFormat(DATE_TIME_SHORT_FORMAT_PATTERN).parse(fullDate);
 			return d.getTime();
 		} catch (ParseException e) {
-			return null;
+			LOG.info("Wrong input Format");
+			return 0L;
+		} catch (NullPointerException e) {
+			LOG.info("No input string");
+			return 0L;
 		}
 	}
 }
