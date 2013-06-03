@@ -190,7 +190,7 @@
 				<spring:message code="label.admin.csvWithCol" />
 				:
 			</p>
-			<pre>icon , altitude, distance, distanceToGo, settlement, advertisingColumn, raceSlow, raceMedium, raceFast</pre>
+			<pre>icon {info, achtung, bahn, tunnel, verpflegung, rechts, links, bodenwelle} , altitude, distance, distanceToGo, settlement, advertisingColumn, raceSlow, raceMedium, raceFast</pre>
 			<form:form method="post" name="marchtableimport"
 				action="/admin/race/${race.raceId}/stage/${stage.stageId}/marchtable/import"
 				enctype="multipart/form-data">

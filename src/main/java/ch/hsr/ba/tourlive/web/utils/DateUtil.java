@@ -82,11 +82,16 @@ public class DateUtil {
 	 *         {@value #TIME_SHORT_PATTERN}
 	 */
 	public static String toShortTimeFormat(Long timestamp) {
-		if (timestamp == -1)
+		try {
+			if (timestamp == -1)
+				return "";
+			Date date = new Date(timestamp);
+			SimpleDateFormat s = new SimpleDateFormat(TIME_SHORT_PATTERN);
+			return s.format(date);
+		} catch (NullPointerException e) {
+			LOG.info("wrong input formar");
 			return "";
-		Date date = new Date(timestamp);
-		SimpleDateFormat s = new SimpleDateFormat(TIME_SHORT_PATTERN);
-		return s.format(date);
+		}
 	}
 
 	/**

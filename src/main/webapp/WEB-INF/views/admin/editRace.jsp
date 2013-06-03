@@ -72,7 +72,7 @@
 								</c:choose></td>
 							<td>${stage.starttime}</td>
 							<td>${stage.endtime}</td>
-							<td>${stage.distance}</td>
+							<td>${stage.distance} km</td>
 							<td>${stage.visible}</td>
 							<td class="nolink"><a href="#modal_delete${stage.stageId}" data-toggle="modal"><i
 									class="icon-trash"></i></a></td>
@@ -118,7 +118,7 @@
 					<spring:message code="label.admin.save" />
 				</button>
 			</div>
-			<!-- 			<div class="span4">
+			<div class="span4">
 				<label for="starttime"><spring:message code="label.admin.starttime" /> <spring:message
 						code="label.admin.starttimeformat" /></label>
 				<div id="datetimepicker1" class="input-append date">
@@ -154,7 +154,6 @@
 				<label for="adCode"><spring:message code="label.admin.htmlForAd" /></label>
 				<textarea name="adCode" rows="6" tabindex="19"></textarea>
 			</div>
-			 -->
 		</form:form>
 	</div>
 	<c:forEach items="${stages}" var="stage">

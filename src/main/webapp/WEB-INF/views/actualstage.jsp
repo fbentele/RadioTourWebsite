@@ -1,7 +1,8 @@
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page trimDirectiveWhitespaces="true"%>
 
 <html>
@@ -67,20 +68,22 @@
 			</div>
 		</c:if>
 		<c:if test="${not empty valuecontainers}">
-			<div class="row-fluid">
-				<div class="span12 border">
-					<h4 id="abstand">
-						<spring:message code="label.stage.deficiteTime" />
-					</h4>
-					<div id="abstand-canvas"></div>
+			<c:if test="${fn:length(latest) > 1}">
+				<div class="row-fluid">
+					<div class="span12 border">
+						<h4 id="abstand">
+							<spring:message code="label.stage.deficiteTime" />
+						</h4>
+						<div id="abstand-canvas"></div>
+					</div>
 				</div>
-			</div>
+			</c:if>
 		</c:if>
 		<c:if test="${not empty images}">
 			<div id="livestream" class="row-fluid">
 				<c:forEach items="${images}" var="image">
 					<div class="span4 border">
-						<h4>${image.device.username}</h4>
+						<h4>${image.device.labelName}</h4>
 						<img width="350" src="<c:url value="${hostname}${image.imageLocation}"/>" />
 						<div id="">
 							<c:forEach items="${latest}" var="latest">
@@ -172,7 +175,7 @@
 								<c:forEach items="${latest}" var="vc">
 									<c:if test="${vc.device.labelName == sit.groupName}">&nbsp;(${vc.deficiteTimeAsString})</c:if>
 								</c:forEach>
-								</c:if>
+							</c:if>
 							<br />
 							<ul class="unstyled">
 								<c:forEach items="${sit.riderNumber}" var="situation">
@@ -190,8 +193,7 @@
 					</c:forEach>
 					<div class="span8">
 						<spring:message code="label.stage.deficiteToLeader" />
-						<br />
-						<br />
+						<br /> <br />
 						<spring:message code="label.stage.legend" />
 						: <span class="badge"><spring:message code="label.stage.rider" /></span> <span
 							class="badge badge-success"><spring:message code="label.stage.neo" /></span> <span
@@ -323,7 +325,7 @@
 		var factor = .925531915;
 		$('#positionbar').width(profilewidth*factor);
 		$('#positionbar').css( { "width" : (profilewidth*factor), "margin-left" : 50*(profilewidth/1000) } );
-		var streckencanvas = Raphael("strecken-canvas", (profilewidth * factor), 350);
+		var streckencanvas = Raphael("strecken-canvas", (profilewidth), 350);
 		<c:choose>
 			<c:when test="${not empty latest}">
 				<c:forEach items="${latest}" var="latest">
