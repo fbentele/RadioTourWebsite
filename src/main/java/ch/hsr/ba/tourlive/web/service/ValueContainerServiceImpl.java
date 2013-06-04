@@ -176,8 +176,8 @@ public class ValueContainerServiceImpl implements ValueContainerService {
 	 */
 	@Override
 	@Transactional
-	public void calculateDeficiteToLeaderForStage(Stage stage) {
-		valueDao.calculateDeficiteToLeaderForStage(stage);
+	public void calculateDeficiteToLeaderForStage(Stage stage, boolean useCache) {
+		valueDao.calculateDeficiteToLeaderForStage(stage, useCache);
 	}
 
 	/*

@@ -43,6 +43,7 @@ import ch.hsr.ba.tourlive.web.service.MarchTableService;
 import ch.hsr.ba.tourlive.web.service.RaceService;
 import ch.hsr.ba.tourlive.web.service.RiderService;
 import ch.hsr.ba.tourlive.web.service.StageService;
+import ch.hsr.ba.tourlive.web.service.ValueContainerService;
 import ch.hsr.ba.tourlive.web.utils.DateUtil;
 import ch.hsr.ba.tourlive.web.utils.FileUtil;
 import ch.hsr.ba.tourlive.web.utils.importer.CSVReader;
@@ -65,6 +66,8 @@ public class AdminStageController {
 	private RiderService riderService;
 	@Autowired
 	private MarchTableService mtiService;
+	@Autowired
+	private ValueContainerService vcService;
 	@Value("${config.api.imagePath}")
 	private String filePath;
 	@Value("${config.dev.hostname}")
@@ -148,6 +151,16 @@ public class AdminStageController {
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}", method = RequestMethod.GET)
 	public String showStage(@PathVariable("raceId") Long raceId,
 			@PathVariable("stageId") Long stageId) {
+		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
+	}
+
+	/**
+	 * Recalculate all deficitetimes
+	 */
+	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/recalculate", method = RequestMethod.GET)
+	public String recalculateDeficiteTimes(@PathVariable("raceId") Long raceId,
+			@PathVariable("stageId") Long stageId) {
+		vcService.calculateDeficiteToLeaderForStage(stageService.getStageById(stageId), false);
 		return "redirect:/admin/race/" + raceId + "/stage/edit/" + stageId;
 	}
 

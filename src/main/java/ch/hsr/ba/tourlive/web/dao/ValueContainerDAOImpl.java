@@ -295,39 +295,26 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 * (ch.hsr.ba.tourlive.web.model.Stage)
 	 */
 	@Override
-	public void calculateDeficiteToLeaderForStage(Stage stage) {
+	public void calculateDeficiteToLeaderForStage(Stage stage, boolean useCache) {
 		if (stage.getDevices().size() >= 2) {
-			for (ValueContainer v : getAllForStageByDistance(stage)) {
-				if (v.getDeficiteTimeAsTimestamp() != null)
+			for (ValueContainer vc : getAllForStageByDistance(stage)) {
+				if (vc.getDeficiteTimeAsTimestamp() != null && useCache)
 					continue;
-				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
-						ValueContainer.class);
-				Disjunction d = Restrictions.or();
-				for (Device device : stage.getDevices()) {
-					if (!device.getDeviceId().equals(v.getDevice().getDeviceId()))
-						d.add(Restrictions.eq("device", device));
-				}
-				crit.add(d);
-				crit.add(Restrictions.between("timestamp",
-						stage.getCorrectedStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
-				crit.addOrder(Order.desc("timestamp"));
-				Criteria stageCriteria = crit.createCriteria("stageData");
-				stageCriteria.add(Restrictions.between("distance", v.getStageData().getDistance(),
-						v.getStageData().getDistance() - DISTANCE_ACCURACY));
+				ValueContainer leader = getFirstForStageByDistanceLimitedToRaceKm(stage, vc
+						.getStageData().getDistance());
 				try {
-					ValueContainer val = (ValueContainer) stageCriteria.list().get(0);
-					if (val.getTimestamp() < v.getTimestamp()
-							&& val.getStageData().getDistance() + 1 >= v.getStageData()
-									.getDistance()) {
-						v.setDeficiteTime(v.getTimestamp() - val.getTimestamp());
+					if (leader.getTimestamp() < vc.getTimestamp()) {
+						vc.setDeficiteTime(vc.getTimestamp() - leader.getTimestamp());
 					} else {
 						// Is Leader, no deficitetime == -1
-						v.setDeficiteTime(-1L);
+						vc.setDeficiteTime(-1L);
 					}
 				} catch (IndexOutOfBoundsException e) {
-					v.setDeficiteTime(-1L);
+					vc.setDeficiteTime(-1L);
+				} catch (NullPointerException e) {
+					vc.setDeficiteTime(-1L);
 				}
-				update(v);
+				update(vc);
 			}
 		}
 	}

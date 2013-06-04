@@ -14,6 +14,9 @@
 		<a class="badge badge-success"
 			href="/admin/race/${race.raceId}/stage/${stage.stageId}/liveticker"><spring:message
 				code="label.admin.startLiveticker" /></a>
+				<a class="badge badge-success"
+			href="/admin/race/${race.raceId}/stage/${stage.stageId}/recalculate"><spring:message
+				code="label.admin.recalculateDeficite" /></a>
 	</p>
 	<div class="row-fluid">
 		<form:form method="post" name="stage"

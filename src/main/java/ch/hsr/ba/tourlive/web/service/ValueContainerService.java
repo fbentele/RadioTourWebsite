@@ -129,10 +129,12 @@ public interface ValueContainerService {
 	 * 
 	 * @param stage
 	 *            the stage
+	 * @param useCache
+	 *            , choos wheter or not to only calculate all or new values
 	 * @return a HashMap with the ID of the Valuecontainer and the deficite as
 	 *         time in seconds
 	 */
-	public void calculateDeficiteToLeaderForStage(Stage stage);
+	public void calculateDeficiteToLeaderForStage(Stage stage, boolean useCache);
 
 	/**
 	 * Get all latest position of a device, for admin purpose only
