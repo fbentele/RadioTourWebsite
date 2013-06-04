@@ -1,7 +1,8 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-	<c:if test="${not empty menuitems}">
+<c:if test="${not empty menuitems}">
 	<div class="span2">
 		<div id="menu" class="well visible-desktop">
 			<ul class="nav nav-list">
@@ -14,8 +15,8 @@
 			</ul>
 		</div>
 	</div>
-	</c:if>
-	<c:if test="${not empty stagemenu}">
+</c:if>
+<c:if test="${not empty stagemenu}">
 	<div class="span2">
 		<div id="menu" class="well visible-desktop">
 			<ul class="nav nav-list">
@@ -29,10 +30,12 @@
 								code="label.stage.stageProfile" /></a></li>
 				</c:if>
 				<c:if test="${not empty valuecontainers}">
-					<li id="menu-distance" class=""><a href="#abstand" target="_self"><spring:message
-								code="label.stage.deficiteTime" /></a></li>
+					<c:if test="${fn:length(latest) > 1}">
+						<li id="menu-distance" class=""><a href="#abstand" target="_self"><spring:message
+									code="label.stage.deficiteTime" /></a></li>
+					</c:if>
 				</c:if>
-					<c:if test="${not empty images || not empty videos}">
+				<c:if test="${not empty images || not empty videos}">
 					<li id="menu-live" class=""><a href="#livestream" target="_self"><spring:message
 								code="label.stage.liveStream" /></a></li>
 				</c:if>
@@ -59,8 +62,8 @@
 			</ul>
 		</div>
 	</div>
-	</c:if>
-	<c:if test="${not empty adminmenu}">
+</c:if>
+<c:if test="${not empty adminmenu}">
 	<div class="span2">
 		<div id="menu" class="well visible-desktop" style="padding: 8px 0;">
 			<ul class="nav nav-list">
@@ -72,4 +75,4 @@
 			</ul>
 		</div>
 	</div>
-	</c:if>
+</c:if>
