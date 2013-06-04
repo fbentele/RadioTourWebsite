@@ -132,7 +132,7 @@ public interface ValueContainerService {
 	 * @return a HashMap with the ID of the Valuecontainer and the deficite as
 	 *         time in seconds
 	 */
-	public void getDeficiteToLeaderForStage(Stage stage);
+	public void calculateDeficiteToLeaderForStage(Stage stage);
 
 	/**
 	 * Get all latest position of a device, for admin purpose only

@@ -34,6 +34,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	private SessionFactory sessionFactory;
 	private final static Logger LOG = LoggerFactory.getLogger(ValueContainerDAOImpl.class);
 	private static final int LIMIT_RESULTS_TO = 1000;
+	private static final float DISTANCE_ACCURACY = 0.5f;
 
 	/*
 	 * (non-Javadoc)
@@ -176,25 +177,31 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 */
 	@Override
 	public ValueContainer getFirstForStageByDistanceLimitedToRaceKm(Stage stage, Float raceKm) {
+		List<ValueContainer> temp = new ArrayList<ValueContainer>();
 		if (stage != null && !stage.getDevices().isEmpty()) {
-			Criteria crit = sessionFactory.getCurrentSession().createCriteria(ValueContainer.class);
-			Disjunction d = Restrictions.or();
 			for (Device device : stage.getDevices()) {
-				d.add(Restrictions.eq("device", device));
-			}
-			crit.add(d);
-			crit.add(Restrictions.between("timestamp", stage.getCorrectedStarttimeAsTimestamp(),
-					stage.getEndtimeAsTimestamp()));
-			Criteria stageCriteria = crit.createCriteria("stageData");
-			stageCriteria.add(Restrictions.le("distance", raceKm));
-			stageCriteria.addOrder(Order.desc("distance"));
-			try {
-				return (ValueContainer) stageCriteria.list().get(0);
-			} catch (IndexOutOfBoundsException e) {
-				LOG.info("No ValueContainer found");
+				Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+						ValueContainer.class);
+				crit.add(Restrictions.eq("device", device));
+				crit.add(Restrictions.between("timestamp",
+						stage.getCorrectedStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
+				Criteria stageCriteria = crit.createCriteria("stageData");
+				stageCriteria.add(Restrictions.between("distance", raceKm - DISTANCE_ACCURACY,
+						raceKm));
+				stageCriteria.addOrder(Order.desc("distance"));
+				try {
+					temp.add((ValueContainer) stageCriteria.list().get(0));
+				} catch (IndexOutOfBoundsException e) {
+					LOG.info("No ValueContainer found");
+				}
 			}
 		}
-		return null;
+		try {
+			Collections.sort(temp, new SortValueContainer());
+			return temp.get(0);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	/*
@@ -288,7 +295,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 	 * (ch.hsr.ba.tourlive.web.model.Stage)
 	 */
 	@Override
-	public void getDeficiteToLeaderForStage(Stage stage) {
+	public void calculateDeficiteToLeaderForStage(Stage stage) {
 		if (stage.getDevices().size() >= 2) {
 			for (ValueContainer v : getAllForStageByDistance(stage)) {
 				if (v.getDeficiteTimeAsTimestamp() != null)
@@ -305,7 +312,8 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 						stage.getCorrectedStarttimeAsTimestamp(), stage.getEndtimeAsTimestamp()));
 				crit.addOrder(Order.desc("timestamp"));
 				Criteria stageCriteria = crit.createCriteria("stageData");
-				stageCriteria.add(Restrictions.le("distance", v.getStageData().getDistance()));
+				stageCriteria.add(Restrictions.between("distance", v.getStageData().getDistance(),
+						v.getStageData().getDistance() - DISTANCE_ACCURACY));
 				try {
 					ValueContainer val = (ValueContainer) stageCriteria.list().get(0);
 					if (val.getTimestamp() < v.getTimestamp()
@@ -313,6 +321,7 @@ public class ValueContainerDAOImpl implements ValueContainerDAO {
 									.getDistance()) {
 						v.setDeficiteTime(v.getTimestamp() - val.getTimestamp());
 					} else {
+						// Is Leader, no deficitetime == -1
 						v.setDeficiteTime(-1L);
 					}
 				} catch (IndexOutOfBoundsException e) {

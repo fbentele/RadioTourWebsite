@@ -127,7 +127,7 @@ public class RaceController {
 						: System.currentTimeMillis());
 				model.addAttribute("devices", stage.getDevices());
 				if (stage.getDevices().size() > 1)
-					valueContainerService.getDeficiteToLeaderForStage(stage);
+					valueContainerService.calculateDeficiteToLeaderForStage(stage);
 				model.addAttribute("first", latest.get(latest.size() - 1));
 			} catch (NullPointerException e) {
 				LOG.info("Important Information (ValueContainers, Devices, Start and Endtime, missing for Stage: "
