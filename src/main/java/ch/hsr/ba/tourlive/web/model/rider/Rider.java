@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.utils.DateUtil;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -50,6 +52,7 @@ public class Rider {
 	 */
 	@Column
 	private Long timeVirt;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "stageId")
 	private Stage stage;

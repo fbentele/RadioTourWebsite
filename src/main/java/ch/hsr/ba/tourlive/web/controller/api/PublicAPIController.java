@@ -20,8 +20,10 @@ import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Stage;
 import ch.hsr.ba.tourlive.web.model.ValueContainer;
 import ch.hsr.ba.tourlive.web.model.VideoData;
+import ch.hsr.ba.tourlive.web.model.rider.Rider;
 import ch.hsr.ba.tourlive.web.service.ImageDataService;
 import ch.hsr.ba.tourlive.web.service.MarchTableService;
+import ch.hsr.ba.tourlive.web.service.RiderService;
 import ch.hsr.ba.tourlive.web.service.StageService;
 import ch.hsr.ba.tourlive.web.service.ValueContainerService;
 import ch.hsr.ba.tourlive.web.service.VideoDataService;
@@ -44,10 +46,13 @@ public class PublicAPIController {
 	@Autowired
 	MarchTableService mtiService;
 
+	@Autowired
+	RiderService riderService;
+
 	/**
-	 * Returns all public visivle stages.
+	 * Returns all public visible stages.
 	 * 
-	 * @return list of all visivle Stages
+	 * @return list of all visible Stages
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/public/stages", method = RequestMethod.GET)
@@ -81,7 +86,7 @@ public class PublicAPIController {
 	 * @return the image data for stage
 	 */
 	@ResponseBody
-	@RequestMapping(value = "public/stage/{stageId}/imagedata", method = RequestMethod.GET)
+	@RequestMapping(value = "/public/stage/{stageId}/imagedata", method = RequestMethod.GET)
 	public List<ImageData> getImageDataForStage(@PathVariable("stageId") Long stageId) {
 		Stage stage = stageService.getStageById(stageId);
 		if (stage != null) {
@@ -99,7 +104,7 @@ public class PublicAPIController {
 	 * @return the video data for stage
 	 */
 	@ResponseBody
-	@RequestMapping(value = "public/stage/{stageId}/videodata", method = RequestMethod.GET)
+	@RequestMapping(value = "/public/stage/{stageId}/videodata", method = RequestMethod.GET)
 	public List<VideoData> getVideoDataForStage(@PathVariable("stageId") Long stageId) {
 		Stage stage = stageService.getStageById(stageId);
 		if (stage != null) {
@@ -117,11 +122,22 @@ public class PublicAPIController {
 	 * @return the video data for stage
 	 */
 	@ResponseBody
-	@RequestMapping(value = "public/stage/{stageId}/marchtableitem", method = RequestMethod.GET)
+	@RequestMapping(value = "/public/stage/{stageId}/marchtableitem", method = RequestMethod.GET)
 	public List<MarchTableItem> getMarchTableItemsForStage(@PathVariable("stageId") Long stageId) {
 		Stage stage = stageService.getStageById(stageId);
 		if (stage != null) {
 			return mtiService.getAllByStage(stage);
+		} else {
+			return null;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/public/stage/{stageId}/riders", method = RequestMethod.GET)
+	public List<Rider> getRiderForStage(@PathVariable("stageId") Long stageId) {
+		Stage stage = stageService.getStageById(stageId);
+		if (stage != null) {
+			return riderService.getAllByStage(stage);
 		} else {
 			return null;
 		}
