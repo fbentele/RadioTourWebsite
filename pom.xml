@@ -397,5 +397,17 @@
 				<config.jdbc.password>GjyNws22JjGPDcMq</config.jdbc.password>
 			</properties>
 		</profile>
+		<profile>
+			<id>flokus.ch</id>
+			<properties>
+				<config.imagePath>/Library/Tomcat/webapps/media/</config.imagePath>
+				<config.imageHost>http://tlng.flokus.ch/media/</config.imageHost>
+				<config.jdbc.driverClassName>com.mysql.jdbc.Driver</config.jdbc.driverClassName>
+				<config.jdbc.dialect>org.hibernate.dialect.MySQLDialect</config.jdbc.dialect>
+				<config.jdbc.databaseurl>jdbc:mysql://localhost:3306/tourlive</config.jdbc.databaseurl>
+				<config.jdbc.username>tourlive</config.jdbc.username>
+				<config.jdbc.password>66554vPuFARtZq2s</config.jdbc.password>
+			</properties>
+		</profile>
 	</profiles>
 </project>
