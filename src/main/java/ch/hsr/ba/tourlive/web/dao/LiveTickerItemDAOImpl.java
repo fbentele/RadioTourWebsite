@@ -96,9 +96,8 @@ public class LiveTickerItemDAOImpl implements LiveTickerItemDAO {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(LiveTickerItem.class);
 		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		crit.add(Restrictions.eq("stage", stage));
-		crit.add(Restrictions.le("timestamp", timelimit));
+		crit.add(Restrictions.between("timestamp", stage.getStarttimeAsTimestamp(), timelimit));
 		crit.addOrder(Order.desc("timestamp"));
 		return (List<LiveTickerItem>) crit.list();
 	}
-
 }

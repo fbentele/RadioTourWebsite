@@ -48,5 +48,4 @@ public interface MarchTableService {
 	 * @return all items by stage
 	 */
 	public List<MarchTableItem> getAllByStage(Stage stage);
-
 }

@@ -70,5 +70,4 @@ public class MarchTableItemServiceImpl implements MarchTableService {
 	public List<MarchTableItem> getAllByStage(Stage stage) {
 		return mtidao.getAllByStage(stage);
 	}
-
 }
