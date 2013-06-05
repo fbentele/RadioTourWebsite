@@ -396,11 +396,11 @@
 				    var x      = 0;
 				    var y      = 0;
 				    var width  = 320;
-				    var height = 240
+				    var height = 240;
 				    var cx     = x + 0.5 * width;
 				    var cy     = y + 0.5 * height;
 				    v.addEventListener('play', function(){
-				    	context.fillStyle = "#000000";
+				    	context.fillStyle = "#ffffff";
 				    	context.fillRect(x, y, width, height);
 				    	context.translate(cx, cy);
 					    context.rotate(${video.rotation}*Math.PI/180);
@@ -422,7 +422,7 @@
 					url : "/race/${raceSlug}/stage/${stage.stageSlug}/nextvideo",
 					data : {
 						deviceId : '${videos[0].device.deviceId}',
-						afterId: videoPlayer.id
+						afterId: videoPlayer.id.substring(5),
 					},
 					success : function(data) {
 						if (data){
@@ -430,7 +430,7 @@
 							console.log(data.videoLocation);
 							$('#mp4').attr('src', '${hostname}'+ data.videoLocation + '.mp4');
 							$('#ogg').attr('src', '${hostname}'+ data.videoLocation + '.ogg');
-							videoPlayer.id= data.videoDataId;
+							videoPlayer.id= "video" + data.videoDataId;
 							videoPlayer.load();
 						} else {
 							console.log('no new video');
