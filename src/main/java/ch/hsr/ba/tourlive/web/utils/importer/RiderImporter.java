@@ -15,15 +15,20 @@ public class RiderImporter {
 
 	public Rider convertTo(String[] strings) {
 		final Rider rider = new Rider();
-		rider.setStartNr(Integer.valueOf(strings[startNr]));
-		rider.setCountry(strings[country]);
-		rider.setName(strings[name]);
-		rider.setTeam(strings[team]);
-		rider.setTeamShort(strings[teamShort]);
-		rider.setTimeOff(strings[timeOff]);
-		rider.setTimeRueck(strings[timeRue]);
-		rider.setTimeVirt(strings[timeVir]);
-		rider.setNeo(!strings[neo].equals("0"));
+		try {
+
+			rider.setStartNr(Integer.valueOf(strings[startNr]));
+			rider.setCountry(strings[country]);
+			rider.setName(strings[name]);
+			rider.setTeam(strings[team]);
+			rider.setTeamShort(strings[teamShort]);
+			rider.setTimeOff(strings[timeOff]);
+			rider.setTimeRueck(strings[timeRue]);
+			rider.setTimeVirt(strings[timeVir]);
+			rider.setNeo(!strings[neo].equals("0"));
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// empty line read...
+		}
 		return rider;
 	}
 }

@@ -70,13 +70,17 @@ public class Device {
 	}
 
 	public String getColorAsRGB() {
-		StringBuilder rgb = new StringBuilder();
-		if (color.length() > 6) {
-			rgb.append(Integer.valueOf(color.substring(1, 3), 16) + ",");
-			rgb.append(Integer.valueOf(color.substring(3, 5), 16) + ",");
-			rgb.append(Integer.valueOf(color.substring(5, 7), 16) + ",");
+		try {
+			StringBuilder rgb = new StringBuilder();
+			if (color.length() > 6) {
+				rgb.append(Integer.valueOf(color.substring(1, 3), 16) + ",");
+				rgb.append(Integer.valueOf(color.substring(3, 5), 16) + ",");
+				rgb.append(Integer.valueOf(color.substring(5, 7), 16) + ",");
+			}
+			return rgb.toString();
+		} catch (Exception e) {
+			return "";
 		}
-		return rgb.toString();
 	}
 
 	public void setColor(String color) {

@@ -210,7 +210,7 @@ public class RaceController {
 	public VideoData getNextVideoForDevice(@PathVariable("stageSlug") String stageSlug,
 			@PathVariable("raceSlug") String raceSlug, @RequestParam("deviceId") String deviceId,
 			@RequestParam("afterId") Long afterId, Model model) {
-		LOG.info("video Requested");
+		LOG.error("video Requested");
 		return videoDataService.getNextForDevice(deviceService.getDeviceById(deviceId), afterId);
 	}
 }

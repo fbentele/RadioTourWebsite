@@ -111,7 +111,7 @@
 			<div id="livevideo" class="row-fluid">
 				<c:forEach items="${videos}" var="video">
 					<div class="span5 border">
-						<h4>${video.device.username}</h4>
+						<h4>${video.device.labelName}</h4>
 						<div id="video-drawing-wrapper">
 							<canvas id="videocanvas${video.videoDataId}" class="videocanvas"></canvas>
 							<video id="video${video.videoDataId}" width="320" height="240" autoplay controls muted>
@@ -388,22 +388,21 @@
 				document.addEventListener('DOMContentLoaded', function(){
 				    var v = document.getElementById('video${video.videoDataId}');
 				    var canvas = document.getElementById('videocanvas${video.videoDataId}');
-				    var context = canvas.getContext('2d');
-				    var cw = Math.floor(canvas.clientWidth);
-				    var ch = Math.floor(canvas.clientHeight);
-				    canvas.width = cw;
-				    canvas.height = ch;
+			    	var context = canvas.getContext('2d');
 				    var x      = 0;
 				    var y      = 0;
 				    var width  = 320;
 				    var height = 240;
 				    var cx     = x + 0.5 * width;
 				    var cy     = y + 0.5 * height;
+				   
+					var rotation = ${video.rotation};
+					context.rotate(rotation*Math.PI/180);
+				    context.fillStyle = "#ffffff";
+			    	context.fillRect(x, y, width, height);
+			    	context.translate(cx, cy);
+			    	
 				    v.addEventListener('play', function(){
-				    	context.fillStyle = "#ffffff";
-				    	context.fillRect(x, y, width, height);
-				    	context.translate(cx, cy);
-					    context.rotate(${video.rotation}*Math.PI/180);
 				        draw(this,context,width,height);
 				    },false);
 				},false);
