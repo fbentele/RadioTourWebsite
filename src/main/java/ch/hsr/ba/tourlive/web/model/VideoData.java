@@ -29,12 +29,15 @@ public class VideoData {
 	@JoinColumn(name = "deviceId")
 	private Device device;
 	@Column
+	private Integer rotation;
+	@Column
 	private String videoLocation;
 
-	public VideoData(Long timestamp, Device device, String imageLocation) {
+	public VideoData(Long timestamp, Device device, String imageLocation, Integer rotation) {
 		this.timestamp = timestamp;
 		this.device = device;
 		this.videoLocation = imageLocation;
+		this.rotation = rotation;
 	}
 
 	public VideoData() {
@@ -73,6 +76,14 @@ public class VideoData {
 
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public Integer getRotation() {
+		return rotation == null ? 0 : rotation;
+	}
+
+	public void setRotation(Integer rotation) {
+		this.rotation = rotation;
 	}
 
 	public Device getDevice() {

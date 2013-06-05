@@ -393,18 +393,24 @@
 				    var ch = Math.floor(canvas.clientHeight);
 				    canvas.width = cw;
 				    canvas.height = ch;
-
+				    var x      = 0;
+				    var y      = 0;
+				    var width  = 320;
+				    var height = 240
+				    var cx     = x + 0.5 * width;
+				    var cy     = y + 0.5 * height;
 				    v.addEventListener('play', function(){
-				    	context.translate(canvas.width, canvas.height);
-					    context.rotate(Math.PI/1);
-
-				        draw(this,context,cw,ch);
+				    	context.fillStyle = "#000000";
+				    	context.fillRect(x, y, width, height);
+				    	context.translate(cx, cy);
+					    context.rotate(${video.rotation}*Math.PI/180);
+				        draw(this,context,width,height);
 				    },false);
 				},false);
 
 				function draw(v,c,w,h) {
 				    if(v.paused || v.ended) return false;
-				    c.drawImage(v,0,0,w,h);
+				    c.drawImage(v,-0.5 * w,-0.5 * h,w,h);
 				    setTimeout(draw,20,v,c,w,h);
 				}
 			</c:forEach>

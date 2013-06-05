@@ -147,7 +147,8 @@ public class ApiController {
 	@RequestMapping(value = "/api/video", method = RequestMethod.POST, headers = { "content-type=multipart/form-data" })
 	public void uploadVideoSequence(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("video") CommonsMultipartFile video,
-			@RequestParam("timestamp") Long timestamp, @RequestParam("deviceId") String deviceId) {
+			@RequestParam("timestamp") Long timestamp, @RequestParam("deviceId") String deviceId,
+			@RequestParam Integer rotation) {
 		String vidLocation = FileUtil.safeVideo(video, mediaPath, deviceId, deviceId + "_"
 				+ timestamp);
 		Device device = deviceService.getDeviceById(deviceId);
@@ -155,7 +156,7 @@ public class ApiController {
 			device = new Device(deviceId);
 			deviceService.save(device);
 		}
-		videoDataService.save(new VideoData(timestamp, device, vidLocation));
+		videoDataService.save(new VideoData(timestamp, device, vidLocation, rotation));
 	}
 
 	/**
