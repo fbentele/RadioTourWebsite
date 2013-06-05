@@ -66,7 +66,7 @@ public class Rider {
 	}
 
 	public int getStartNr() {
-		return startNr;
+		return startNr == null ? 0 : startNr;
 	}
 
 	public void setStartNr(int startNr) {
