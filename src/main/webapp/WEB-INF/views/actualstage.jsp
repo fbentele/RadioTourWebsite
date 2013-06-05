@@ -112,11 +112,14 @@
 				<c:forEach items="${videos}" var="video">
 					<div class="span5 border">
 						<h4>${video.device.username}</h4>
-						<video id="${video.videoDataId}" width="320" height="240" autoplay controls muted>
-							<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
-								type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
-							<source id="ogg" src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
-						</video>
+						<div id="video-drawing-wrapper">
+							<canvas id="videocanvas${video.videoDataId}" class="videocanvas"></canvas>
+							<video id="video${video.videoDataId}" width="320" height="240" autoplay controls muted>
+								<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
+									type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
+								<source id="ogg" src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
+							</video>
+						</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -377,10 +380,33 @@
 	<c:if test="${not empty videos}">
 		<script type="text/javascript">
 			<c:forEach items="${videos}" var="video">
-				var videoPlayer${video.videoDataId} = document.getElementById('${video.videoDataId}');
+				var videoPlayer${video.videoDataId} = document.getElementById('video${video.videoDataId}');
 				videoPlayer${video.videoDataId}.addEventListener('ended', function(){
 					loadNext(videoPlayer${video.videoDataId});
 				});
+				
+				document.addEventListener('DOMContentLoaded', function(){
+				    var v = document.getElementById('video${video.videoDataId}');
+				    var canvas = document.getElementById('videocanvas${video.videoDataId}');
+				    var context = canvas.getContext('2d');
+				    var cw = Math.floor(canvas.clientWidth);
+				    var ch = Math.floor(canvas.clientHeight);
+				    canvas.width = cw;
+				    canvas.height = ch;
+
+				    v.addEventListener('play', function(){
+				    	context.translate(canvas.width, canvas.height);
+					    context.rotate(Math.PI/1);
+
+				        draw(this,context,cw,ch);
+				    },false);
+				},false);
+
+				function draw(v,c,w,h) {
+				    if(v.paused || v.ended) return false;
+				    c.drawImage(v,0,0,w,h);
+				    setTimeout(draw,20,v,c,w,h);
+				}
 			</c:forEach>
 			
 			function loadNext(videoPlayer){
@@ -508,5 +534,6 @@
 	  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
 		}, false);
 	</script>
+
 </body>
 </html>
