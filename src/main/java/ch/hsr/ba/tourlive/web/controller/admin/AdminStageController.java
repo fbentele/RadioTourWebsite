@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import ch.hsr.ba.tourlive.web.model.Device;
 import ch.hsr.ba.tourlive.web.model.LiveTickerItem;
 import ch.hsr.ba.tourlive.web.model.MarchTableItem;
 import ch.hsr.ba.tourlive.web.model.Race;
@@ -219,6 +220,14 @@ public class AdminStageController {
 	@RequestMapping(value = "/admin/race/{raceId}/stage/delete/{stageId}", method = RequestMethod.GET)
 	public String deleteStage(@PathVariable("stageId") Long stageId,
 			@PathVariable("raceId") Long raceId) {
+		deleteProfileImage(raceId, stageId);
+		deleteBannerImage(raceId, stageId);
+		deleteAllRider(raceId, stageId);
+		deleteAllMarchTableItem(raceId, stageId);
+		Stage s = stageService.getStageById(stageId);
+		for (Device d : s.getDevices()) {
+			removeDevice(stageId, raceId, d.getDeviceId());
+		}
 		stageService.delete(stageId);
 		return "redirect:/admin/race/edit/" + raceId;
 	}
@@ -278,8 +287,7 @@ public class AdminStageController {
 	 */
 	@RequestMapping(value = "/admin/race/{raceId}/stage/{stageId}/device/{deviceId}/remove", method = RequestMethod.GET)
 	public String removeDevice(@PathVariable("stageId") Long stageId,
-			@PathVariable("raceId") Long raceId, @PathVariable("deviceId") String deviceId,
-			HttpServletRequest request) {
+			@PathVariable("raceId") Long raceId, @PathVariable("deviceId") String deviceId) {
 		Stage stage = stageService.getStageById(stageId);
 		stage.removeDevice(deviceId);
 		stageService.update(stage);

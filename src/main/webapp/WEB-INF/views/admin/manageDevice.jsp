@@ -27,11 +27,13 @@
 				<td>${device.labelName}</td>
 				<td>${device.phoneNr}</td>
 				<td><span style="background-color: ${device.color}">&nbsp;&nbsp;</span></td>
-				<c:forEach items="${positions}" var="pos">
-					<c:if test="${pos.device.deviceId == device.deviceId}">
-						<td class="nolink"><a href="https://maps.google.ch/?saddr=${pos.positionData.latitude},${pos.positionData.longitude}" target="_blank">Link</a></td>
-					</c:if>
-				</c:forEach>
+				<td class="nolink"><c:forEach items="${positions}" var="pos">
+						<c:if test="${pos.device.deviceId == device.deviceId}">
+							<a
+								href="https://maps.google.ch/?saddr=${pos.positionData.latitude},${pos.positionData.longitude}"
+								target="_blank">Link</a>
+						</c:if>
+					</c:forEach></td>
 				<td class="nolink"><a href="#modal_delete${device.deviceId}" data-toggle="modal"
 					target="_self"><i class="icon-trash"></i></a></td>
 			</tr>

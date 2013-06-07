@@ -77,9 +77,10 @@ public class RaceController {
 		Race actualRace = raceService.getRaceBySlug(raceSlug);
 		if (actualRace != null) {
 			model.addAttribute("race", actualRace);
+			model.addAttribute("stages", stageService.getAllByRace(actualRace));
 			model.addAttribute("navbarrace", "active");
 			model.addAttribute("races", raceService.getAllVisible());
-			model.addAttribute("menutitle", "etappen");
+			model.addAttribute("menutitle", messageSource.getMessage("label.stages", null, locale));
 			model.addAttribute("menuitems",
 					MenuItem.makeMenu(stageService.getAllVisibleByRace(actualRace)));
 			model.addAttribute(
