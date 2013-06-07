@@ -12,4 +12,6 @@
 	src="<c:url value="/resources/js/jquery.dataTables.min.js" />"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/dataTables.scroller.js" />"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.cookie.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/tourliveux.js" />"></script>

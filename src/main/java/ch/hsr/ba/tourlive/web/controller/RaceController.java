@@ -3,6 +3,9 @@ package ch.hsr.ba.tourlive.web.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +124,7 @@ public class RaceController {
 			model.addAttribute("distances", valueContainerService.getAllForStageByDistance(stage));
 			model.addAttribute("marchtable", marchTableService.getAllByStage(stage));
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage));
+			model.addAttribute("refresh", true);
 			model.addAttribute("highestdeficite",
 					valueContainerService.getHighestDeficiteForStage(stage));
 			try {
@@ -190,6 +194,23 @@ public class RaceController {
 			model.addAttribute("situation", raceSituationService.getLatestByStage(stage, untilTime));
 		}
 		return "actualstage";
+	}
+
+	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/refresh/on", method = RequestMethod.GET)
+	public String refreshOn(HttpServletResponse response,
+			@PathVariable("stageSlug") String stageSlug, @PathVariable("raceSlug") String raceSlug,
+			Model model, Locale locale) {
+		response.addCookie(new Cookie("refresh", "on"));
+
+		return showStage(stageSlug, raceSlug, model, locale);
+	}
+
+	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/refresh/off", method = RequestMethod.GET)
+	public String refreshOff(HttpServletResponse response,
+			@PathVariable("stageSlug") String stageSlug, @PathVariable("raceSlug") String raceSlug,
+			Model model, Locale locale) {
+		response.addCookie(new Cookie("refresh", "off"));
+		return showStage(stageSlug, raceSlug, model, locale);
 	}
 
 	@RequestMapping(value = "/race/{raceSlug}/stage/{stageSlug}/km/{raceKm}", method = RequestMethod.GET)

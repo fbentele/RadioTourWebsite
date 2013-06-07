@@ -13,7 +13,15 @@
 <body>
 	<div>
 		<div id="top" class="row-fluid">
-			<h2 id="top">${stage.stageName} (${stage.distance} km)</h2>
+			<div class="row-fluid">
+				<h2 class="span6" id="top">${stage.stageName} (${stage.distance} km)</h2>
+				<div class="span6">
+					<spring:message code="label.stage.refresh" />
+					: <a id="refreshon" href="/race/${raceSlug}/stage/${stage.stageSlug}/refresh/on"
+						class="badge"><spring:message code="label.stage.on" /></a> <a id="refreshoff"
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/refresh/off" class="badge"><spring:message code="label.stage.off" /></a>
+				</div>
+			</div>
 			<div class="span5">
 				<p class="lead">
 					<spring:message code="label.stage.distancestatus1" />
@@ -114,7 +122,8 @@
 						<h4>${video.device.labelName}</h4>
 						<div id="video-drawing-wrapper">
 							<canvas id="videocanvas${video.videoDataId}" class="videocanvas"></canvas>
-							<video id="video${video.videoDataId}" width="320" height="240" autoplay controls muted>
+							<video id="video${video.videoDataId}" width="320" height="240" autoplay controls
+								muted>
 								<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
 									type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
 								<source id="ogg" src="${hostname}${video.videoLocation}.ogg" type='video/ogg'></source>
@@ -543,6 +552,17 @@
 	  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
 		}, false);
 	</script>
-
+	<script type="text/javascript">
+	if ($.cookie('refresh') == 'on'){
+		$('#refreshon').addClass('badge-success').delay(5000);
+		window.setTimeout(refresh, 8000);
+	} else {
+		$('#refreshoff').addClass('badge-success');
+	}
+	
+	function refresh() {
+		location.reload();
+	}
+	</script>
 </body>
 </html>
