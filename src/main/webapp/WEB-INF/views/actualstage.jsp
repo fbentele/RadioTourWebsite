@@ -310,10 +310,14 @@
 				profilewidth = 588;
 				lineheight=200;
 				lineheightend= 80;			
-			} else if (screensize < 768){
+			} else if (screensize < 768 && screensize >= 450){
 				profilewidth = 520;
 				lineheight=180;
 				lineheightend=70;
+			}  else if (screensize < 450){
+				profilewidth = 240;
+				lineheight = 150;
+				lineheightend = 50;
 			}
 		}
 		setScreenParams();
