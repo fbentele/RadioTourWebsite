@@ -19,7 +19,8 @@
 					<spring:message code="label.stage.refresh" />
 					: <a id="refreshon" href="/race/${raceSlug}/stage/${stage.stageSlug}/refresh/on"
 						class="badge"><spring:message code="label.stage.on" /></a> <a id="refreshoff"
-						href="/race/${raceSlug}/stage/${stage.stageSlug}/refresh/off" class="badge"><spring:message code="label.stage.off" /></a>
+						href="/race/${raceSlug}/stage/${stage.stageSlug}/refresh/off" class="badge"><spring:message
+							code="label.stage.off" /></a>
 				</div>
 			</div>
 			<div class="span5">
@@ -122,7 +123,7 @@
 						<h4>${video.device.labelName}</h4>
 						<div id="video-drawing-wrapper">
 							<canvas id="videocanvas${video.videoDataId}" class="videocanvas"></canvas>
-							<video id="video${video.videoDataId}" width="320" height="240" autoplay controls
+							<video id="video${video.videoDataId}" data-rotation="${video.rotation}" data-device="${video.device.deviceId}" width="320" height="240" autoplay controls
 								muted>
 								<source id="mp4" src="${hostname}${video.videoLocation}.mp4"
 									type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></source>
@@ -408,14 +409,18 @@
 				    var height = 240;
 				    var cx     = x + 0.5 * width;
 				    var cy     = y + 0.5 * height;
-				   
-					var rotation = ${video.rotation};
-					context.rotate(rotation*Math.PI/180);
+
 				    context.fillStyle = "#ffffff";
 			    	context.fillRect(x, y, width, height);
 			    	context.translate(cx, cy);
-			    	
+
+				    var rotation = 0;
+				    
 				    v.addEventListener('play', function(){
+				    	if (rotation != v.getAttribute('data-rotation')){
+							context.rotate((v.getAttribute('data-rotation') - rotation)*Math.PI/180);
+							rotation = v.getAttribute('data-rotation');
+				    	}
 				        draw(this,context,width,height);
 				    },false);
 				},false);
@@ -425,6 +430,7 @@
 				    c.drawImage(v,-0.5 * w,-0.5 * h,w,h);
 				    setTimeout(draw,20,v,c,w,h);
 				}
+				
 			</c:forEach>
 			
 			function loadNext(videoPlayer){
@@ -433,15 +439,14 @@
 					dataType: "json",
 					url : "/race/${raceSlug}/stage/${stage.stageSlug}/nextvideo",
 					data : {
-						deviceId : '${videos[0].device.deviceId}',
+						deviceId : videoPlayer.getAttribute('data-device'),
 						afterId: videoPlayer.id.substring(5),
 					},
 					success : function(data) {
 						if (data){
-							console.log('new video');
-							console.log(data.videoLocation);
 							$('#mp4').attr('src', '${hostname}'+ data.videoLocation + '.mp4');
 							$('#ogg').attr('src', '${hostname}'+ data.videoLocation + '.ogg');
+							$(videoPlayer).attr('data-rotation', data.rotation);
 							videoPlayer.id= "video" + data.videoDataId;
 							videoPlayer.load();
 						} else {
@@ -543,14 +548,19 @@
 	<script type="text/javascript">
 		var wrapper = document.getElementById('positionbar');
 		var progress = document.getElementById('progress');
-		var status = ${first.stageData.distance} * 100 / ${stage.distance};
-		progress.style.width = status + "%";		
-		wrapper.addEventListener('click', function(e) {
-			var offset=e.offsetX==undefined?e.layerX:e.offsetX;
-	  		progress.style.width = offset + "px";
-	  		var pct = (offset / wrapper.offsetWidth) * ${stage.distance};
-	  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
-		}, false);
+		try{
+			var status = ${first.stageData.distance} * 100 / ${stage.distance};
+			progress.style.width =status + "%";		
+			wrapper.addEventListener('click', function(e) {
+				var offset=e.offsetX==undefined?e.layerX:e.offsetX;
+		  		progress.style.width = offset + "px";
+		  		var pct = (offset / wrapper.offsetWidth) * ${stage.distance};
+		  		window.location = "/race/${raceSlug}/stage/${stage.stageSlug}/km/"+pct;
+			}, false);
+		} catch (err){
+			var status = 0;
+		} 
+		
 	</script>
 	<script type="text/javascript">
 	if ($.cookie('refresh') == 'on'){
