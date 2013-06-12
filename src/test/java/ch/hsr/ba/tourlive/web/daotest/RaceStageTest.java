@@ -77,7 +77,6 @@ public class RaceStageTest extends AbstractTestClass {
 
 	@After
 	public void cleanUp() {
-		System.out.println("________deleting " + s.getStageId());
 		ltiService.delete(l.getLiveTickerId());
 		stageService.delete(s.getStageId());
 		raceService.delete(r.getRaceId());
