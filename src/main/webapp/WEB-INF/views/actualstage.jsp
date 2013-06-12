@@ -374,13 +374,15 @@
 			canvas.path("M"+ (profilewidth*.712765957) +",190L"+ (profilewidth*.712765957) +",210");
 			canvas.path("M" + (profilewidth*.946808511)+",190L"+(profilewidth*.946808511)+",210");
 			canvas.path("M5,25L15,25");
+			canvas.path("M5,113L15,113");
 			canvas.text(10,215, "0 " );
 			canvas.text((profilewidth*.244680851),215, Math.round(stageDistance/4));
 			canvas.text((profilewidth*.478723404),215, Math.round(stageDistance/2));
 			canvas.text((profilewidth*.712765957),215, Math.round(stageDistance/4 *3));
 			canvas.text((profilewidth*.946808511),215, Math.round(stageDistance));
-			canvas.text(25,25, Math.round(highestdeficite) + " s");
-			canvas.text(50, 10, "<spring:message code="label.stage.deficiteInS" />");
+			canvas.text(45,25, Math.round(highestdeficite/60) + " min " + Math.round(highestdeficite%60) + " s");
+			canvas.text(45,113, Math.round((highestdeficite/2)/60) + " min " + Math.round((highestdeficite/2)%120) + " s");
+			canvas.text(25, 4, "<spring:message code="label.stage.deficite" />");
 			canvas.text((factor * profilewidth), 180, "<spring:message code="label.stage.raceKm" />");
 			<c:forEach items="${valuecontainers}" var="vc">
 				<c:if test="${vc.deficiteTime > 0}">
