@@ -25,11 +25,8 @@
 			</div>
 			<div class="span5">
 				<p class="lead">
-					<spring:message code="label.stage.distancestatus1" />
-					<c:if test="${empty first}">0</c:if>${first.stageData.distance} km
-					<spring:message code="label.stage.distancestatus2" />
-					${stage.distance} km
-					<spring:message code="label.stage.distancestatus3" />
+					<spring:message code="label.stage.distancestatus1" />&nbsp;<c:if test="${empty first}">0</c:if>${first.stageData.distance} km
+					<spring:message code="label.stage.distancestatus2" />&nbsp;${stage.distance} km <spring:message code="label.stage.distancestatus3" />
 				</p>
 			</div>
 			<div class="span6 pull-right">
