@@ -7,6 +7,7 @@
 package ch.hsr.ba.tourlive.web.controller.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -87,19 +88,25 @@ public class ApiController {
 	 */
 	@RequestMapping(value = "/api/valuecontainer", method = RequestMethod.POST)
 	@ResponseBody
-	public void valueContainer(@RequestBody final ValueContainer request) {
+	public void valueContainer(@RequestBody final List<ValueContainer> request) {
 		// not loosing device information on every request, refactoring
 		// needed...
 		try {
-			Device requestDevice = request.getDevice();
+			Device requestDevice = request.get(0).getDevice();
 			Device d = deviceService.getDeviceById(requestDevice.getDeviceId());
 			d.setUsername(requestDevice.getUsername());
 			d.setPhoneNr(requestDevice.getPhoneNr());
-			request.setDevice(d);
+			for(ValueContainer vc : request) {
+				vc.setDevice(d);
+			}
 		} catch (NullPointerException e) {
 			LOG.error("no deviceId found");
+		} catch (IndexOutOfBoundsException e) {
+			LOG.error("no ValueContainer in request");
 		}
-		valueContainerService.save(request);
+		for(ValueContainer vc : request) {
+			valueContainerService.save(vc);
+		}
 	}
 
 	/**
